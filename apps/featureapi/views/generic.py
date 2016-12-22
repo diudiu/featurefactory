@@ -28,7 +28,7 @@ class FeatureExtract(CsrfExemptMixin, View):
     #     return HttpResponse("Feature Factory !!!!!")
 
     def post(self, request):
-
+        des_key = 'yyyyyyuuuuoooooo'
         post_data = json.loads(request.body)
 
         # get client code
