@@ -39,6 +39,7 @@ INSTALLED_APPS = (
 
     'apps.featureapi',
     'apps.common',
+    'apps.datasource',
 )
 
 MIDDLEWARE_CLASSES = (

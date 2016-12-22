@@ -4,9 +4,6 @@
 """
 from django.db import models
 
-__author__ = "Shaohan Niu"
-__datetime__ = "2016/1/31"
-
 
 class BaseModel(models.Model):
     """
@@ -18,3 +15,18 @@ class BaseModel(models.Model):
 
     class Meta:
         abstract = True
+
+
+class ClientOverview(BaseModel):
+    """
+        client_code and other messages
+    """
+    client_code = models.CharField(u'', max_length=128)
+    client_id = models.CharField(u'', max_length=128)
+    client_secret = models.CharField(u'', max_length=256)
+    res_key = models.CharField(u'', max_length=128)
+
+    class Meta:
+        db_table = 'fic_client_overview'
+        verbose_name = u''
+        verbose_name_plural = u''
