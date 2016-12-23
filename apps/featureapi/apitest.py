@@ -16,7 +16,7 @@ des_key = 'yyyyyyuuuuoooooo'
 def feature_post():
     url = 'http://127.0.0.1:9999/feature/extract/'
     data = {
-        'client_code': 'test_client_code',
+        'client_code': 'lp_test',
         'content': {
             'apply_id': 'test_apply_id',
             'res_keys': [
@@ -37,7 +37,8 @@ def feature_post():
     }
     json_data = json.dumps(data['content'], encoding="UTF-8", ensure_ascii=False)
     req_data = Cryption.aes_base64_encrypt(json_data, des_key)
-    post_data = json.dumps(data.update({'content': req_data}), encoding="UTF-8", ensure_ascii=False)
+    data.update({'content': req_data})
+    post_data = json.dumps(data, encoding="UTF-8", ensure_ascii=False)
     response = requests.post(url, headers=headers, data=post_data)
     print response.content
 

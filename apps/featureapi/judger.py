@@ -32,7 +32,7 @@ class Judger(object):
     """
 
     def __init__(self, client_code, data):
-        self.cilent_code = client_code
+        self.client_code = client_code
         self.client_id = ''
         self.client_secret = ''
         self.des_key = ''
@@ -49,7 +49,7 @@ class Judger(object):
             return False
 
     def _check_identity(self):
-        client_package = ClientOverview.objects.filter(client_code=self.cilent_code)
+        client_package = ClientOverview.objects.filter(client_code=self.client_code)
         if not client_package:
             raise  # E02
         client_package = client_package[0]
@@ -64,7 +64,7 @@ class Judger(object):
         except Exception as e:
             raise  # E03
         self.appli_id = message.get('apply_id', None)
-        self.target_features = message.get('keys', None)
+        self.target_features = message.get('res_keys', None)
         self.arguments = message.get('arguments', None)
         if not self.appli_id:
             raise  # E04
