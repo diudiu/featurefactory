@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'apps.featureapi',
     'apps.common',
     'apps.datasource',
+    'apps.remote',
 )
 
 MIDDLEWARE_CLASSES = (

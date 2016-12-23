@@ -16,7 +16,7 @@ from apps.featureapi.response import JSONResponse
 from django.views.generic import View
 from braces.views import CsrfExemptMixin
 
-from vendor.utils.encrypt import Cryption
+from apps.featureapi.judger import Judger
 from vendor.errors.api_errors import *
 
 logger = logging.getLogger('apps.feature')
@@ -28,20 +28,27 @@ class FeatureExtract(CsrfExemptMixin, View):
     #     return HttpResponse("Feature Factory !!!!!")
 
     def post(self, request):
-        des_key = 'yyyyyyuuuuoooooo'
+
+        message = {}
+        if not request.body:
+            raise
         post_data = json.loads(request.body)
 
         # get client code
         client_code = post_data.get('client_code')
+        content = post_data.get('content')
 
-        # TODO is client code useful and get messages belong to this client
+        judger = Judger(client_code=client_code, data=content)
 
-        # decrypt the messages
-        data = Cryption.aes_base64_decrypt(post_data['content'], des_key)
-        message = json.loads(data)
-
-        # TODO get target keys and arguments, check them in the DB
+        # TODO use judger's work stream
+        useful_data = judger.work_stream()
 
         # TODO packing the useful messages go to the next part of the syetem
+
+        # TODO except Exceptions and do somethings
+
+        # TODO finaly packing the response messages
+
+        # TODO return JSONResponse
 
         return JSONResponse(message)
