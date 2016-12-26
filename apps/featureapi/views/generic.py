@@ -17,6 +17,7 @@ from braces.views import CsrfExemptMixin
 
 from apps.featureapi.decorator import post_data_check
 from apps.featureapi.judger import Judger
+from vendor.utils.constant import Constant as cons
 from vendor.errors.api_errors import *
 
 logger = logging.getLogger('apps.feature')
@@ -30,10 +31,10 @@ class FeatureExtract(CsrfExemptMixin, View):
     # @装饰器验证一下request包完整性
     @post_data_check
     def post(self, request):
-
-        message = {}
-        if not request.body:
-            raise
+        data = {
+            cons.RESPONSE_REQUEST_STATUS: ResponseCode.SUCCESS,
+            cons.RESPONSE_REQUEST_MESSAGE: ResponseCode.message(ResponseCode.SUCCESS)
+        }
         post_data = json.loads(request.body)
         # get client code
         client_code = post_data.get('client_code')
@@ -59,13 +60,43 @@ class FeatureExtract(CsrfExemptMixin, View):
             print useful_args
             print 'useful_common_data'
             print useful_common_data
+            ret_data = {
+                'key1': 'value1',
+                'key2': 'value2',
+                'key3': 'value3',
+            }
+            data.update({
+                cons.RESPONSE_REQUEST_RES_DATA: ret_data,
+            })
 
         # TODO except Exceptions and do somethings
+        except UserIdentityError as e:
+            data = {
+                cons.RESPONSE_REQUEST_STATUS: e.status,
+                cons.RESPONSE_REQUEST_MESSAGE: e.message,
+            }
+
+        except EncryptError as e:
+            data = {
+                cons.RESPONSE_REQUEST_STATUS: e.status,
+                cons.RESPONSE_REQUEST_MESSAGE: e.message,
+            }
+
+        except (GetApplyIdError, GetResKeysError, GetArgumentsError, ArgumentsAvailableError) as e:
+            data = {
+                cons.RESPONSE_REQUEST_STATUS: e.status,
+                cons.RESPONSE_REQUEST_MESSAGE: e.message,
+            }
+
         except Exception as e:
-            pass
+            data = {
+                cons.RESPONSE_REQUEST_STATUS: ResponseCode.FAILED,
+                cons.RESPONSE_REQUEST_MESSAGE: e.message,
+            }
+
         # TODO finaly packing the response messages
         finally:
             pass
 
         # TODO return JSONResponse
-        return JSONResponse(message)
+        return JSONResponse(data)

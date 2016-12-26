@@ -7,29 +7,24 @@
     Change Activity:
 
 """
+import logging
 import json
 
 from vendor.utils.encrypt import Cryption
 from apps.common.models import ClientOverview
 from apps.remote.models import FeatureFieldRel
+from vendor.errors.api_errors import *
+
+logger = logging.getLogger('apps.openapi')
 
 
 class Judger(object):
     """
-        1.身份验证
-        2.数据解密
-        3.参数可用性验证
-        4.异常抛出
-
-        # is client code useful and get messages belong to this client
-        #
-        # decrypt the messages
-        # data = Cryption.aes_base64_decrypt(post_data['content'], des_key)
-        # message = json.loads(data)
-        #
-        # get target keys and arguments, check them in the DB
-        #
-        # packing the useful messages go to the next part of the syetem
+        1.authentication (_check_identity)
+        2.data decryption (_decrypt)
+        3.check availability of arguments (_args_useful_check)
+        4.throw the Exceptions
+        5.finally check all works
     """
 
     def __init__(self, client_code, data):
@@ -54,30 +49,45 @@ class Judger(object):
     def _check_identity(self):
         client_package = ClientOverview.objects.filter(client_code=self.client_code)
         if not client_package:
-            raise  # E02
+            logger.error('Response from the function of `judge._check_identity`, error_msg=%s, rel_err_msg=%s'
+                         % (UserIdentityError.message, 'No data in ClientOverview'), exc_info=True)
+            raise UserIdentityError  # E02
         client_package = client_package[0]
         self.client_id = client_package.client_id
         self.client_secret = client_package.client_secret
         self.des_key = client_package.des_key
 
     def _decrypt(self):
+
         try:
             json_data = Cryption.aes_base64_decrypt(self.origin_data, self.des_key)
             message = json.loads(json_data)
         except Exception as e:
-            raise  # E03
+            logger.error('Response from the function of `judge._decrypt`, error_msg=%s, rel_err_msg=%s'
+                         % (EncryptError.message, e.message), exc_info=True)
+            raise EncryptError  # E03
+
         self.apply_id = message.get('apply_id', None)
         self.target_features = message.get('res_keys', None)
         self.arguments = message.get('arguments', None)
+
+        if not self.apply_id:
+            logger.error('Response from the function of `judge._decrypt`, error_msg=%s, rel_err_msg=%s'
+                         % (GetApplyIdError.message, "Missing apply_id in the post_data"), exc_info=True)
+            raise GetApplyIdError  # E04
+
         self.arguments.update({
             'apply_id': self.apply_id
         })
-        if not self.apply_id:
-            raise  # E04
+
         if not self.target_features:
-            raise  # E05
+            logger.error('Response from the function of `judge._decrypt`, error_msg=%s, rel_err_msg=%s'
+                         % (GetResKeysError.message, "Missing res_keys in the post_data"), exc_info=True)
+            raise GetResKeysError  # E05
         if not self.arguments:
-            raise  # E06
+            logger.error('Response from the function of `judge._decrypt`, error_msg=%s, rel_err_msg=%s'
+                         % (GetArgumentsError.message, "Missing arguments in the post_data"), exc_info=True)
+            raise GetArgumentsError  # E06
 
     def _args_useful_check(self):
         """
@@ -109,7 +119,10 @@ class Judger(object):
                     }
                     self.ret_msg.append(temp_msg)
             else:
-                raise
+                logger.error('Response from the function of `judge._args_useful_check`, error_msg=%s, rel_err_msg=%s'
+                             % (ArgumentsAvailableError.message, "Arguments are not enough to get all res_keys"),
+                             exc_info=True)
+                raise ArgumentsAvailableError  # E07
 
     def work_stream(self):
         self._check_identity()

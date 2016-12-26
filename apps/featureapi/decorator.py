@@ -12,9 +12,6 @@ import logging
 from functools import wraps
 import json
 
-from django.conf import settings
-from django.http import QueryDict
-
 from vendor.utils.constant import cons
 from vendor.messages.response_code import ResponseCode
 from vendor.errors.api_errors import *
@@ -27,7 +24,6 @@ def post_data_check(view_func):
     """
         decorators for request
     """
-
     @wraps(view_func)
     def _wrapped_view_func(request, *args, **kwargs):
 
@@ -51,5 +47,4 @@ def post_data_check(view_func):
             logger.error('Response from the decorators of `post_data_check`, data=%s, unknow error, rel_err_msg=%s'
                          % (str(data), e.message), exc_info=True)
         return JSONResponse(data=data)
-
     return _wrapped_view_func
