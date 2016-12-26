@@ -20,18 +20,15 @@ def feature_post():
         'content': {
             'apply_id': 'test_apply_id',
             'res_keys': [
-                'x',
-                'y',
-                'z',
+                'is_tianwang_gray',
+                'is_tianwang_black',
+                'is_tianwang_multi_loan',
+                'is_tianyan_black',
             ],
             'arguments': {
-                'a': '1',
-                'b': '2',
-                'c': '3',
-                'd': '4',
-                'e': '5',
-                'f': '6',
-                'g': '7',
+                'id_card_code': '0',
+                'mobile': '1',
+                'email': '2',
             },
         },
     }

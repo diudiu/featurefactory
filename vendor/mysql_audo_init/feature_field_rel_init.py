@@ -47,6 +47,5 @@ def init_rule_base():
         )
         ffr.save()
 
-
 if __name__ == '__main__':
     init_rule_base()

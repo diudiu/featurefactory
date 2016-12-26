@@ -35,6 +35,13 @@ cons.COMMA = ','
 cons.SEMICOLON = ';'
 cons.BLANK = ' '
 
+cons.RESPONSE_REQUEST_STATUS = 'status'
+cons.RESPONSE_REQUEST_MESSAGE = 'message'
+cons.RESPONSE_REQUEST_RES_DATA = 'res_data'
+cons.RESPONSE_HANDLE_RESULT = 'result'
+cons.RESPONSE_HANDLE_MESSAGE = 'result_message'
+cons.RESPONSE_HANDLE_CONTENT = 'content'
+
 cons.PROTOCOL_HTTP = 'http'
 cons.PROTOCOL_HTTPS = 'https'
 cons.PROTOCOL_SYS_LOCAL = 'local'

@@ -11,6 +11,7 @@ import json
 
 from vendor.utils.encrypt import Cryption
 from apps.common.models import ClientOverview
+from apps.remote.models import FeatureFieldRel
 
 
 class Judger(object):
@@ -38,12 +39,14 @@ class Judger(object):
         self.des_key = ''
         self.origin_data = data
         self.cryption = Cryption()
-        self.appli_id = ''
+        self.apply_id = ''
         self.target_features = []
         self.arguments = {}
+        self.ret_msg = []
 
     def _check_sum(self):
-        if self.client_id and self.client_secret and self.des_key and self.target_features and self.arguments:
+        if self.client_id and self.client_secret and self.des_key and self.target_features and self.arguments \
+                and (len(self.target_features) == len(self.ret_msg)):
             return True
         else:
             return False
@@ -63,10 +66,13 @@ class Judger(object):
             message = json.loads(json_data)
         except Exception as e:
             raise  # E03
-        self.appli_id = message.get('apply_id', None)
+        self.apply_id = message.get('apply_id', None)
         self.target_features = message.get('res_keys', None)
         self.arguments = message.get('arguments', None)
-        if not self.appli_id:
+        self.arguments.update({
+            'apply_id': self.apply_id
+        })
+        if not self.apply_id:
             raise  # E04
         if not self.target_features:
             raise  # E05
@@ -78,13 +84,35 @@ class Judger(object):
         need sql which mapping the target features and arguments
         :return:
         """
-        pass
+
+        arg_msg_list = FeatureFieldRel.objects.filter(
+            feature_name__in=self.target_features,
+            is_delete=False,
+        )
+        for arg_msg in arg_msg_list:
+            if arg_msg.raw_field_name in self.arguments.keys():
+                if self.ret_msg and (arg_msg.feature_name == (self.ret_msg[-1])['target_field_name']):
+                    sub_msg = self.ret_msg[-1]
+
+                    if arg_msg.feature_name == sub_msg['target_field_name']:
+                        sub_msg['arguments'].update({
+                            arg_msg.raw_field_name: self.arguments[arg_msg.raw_field_name],
+                        })
+                        self.ret_msg[-1] = sub_msg
+                else:
+                    temp_msg = {
+                        'data_identity': arg_msg.data_identity,
+                        'target_field_name': arg_msg.feature_name,
+                        'arguments': {
+                            arg_msg.raw_field_name: self.arguments[arg_msg.raw_field_name],
+                        }
+                    }
+                    self.ret_msg.append(temp_msg)
+            else:
+                raise
 
     def work_stream(self):
         self._check_identity()
         self._decrypt()
         self._args_useful_check()
-        if self._check_sum():
-            pass
-        else:
-            pass
+        return self._check_sum()

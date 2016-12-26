@@ -12,10 +12,10 @@ import logging
 import json
 
 from apps.featureapi.response import JSONResponse
-# from django.http.response import HttpResponse
 from django.views.generic import View
 from braces.views import CsrfExemptMixin
 
+from apps.featureapi.decorator import post_data_check
 from apps.featureapi.judger import Judger
 from vendor.errors.api_errors import *
 
@@ -27,6 +27,8 @@ class FeatureExtract(CsrfExemptMixin, View):
     # def get(self, request):
     #     return HttpResponse("Feature Factory !!!!!")
 
+    # @装饰器验证一下request包完整性
+    @post_data_check
     def post(self, request):
 
         message = {}
@@ -40,14 +42,30 @@ class FeatureExtract(CsrfExemptMixin, View):
         judger = Judger(client_code=client_code, data=content)
 
         # TODO use judger's work stream
-        useful_data = judger.work_stream()
+        try:
+            index = judger.work_stream()
+            if index:
+                useful_args = judger.ret_msg
+                useful_common_data = {
+                    'client_id': judger.client_id,
+                    'client_secret': judger.client_secret,
+                    'des_key': judger.des_key,
+                }
+            else:
+                raise
 
-        # TODO packing the useful messages go to the next part of the syetem
+            # TODO packing the useful messages go to the next part of the syetem
+            print 'useful_args: '
+            print useful_args
+            print 'useful_common_data'
+            print useful_common_data
 
         # TODO except Exceptions and do somethings
-
+        except Exception as e:
+            pass
         # TODO finaly packing the response messages
+        finally:
+            pass
 
         # TODO return JSONResponse
-
         return JSONResponse(message)
