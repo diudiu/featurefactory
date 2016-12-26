@@ -15,7 +15,7 @@ from apps.common.models import ClientOverview
 from apps.remote.models import FeatureFieldRel
 from vendor.errors.api_errors import *
 
-logger = logging.getLogger('apps.openapi')
+logger = logging.getLogger('apps.featureapi')
 
 
 class Judger(object):

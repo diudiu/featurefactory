@@ -20,7 +20,7 @@ from apps.featureapi.judger import Judger
 from vendor.utils.constant import Constant as cons
 from vendor.errors.api_errors import *
 
-logger = logging.getLogger('apps.feature')
+logger = logging.getLogger('apps.featureapi')
 
 
 class FeatureExtract(CsrfExemptMixin, View):

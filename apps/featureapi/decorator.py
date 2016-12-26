@@ -17,7 +17,7 @@ from vendor.messages.response_code import ResponseCode
 from vendor.errors.api_errors import *
 from apps.featureapi.response import JSONResponse
 
-logger = logging.getLogger('apps.openapi')
+logger = logging.getLogger('apps.featureapi')
 
 
 def post_data_check(view_func):
