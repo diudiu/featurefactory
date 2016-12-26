@@ -33,7 +33,6 @@ class FeatureExtract(CsrfExemptMixin, View):
         if not request.body:
             raise
         post_data = json.loads(request.body)
-
         # get client code
         client_code = post_data.get('client_code')
         content = post_data.get('content')
