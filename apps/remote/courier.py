@@ -28,24 +28,23 @@ class Courier(object):
         self.original_base = None  # MongoDB data
         self.process_base = None  # MongoDB data
 
+    def _get_key_from_db(self, key):
+        value = '1'
+        return value
+
+    def _get_key_from_interface(self, key):
+        value = '1'
+        return value
+
     def get_keys(self):
         keys = [arg['target_field_name'] for arg in self.args]
         cache_data = {}
         fresh_data = {}
         for key in keys:
-            cache_value = self.get_key_from_db(key)
+            cache_value = self._get_key_from_db(key)
             if cache_value:
                 cache_data.update({key: cache_value})
             else:
-                fresh_value = self.get_key_from_interface(key)
+                fresh_value = self._get_key_from_interface(key)
                 fresh_data.update({key: fresh_value})
         return {'cache': cache_data, 'fresh': fresh_data}
-
-    def get_key_from_db(self, key):
-        value = '1'
-        return value
-
-    def get_key_from_interface(self, key):
-        value = '1'
-        return value
-
