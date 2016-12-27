@@ -54,12 +54,10 @@ class FeatureExtract(CsrfExemptMixin, View):
                 }
             else:
                 raise
-
+            logger.info('useful_args: %s ' % useful_args)
+            logger.info('useful_common_data: %s ' % useful_common_data)
             # TODO packing the useful messages go to the next part of the syetem
-            # print 'useful_args: '
-            # print useful_args
-            # print 'useful_common_data'
-            # print useful_common_data
+            # TODO args is useful_args and useful_common_data
             ret_data = {
                 'key1': 'value1',
                 'key2': 'value2',
