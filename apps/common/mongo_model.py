@@ -42,44 +42,22 @@ class BaseDynamicDocument(DynamicDocument):
         self.updated_time = datetime.now()
 
 
-class SubmitExceptionRecord(BaseDynamicDocument):
+class OriginalBase(BaseDynamicDocument):
     """
-        API submit data occur exception.
+        原始数据集合
     """
-    meta = {
-        'collection': 'submit_exception_record'
-    }
-
-
-class ApplyBase(BaseDynamicDocument):
-    """
-
-    """
-
     apply_id = StringField(max_length=64, help_text=u'申请唯一标识', unique=True)
-    proposer_id = StringField(max_length=64, help_text=u'申请人唯一标识')
-    name = StringField(max_length=64, help_text=u'申请姓名')
-    card_id = StringField(max_length=32, help_text=u'申请身份证')
-    product_code = StringField(max_length=32, help_text=u'产品编码')
-    product_version = StringField(max_length=32, help_text=u'产品版本号', null=True)
 
     meta = {
         'collection': 'apply_base'
     }
 
 
-class AuditBase(BaseDynamicDocument):
+class ProcessBase(BaseDynamicDocument):
     """
-
+        申请人维度集合(经过处理的原始数据)
     """
-
-    # apply_id = DictField(help_text=u'申请唯一标识', null=True)
-    # proposer_id = DictField(help_text=u'申请人唯一标识', null=True)
-    name = DictField(help_text=u'申请姓名', null=True)
-    card_id = DictField(help_text=u'申请身份证', null=True)
-    product_code = DictField(help_text=u'产品编码', null=True)
-    audit_status = DictField(help_text=u'申请信息审核状态', null=True)
-    audit_score = DictField(help_text=u'审核分数', null=True)
+    apply_id = StringField(max_length=64, help_text=u'申请唯一标识', unique=True)
 
     meta = {
         'collection': 'audit_base'
@@ -88,29 +66,10 @@ class AuditBase(BaseDynamicDocument):
 
 class PortraitBase(BaseDynamicDocument):
     """
-
+        缓存数据集合
     """
-    # apply_id = DictField(help_text=u'申请唯一标识', null=True)
-    # proposer_id = DictField(help_text=u'申请人唯一标识', null=True)
-    name = DictField(help_text=u'申请姓名', null=True)
-    card_id = DictField(help_text=u'申请身份证', null=True)
-    last_audit_status = DictField(help_text=u'上次申请信息审核状态', null=True)
+    apply_id = StringField(max_length=64, help_text=u'申请唯一标识', unique=True)
 
     meta = {
         'collection': 'portrait_base'
-    }
-
-
-class ConvertModel(Document):
-    """
-
-    """
-    convert_code = StringField(max_length=128, help_text=u'转换模型编码', unique=True)
-    convert_name = StringField(max_length=128, help_text=u'转换模型名称')
-    conf = DictField(help_text=u'转换配置', null=True)
-    created_on = DateTimeField(help_text=u'创建时间', null=True)
-    updated_on = DateTimeField(help_text=u'最后修改时间', null=True)
-
-    meta = {
-        'collection': 'convert_model_info'
     }
