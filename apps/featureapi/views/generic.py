@@ -17,6 +17,7 @@ from braces.views import CsrfExemptMixin
 
 from apps.featureapi.decorator import post_data_check
 from apps.featureapi.judger import Judger
+from apps.remote.dispatch import dispatch
 from vendor.utils.constant import cons
 from vendor.errors.api_errors import *
 
@@ -51,12 +52,15 @@ class FeatureExtract(CsrfExemptMixin, View):
                     'client_id': judger.client_id,
                     'client_secret': judger.client_secret,
                     'des_key': judger.des_key,
+                    'apply_id': judger.apply_id,
                 }
             else:
                 raise
             logger.info('useful_args: %s ' % useful_args)
             logger.info('useful_common_data: %s ' % useful_common_data)
             # TODO packing the useful messages go to the next part of the syetem
+            ret_data = dispatch(useful_common_data, useful_args)
+
             # TODO args is useful_args and useful_common_data
             ret_data = {
                 'key1': 'value1',
