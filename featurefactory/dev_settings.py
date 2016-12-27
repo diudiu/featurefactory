@@ -53,16 +53,11 @@ REDIS_CONFIG = {
 }
 
 # mongodb
-MONGODB_CONFIG = {
-    'default': {
-        'host': '192.168.1.198',
-        'port': 27017,
-        'username': '',
-        'password': '',
-        'db': 'featurefactory',
-        'connect': False,
-    }
-}
+MONGODB_HOST = '192.168.1.198'
+MONGODB_PORT = 27017
+MONGODB_NAME = 'feature_storage'
+MONGODB_USERNAME = ''
+MONGODB_PASSWORD = ''
 
 # logging
 log_path = os.path.join(BASE_DIR, 'logs')

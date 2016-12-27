@@ -3,7 +3,6 @@
     common models
 """
 from django.db import models
-from vendor.utils.constant import cons
 from apps.common.models import BaseModel
 
 

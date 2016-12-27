@@ -34,6 +34,11 @@ cons.ZERO = 0
 cons.COMMA = ','
 cons.SEMICOLON = ';'
 cons.BLANK = ' '
+cons.APPLY_ID = 'apply_id'
+cons.CLIENT_CODE = 'client_code'
+cons.CLIENT_ID = 'client_id'
+cons.CLIENT_SECRET = 'client_secret'
+cons.DES_KEY = 'des_key'
 
 cons.RESPONSE_REQUEST_STATUS = 'status'
 cons.RESPONSE_REQUEST_MESSAGE = 'message'

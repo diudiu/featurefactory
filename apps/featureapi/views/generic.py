@@ -38,8 +38,8 @@ class FeatureExtract(CsrfExemptMixin, View):
         }
         post_data = json.loads(request.body)
         # get client code
-        client_code = post_data.get('client_code')
-        content = post_data.get('content')
+        client_code = post_data.get(cons.CLIENT_CODE)
+        content = post_data.get(cons.RESPONSE_HANDLE_CONTENT)
 
         judger = Judger(client_code=client_code, data=content)
 
@@ -49,25 +49,26 @@ class FeatureExtract(CsrfExemptMixin, View):
             if index:
                 useful_args = judger.ret_msg
                 useful_common_data = {
-                    'client_id': judger.client_id,
-                    'client_secret': judger.client_secret,
-                    'des_key': judger.des_key,
-                    'apply_id': judger.apply_id,
+                    cons.CLIENT_ID: judger.client_id,
+                    cons.CLIENT_SECRET: judger.client_secret,
+                    cons.DES_KEY: judger.des_key,
+                    cons.APPLY_ID: judger.apply_id,
                 }
             else:
                 raise
-            logger.info('useful_args: %s ' % useful_args)
-            logger.info('useful_common_data: %s ' % useful_common_data)
-            # TODO packing the useful messages go to the next part of the syetem
-            ret_data = dispatch(useful_common_data, useful_args)
+            logger.info('useful_args: \n%s\nuseful_common_data: \n%s\n' % useful_args, useful_common_data)
 
             # TODO args is useful_args and useful_common_data
-            ret_data = {
-                'key1': 'value1',
-                'key2': 'value2',
-                'key3': 'value3',
-            }
+            # TODO packing the useful messages go to the next part of the syetem
+            temp_data = dispatch(useful_common_data, useful_args)
+
+            cache_data = temp_data['cache']
+            fresh_data = temp_data['fresh']
+
+            ret_data = fresh_data
+            ret_data.update(cache_data)
             data.update({
+                cons.APPLY_ID: useful_common_data[cons.APPLY_ID],
                 cons.RESPONSE_REQUEST_RES_DATA: ret_data,
             })
 
