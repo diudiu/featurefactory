@@ -56,10 +56,10 @@ class FeatureExtract(CsrfExemptMixin, View):
                 raise
 
             # TODO packing the useful messages go to the next part of the syetem
-            print 'useful_args: '
-            print useful_args
-            print 'useful_common_data'
-            print useful_common_data
+            # print 'useful_args: '
+            # print useful_args
+            # print 'useful_common_data'
+            # print useful_common_data
             ret_data = {
                 'key1': 'value1',
                 'key2': 'value2',
@@ -70,19 +70,8 @@ class FeatureExtract(CsrfExemptMixin, View):
             })
 
         # TODO except Exceptions and do somethings
-        except UserIdentityError as e:
-            data = {
-                cons.RESPONSE_REQUEST_STATUS: e.status,
-                cons.RESPONSE_REQUEST_MESSAGE: e.message,
-            }
-
-        except EncryptError as e:
-            data = {
-                cons.RESPONSE_REQUEST_STATUS: e.status,
-                cons.RESPONSE_REQUEST_MESSAGE: e.message,
-            }
-
-        except (GetApplyIdError, GetResKeysError, GetArgumentsError, ArgumentsAvailableError) as e:
+        except (UserIdentityError, EncryptError, GetApplyIdError,
+                GetResKeysError, GetArgumentsError, ArgumentsAvailableError) as e:
             data = {
                 cons.RESPONSE_REQUEST_STATUS: e.status,
                 cons.RESPONSE_REQUEST_MESSAGE: e.message,
