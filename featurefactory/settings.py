@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'apps.common',
     'apps.datasource',
     'apps.remote',
+    'apps.etl',
 )
 
 MIDDLEWARE_CLASSES = (

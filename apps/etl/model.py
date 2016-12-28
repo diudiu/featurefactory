@@ -11,7 +11,7 @@ class FeaturePrams(object):
     id = models.AutoField(u'主键', primary_key=True)
     feature_name = models.CharField(u'特征字段名', max_length=64)
     pram_field = models.CharField(u'特征计算参数', max_length=64)
-    interface_id = models.IntegerField(u'特征来源接口id')
+    interface_id = models.IntegerField(u'参数来源接口id')
 
     class Meta:
         db_table = 'fic_feature_prams_info'

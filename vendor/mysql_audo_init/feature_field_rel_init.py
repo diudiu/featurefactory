@@ -1,4 +1,13 @@
-# -*- coding: utf-8 -*-
+# -*- coding:utf-8 -*-
+"""
+    License SYPH-L.
+    Copyright (c) 2013- SYPH(Shaohan Niu), All Rights Reserved.
+    -----------------------------------------------------------
+    Author: S.JunPeng
+    Date:  2016/12/26
+    Change Activity:
+
+"""
 
 import os
 import sys
@@ -14,10 +23,7 @@ django.setup()
 from apps.remote.models import FeatureFieldRel
 
 
-def load_rule_base_from_xls(file_path):
-    # id = models.AutoField(u'主键', primary_key=True)
-    # feature_name = models.CharField(u'特征字段名', max_length=64)
-    # raw_field_name = models.CharField(u'参数字段名', max_length=64)
+def load_feature_field_from_xls(file_path):
     rule_base_list = []
 
     xls = xlrd.open_workbook(file_path)
@@ -36,8 +42,8 @@ def load_rule_base_from_xls(file_path):
     return rule_base_list
 
 
-def init_rule_base():
-    all_rule_base = load_rule_base_from_xls('feature_field_rel.xlsx')
+def init_feature_field():
+    all_rule_base = load_feature_field_from_xls('feature_field_rel.xlsx')
     for rule_base in all_rule_base:
         ffr = FeatureFieldRel(
             id=rule_base['id'],
@@ -48,4 +54,4 @@ def init_rule_base():
         ffr.save()
 
 if __name__ == '__main__':
-    init_rule_base()
+    init_feature_field()

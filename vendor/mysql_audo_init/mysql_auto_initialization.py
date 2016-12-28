@@ -1,4 +1,13 @@
-# -*- coding: utf-8 -*-
+# -*- coding:utf-8 -*-
+"""
+    License SYPH-L.
+    Copyright (c) 2013- SYPH(Shaohan Niu), All Rights Reserved.
+    -----------------------------------------------------------
+    Author: S.JunPeng
+    Date:  2016/12/26
+    Change Activity:
+
+"""
 
 import os
 import sys
@@ -11,10 +20,6 @@ from apps.common.models import ClientOverview
 
 
 def client_overview_msg():
-    # client_code = models.CharField(u'', max_length=128)
-    # client_id = models.CharField(u'', max_length=128)
-    # client_secret = models.CharField(u'', max_length=256)
-    # res_key = models.CharField(u'', max_length=128)
     messages = [
         {
             'client_code': 'lp_test',
