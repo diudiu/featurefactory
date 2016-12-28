@@ -27,6 +27,7 @@ class ResponseCode(object):
         REQUEST_TYPE_ERROR:             u"请求方式错误, 请求数据应为JSON  请求方式应为HTTP-POST",
         USERS_IDENTIFICATION_ERROR:     u"用户身份不合法 client_code 错误或不存在",
         INCOME_ENCRYPT_ERROR:           u"数据解密错误, 传入参数加密错误",
+        ARGUMENTS_UNAVAILABLE:          u'传入参数不足以获取所有目标特征, 请检查参数列表',
         MISSING_APPLY_ID:               u"传入数据内容缺失 apply_id",
         MISSING_RES_KEYS:               u"传入数据内容缺失 res_keys",
         MISSING_ARGUMENTS:              u"传入数据内容缺失 arguments",

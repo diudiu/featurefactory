@@ -11,13 +11,20 @@ from apps.remote.courier import Courier
 
 
 def dispatch(useful_common_data, useful_args):
+    """
+    Save the original data and calculate the features
+    :param useful_common_data:dict
+    :param useful_args:dict
+    :return:dict
+    """
 
     courier = Courier(useful_common_data, useful_args)
 
     # TODO step 1: get data
-    ret_data = courier.get_keys()
+    temp_data = courier.get_keys()
     # TODO step 2: save original data
-
+    cache_data = temp_data['cache']
+    fresh_data = temp_data['fresh']
     # TODO step 3: dispose the original data
 
     # TODO step 4: save the process data

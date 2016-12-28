@@ -60,13 +60,7 @@ class FeatureExtract(CsrfExemptMixin, View):
 
             # TODO args is useful_args and useful_common_data
             # TODO packing the useful messages go to the next part of the syetem
-            temp_data = dispatch(useful_common_data, useful_args)
-
-            cache_data = temp_data['cache']
-            fresh_data = temp_data['fresh']
-
-            ret_data = fresh_data
-            ret_data.update(cache_data)
+            ret_data = dispatch(useful_common_data, useful_args)
             data.update({
                 cons.APPLY_ID: useful_common_data[cons.APPLY_ID],
                 cons.RESPONSE_REQUEST_RES_DATA: ret_data,
