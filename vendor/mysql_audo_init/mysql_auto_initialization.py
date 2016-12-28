@@ -44,6 +44,3 @@ def add_client_overview():
                 des_key=msg['des_key']
             )
             cov.save()
-
-if __name__ == '__main__':
-    add_client_overview()

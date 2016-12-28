@@ -19,7 +19,7 @@ def feature_post():
     data = {
         'client_code': 'lp_test',
         'content': {
-            'apply_id': 'test_apply_id',
+            'apply_id': '',
             'res_keys': [
                 'is_tianwang_gray',
                 'is_tianwang_black',

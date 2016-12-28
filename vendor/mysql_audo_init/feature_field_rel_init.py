@@ -52,6 +52,3 @@ def init_feature_field():
             data_identity=rule_base['data_identity'],
         )
         ffr.save()
-
-if __name__ == '__main__':
-    init_feature_field()
