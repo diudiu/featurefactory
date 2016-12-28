@@ -16,9 +16,9 @@ from vendor.mysql_audo_init.interface_info_init import init_interface_info
 from vendor.mysql_audo_init.feature_prams_init import init_feature_prams
 
 if __name__ == '__main__':
-    # add_client_overview()
-    # init_data_source()
-    # init_feature_field()
-    # init_interface_info()
-    # init_feature_prams()
+    add_client_overview()
+    init_data_source()
+    init_feature_field()
+    init_interface_info()
+    init_feature_prams()
     pass

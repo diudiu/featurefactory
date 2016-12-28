@@ -21,11 +21,9 @@ import django
 django.setup()
 
 from apps.etl.models import FeaturePrams
+from apps.datasource.models import DsInterfaceInfo
 
-# id = models.AutoField(u'主键', primary_key=True)
-# feature_name = models.CharField(u'特征字段名', max_length=64)
-# pram_field = models.CharField(u'特征计算参数', max_length=64)
-# interface_id = models.IntegerField(u'参数来源接口id')
+
 def load_feature_prams_from_xls(file_path):
     feature_prams_list = []
 
@@ -39,7 +37,7 @@ def load_feature_prams_from_xls(file_path):
             'id': int(row[0]),
             'feature_name': row[1],
             'pram_field': row[2],
-            'interface_id': int(row[3]),
+            'interface': DsInterfaceInfo.objects.filter(id=int(row[3]))[0],
         }
         feature_prams_list.append(rule_base_info)
     return feature_prams_list
@@ -52,6 +50,6 @@ def init_feature_prams():
             id=feature_prams['id'],
             feature_name=feature_prams['feature_name'],
             pram_field=feature_prams['pram_field'],
-            interface_id=feature_prams['interface_id'],
+            interface=feature_prams['interface'],
         )
         fp.save()

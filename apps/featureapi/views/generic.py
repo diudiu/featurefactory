@@ -56,7 +56,7 @@ class FeatureExtract(CsrfExemptMixin, View):
                 }
             else:
                 raise
-            logger.info('useful_args: \n%s\nuseful_common_data: \n%s\n' % useful_args, useful_common_data)
+            # logger.info('useful_args: \n%s\nuseful_common_data: \n%s\n' % useful_args, useful_common_data)
 
             # TODO args is useful_args and useful_common_data
             # TODO packing the useful messages go to the next part of the syetem

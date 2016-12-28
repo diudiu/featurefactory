@@ -9,6 +9,7 @@
 """
 from vendor.utils.encrypt import Cryption
 from apps.datasource.models import DataSourceInfo, DsInterfaceInfo
+from apps.etl.models import FeaturePrams
 
 
 class Courier(object):
@@ -29,12 +30,18 @@ class Courier(object):
         self.args = args
         self.original_base = None  # MongoDB data
         self.process_base = None  # MongoDB data
+        self.base_data_list = None
 
     def _load_config(self):
-        api_conf = DsInterfaceInfo.objects.filter(
-
+        self.interface_list = FeaturePrams.objects.filter(
+            feature_name__in=self.keys,
+            is_delete=False
         )
-        data_source = DataSourceInfo.objects.filter()
+        if self.base_data_list.count() > 0:
+            for base_data in self.interface_list.iterator():
+                pass
+        else:
+            raise  # E 查不到数据
 
     def _build_prams(self):
         prams = {}
@@ -53,13 +60,10 @@ class Courier(object):
 
     def get_keys(self):
         self.keys = [arg['target_field_name'] for arg in self.args]
+        self._load_config()
         cache_data = {}
         fresh_data = {}
-        for key in self.keys:
-            cache_value = self._get_key_from_cache(key)
-            if cache_value:
-                cache_data.update({key: cache_value})
-            else:
-                fresh_value = self._get_key_from_interface(key)
-                fresh_data.update({key: fresh_value})
+        # TODO 这堆接口按个先查一遍
+        for api_conf in self.api_conf_list.iterator():
+            pass
         return {'cache': cache_data, 'fresh': fresh_data}
