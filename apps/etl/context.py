@@ -3,10 +3,12 @@
 import logging
 import datetime
 
-from .backend import MongodbBackend
-from apps.common.mongo_model import OriginalBase, ProcessBase, CacheBase
+from apps.common.mongo_handle import MongoBase
 
 logger = logging.getLogger('apps.etl')
+ORIGINAL_BASE_NAME = 'original_base'
+PROCESS_BASE_NAME = 'process_base'
+CACHE_BASE_NAME = 'cache_base'
 
 
 class BaseContext(object):
@@ -41,25 +43,21 @@ class OriginalContext(BaseContext):
     """
 
     def __init__(self, apply_id, **kwargs):
-
         super(OriginalContext, self).__init__(apply_id, **kwargs)
-        self.original_model = OriginalBase
-        if not self.kwargs:
-            filters = dict(apply_id=self.apply_id, limit_start=0, limit_end=1)
-            original_info = MongodbBackend(self.original_model, **filters).load(only_one=True)
-            if original_info:
-                self.kwargs.update(original_info)
+        self.original_base = MongoBase(collection_name=ORIGINAL_BASE_NAME)
+        self.cache_base = MongoBase(collection_name=CACHE_BASE_NAME)
 
     def save(self):
         """save kwargs to backend"""
-        apply_info = MongodbBackend(self.original_model, apply_id=self.apply_id).load(only_one=True, obj=True)
-        if apply_info:
-            apply_info.update(**self.kwargs)
+        query = {'apply_id': self.apply_id}
+        original_info = self.original_base.search(query=query)
+        self.kwargs.update(query)
+        if original_info:
+            self.original_base.update(query=query, data=self.kwargs)
+            self.cache_base.save(self.kwargs)
         else:
-            backend = MongodbBackend(self.original_model, **self.kwargs)
-            backend.save()
-
-        return self.apply_id
+            self.original_base.save(self.kwargs)
+            self.cache_base.save(self.kwargs)
 
 
 class ProcessContext(BaseContext):
@@ -76,23 +74,6 @@ class ProcessContext(BaseContext):
     def __init__(self, apply_id, **kwargs):
 
         super(ProcessContext, self).__init__(apply_id, **kwargs)
-        self.process_model = ProcessBase
-        if not self.kwargs:
-            filters = dict(apply_id=self.apply_id, limit_start=0, limit_end=1)
-            process_info = MongodbBackend(self.process_model, **filters).load(only_one=True)
-            if process_info:
-                self.kwargs.update(process_info)
-
-    def save(self):
-        """save kwargs to backend"""
-        process_info = MongodbBackend(self.process_model, apply_id=self.apply_id).load(only_one=True, obj=True)
-        if process_info:
-            process_info.update(**self.kwargs)
-        else:
-            backend = MongodbBackend(self.process_model, **self.kwargs)
-            backend.save()
-
-        return self.apply_id
 
 
 class CacheContext(BaseContext):
@@ -108,21 +89,22 @@ class CacheContext(BaseContext):
 
     def __init__(self, apply_id, **kwargs):
         super(CacheContext, self).__init__(apply_id, **kwargs)
-        self.cache_model = CacheBase
-        if not self.kwargs:
-            filters = dict(apply_id=self.apply_id, limit_start=0, limit_end=1)
-            cache_info = MongodbBackend(self.cache_model, **filters).load(only_one=True)
-            if cache_info:
-                self.kwargs.update(cache_info)
+        self.cache_base = MongoBase(collection_name=CACHE_BASE_NAME)
 
     def save(self):
-        """update kwargs for portrait to backend"""
-        cache_info = MongodbBackend(self.cache_model, apply_id=self.apply_id).load(only_one=True, obj=True)
+        """save kwargs to backend"""
+        query = {'apply_id': self.apply_id}
+        cache_info = self.cache_base.search(query=query)
+        self.kwargs.update(query)
         if cache_info:
-            cache_info.update(**self.kwargs)
+            self.cache_base.update(query=query, data=self.kwargs)
         else:
-            backend = MongodbBackend(self.cache_model, **self.kwargs)
-            backend.save()
+            self.cache_base.save(self.kwargs)
 
-        return self.apply_id
-
+    def get(self, key):
+        """get value for key"""
+        data = self.cache_base.search(query={'apply_id': self.apply_id})
+        if data:
+            return data.get(key)
+        else:
+            return None

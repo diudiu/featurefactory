@@ -20,14 +20,8 @@ def dispatch(useful_common_data, useful_args):
 
     courier = Courier(useful_common_data, useful_args)
 
-    # TODO step 1: get data
+    # TODO step 1: get and save original data
     temp_data = courier.get_data_by_keys()
-    # TODO step 2: save original data
-    cache_data = temp_data['cache']
-    fresh_data = temp_data['fresh']
-    # TODO step 3: dispose the original data
-
-    # TODO step 4: save the process data
-
-    # TODO step 5: return the useful data
-    return {}
+    # TODO step 3: dispose and save the process data used original data
+    
+    return temp_data

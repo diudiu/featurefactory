@@ -27,8 +27,8 @@ def feature_post():
                 'is_tianyan_black',
             ],
             'arguments': {
-                'id_card_code': '0',
-                'mobile': '1',
+                'card_id': '130202199108101234',
+                'mobile': '13873275214',
                 'email': '2',
             },
         },
