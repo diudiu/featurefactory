@@ -5,11 +5,10 @@
 from django.conf import settings
 from django.utils.timezone import datetime
 
-from mongoengine import connect, DynamicDocument, Document
-from mongoengine import StringField, DictField, DateTimeField, ListField, FloatField
+from mongoengine import connect, DynamicDocument, StringField, DateTimeField
 
-__author__ = "Shaohan Niu"
-__datetime__ = "2016/1/31"
+__author__ = "S.Junpeng"
+__datetime__ = "2016/12/28"
 
 # Mongodb config
 MONGODB_HOST = getattr(settings, 'MONGODB_HOST', '')
@@ -49,7 +48,7 @@ class OriginalBase(BaseDynamicDocument):
     apply_id = StringField(max_length=64, help_text=u'申请唯一标识', unique=True)
 
     meta = {
-        'collection': 'apply_base'
+        'collection': 'original_base'
     }
 
 
@@ -60,16 +59,16 @@ class ProcessBase(BaseDynamicDocument):
     apply_id = StringField(max_length=64, help_text=u'申请唯一标识', unique=True)
 
     meta = {
-        'collection': 'audit_base'
+        'collection': 'process_base'
     }
 
 
-class PortraitBase(BaseDynamicDocument):
+class CacheBase(BaseDynamicDocument):
     """
         缓存数据集合
     """
     apply_id = StringField(max_length=64, help_text=u'申请唯一标识', unique=True)
 
     meta = {
-        'collection': 'portrait_base'
+        'collection': 'cache_base'
     }
