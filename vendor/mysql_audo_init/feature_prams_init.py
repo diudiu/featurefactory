@@ -36,8 +36,8 @@ def load_feature_prams_from_xls(file_path):
         rule_base_info = {
             'id': int(row[0]),
             'feature_name': row[1],
-            'pram_field': row[2],
-            'interface': DsInterfaceInfo.objects.filter(id=int(row[3]))[0],
+            'process_type': row[2],
+            'data_identity': row[3],
         }
         feature_prams_list.append(rule_base_info)
     return feature_prams_list
@@ -49,7 +49,7 @@ def init_feature_prams():
         fp = FeaturePrams(
             id=feature_prams['id'],
             feature_name=feature_prams['feature_name'],
-            pram_field=feature_prams['pram_field'],
-            interface=feature_prams['interface'],
+            process_type=feature_prams['process_type'],
+            data_identity=feature_prams['data_identity'],
         )
         fp.save()

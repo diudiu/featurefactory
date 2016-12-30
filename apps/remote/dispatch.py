@@ -7,7 +7,9 @@
     Date:  2016/12/26
     Change Activity:
 """
+
 from apps.remote.courier import Courier
+from apps.etl.fabrication import fabricate
 
 
 def dispatch(useful_common_data, useful_args):
@@ -23,5 +25,5 @@ def dispatch(useful_common_data, useful_args):
     # TODO step 1: get and save original data
     temp_data = courier.get_data_by_keys()
     # TODO step 3: dispose and save the process data used original data
-    
-    return temp_data
+    res_data = fabricate(temp_data, useful_args)
+    return res_data

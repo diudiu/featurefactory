@@ -1,7 +1,6 @@
 # -*- coding:utf-8 -*-
 
 import logging
-import datetime
 from bson import ObjectId
 
 from apps.common.mongo_handle import MongoBase
