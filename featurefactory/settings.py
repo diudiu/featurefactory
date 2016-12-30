@@ -24,7 +24,7 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -38,6 +38,10 @@ INSTALLED_APPS = (
     # 'django.contrib.staticfiles',
 
     'apps.featureapi',
+    'apps.common',
+    'apps.datasource',
+    'apps.remote',
+    'apps.etl',
 )
 
 MIDDLEWARE_CLASSES = (
