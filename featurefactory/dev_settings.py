@@ -47,10 +47,11 @@ REDIS_CONFIG = {
         'host': '192.168.1.198',
         'port': 6379,
         'password': 'syph@dev',
-        'db': 0,
+        'db': 7,
         'connect_timeout': 1,
     }
 }
+
 
 # mongodb
 MONGODB_HOST = '192.168.1.198'

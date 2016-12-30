@@ -30,8 +30,7 @@ class MongoBase(object):
             'create_time': datetime.now(),
             'update_time': datetime.now(),
         })
-        self.coll.insert_one(data)
-        return True
+        return self.coll.insert_one(data)
 
     def update(self, key=None, query=None, data=None):
         if query is None:

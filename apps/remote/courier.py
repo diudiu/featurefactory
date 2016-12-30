@@ -31,7 +31,7 @@ class Courier(object):
         self.cryption = Cryption()
         self.data_identity_list = []
         self.interface_conf = None
-        self.args = args
+        self.args = {arg['data_identity']: arg['arguments'] for arg in args}
         self.original_base = OriginalContext(self.apply_id)  # MongoDB data
         self.cache_base = CacheContext(self.apply_id)  # MongoDB data
 
@@ -46,7 +46,6 @@ class Courier(object):
         return value
 
     def _get_data_from_interface(self, interface, prams):
-        fresh_data = {}
         url = interface.data_source.backend_url + interface.route
         access_token = None
         if interface.is_need_token:
@@ -100,33 +99,35 @@ class Courier(object):
         return result
 
     def get_data_by_keys(self):
-        self.data_identity_list = [arg['data_identity'] for arg in self.args]
+        self.data_identity_list = self.args.keys()
         cache_data = {}
         fresh_data = {}
         for i in range(len(self.data_identity_list)):
             data = self.cache_base.get(self.data_identity_list[i])
             if data:
                 cache_data.update({
-                    self.data_identity_list[i]: data
+                    self.data_identity_list[i]: data[self.data_identity_list[i]]
                 })
                 self.data_identity_list[i] = 0
             else:
                 continue
         self.data_identity_list = list(set(self.data_identity_list))
-        self.data_identity_list.remove(0)
+        if 0 in self.data_identity_list:
+            self.data_identity_list.remove(0)
         self._load_config()
-        index = 0
         if not self.interface_conf and self.data_identity_list:
             raise
         if self.interface_conf:
             for interface in self.interface_conf.iterator():
-                prams = self.args[index].get('arguments', None)
+                prams = self.args[interface.data_identity]
                 if not prams:
                     pass
                 data = self._get_data_from_interface(interface, prams)
                 if data:
                     fresh_data.update(data)
-                index += 1
+                    self.cache_base.kwargs.update(data)
+                    self.cache_base.data_identity = data.keys()[0]
+                self.cache_base.save()
             self.original_base.save()
 
         fresh_data.update(cache_data)
