@@ -73,8 +73,18 @@ class ProcessContext(BaseContext):
     """
 
     def __init__(self, apply_id, **kwargs):
-
         super(ProcessContext, self).__init__(apply_id, **kwargs)
+        self.process_base = MongoBase(collection_name=PROCESS_BASE_NAME)
+
+    def save(self):
+        """save kwargs to backend"""
+        query = {'apply_id': self.apply_id}
+        original_info = self.process_base.search(query=query)
+        self.kwargs.update(query)
+        if original_info:
+            self.process_base.update(query=query, data=self.kwargs)
+        else:
+            self.process_base.save(self.kwargs)
 
 
 class CacheContext(BaseContext):

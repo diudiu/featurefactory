@@ -16,7 +16,7 @@ class Machine(object):
 
     def __init__(self, key=None, data=None):
         self.key = key
-        self.data = data.get('content', None)
+        self.content = data.get('content', None)
         self.data_identity = data.get('data_identity', None)
         self.result = data.get('result', None)
 
@@ -32,7 +32,7 @@ class DoNothingMachine(Machine):
     def dispose_data(self):
         # 判断返回result码决定结果的 (黑名单系列)
         func = import_string('studio.do_nothing.judge_with_result.Handle')
-        obj = func(self.data)
+        obj = func(self)
         res = obj.handle()
         return res
 

@@ -9,7 +9,8 @@
 """
 
 from apps.remote.courier import Courier
-from apps.etl.fabrication import fabricate
+from apps.etl.fabrication import Fabricate
+from vendor.utils.constant import cons
 
 
 def dispatch(useful_common_data, useful_args):
@@ -25,5 +26,11 @@ def dispatch(useful_common_data, useful_args):
     # TODO step 1: get and save original data
     temp_data = courier.get_data_by_keys()
     # TODO step 3: dispose and save the process data used original data
-    res_data = fabricate(temp_data, useful_args)
+    apply_id = useful_common_data[cons.APPLY_ID]
+    fabrica = Fabricate(temp_data, useful_args, apply_id)
+    res_data = fabrica.fabricate()
+    if fabrica.process_data_2_storage():
+        # TODO log " save in db "
+        pass
+
     return res_data
