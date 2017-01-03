@@ -20,6 +20,12 @@ class Factory(object):
         if son_type == 'direct':
             return DoNothingFactory(key, self.data)
 
+        elif son_type == 'single_calculate':
+            return SingleOriginFactory(key, self.data)
+
+        elif son_type == 'combo_calculate':
+            return ComboOriginFactory(key, self.data)
+
 
 # 一类工厂(什么也不干)
 class DoNothingFactory(Factory):

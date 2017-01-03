@@ -8,7 +8,7 @@
 
 """
 from studio import do_nothing
-import imp
+from django.utils.module_loading import import_string
 
 
 # 抽象处理方法
@@ -31,9 +31,10 @@ class DoNothingMachine(Machine):
 
     def dispose_data(self):
         # 判断返回result码决定结果的 (黑名单系列)
-        func = imp.load_module('studio.do_nothing.judge_with_result')
-        func = __import__('studio.do_nothing.judge_with_result')
-        value = func(self.data)
+        func = import_string('studio.do_nothing.judge_with_result.Handle')
+        obj = func(self.data)
+        res = obj.handle()
+        return res
 
 
 # 二类机械(处理的数据来自一个数据源)

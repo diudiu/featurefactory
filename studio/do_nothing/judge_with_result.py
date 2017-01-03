@@ -9,8 +9,10 @@
 """
 
 
-def handle(result_value):
-    if result_value == '00':
-        return True
-    else:
-        return False
+class Handle(object):
+
+    def __init__(self, data):
+        self.data = data
+
+    def handle(self):
+        print self.data
