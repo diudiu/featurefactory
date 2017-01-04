@@ -13,6 +13,7 @@ import json
 
 from apps.featureapi.response import JSONResponse
 from django.views.generic import View
+from django.http.response import HttpResponse
 from braces.views import CsrfExemptMixin
 
 from apps.featureapi.decorator import post_data_check
@@ -26,8 +27,9 @@ logger = logging.getLogger('apps.featureapi')
 
 class FeatureExtract(CsrfExemptMixin, View):
 
-    # def get(self, request):
-    #     return HttpResponse("Feature Factory !!!!!")
+    @staticmethod
+    def get(self, request):
+        return HttpResponse("Feature Factory !!!!!")
 
     # @装饰器验证一下request包完整性
     @post_data_check
@@ -43,23 +45,21 @@ class FeatureExtract(CsrfExemptMixin, View):
 
         judger = Judger(client_code=client_code, data=content)
 
-        # TODO use judger's work stream
+        # use judger's work stream
         try:
             index = judger.work_stream()
-            if index:
-                useful_args = judger.ret_msg
-                useful_common_data = {
-                    cons.CLIENT_ID: judger.client_id,
-                    cons.CLIENT_SECRET: judger.client_secret,
-                    cons.DES_KEY: judger.des_key,
-                    cons.APPLY_ID: judger.apply_id,
-                }
-            else:
-                raise
-            # logger.info('useful_args: \n%s\nuseful_common_data: \n%s\n' % useful_args, useful_common_data)
+            if not index:
+                raise ServerBusy
+            useful_args = judger.ret_msg
+            useful_common_data = {
+                cons.CLIENT_ID: judger.client_id,
+                cons.CLIENT_SECRET: judger.client_secret,
+                cons.DES_KEY: judger.des_key,
+                cons.APPLY_ID: judger.apply_id,
+            }
 
-            # TODO args is useful_args and useful_common_data
-            # TODO packing the useful messages go to the next part of the syetem
+            # args is useful_args and useful_common_data
+            # packing the useful messages go to the next part of the syetem
             ret_data = dispatch(useful_common_data, useful_args)
             data.update({
                 cons.APPLY_ID: useful_common_data[cons.APPLY_ID],

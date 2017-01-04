@@ -13,7 +13,6 @@ from functools import wraps
 import json
 
 from vendor.utils.constant import cons
-from vendor.messages.response_code import ResponseCode
 from vendor.errors.api_errors import *
 from apps.featureapi.response import JSONResponse
 

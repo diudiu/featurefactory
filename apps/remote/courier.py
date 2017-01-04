@@ -7,6 +7,7 @@
     Date:  2016/12/26
     Change Activity:
 """
+import logging
 import json
 import requests
 from django.utils.timezone import datetime
@@ -14,6 +15,8 @@ from django.utils.timezone import datetime
 from apps.etl.context import OriginalContext, CacheContext
 from vendor.utils.encrypt import Cryption
 from apps.datasource.models import DsInterfaceInfo
+
+logger = logging.getLogger('apps.remote')
 
 
 class Courier(object):
@@ -36,14 +39,14 @@ class Courier(object):
         self.cache_base = CacheContext(self.apply_id)  # MongoDB data
 
     def _load_config(self):
-        self.interface_conf = DsInterfaceInfo.objects.filter(
-            data_identity__in=self.data_identity_list,
-            is_delete=False
-        )
-
-    def _get_data_from_cache(self, key):
-        value = '1'
-        return value
+        try:
+            self.interface_conf = DsInterfaceInfo.objects.filter(
+                data_identity__in=self.data_identity_list,
+                is_delete=False
+            )
+        except Exception as e:
+            logger.error(e)
+            raise  # TODO mysql db error
 
     def _get_data_from_interface(self, interface, prams):
         url = interface.data_source.backend_url + interface.route
@@ -55,6 +58,7 @@ class Courier(object):
                 client_secret=self.client_secret,
             )
             res = self.do_request(token_url, token_data)
+            # TODO no access_token error
             access_token = res['access_token'].encode('utf-8')
         common_data = eval(interface.common_data)
         data_prams = eval(interface.must_data % prams)
@@ -65,7 +69,7 @@ class Courier(object):
         data_prams.update(common_data)
         origin_data = self.do_request(url, data_prams)
         if not origin_data:
-            raise
+            raise  # TODO get data error
         self.original_base.kwargs.update({
             common_data['data_identity']: {
                 'origin_data': origin_data,
