@@ -42,9 +42,8 @@ class Fabricate(object):
             machine = factory.machine
             # value = machine
             value = machine.dispose_data()
-            self.ret_value.update({
-                feature_pram.feature_name: value
-            })
+            self.ret_value.update(value)
+        self.process_data_2_storage()
         return self.ret_value
 
     def process_data_2_storage(self):

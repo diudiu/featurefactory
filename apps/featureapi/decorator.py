@@ -12,7 +12,7 @@ import logging
 from functools import wraps
 import json
 
-from vendor.utils import constant as cons
+from vendor.utils.constant import cons
 from vendor.errors.api_errors import *
 from apps.featureapi.response import JSONResponse
 

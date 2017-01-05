@@ -36,7 +36,9 @@ def feature_post():
     data.update({'content': req_data})
     post_data = json.dumps(data, encoding="UTF-8", ensure_ascii=False)
     response = requests.post(url, headers=headers, data=post_data)
-    print response.content
+    content = json.loads(response.content)
+    content['res_data'] = json.loads(Cryption.aes_base64_decrypt(content['res_data'], des_key))
+    print content
 
 if __name__ == '__main__':
     feature_post()

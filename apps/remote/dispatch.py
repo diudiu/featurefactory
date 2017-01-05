@@ -11,7 +11,7 @@ import logging
 
 from apps.remote.courier import Courier
 from apps.etl.fabrication import Fabricate
-from vendor.utils import constant as cons
+from vendor.utils.constant import cons
 
 logger = logging.getLogger('apps.remote')
 
@@ -32,8 +32,4 @@ def dispatch(useful_common_data, useful_args):
     apply_id = useful_common_data[cons.APPLY_ID]
     fabrica = Fabricate(temp_data, useful_args, apply_id)
     res_data = fabrica.fabricate()
-    if fabrica.process_data_2_storage():
-        logger.info('put the process data in the db')
-        pass
-
     return res_data

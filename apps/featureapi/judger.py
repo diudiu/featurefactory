@@ -57,6 +57,11 @@ class Judger(object):
         self.client_secret = client_package.client_secret
         self.des_key = client_package.des_key
 
+    def encrypt(self, data):
+        json_data = json.dumps(data)
+        des_data = Cryption.aes_base64_encrypt(json_data, self.des_key)
+        return des_data
+
     def _decrypt(self):
 
         try:
@@ -76,10 +81,6 @@ class Judger(object):
                          % (GetApplyIdError.message, "Missing apply_id in the post_data"), exc_info=True)
             raise GetApplyIdError  # E04
 
-        self.arguments.update({
-            'apply_id': self.apply_id
-        })
-
         if not self.target_features:
             logger.error('Response from the function of `judge._decrypt`, error_msg=%s, rel_err_msg=%s'
                          % (GetResKeysError.message, "Missing res_keys in the post_data"), exc_info=True)
@@ -88,6 +89,10 @@ class Judger(object):
             logger.error('Response from the function of `judge._decrypt`, error_msg=%s, rel_err_msg=%s'
                          % (GetArgumentsError.message, "Missing arguments in the post_data"), exc_info=True)
             raise GetArgumentsError  # E06
+
+        self.arguments.update({
+            'apply_id': self.apply_id
+        })
 
     def _args_useful_check(self):
         """
