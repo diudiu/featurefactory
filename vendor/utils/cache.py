@@ -11,8 +11,9 @@
 import redis
 
 from featurefactory.settings import REDIS_CONFIG
+from vendor.utils import constant as cons
 
-CACHE_TIMEOUT = 86400
+CACHE_TIMEOUT = cons.CACHE_TIMEOUT
 
 
 class RedisX(object):

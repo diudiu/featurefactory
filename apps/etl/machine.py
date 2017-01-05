@@ -7,8 +7,11 @@
     Change Activity:
 
 """
-from studio import do_nothing
+import logging
+
 from django.utils.module_loading import import_string
+
+logger = logging.getLogger('apps.etl')
 
 
 # 抽象处理方法

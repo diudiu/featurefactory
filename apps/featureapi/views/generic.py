@@ -19,7 +19,7 @@ from braces.views import CsrfExemptMixin
 from apps.featureapi.decorator import post_data_check
 from apps.featureapi.judger import Judger
 from apps.remote.dispatch import dispatch
-from vendor.utils.constant import cons
+from vendor.utils import constant as cons
 from vendor.errors.api_errors import *
 
 logger = logging.getLogger('apps.featureapi')

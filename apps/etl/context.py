@@ -1,5 +1,12 @@
 # -*- coding:utf-8 -*-
-
+"""
+    License SYPH-L.
+    Copyright (c) 2013- SYPH, All Rights Reserved.
+    -----------------------------------------------------------
+    Author: S.JunPeng
+    Date:  2016/12/26
+    Change Activity:
+"""
 import logging
 from bson import ObjectId
 
@@ -7,6 +14,7 @@ from apps.common.mongo_handle import MongoBase
 from vendor.utils.cache import RedisX
 
 logger = logging.getLogger('apps.etl')
+
 ORIGINAL_BASE_NAME = 'original_base'
 PROCESS_BASE_NAME = 'process_base'
 CACHE_BASE_NAME = 'cache_base'

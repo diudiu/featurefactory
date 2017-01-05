@@ -1,15 +1,19 @@
 # -*- coding:utf-8 -*-
 """
     License SYPH-L.
-    Copyright (c) 2013- SYPH(Shaohan Niu), All Rights Reserved.
+    Copyright (c) 2013- SYPH, All Rights Reserved.
     -----------------------------------------------------------
     Author: S.JunPeng
     Date:  2016/12/26
     Change Activity:
 """
+import logging
+
 from apps.etl.models import FeatureProcessInfo
 from apps.etl.context import ProcessContext
 from apps.etl.factory import *
+
+logger = logging.getLogger('apps.etl')
 
 
 class Fabricate(object):

@@ -4,7 +4,7 @@
 """
 from django.db import models
 
-from vendor.utils.constant import cons
+from vendor.utils import constant as cons
 from apps.common.models import BaseModel
 
 

@@ -7,7 +7,10 @@
     Change Activity:
 
 """
-from apps.etl.machine import Machine, DoNothingMachine, SingleOriginMachine, ComboOriginMachine
+import logging
+from apps.etl.machine import DoNothingMachine, SingleOriginMachine, ComboOriginMachine
+
+logger = logging.getLogger('apps.etl')
 
 
 # 抽象工厂
