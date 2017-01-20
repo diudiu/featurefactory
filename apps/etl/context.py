@@ -18,6 +18,7 @@ logger = logging.getLogger('apps.etl')
 ORIGINAL_BASE_NAME = 'original_base'
 PROCESS_BASE_NAME = 'process_base'
 CACHE_BASE_NAME = 'cache_base'
+APPLY_BASE_NAME = 'apply_base'
 
 
 class BaseContext(object):
@@ -38,6 +39,26 @@ class BaseContext(object):
     def data(self):
         """return all attribute for apply info dict"""
         return self.kwargs
+
+
+class ApplyContext(BaseContext):
+    """
+    这是一个储存受信人输入的Mongo集合
+    以受信人为文档标识
+    每一组数据包含:
+        受信人输入的基本数据
+    储存模式:永久
+    """
+
+    def __init__(self, apply_id, **kwargs):
+        super(ApplyContext, self).__init__(apply_id, **kwargs)
+        self.apply_base = MongoBase(collection_name=APPLY_BASE_NAME)
+        # self.cache_base = MongoBase(collection_name=CACHE_BASE_NAME)
+
+    def load(self):
+        query = {'apply_id': self.apply_id}
+        data = self.apply_base.search(query)
+        return data
 
 
 class OriginalContext(BaseContext):

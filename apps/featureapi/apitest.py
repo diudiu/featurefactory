@@ -24,11 +24,6 @@ def feature_post():
                 'is_tianwang_multi_loan',
                 'is_tianyan_black',
             ],
-            'arguments': {
-                'card_id': '130202199108101234',
-                'mobile': '13873275214',
-                'email': '2',
-            },
         },
     }
     json_data = json.dumps(data['content'], encoding="UTF-8", ensure_ascii=False)
