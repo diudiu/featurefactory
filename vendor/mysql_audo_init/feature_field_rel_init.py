@@ -45,10 +45,20 @@ def load_feature_field_from_xls(file_path):
 def init_feature_field():
     all_rule_base = load_feature_field_from_xls('feature_field_rel.xlsx')
     for rule_base in all_rule_base:
-        ffr = FeatureFieldRel(
-            id=rule_base['id'],
-            feature_name=rule_base['feature_name'],
-            raw_field_name=rule_base['raw_field_name'],
-            data_identity=rule_base['data_identity'],
-        )
-        ffr.save()
+        if FeatureFieldRel.objects.filter(
+                feature_name=rule_base['feature_name'],
+                raw_field_name=rule_base['raw_field_name'],
+                data_identity=rule_base['data_identity'],
+        ).count() > 0:
+            continue
+        else:
+            ffr = FeatureFieldRel(
+                id=rule_base['id'],
+                feature_name=rule_base['feature_name'],
+                raw_field_name=rule_base['raw_field_name'],
+                data_identity=rule_base['data_identity'],
+            )
+            ffr.save()
+
+if __name__ == '__main__':
+    init_feature_field()

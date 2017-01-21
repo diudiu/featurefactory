@@ -1,14 +1,24 @@
 # -*- coding:utf-8 -*-
-
+"""
+    License SYPH-L.
+    Copyright (c) 2013- SYPH, All Rights Reserved.
+    -----------------------------------------------------------
+    Author: S.JunPeng
+    Date:  2016/12/26
+    Change Activity:
+"""
 import logging
-import datetime
+from bson import ObjectId
 
 from apps.common.mongo_handle import MongoBase
+from vendor.utils.cache import RedisX
 
 logger = logging.getLogger('apps.etl')
+
 ORIGINAL_BASE_NAME = 'original_base'
 PROCESS_BASE_NAME = 'process_base'
 CACHE_BASE_NAME = 'cache_base'
+APPLY_BASE_NAME = 'apply_base'
 
 
 class BaseContext(object):
@@ -29,6 +39,26 @@ class BaseContext(object):
     def data(self):
         """return all attribute for apply info dict"""
         return self.kwargs
+
+
+class ApplyContext(BaseContext):
+    """
+    这是一个储存受信人输入的Mongo集合
+    以受信人为文档标识
+    每一组数据包含:
+        受信人输入的基本数据
+    储存模式:永久
+    """
+
+    def __init__(self, apply_id, **kwargs):
+        super(ApplyContext, self).__init__(apply_id, **kwargs)
+        self.apply_base = MongoBase(collection_name=APPLY_BASE_NAME)
+        # self.cache_base = MongoBase(collection_name=CACHE_BASE_NAME)
+
+    def load(self):
+        query = {'apply_id': self.apply_id}
+        data = self.apply_base.search(query)
+        return data
 
 
 class OriginalContext(BaseContext):
@@ -54,10 +84,10 @@ class OriginalContext(BaseContext):
         self.kwargs.update(query)
         if original_info:
             self.original_base.update(query=query, data=self.kwargs)
-            self.cache_base.save(self.kwargs)
+            # self.cache_base.save(self.kwargs)
         else:
             self.original_base.save(self.kwargs)
-            self.cache_base.save(self.kwargs)
+            # self.cache_base.save(self.kwargs)
 
 
 class ProcessContext(BaseContext):
@@ -72,8 +102,18 @@ class ProcessContext(BaseContext):
     """
 
     def __init__(self, apply_id, **kwargs):
-
         super(ProcessContext, self).__init__(apply_id, **kwargs)
+        self.process_base = MongoBase(collection_name=PROCESS_BASE_NAME)
+
+    def save(self):
+        """save kwargs to backend"""
+        query = {'apply_id': self.apply_id}
+        original_info = self.process_base.search(query=query)
+        self.kwargs.update(query)
+        if original_info:
+            self.process_base.update(query=query, data=self.kwargs)
+        else:
+            self.process_base.save(self.kwargs)
 
 
 class CacheContext(BaseContext):
@@ -89,22 +129,26 @@ class CacheContext(BaseContext):
 
     def __init__(self, apply_id, **kwargs):
         super(CacheContext, self).__init__(apply_id, **kwargs)
+        self.data_identity = ''
+        self.red = RedisX()
         self.cache_base = MongoBase(collection_name=CACHE_BASE_NAME)
 
     def save(self):
         """save kwargs to backend"""
-        query = {'apply_id': self.apply_id}
-        cache_info = self.cache_base.search(query=query)
-        self.kwargs.update(query)
-        if cache_info:
-            self.cache_base.update(query=query, data=self.kwargs)
-        else:
-            self.cache_base.save(self.kwargs)
+        insert_id = self.cache_base.save(self.kwargs)
+        self.kwargs = {}
+        o_id = insert_id.inserted_id
+        key = self.apply_id + ':' + self.data_identity
+        if not self.red.set(key, o_id):
+            raise
 
     def get(self, key):
         """get value for key"""
-        data = self.cache_base.search(query={'apply_id': self.apply_id})
-        if data:
-            return data.get(key)
+        redis_key = self.apply_id + ':' + key
+        o_id = self.red.get(redis_key)
+        if o_id:
+            query = {'_id': ObjectId(o_id)}
+            ret = self.cache_base.search(query)
+            return ret
         else:
             return None

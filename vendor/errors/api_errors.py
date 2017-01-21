@@ -45,3 +45,8 @@ class GetArgumentsError(ServerError):
 class ArgumentsAvailableError(ServerError):
     status = ResponseCode.ARGUMENTS_UNAVAILABLE
     message = ResponseCode.message(status)
+
+
+class ServerBusy(ServerError):
+    status = ResponseCode.SERVER_BUSY
+    message = ResponseCode.message(status)

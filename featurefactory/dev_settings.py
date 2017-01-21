@@ -47,10 +47,11 @@ REDIS_CONFIG = {
         'host': '192.168.1.198',
         'port': 6379,
         'password': 'syph@dev',
-        'db': 0,
+        'db': 7,
         'connect_timeout': 1,
     }
 }
+
 
 # mongodb
 MONGODB_HOST = '192.168.1.198'
@@ -123,7 +124,14 @@ LOGGING = {
             'maxBytes': 1024 * 1024 * 20,
             'backupCount': 200,
         },
-
+        'etl': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'formatter': 'verbose',
+            'filename': os.path.join(log_path, 'apps.etl.out'),
+            'maxBytes': 1024 * 1024 * 20,
+            'backupCount': 200,
+        },
     },
     'loggers': {
         'django': {
@@ -131,8 +139,13 @@ LOGGING = {
             'level': 'INFO',
             'propagate': False,
         },
+        'error': {
+            'handlers': ['error', 'console'],
+            'level': 'INFO',
+            'propagate': False,
+        },
         'apps.featureapi': {
-            'handlers': ['common', 'console'],
+            'handlers': ['featureapi', 'console'],
             'level': 'INFO',
             'propagate': False,
         },
@@ -142,12 +155,17 @@ LOGGING = {
             'propagate': False,
         },
         'apps.datasource': {
-            'handlers': ['common', 'console'],
+            'handlers': ['datasource', 'console'],
             'level': 'INFO',
             'propagate': False,
         },
         'apps.remote': {
-            'handlers': ['common', 'console'],
+            'handlers': ['remote', 'console'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'apps.etl': {
+            'handlers': ['etl', 'console'],
             'level': 'INFO',
             'propagate': False,
         },

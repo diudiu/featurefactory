@@ -55,19 +55,25 @@ def load_interface_info_from_xls(file_path):
 def init_interface_info():
     interface_base_list = load_interface_info_from_xls('interface_info.xlsx')
     for interface_base in interface_base_list:
-        dsi = DsInterfaceInfo(
-            id=interface_base['id'],
-            name=interface_base['name'],
-            data_identity=interface_base['data_identity'],
-            data_source=interface_base['data_source'],
-            route=interface_base['route'],
-            method=interface_base['method'],
-            comment=interface_base['comment'],
-            common_data=interface_base['common_data'],
-            must_data=interface_base['must_data'],
-            is_need_token=interface_base['is_need_token'],
-            is_need_encrypt=interface_base['is_need_encrypt'],
-            is_async=interface_base['is_async'],
-            encrypt_type=interface_base['encrypt_type'],
-        )
-        dsi.save()
+        if DsInterfaceInfo.objects.filter(data_identity=interface_base['data_identity']).count() > 0:
+            continue
+        else:
+            dsi = DsInterfaceInfo(
+                id=interface_base['id'],
+                name=interface_base['name'],
+                data_identity=interface_base['data_identity'],
+                data_source=interface_base['data_source'],
+                route=interface_base['route'],
+                method=interface_base['method'],
+                comment=interface_base['comment'],
+                common_data=interface_base['common_data'],
+                must_data=interface_base['must_data'],
+                is_need_token=interface_base['is_need_token'],
+                is_need_encrypt=interface_base['is_need_encrypt'],
+                is_async=interface_base['is_async'],
+                encrypt_type=interface_base['encrypt_type'],
+            )
+            dsi.save()
+
+if __name__ == '__main__':
+    init_interface_info()
