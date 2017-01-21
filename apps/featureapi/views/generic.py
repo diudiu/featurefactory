@@ -48,33 +48,13 @@ class FeatureExtract(CsrfExemptMixin, View):
             # TODO 这里调用分发器->客户端分发器  返回一个数据对象
             base_data = client_dispatch(client_code, content)
             # TODO 这里调用一个原始数据收集分发器  再次返回一个数据对象
-            data_get_dispatch(base_data)
+            original_data_list = data_get_dispatch(base_data)
             # TODO 这里调用一个特征处理分发器  依然返回一个数据对象
-            process_dispatch()
+            if not process_dispatch(original_data_list):
+                raise
+
+            # TODO 这里有按要求取特征逻辑, 计算结束的特征全部存在mongo里面  而且已经准备就绪  取出来返回
             # TODO 未来这里讲调用异步任务流
-
-        # judger = Judger(client_code=client_code, data=content)
-
-        # use judger's work stream
-        # try:
-        #     index = judger.work_stream()
-        #     if not index:
-        #         raise ServerBusy
-        #     useful_args = judger.ret_msg
-        #     useful_common_data = {
-        #         cons.CLIENT_ID: judger.client_id,
-        #         cons.CLIENT_SECRET: judger.client_secret,
-        #         cons.DES_KEY: judger.des_key,
-        #         cons.APPLY_ID: judger.apply_id,
-        #     }
-        #     # args is useful_args and useful_common_data
-        #     # packing the useful messages go to the next part of the syetem
-        #     ret_data = dispatch(useful_common_data, useful_args)
-        #     res_data = judger.encrypt(ret_data)
-        #     data.update({
-        #         cons.APPLY_ID: useful_common_data[cons.APPLY_ID],
-        #         cons.RESPONSE_REQUEST_RES_DATA: res_data,
-        #     })
 
         # TODO except Exceptions and do somethings
         except (UserIdentityError, EncryptError, GetApplyIdError,

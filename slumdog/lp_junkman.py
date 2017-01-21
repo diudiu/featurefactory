@@ -10,6 +10,7 @@
 import logging
 import json
 import requests
+import time
 from django.utils.timezone import datetime
 
 from apps.etl.context import OriginalContext, CacheContext
@@ -33,7 +34,7 @@ class Courier(object):
         self.cache_base = CacheContext(self.apply_id)  # MongoDB data
 
     def work_stream(self):
-        pass
+        return self.get_data_by_keys()
 
     def get_data_by_keys(self):
         cache_data = {}
@@ -50,7 +51,7 @@ class Courier(object):
         self.data_identity_list = list(set(self.data_identity_list))
         if 0 in self.data_identity_list:
             self.data_identity_list.remove(0)
-        if not self.interface_conf or self.data_identity_list:
+        if not self.interface_conf or not self.data_identity_list:
             raise
         for interface in self.interface_conf.iterator():
             prams = self.args[interface.data_identity]
@@ -67,40 +68,24 @@ class Courier(object):
         fresh_data.update(cache_data)
         return fresh_data
 
-    # def _get_data_from_interface(self, interface, prams):
-    #     url = interface.data_source.backend_url + interface.route
-    #     data_prams = eval(interface.must_data % prams)
-    #     origin_data = self.do_request(url, data_prams)
-    #     if not origin_data:
-    #         raise  # TODO get data error
-    #     self.original_base.kwargs.update({
-    #         common_data['data_identity']: {
-    #             'origin_data': origin_data,
-    #             'prams': prams,
-    #         }
-    #     })
-    #     return {common_data['data_identity']: origin_data}
-    #
-    # def do_request(self, url, data):
-    #     json_data = json.dumps(data, encoding="UTF-8", ensure_ascii=False)
-    #     req_data = Cryption.aes_base64_encrypt(json_data, self.des_key)
-    #     data_bag = {
-    #         "req_data": req_data,
-    #         "client": self.client_id
-    #     }
-    #     post_data = json.dumps(
-    #         data_bag,
-    #         encoding="UTF-8",
-    #         ensure_ascii=False
-    #     )
-    #     response = requests.post(url, post_data)
-    #     content = response.content
-    #     content = json.loads(content)
-    #     result = None
-    #     if content.get('res_data', None):
-    #         content['res_data'] = Cryption.aes_base64_decrypt(content['res_data'], self.des_key)
-    #         result = json.loads(content['res_data'])
-    #         result.update({
-    #             'create_time': datetime.now()
-    #         })
-    #     return result
+    def _get_data_from_interface(self, interface, prams):
+        url = interface.data_source.backend_url + interface.route
+        data_prams = eval(interface.must_data % prams)
+        origin_data = self.do_request(url, data_prams)
+        if not origin_data:
+            raise  # TODO get data error
+        self.original_base.kwargs.update({
+            interface.data_identity: {
+                'origin_data': origin_data,
+                'prams': prams,
+            }
+        })
+        return {interface.data_identity: origin_data}
+
+    def do_request(self, url, data):
+        # json_data = json.dumps(data, encoding="UTF-8", ensure_ascii=False)
+        # response = requests.post(url, json_data)
+        # content = response.content
+        # content = json.loads(content)
+        result = {'time': time.ctime(time.time())}
+        return result

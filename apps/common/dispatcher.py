@@ -11,8 +11,8 @@
 from django.utils.module_loading import import_string
 
 from apps.common.models import ClientOverview
-from apps.datasource.models import DataSourceInfo
 from apps.datasource.models import DsInterfaceInfo
+from apps.etl.models import FeatureProcessInfo
 
 
 def client_dispatch(client_code, content):
@@ -60,6 +60,8 @@ def data_get_dispatch(base_data):
     """
     apply_id = base_data.get('apply_id', None)
     useful_args = base_data.get('useful_args', None)
+    base_data_list = []
+
     if not apply_id or not useful_args:
         raise
     data_identity_list = [data['data_identity'] for data in useful_args]
@@ -79,10 +81,11 @@ def data_get_dispatch(base_data):
         base_data = junkman.work_stream()
         if not base_data:
             raise
-        return base_data
+        base_data_list.append(base_data)
+    return base_data_list
 
 
-def process_dispatch():
+def process_dispatch(original_data_list):
     """
     特征处理分发器
     根据传入上面两个数据对象确定每一个特征的处理逻辑路径
@@ -91,4 +94,18 @@ def process_dispatch():
     特征返回
     :return:
     """
-    pass
+    for original_data in original_data_list:
+        di_list = original_data.keys()
+        studio_conf = FeatureProcessInfo.objects.filter(
+            data_identity__in=di_list,
+            is_delete=False
+        )
+        for studio_data in studio_conf.iterator():
+            data_identity = studio_data.data_identity
+            obj_string = studio_data.process_type
+            obj = import_string(obj_string)
+            handler = obj(original_data.get(data_identity, None))
+            ret = handler.handle()
+        # TODO ret中是处理出来的特征 这一层循环结束 储存一下子
+
+    return True
