@@ -39,13 +39,13 @@ class Judger(object):
         self.target_features = []
         self.arguments = {}
         self.ret_msg = []
-    #
-    # def _check_sum(self):
-    #     if self.client_id and self.client_secret and self.des_key and self.target_features and self.arguments \
-    #             and (len(self.target_features) == len(self.ret_msg)):
-    #         return True
-    #     else:
-    #         return False
+
+    def _check_sum(self):
+        if self.client_id and self.client_secret and self.des_key and self.target_features and self.arguments \
+                and (len(self.target_features) == len(self.ret_msg)):
+            return True
+        else:
+            return False
 
     def _check_identity(self):
         client_package = ClientOverview.objects.filter(client_code=self.client_code)
@@ -133,3 +133,4 @@ class Judger(object):
         self._check_identity()
         self._decrypt()
         self._args_useful_check()
+        return self._check_sum()

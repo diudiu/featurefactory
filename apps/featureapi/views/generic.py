@@ -46,9 +46,9 @@ class FeatureExtract(CsrfExemptMixin, View):
 
         try:
             # TODO 这里调用分发器->客户端分发器  返回一个数据对象
-            client_dispatch(client_code, content)
+            base_data = client_dispatch(client_code, content)
             # TODO 这里调用一个原始数据收集分发器  再次返回一个数据对象
-            data_get_dispatch()
+            data_get_dispatch(base_data)
             # TODO 这里调用一个特征处理分发器  依然返回一个数据对象
             process_dispatch()
             # TODO 未来这里讲调用异步任务流

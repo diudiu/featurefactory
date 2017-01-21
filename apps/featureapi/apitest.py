@@ -19,18 +19,18 @@ def feature_post():
         'content': {
             'apply_id': 'test_apply_id',
             'res_keys': [
-                'is_tianwang_gray',
-                'is_tianwang_black',
-                'is_tianwang_multi_loan',
-                'is_tianyan_black',
+                'is_netsky_gray',
+                'is_netsky_black',
+                'is_netsky_longloan',
+                'is_skyeye_black',
             ],
         },
     }
     json_data = json.dumps(data['content'], encoding="UTF-8", ensure_ascii=False)
-    req_data = Cryption.aes_base64_encrypt(json_data, des_key)
-    data.update({'content': req_data})
-    post_data = json.dumps(data, encoding="UTF-8", ensure_ascii=False)
-    response = requests.post(url, headers=headers, data=post_data)
+    # req_data = Cryption.aes_base64_encrypt(json_data, des_key)
+    # data.update({'content': req_data})
+    # post_data = json.dumps(data, encoding="UTF-8", ensure_ascii=False)
+    response = requests.post(url, headers=headers, data=json.dumps(data))
     content = json.loads(response.content)
     content['res_data'] = json.loads(Cryption.aes_base64_decrypt(content['res_data'], des_key))
     print content
