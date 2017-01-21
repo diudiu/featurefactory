@@ -94,6 +94,7 @@ def process_dispatch(original_data_list):
     特征返回
     :return:
     """
+    ret_data = {}
     for original_data in original_data_list:
         di_list = original_data.keys()
         studio_conf = FeatureProcessInfo.objects.filter(
@@ -106,6 +107,6 @@ def process_dispatch(original_data_list):
             obj = import_string(obj_string)
             handler = obj(original_data.get(data_identity, None))
             ret = handler.handle()
+            ret_data.update(ret)
         # TODO ret中是处理出来的特征 这一层循环结束 储存一下子
-
-    return True
+    return ret_data

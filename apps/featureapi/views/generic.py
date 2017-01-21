@@ -50,12 +50,12 @@ class FeatureExtract(CsrfExemptMixin, View):
             # TODO 这里调用一个原始数据收集分发器  再次返回一个数据对象
             original_data_list = data_get_dispatch(base_data)
             # TODO 这里调用一个特征处理分发器  依然返回一个数据对象
-            if not process_dispatch(original_data_list):
+            ret_data = process_dispatch(original_data_list)
+            if not ret_data:
                 raise
-
+            data.update({'res_data': ret_data})
             # TODO 这里有按要求取特征逻辑, 计算结束的特征全部存在mongo里面  而且已经准备就绪  取出来返回
             # TODO 未来这里讲调用异步任务流
-
         # TODO except Exceptions and do somethings
         except (UserIdentityError, EncryptError, GetApplyIdError,
                 GetResKeysError, GetArgumentsError, ArgumentsAvailableError) as e:
