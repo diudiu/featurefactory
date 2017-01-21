@@ -23,9 +23,7 @@ def dispatch(useful_common_data, useful_args):
     :param useful_args:dict
     :return:dict
     """
-
     courier = Courier(useful_common_data, useful_args)
-
     # TODO step 1: get and save original data
     temp_data = courier.get_data_by_keys()
     # TODO step 3: dispose and save the process data used original data
