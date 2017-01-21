@@ -51,7 +51,7 @@ class Courier(object):
         self.data_identity_list = list(set(self.data_identity_list))
         if 0 in self.data_identity_list:
             self.data_identity_list.remove(0)
-        if not self.interface_conf or not self.data_identity_list:
+        if not self.interface_conf and self.data_identity_list:
             raise
         for interface in self.interface_conf.iterator():
             prams = self.args[interface.data_identity]

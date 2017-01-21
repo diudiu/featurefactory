@@ -25,7 +25,6 @@ def post_data_check(view_func):
     """
     @wraps(view_func)
     def _wrapped_view_func(request, *args, **kwargs):
-
         try:
             request_json = request.request.body
             request_data = json.loads(request_json)
