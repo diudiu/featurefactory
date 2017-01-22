@@ -3,7 +3,7 @@
 import requests
 import json
 
-from vendor.utils.encrypt import Cryption
+# from vendor.utils.encrypt import Cryption
 
 headers = {
     "Content-type": "application/json; charset=utf-8",
@@ -12,8 +12,8 @@ des_key = 'yyyyyyuuuuoooooo'
 
 
 def feature_post():
-    url = 'http://127.0.0.1:9999/feature/extract/'
-    # url = 'http://192.168.1.196:9008/feature/extract/'
+    url = 'http://127.0.0.1:8070/feature/extract/'
+    # url = 'http://192.168.1.196:8070/feature/extract/'
     data = {
         'client_code': 'lp_test',
         'content': {
@@ -32,7 +32,7 @@ def feature_post():
     # post_data = json.dumps(data, encoding="UTF-8", ensure_ascii=False)
     response = requests.post(url, headers=headers, data=json.dumps(data))
     content = json.loads(response.content)
-    content['res_data'] = json.loads(Cryption.aes_base64_decrypt(content['res_data'], des_key))
+    # content['res_data'] = json.loads(Cryption.aes_base64_decrypt(content['res_data'], des_key))
     print content
 
 if __name__ == '__main__':
