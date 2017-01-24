@@ -15,11 +15,10 @@ from braces.views import CsrfExemptMixin
 from django.http.response import HttpResponse
 from django.views.generic import View
 
+from apps.async.tasks import audit_task
+from apps.common.dispatcher import client_dispatch
 from apps.featureapi.decorator import post_data_check
 from apps.featureapi.response import JSONResponse
-from apps.common.dispatcher import client_dispatch
-from apps.common.dispatcher import data_get_dispatch
-from apps.common.dispatcher import process_dispatch
 from vendor.errors.api_errors import *
 from vendor.utils.constant import cons
 
@@ -47,18 +46,21 @@ class FeatureExtract(CsrfExemptMixin, View):
         try:
             # TODO 这里调用分发器->客户端分发器  返回一个数据对象
             base_data = client_dispatch(client_code, content)
+
+            audit_task.apply_async((base_data, ), retry=True,
+                                   queue='re_task_audit', routing_key='re_task_audit')
             # TODO 这里调用一个原始数据收集分发器  再次返回一个数据对象
-            original_data_list = data_get_dispatch(base_data)
+            # original_data_list = data_get_dispatch(base_data)
             # TODO 这里调用一个特征处理分发器  依然返回一个数据对象
-            ret_data = process_dispatch(original_data_list)
-            if not ret_data:
-                raise
-            data.update({'res_data': ret_data})
+            # ret_data = process_dispatch(original_data_list)
+            # if not ret_data:
+            #     raise
+            # data.update({'res_data': ret_data})
             # TODO 这里有按要求取特征逻辑, 计算结束的特征全部存在mongo里面  而且已经准备就绪  取出来返回
             # TODO 未来这里讲调用异步任务流
         # TODO except Exceptions and do somethings
-        except (UserIdentityError, EncryptError, GetApplyIdError,
-                GetResKeysError, GetArgumentsError, ArgumentsAvailableError) as e:
+        except (UserIdentityError, EncryptError, GetApplyIdError, GetResKeysError,
+                GetArgumentsError, ArgumentsAvailableError) as e:
             data = {
                 cons.RESPONSE_REQUEST_STATUS: e.status,
                 cons.RESPONSE_REQUEST_MESSAGE: e.message,

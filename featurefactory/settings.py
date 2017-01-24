@@ -35,6 +35,7 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'djcelery',
     # 'django.contrib.staticfiles',
 
     'apps.featureapi',
@@ -42,6 +43,7 @@ INSTALLED_APPS = (
     'apps.datasource',
     'apps.remote',
     'apps.etl',
+    'apps.async',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -105,3 +107,5 @@ USE_TZ = False
 
 from .dev_settings import *
 # from .prod_settings import *
+
+from celery_config import *

@@ -12,7 +12,7 @@ des_key = 'yyyyyyuuuuoooooo'
 
 
 def feature_post():
-    url = 'http://127.0.0.1:8070/feature/extract/'
+    url = 'http://127.0.0.1:9999/feature/extract/'
     # url = 'http://192.168.1.196:8070/feature/extract/'
     data = {
         'client_code': 'lp_test',

@@ -13,12 +13,13 @@ from vendor.mysql_audo_init.mysql_auto_initialization import add_client_overview
 from vendor.mysql_audo_init.data_source_info_init import init_data_source
 from vendor.mysql_audo_init.feature_field_rel_init import init_feature_field
 from vendor.mysql_audo_init.interface_info_init import init_interface_info
-from vendor.mysql_audo_init.feature_prams_init import init_feature_prams
 
-if __name__ == '__main__':
+def run():
     add_client_overview()
     init_data_source()
     init_feature_field()
     init_interface_info()
-    init_feature_prams()
-    pass
+
+
+if __name__ == '__main__':
+    run()
