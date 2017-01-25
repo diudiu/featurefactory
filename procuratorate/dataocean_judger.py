@@ -5,7 +5,6 @@
     Author: S.JunPeng
     Date:  2016/12/22
     Change Activity:
-
 """
 import logging
 import json
@@ -64,7 +63,6 @@ class Judger(object):
         return des_data
 
     def _decrypt(self):
-
         try:
             json_data = Cryption.aes_base64_decrypt(self.origin_data, self.des_key)
             message = json.loads(json_data)

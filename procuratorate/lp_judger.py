@@ -29,6 +29,7 @@ class Judger(object):
     def __init__(self, content):
         self.content = content
         self.apply_id = ''
+        self.callback_url = ''
         self.feature_list = []
         self.arguments = {}
         self.ret_msg = []
@@ -43,6 +44,7 @@ class Judger(object):
 
     def _fill_attributes(self):
         self.apply_id = self.content.get('apply_id', None)
+        self.callback_url = self.content.get('callback', None)
         self.feature_list = self.content.get('res_keys', None)
         apply_base = ApplyContext(self.apply_id)
         self.arguments = apply_base.load()
