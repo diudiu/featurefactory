@@ -6,11 +6,6 @@
 
 
 class Constant(object):
-    class ConstantError(TypeError):
-        pass
-
-    class ConstantCaseError(ConstantError):
-        pass
 
     def __setattr__(self, name, value):
         if name in self.__dict__:
@@ -28,6 +23,8 @@ class Constant(object):
             return None
 
 cons = Constant()
+
+CACHE_TIMEOUT = 86400
 
 cons.STR_EMPTY = ''
 cons.ZERO = 0
@@ -62,5 +59,14 @@ cons.CALL_DATA_SOURCE_TYPE = [
     (cons.CALL_DATA_SOURCE_REMOTE, u'远程接口调用'),
     (cons.CALL_DATA_SOURCE_BUSINESS, u'本地调用')
 ]
+
+cons.HTTP_GET = 'GET'                                              # http GET
+cons.HTTP_POST = 'POST'                                            # http POST
+cons.LOCAL_REQUEST = 'LOCAL'
+cons.HTTP_METHOD = (
+    (cons.HTTP_GET, cons.HTTP_GET),
+    (cons.HTTP_POST, cons.HTTP_POST),
+    (cons.LOCAL_REQUEST, cons.LOCAL_REQUEST),
+)
 
 

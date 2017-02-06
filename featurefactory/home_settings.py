@@ -19,9 +19,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'featurefactory',
-        'PASSWORD': '123456',
-        'USER': 'dev',
-        'HOST': '192.168.1.198',
+        'PASSWORD': 'root',
+        'USER': 'root',
+        'HOST': '192.168.232.128',
         'PORT': '3306',
     },
 }
@@ -29,9 +29,9 @@ if 'test' in sys.argv:
     DATABASES['default'] = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'featurefactory',
-        'PASSWORD': '123456',
+        'PASSWORD': 'root',
         'USER': 'root',
-        'HOST': '192.168.1.198',
+        'HOST': '192.168.232.128',
         'PORT': '3306',
         'TEST': {
             'CHARSET': 'utf8',
@@ -44,17 +44,17 @@ if 'test' in sys.argv:
 # redis
 REDIS_CONFIG = {
     'default': {
-        'host': '192.168.1.198',
+        'host': '192.168.232.128',
         'port': 6379,
-        'password': 'syph@dev',
-        'db': 7,
+        'password': '123456',
+        'db': 0,
         'connect_timeout': 1,
     }
 }
 
 
 # mongodb
-MONGODB_HOST = '192.168.1.198'
+MONGODB_HOST = '192.168.232.128'
 MONGODB_PORT = 27017
 MONGODB_NAME = 'feature_storage'
 MONGODB_USERNAME = ''

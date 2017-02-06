@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 """
     License SYPH-L.
-    Copyright (c) 2013- SYPH(Shaohan Niu), All Rights Reserved.
+    Copyright (c) 2013- SYPH, All Rights Reserved.
     -----------------------------------------------------------
     Author: S.JunPeng
     Date:  2016/12/26
@@ -13,7 +13,6 @@ from functools import wraps
 import json
 
 from vendor.utils.constant import cons
-from vendor.messages.response_code import ResponseCode
 from vendor.errors.api_errors import *
 from apps.featureapi.response import JSONResponse
 
@@ -26,7 +25,6 @@ def post_data_check(view_func):
     """
     @wraps(view_func)
     def _wrapped_view_func(request, *args, **kwargs):
-
         try:
             request_json = request.request.body
             request_data = json.loads(request_json)

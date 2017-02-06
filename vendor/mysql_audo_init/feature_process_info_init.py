@@ -20,11 +20,11 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'featurefactory.settings')
 import django
 django.setup()
 
-from apps.remote.models import FeatureFieldRel
+from apps.etl.models import FeatureProcessInfo
 
 
 def load_feature_field_from_xls(file_path):
-    rule_base_list = []
+    process_base_list = []
 
     xls = xlrd.open_workbook(file_path)
     sheet1 = xls.sheets()[0]
@@ -32,33 +32,33 @@ def load_feature_field_from_xls(file_path):
         if row_num == 0:
             continue
         row = sheet1.row_values(row_num)
-        rule_base_info = {
+        process_base_info = {
             'id': int(row[0]),
             'feature_name': row[1],
-            'raw_field_name': row[2],
+            'process_type': row[2],
             'data_identity': row[3],
         }
-        rule_base_list.append(rule_base_info)
-    return rule_base_list
+        process_base_list.append(process_base_info)
+    return process_base_list
 
 
 def init_feature_field():
-    all_rule_base = load_feature_field_from_xls('feature_field_rel.xlsx')
-    for rule_base in all_rule_base:
-        if FeatureFieldRel.objects.filter(
-                feature_name=rule_base['feature_name'],
-                raw_field_name=rule_base['raw_field_name'],
-                data_identity=rule_base['data_identity'],
+    process_base_list = load_feature_field_from_xls('feature_process.xlsx')
+    for process_base in process_base_list:
+        if FeatureProcessInfo.objects.filter(
+                feature_name=process_base['feature_name'],
+                process_type=process_base['process_type'],
+                data_identity=process_base['data_identity'],
         ).count() > 0:
             continue
         else:
-            ffr = FeatureFieldRel(
-                id=rule_base['id'],
-                feature_name=rule_base['feature_name'],
-                raw_field_name=rule_base['raw_field_name'],
-                data_identity=rule_base['data_identity'],
+            fpi = FeatureProcessInfo(
+                id=process_base['id'],
+                feature_name=process_base['feature_name'],
+                process_type=process_base['process_type'],
+                data_identity=process_base['data_identity'],
             )
-            ffr.save()
+            fpi.save()
 
 if __name__ == '__main__':
     init_feature_field()

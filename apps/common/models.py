@@ -25,6 +25,7 @@ class ClientOverview(BaseModel):
     client_id = models.CharField(u'', max_length=128)
     client_secret = models.CharField(u'', max_length=256)
     des_key = models.CharField(u'', max_length=128)
+    manage_type = models.CharField(u'', max_length=256)
 
     class Meta:
         db_table = 'fic_client_overview'

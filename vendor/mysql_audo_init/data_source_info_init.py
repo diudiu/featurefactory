@@ -56,3 +56,6 @@ def init_data_source():
             backend_url=data_source['backend_url'],
         )
         dsi.save()
+
+if __name__ == '__main__':
+    init_data_source()

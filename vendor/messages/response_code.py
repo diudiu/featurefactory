@@ -30,7 +30,7 @@ class ResponseCode(object):
         ARGUMENTS_UNAVAILABLE:          u'传入参数不足以获取所有目标特征, 请检查参数列表',
         MISSING_APPLY_ID:               u"传入数据内容缺失 apply_id",
         MISSING_RES_KEYS:               u"传入数据内容缺失 res_keys",
-        MISSING_ARGUMENTS:              u"传入数据内容缺失 arguments",
+        MISSING_ARGUMENTS:              u"受信人输入数据缺失",
 
         DATABASE_ERROR:                 u"数据库服务错误",
     }

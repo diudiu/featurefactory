@@ -21,6 +21,7 @@ class Migration(migrations.Migration):
                 ('client_id', models.CharField(max_length=128, verbose_name='')),
                 ('client_secret', models.CharField(max_length=256, verbose_name='')),
                 ('des_key', models.CharField(max_length=128, verbose_name='')),
+                ('manage_type', models.CharField(max_length=256, verbose_name='')),
             ],
             options={
                 'db_table': 'fic_client_overview',

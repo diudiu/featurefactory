@@ -15,6 +15,7 @@ class DataSourceInfo(BaseModel):
     desc = models.CharField(u'数据源描述', max_length=512, null=True, blank=True)
     protocol_type = models.CharField(u'协议类型', max_length=15, choices=cons.REQUEST_PROTOCOL_TYPE)
     backend_url = models.CharField(u'域名', max_length=64)
+    api_manager = models.CharField(u'获取逻辑路径', max_length=256)
 
     class Meta:
         db_table = 'fic_data_source_info'
