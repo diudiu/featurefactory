@@ -4,7 +4,7 @@
     Copyright (c) 2013- SYPH, All Rights Reserved.
     -----------------------------------------------------------
     Author: ZL
-    Date:  2017/01/18
+    Date:  2017/01/20
     Change Activity:
 """
 
@@ -18,26 +18,26 @@ class Handle(object):
 
         """
         接口名称：
-        'personal_info': 个人基本信息查询
+        'tags': 电话标记
         字段名称：
-        'age': 年龄 int
+        'label': 用户标注标签 str
 
         输出:
         特征名称:
-        'age': 年龄 int
+        'mobile_mark': 用户标注标签 str
         """
 
         result = {
-            'age': 999999,
+            'mobile_mark': 999999,
         }
         try:
-            base_data = self.data["content"]["age"]
+            base_data = self.data["tags"]["contactMain_IMSI1_IMEI1"]["label"]
         except Exception as e:
             # TODO log this error
             return result
-        if not base_data or not isinstance(base_data, int):
+        if not base_data or not isinstance(base_data, str):
             return result
 
-        result['age'] = base_data
+        result['mobile_mark'] = base_data
 
         return result
