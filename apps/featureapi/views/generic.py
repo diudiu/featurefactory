@@ -7,7 +7,7 @@
     Change Activity:
 
 
-        _==/          i     i          \==_
+        _==/          i     i           \==_
       /XX/            |\___/|            \XX\
     /XXXX\            |XXXXX|            /XXXX\
    |XXXXXX\_         _XXXXXXX_         _/XXXXXX|
@@ -15,7 +15,7 @@
  |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
  |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
-  XXXXXX/^^^^"\XXXXXXXXXXXXXXXXXXXXX/^^^^^\XXXXXX
+  XXXXXX/^^^^^\XXXXXXXXXXXXXXXXXXXXX/^^^^^\XXXXXX
    |XXX|       \XXX/^^\XXXXX/^^\XXX/       |XXX|
      \XX\       \X/    \XXX/    \X/       /XX/
         "\       "      \X/      "      /"
