@@ -8,7 +8,6 @@
 
 """
 import logging
-import json
 
 from apps.remote.models import FeatureFieldRel
 from apps.etl.context import ApplyContext
