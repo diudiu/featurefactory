@@ -4,9 +4,11 @@
     Copyright (c) 2017- DIGCREDIT, All Rights Reserved.
     ----------------------------------------------
     Author: S.G
-    Date:  2017/02/10
+    Date:  2017/2/8
     Change Activity:
 """
+
+import numpy as np
 
 
 class Handle(object):
@@ -15,17 +17,17 @@ class Handle(object):
         self.data = data
 
     def handle(self):
-        """
-        接口名称：猎聘
-        字段名称：work_exp_form       工作信息
-                 industry            公司行业名称
-                 work_end            工作经历结束时间
 
-        输出：
-        特征名称：last_industry_code  上一份工作行业code
+        """
+        接口：猎聘
+        字段：work_exp_form       工作信息
+              comp_name           公司名称
+              work_end            工作经历结束时间
+
+        输出：cur_company    当前工作单位
         """
 
-        result = {'last_industry_code': 9999}
+        result = {'cur_company': '9999'}
 
         try:
             work_exp_form = self.data['work_exp_form']
@@ -38,17 +40,10 @@ class Handle(object):
                     return result
                 else:
                     work_end_list.append(int(work_end))
-            if len(work_end_list) >= 2:
-                last_work_end = sorted(work_end_list)[-2]
-                last_woek_end_index = work_end_list.index(last_work_end)
-                last_industry_code_dic['last_industry_code'] = work_exp_form[
-                    last_woek_end_index].get('industry', None)
-            else:
-                result['last_industry_code'] = 9999
+            result['cur_company'] = work_exp_form[
+                np.argmax(work_end_list)].get('comp_name', None)
         except Exception:
             # TODO log this error
             return result
-
-        return result
 
         return result

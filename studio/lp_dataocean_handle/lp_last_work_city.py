@@ -3,8 +3,8 @@
     License DIGCREDIT-L.
     Copyright (c) 2017- DIGCREDIT, All Rights Reserved.
     ----------------------------------------------
-    Author: Sun Fei
-    Date:  2017/1/18
+    Author: S.G
+    Date:  2017/02/10
     Change Activity:
 """
 
@@ -23,19 +23,15 @@ class Handle(object):
         特征名称：dq_name             地点名称
         """
 
-        last_work_city_dic = {'last_work_city': 9999}  # 9999：异常
+        result = {'last_work_city': '9999'}
 
         try:
             work_exp_form = self.data['work_exp_form']
+            if not isinstance(work_exp_form, list):
+                return last_work_city_dic
+            result['last_work_city'] = work_exp_form[-1].get('dq_name', None)
         except Exception:
             # TODO log this error
-            return last_work_city_dic
+            return result
 
-        if not isinstance(work_exp_form, list):
-            return last_work_city_dic
-
-        # TODO 计算维度
-        last_work_city_dic[
-            'last_work_city'] = work_exp_form[-1].get('dq_name', None)
-
-        return last_work_city_dic
+        return result

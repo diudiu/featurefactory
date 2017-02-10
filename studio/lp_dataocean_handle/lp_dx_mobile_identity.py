@@ -3,8 +3,8 @@
     License DIGCREDIT-L.
     Copyright (c) 2017- DIGCREDIT, All Rights Reserved.
     ----------------------------------------------
-    Author: Sun Fei
-    Date:  2017/1/18
+    Author: S.G
+    Date:  2017/02/10
     Change Activity:
 """
 
@@ -23,17 +23,16 @@ class Handle(object):
         特征名称：mobile_identity 电信查询返回结果
         """
 
-        mobile_identity_dic = {'mobile_identity': 9999}  # 9999：异常
+        result = {'mobile_identity': 9999}
 
         try:
             mobile_identity = self.data['result']
+            if mobile_identity == '00':
+                result['mobile_identity'] = 1
+            else:
+                result['mobile_identity'] = 0
         except Exception:
             # TODO log this error
-            return mobile_identity_dic
+            return result
 
-        if mobile_identity == '00':
-            mobile_identity_dic['mobile_identity'] = 1
-        else:
-            mobile_identity_dic['mobile_identity'] = 0
-
-        return mobile_identity_dic
+        return result
