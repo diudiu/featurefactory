@@ -21,9 +21,10 @@ logger = logging.getLogger('apps.remote')
 class Courier(object):
     """
     这个类用来获取全部原始数据
+    针对单一数据源获取逻辑
     原始数据来源包括:
         1.缓存数据库(有效期一天?????)
-        2.接口获取(访问数据源 DataOcean)
+        2.接口数据获取
     """
     def __init__(self, apply_id, useful_args, interface_data):
         self.apply_id = apply_id
@@ -34,9 +35,9 @@ class Courier(object):
         self.cache_base = CacheContext(self.apply_id)  # MongoDB data
 
     def work_stream(self):
-        return self.get_data_by_keys()
+        return self._get_data_by_keys()
 
-    def get_data_by_keys(self):
+    def _get_data_by_keys(self):
         cache_data = {}
         fresh_data = {}
         for i in range(len(self.data_identity_list)):
@@ -89,3 +90,61 @@ class Courier(object):
         # content = json.loads(content)
         result = {'time': time.ctime(time.time())}
         return result
+
+
+class ShuntCourier(object):
+    """
+    这个类用来获取全部原始数据
+    针对根据参数进行数据源分流获取逻辑
+    原始数据来源包括:
+        1.缓存数据库(有效期一天?????)
+        2.接口数据获取
+    """
+
+    def __init__(self, apply_id, useful_args, interface_data):
+        self.apply_id = apply_id
+        self.interface_conf = interface_data
+        self.args = {arg['data_identity']: arg['arguments'] for arg in useful_args}
+        self.data_identity_list = self.args.keys()
+        self.original_base = OriginalContext(self.apply_id)  # MongoDB data
+        self.cache_base = CacheContext(self.apply_id)  # MongoDB data
+
+    def work_stream(self):
+        return self.get_data_by_keys()
+
+    def get_data_by_keys(self):
+        pass
+
+    def _get_data_from_interface(self, interface, prams):
+        pass
+
+    def do_request(self, url, data):
+        pass
+
+
+class RelevanceCourier(object):
+    """
+    这个类用来获取全部原始数据
+    针对多个数据源包含层级关系的逻辑
+    如:
+        查询接口A 获得特征a
+        用特征a做参数查询接口B 获取目标数据包
+    原始数据来源包括:
+        1.缓存数据库(有效期一天?????)
+        2.接口数据获取
+    """
+
+    def __init__(self, apply_id, useful_args, interface_data):
+        pass
+
+    def work_stream(self):
+        pass
+
+    def get_data_by_keys(self):
+        pass
+
+    def _get_data_from_interface(self, interface, prams):
+        pass
+
+    def do_request(self, url, data):
+        pass

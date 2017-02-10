@@ -36,6 +36,7 @@ class Judger(object):
     def work_stream(self):
         self._fill_attributes()
         base_data = {
+            'callback_url': self.callback_url,
             'apply_id': self.apply_id,
             'useful_args': self.ret_msg,
         }

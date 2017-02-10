@@ -69,4 +69,13 @@ cons.HTTP_METHOD = (
     (cons.LOCAL_REQUEST, cons.LOCAL_REQUEST),
 )
 
+cons.UNICOM_MOBILE_NUMBER = 'UMN'
+cons.UNICOM_MATCH_STR = '(^1(3[0-2]|4[5]|5[56]|7[6]|8[56])\\d{8}$)|(^1709\\d{7}$)'
 
+cons.YD_MOBILE_NUMBER = 'YMN'
+cons.YD_MATCH_STR = '(^1(3[4-9]|4[7]|5[0-27-9]|7[8]|8[2-478])\\d{8}$)|(^1705\\d{7}$)'
+
+cons.TELECOME_MOBILE_NUMBER = 'TMN'
+cons.TELECOME_MATCH_STR = '^1((33|53|77|8[019])[0-9]|349)|(700\\d{7}$)'
+
+cons.OTHER_MOBILE_NUMBER = 'OMN'
