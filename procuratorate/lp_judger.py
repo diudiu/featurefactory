@@ -8,9 +8,11 @@
 
 """
 import logging
+import json
 
 from apps.remote.models import FeatureFieldRel
 from apps.etl.context import ApplyContext
+from apps.etl.context import PortraitContext
 from vendor.errors.api_errors import *
 
 logger = logging.getLogger('apps.featureapi')
@@ -28,6 +30,7 @@ class Judger(object):
     def __init__(self, content):
         self.content = content
         self.apply_id = ''
+        self.proposer_id = ''
         self.callback_url = ''
         self.feature_list = []
         self.arguments = {}
@@ -47,8 +50,14 @@ class Judger(object):
         self.callback_url = self.content.get('callback', None)
         self.feature_list = self.content.get('res_keys', None)
         apply_base = ApplyContext(self.apply_id)
-        self.arguments = apply_base.load()
+        apply_data = apply_base.load()
+        self.proposer_id = apply_data.get('proposer_id', None)
+        if not self.proposer_id:
+            raise
 
+        portrait_base = PortraitContext(self.proposer_id)
+        portrait_data = portrait_base.load()
+        self._prepare_args(apply_data, portrait_data)
         if not self.arguments:
             logger.error(
                 'Response from the function of `judge._decrypt`, error_msg=%s, rel_err_msg=%s, apply_id=%s'
@@ -56,7 +65,6 @@ class Judger(object):
                 exc_info=True
             )
             raise GetArgumentsError  # E06
-
         arg_msg_list = FeatureFieldRel.objects.filter(
             feature_name__in=self.feature_list,
             is_delete=False,
@@ -92,5 +100,6 @@ class Judger(object):
                 )
                 raise ArgumentsAvailableError  # E07
 
-    def _prepare_args(self):
-        pass
+    def _prepare_args(self, apply_data, portrait_data):
+        self.arguments = portrait_data.get('data', None)
+        self.arguments.update(apply_data.get('data', None))

@@ -17,7 +17,8 @@ def feature_post():
     data = {
         'client_code': 'lp_test',
         'content': {
-            'apply_id': 'test_apply_id',
+            'apply_id': 'APPLY20170213143121831017716',
+            'callback_url': 'http://0.0.0.0:10086',
             'res_keys': [
                 'is_netsky_gray',
                 'is_netsky_black',

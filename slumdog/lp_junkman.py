@@ -40,32 +40,24 @@ class Courier(object):
     def _get_data_by_keys(self):
         cache_data = {}
         fresh_data = {}
-        for i in range(len(self.data_identity_list)):
-            data = self.cache_base.get(self.data_identity_list[i])
+        for interface in self.interface_conf.iterator():
+            data_identity = interface.data_identity
+            data = self.cache_base.get(data_identity)
             if data:
                 cache_data.update({
-                    self.data_identity_list[i]: data[self.data_identity_list[i]]
+                    data_identity: data[data_identity]
                 })
-                self.data_identity_list[i] = 0
             else:
-                continue
-        self.data_identity_list = list(set(self.data_identity_list))
-        if 0 in self.data_identity_list:
-            self.data_identity_list.remove(0)
-        if not self.interface_conf and self.data_identity_list:
-            raise
-        for interface in self.interface_conf.iterator():
-            prams = self.args[interface.data_identity]
-            if not prams:
-                pass
-            data = self._get_data_from_interface(interface, prams)
-            if data:
-                fresh_data.update(data)
-                self.cache_base.kwargs.update(data)
-                self.cache_base.data_identity = data.keys()[0]
-            self.cache_base.save()
-        self.original_base.save()
-
+                prams = self.args[interface.data_identity]
+                if not prams:
+                    raise
+                data = self._get_data_from_interface(interface, prams)
+                if data:
+                    fresh_data.update(data)
+                    self.cache_base.kwargs.update(data)
+                    self.cache_base.data_identity = data.keys()[0]
+                self.cache_base.save()
+            self.original_base.save()
         fresh_data.update(cache_data)
         return fresh_data
 

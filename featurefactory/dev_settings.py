@@ -57,8 +57,8 @@ REDIS_CONFIG = {
 MONGODB_HOST = '192.168.1.198'
 MONGODB_PORT = 27017
 MONGODB_NAME = 'feature_storage'
-MONGODB_USERNAME = ''
-MONGODB_PASSWORD = ''
+MONGODB_USERNAME = 'feature_storage'
+MONGODB_PASSWORD = 'feature_storage'
 
 # logging
 log_path = os.path.join(BASE_DIR, 'logs')

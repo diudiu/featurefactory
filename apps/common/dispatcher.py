@@ -86,7 +86,7 @@ def data_get_dispatch(base_data):
     return base_data_list
 
 
-def process_dispatch(original_data_list):
+def process_dispatch(original_data_list, target_field_name):
     """
     特征处理分发器
     根据传入上面两个数据对象确定每一个特征的处理逻辑路径
@@ -97,9 +97,8 @@ def process_dispatch(original_data_list):
     """
     ret_data = {}
     for original_data in original_data_list:
-        di_list = original_data.keys()
         studio_conf = FeatureProcessInfo.objects.filter(
-            data_identity__in=di_list,
+            feature_name__in=target_field_name,
             is_delete=False
         )
         for studio_data in studio_conf.iterator():
