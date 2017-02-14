@@ -18,9 +18,9 @@ class Handle(object):
         """
         接口：反欺诈服务接口——3借贷信息——3.1逾期信息
         输出：是否命中凭安逾期名单（近24个月）
-        :return:
         """
-        result = {"is_pingan_overdue_loan": 999999999}
+
+        result = {"is_pingan_overdue_loan": 9999}
 
         if self.data['result'] == 0:
             result['is_pingan_overdue_loan'] = 1

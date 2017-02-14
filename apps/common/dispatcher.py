@@ -13,6 +13,8 @@ from django.utils.module_loading import import_string
 from apps.common.models import ClientOverview
 from apps.datasource.models import DsInterfaceInfo
 from apps.etl.models import FeatureProcessInfo
+from apps.remote.models import FeatureFieldRel
+from vendor.utils.constant import cons
 
 
 def client_dispatch(client_code, content):
@@ -60,18 +62,24 @@ def data_get_dispatch(base_data):
     """
     apply_id = base_data.get('apply_id', None)
     useful_args = base_data.get('useful_args', None)
+    feature_list = base_data.get('feature_list', None)
     base_data_list = []
 
     if not apply_id or not useful_args:
         raise
+    collect_type_list = FeatureFieldRel.objects.filter(
+        feature_name__in=feature_list,
+        is_delete=False
+    )
     data_identity_list = [data['data_identity'] for data in useful_args]
     interface_data = DsInterfaceInfo.objects.filter(
         data_identity__in=data_identity_list,
         is_delete=False,
     )
+    api_manager = interface_data[0].data_source.api_manager
     # TODO 这下面有BUG 当api_manager有多个时  需要对interface_data 和 useful_args做一下分组
-    api_manager_list = [interface.data_source.api_manager + '.' + interface.comment
-                        for interface in interface_data.iterator()]
+    api_manager_list = [api_manager + '.' + collect_type.collect_type
+                        for collect_type in collect_type_list.iterator()]
     api_manager_list = list(set(api_manager_list))
     for api_manager in api_manager_list:
         try:
@@ -83,10 +91,10 @@ def data_get_dispatch(base_data):
         if not base_data:
             raise
         base_data_list.append(base_data)
-    return base_data_list
+    return base_data_list, collect_type_list
 
 
-def process_dispatch(original_data_list):
+def process_dispatch(original_data_list, target_field_name, collect_type_list):
     """
     特征处理分发器
     根据传入上面两个数据对象确定每一个特征的处理逻辑路径
@@ -96,17 +104,13 @@ def process_dispatch(original_data_list):
     :return:
     """
     ret_data = {}
+    feature_map = {collect.feature_name: collect.data_identity for collect in collect_type_list}
     for original_data in original_data_list:
-        di_list = original_data.keys()
-        studio_conf = FeatureProcessInfo.objects.filter(
-            data_identity__in=di_list,
-            is_delete=False
-        )
-        for studio_data in studio_conf.iterator():
-            data_identity = studio_data.data_identity
-            obj_string = studio_data.process_type
+        for feature_name in target_field_name:
+            obj_string = cons.LP_BASE_HANDLE + cons.HANDLE_COMBINE + 'lp_' + \
+                         feature_name + cons.HANDLE_COMBINE + cons.HANDLE_CLASS
             obj = import_string(obj_string)
-            handler = obj(original_data.get(data_identity, None))
+            handler = obj(original_data.get(feature_map[feature_name], None))
             ret = handler.handle()
             ret_data.update(ret)
         # TODO ret中是处理出来的特征 这一层循环结束 储存一下子
