@@ -41,6 +41,7 @@ class Judger(object):
         base_data = {
             'callback_url': self.callback_url,
             'apply_id': self.apply_id,
+            'feature_list': self.feature_list,
             'useful_args': self.ret_msg,
         }
         return base_data
@@ -74,16 +75,15 @@ class Judger(object):
         arg_msg_list = InterfaceFieldRel.objects.filter(
             data_identity__in=data_identity_list,
             is_delete=False
-        )
+        ).order_by('data_identity')
         for arg_msg in arg_msg_list:
             if arg_msg.raw_field_name in self.arguments.keys():
-                if self.ret_msg and (arg_msg.feature_name == (self.ret_msg[-1])['target_field_name']):
+                if self.ret_msg and (arg_msg.data_identity == (self.ret_msg[-1])['data_identity']):
                     sub_msg = self.ret_msg[-1]
-                    if arg_msg.feature_name == sub_msg['target_field_name']:
-                        sub_msg['arguments'].update({
-                            arg_msg.raw_field_name: self.arguments[arg_msg.raw_field_name],
-                        })
-                        self.ret_msg[-1] = sub_msg
+                    sub_msg['arguments'].update({
+                        arg_msg.raw_field_name: self.arguments[arg_msg.raw_field_name],
+                    })
+                    self.ret_msg[-1] = sub_msg
                 else:
                     temp_msg = {
                         'data_identity': arg_msg.data_identity,
