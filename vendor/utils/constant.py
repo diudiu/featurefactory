@@ -79,3 +79,7 @@ cons.TELECOME_MOBILE_NUMBER = 'TMN'
 cons.TELECOME_MATCH_STR = '^1((33|53|77|8[019])[0-9]|349)|(700\\d{7}$)'
 
 cons.OTHER_MOBILE_NUMBER = 'OMN'
+
+cons.LP_BASE_HANDLE = 'studio.lp_dataocean_handle'
+cons.HANDLE_CLASS = 'Handle'
+cons.HANDLE_COMBINE = '.'
