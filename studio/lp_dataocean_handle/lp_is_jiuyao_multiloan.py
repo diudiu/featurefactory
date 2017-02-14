@@ -3,8 +3,8 @@
     License DIGCREDIT-L.
     Copyright (c) 2017- DIGCREDIT, All Rights Reserved.
     ----------------------------------------------
-    Author: Sun Fei
-    Date:  2017/1/22
+    Author: S.G
+    Date:  2017/02/10
     Change Activity:
 """
 
@@ -15,6 +15,7 @@ class Handle(object):
         self.data = data
 
     def handle(self):
+
         """
         接口名称：91征信接口
         字段名称：loan_infos              申请人借贷信息
@@ -23,13 +24,16 @@ class Handle(object):
         特征名称：is_jiuyao_multi_loan    是否命中91多头借贷名单
         """
 
-        is_jiuyao_multi_loan_dic = {'is_jiuyao_multi_loan': None}
+        result = {'is_jiuyao_multi_loan': 9999}
 
-        loan_infos = self.data.get('loanInfos', None)
+        try:
+            loan_infos = self.data.get('loanInfos', None)
+            if loan_infos:
+                result['is_jiuyao_multi_loan'] = 0
+            else:
+                result['is_jiuyao_multi_loan'] = 1
+        except Exception:
+            # TODO log the error
+            return result
 
-        if loan_infos == []:
-            is_jiuyao_multi_loan_dic['is_jiuyao_multi_loan'] = 0
-        else:
-            is_jiuyao_multi_loan_dic['is_jiuyao_multi_loan'] = 1
-
-        return is_jiuyao_multi_loan_dic
+        return result
