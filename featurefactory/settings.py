@@ -44,6 +44,7 @@ INSTALLED_APPS = (
     'apps.remote',
     'apps.etl',
     'apps.async',
+    'apps.pregranting',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -105,8 +106,8 @@ USE_TZ = False
 # LOGIN_URL = '/accounts/login/'
 # LOGIN_REDIRECT_URL = '/accounts/home/'
 
-from .home_settings import *
-# from .dev_settings import *
+# from .home_settings import *
+from .dev_settings import *
 # from .prod_settings import *
 
 from celery_config import *
