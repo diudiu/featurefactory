@@ -8,18 +8,16 @@ import djcelery
 djcelery.setup_loader()
 
 BROKER_BACKEND = 'redis'
-BROKER_URL = 'redis://:syph@dev@192.168.1.198:6379/15'
-# BROKER_URL = ''
+
+# BROKER_URL = 'redis://:syph@dev@192.168.1.198:6379/15'
 # HOME BROKER_URL
-# BROKER_URL = 'redis://:123456@192.168.232.128:6379/1'
+BROKER_URL = 'redis://:123456@192.168.232.128:6379/1'
 
 CELERY_TASK_SERIALIZER = 'json'
 
 CELERYD_CONCURRENCY = 4
 CELERYD_PREFETCH_MULTIPLIER = 8
 
-# CELERY_RESULT_BACKEND = 'redis://:syph@mxREDIS@172.16.0.19:6379/7'
-# CELERY_RESULT_SERIALIZER = 'json'
 CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
 
 # CELERY_IMPORTS = ("sreg_task", )

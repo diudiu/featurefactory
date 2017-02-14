@@ -36,3 +36,6 @@ def audit_task(base_data):
         raise
 
     logger.info('\n**********\nin the tasks\n**********\n')
+
+    callback_url = base_data.get('callback_url', None)
+    # TODO 向callback_url回推结果
