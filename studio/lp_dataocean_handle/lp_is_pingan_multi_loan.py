@@ -27,15 +27,16 @@ class Handle(object):
         """
 
         result = {
-            'is_pingan_multi_loan': 999999,
+            'is_pingan_multi_loan': 9999,
         }
         try:
             base_data = self.data["result"]
+            if base_data == "2":
+                result['is_pingan_multi_loan'] = 0
+            else:
+                result['is_pingan_multi_loan'] = 1
+            return result
         except Exception as e:
             # TODO log this error
             return result
-        if base_data == "2":
-            result['is_pingan_multi_loan'] = 0
 
-        result['is_pingan_multi_loan'] = 1
-        return result

@@ -27,16 +27,16 @@ class Handle(object):
         """
 
         result = {
-            "car_count": 999999,
+            "car_count": 9999,
         }
         try:
             base_data = self.data["result"]
+            if not base_data or not isinstance(base_data, list):
+                return result
+            result["car_count"] = len(base_data)
+
+            return result
         except Exception as e:
             # TODO log this error
             return result
-        if not base_data or not isinstance(base_data, list):
-            return result
 
-        result["car_count"] = len(base_data)
-
-        return result

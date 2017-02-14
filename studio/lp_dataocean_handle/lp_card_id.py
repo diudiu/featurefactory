@@ -17,7 +17,7 @@ class Handle(object):
     def handle(self):
 
         """
-        接口名称：猎聘
+        接口名称：猎聘申请信息上传接口
         字段名称：
         card_id 身份证号 str
 
@@ -28,16 +28,17 @@ class Handle(object):
         """
 
         result = {
-            'card_id': 999999,
+            'card_id': 9999,
         }
         try:
             base_data = self.data['card_id']
+            if not base_data or not isinstance(base_data, str):
+                return result
+
+            result['card_id'] = base_data
+
+            return result
         except Exception as e:
             # TODO log this error
             return result
-        if not base_data or not isinstance(base_data, str):
-            return result
 
-        result['card_id'] = base_data
-
-        return result

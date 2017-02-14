@@ -30,16 +30,16 @@ class Handle(object):
         """
 
         result = {
-            'application_on': 999999,
+            'application_on': 9999,
         }
         try:
             apply_data = self.data["application_on"]
+            if not apply_data or not isinstance(apply_data, str):
+                return result
+
+            result['application_on'] = apply_data
+            return result
         except Exception as e:
             # TODO log this error
             return result
-        if not apply_data or not isinstance(apply_data, str):
-            return result
 
-        result['application_on'] = apply_data
-
-        return result

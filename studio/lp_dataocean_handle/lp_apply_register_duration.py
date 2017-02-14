@@ -32,26 +32,30 @@ class Handle(object):
         """
 
         result = {
-            'apply_register_duration': 999999,
+            'apply_register_duration': 9999,
         }
         try:
-            apply_data = self.data["application_on"]
-            register_data = self.data["registration_on"]
+            apply_data = self.data["apply_data"]["application_on"]
+            register_data = self.data["portrait_data"]["registration_on"]
+            if not apply_data or not isinstance(apply_data, str):
+                return result
+            if not register_data or not isinstance(register_data, str):
+                return result
+
+            apply_data = apply_data[0:10]
+            register_data = register_data[0:10]
+            apply_data = datetime.strptime(apply_data, "%Y-%m-%d")
+            register_data = datetime.strptime(register_data, "%Y-%m-%d")
+
+            register_time = datetime(register_data.year, register_data.month, register_data.day)
+            apply_time = datetime(apply_data.year, apply_data.month, apply_data.day)
+            apply_register = (apply_time - register_time).days/30.0
+            apply_register = round(apply_register, 2)
+
+            result['apply_register_duration'] = apply_register
+
+            return result
         except Exception as e:
             # TODO log this error
             return result
-        if not apply_data or not isinstance(apply_data, str):
-            return result
-        if not register_data or not isinstance(register_data, str):
-            return result
 
-        apply_data = datetime.strptime(apply_data, "%Y-%m-%d")
-        register_data = datetime.strptime(register_data, "%Y-%m-%d")
-
-        register_time = datetime(register_data.year, register_data.month, register_data.day)
-        apply_time = datetime(apply_data.year, apply_data.month, apply_data.day)
-        apply_register = (apply_time - register_time).days/30.0
-
-        result['apply_register_duration'] = apply_register
-
-        return result

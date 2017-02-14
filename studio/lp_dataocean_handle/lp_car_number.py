@@ -27,19 +27,20 @@ class Handle(object):
         """
 
         result = {
-            "car_number": 999999,
+            "car_number": 9999,
         }
         try:
             base_data = self.data["result"]
+            if not base_data or not isinstance(base_data, list):
+                return result
+
+            car_list = []
+            for data in base_data:
+                car_list.append(data.get("license_no"))
+
+            result["car_number"] = car_list
+            return result
         except Exception as e:
             # TODO log this error
             return result
-        if not base_data or not isinstance(base_data, list):
-            return result
 
-        car_list = []
-        for data in base_data:
-            car_list.append(data.get("license_no"))
-
-        result["car_number"] = car_list
-        return result

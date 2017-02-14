@@ -27,16 +27,17 @@ class Handle(object):
         """
 
         result = {
-            "dc_bill_age": 999999,
+            "dc_bill_age": 9999,
         }
         try:
             base_data = self.data["result"]["rrx_once_all"]["debit_card_account_age"]
+            if not base_data or not isinstance(base_data, str):
+                return result
+
+            result["dc_bill_age"] = base_data
+
+            return result
         except Exception as e:
             # TODO log this error
             return result
-        if not base_data or not isinstance(base_data, str):
-            return result
 
-        result["dc_bill_age"] = base_data
-
-        return result

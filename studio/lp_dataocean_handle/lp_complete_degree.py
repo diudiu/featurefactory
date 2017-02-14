@@ -18,7 +18,7 @@ class Handle(object):
 
         """
         接口名称：
-        猎聘
+        猎聘预授信接口
         字段名称：
         'complete_degree': 简历完成度 int
 
@@ -28,16 +28,17 @@ class Handle(object):
         """
 
         result = {
-            "complete_degree": 999999,
+            "complete_degree": 9999,
         }
         try:
             base_data = self.data["complete_degree"]
+            if not isinstance(base_data, int):
+                return result
+
+            result["complete_degree"] = base_data
+
+            return result
         except Exception as e:
             # TODO log this error
             return result
-        if not base_data or not isinstance(base_data, int):
-            return result
 
-        result["complete_degree"] = base_data
-
-        return result

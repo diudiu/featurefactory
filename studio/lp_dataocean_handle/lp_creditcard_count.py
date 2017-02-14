@@ -27,16 +27,17 @@ class Handle(object):
         """
 
         result = {
-            "creditcard_count": 999999,
+            "creditcard_count": 9999,
         }
         try:
             base_data = self.data["result"]["rrx_once_all"]["credit_cards_num"]
+            if not base_data or not isinstance(base_data, str):
+                return result
+
+            result["creditcard_count"] = base_data
+
+            return result
         except Exception as e:
             # TODO log this error
             return result
-        if not base_data or not isinstance(base_data, str):
-            return result
 
-        result["creditcard_count"] = base_data
-
-        return result
