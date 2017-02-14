@@ -3,8 +3,8 @@
     License DIGCREDIT-L.
     Copyright (c) 2017- DIGCREDIT, All Rights Reserved.
     ----------------------------------------------
-    Author: Sun Fei
-    Date:  2017/1/18
+    Author: S.G
+    Date:  2017/02/10
     Change Activity:
 """
 
@@ -26,35 +26,31 @@ class Handle(object):
         特征名称：income_expense_comparison  入账与支出关系
         """
 
-        result = {"income_expense_comparison": 999999}
-
-        income_level = None
-        expense_level = None
+        result = {"income_expense_comparison": 9999}
 
         try:
             income_level = self.data['content']['last12']['debit']['income_range']
             expense_level = self.data['content']['last12']['debit']['charge_off_range']
+            amount_list = [str(x) for x in range(0, 10)]
+            amount_list = amount_list + ['a', 'b', 'c', 'd', 'e', 'f']
+            amount_list = amount_list + [str(x) for x in range(10, 20)]
+            amount_list = amount_list + ['1a', '1b', '1c', '1d', '1e', '1f']
+            amount_list = amount_list + [str(x) for x in range(20, 26)]
+            if income_level is not None and expense_level is not None:
+                income_level_index = amount_list.index(income_level)
+                expense_level_index = amount_list.index(expense_level)
+                ratio = income_level_index/expense_level_index
+                if ratio >= 10:
+                    result['income_expense_comparison'] = 1
+                elif 1 < ratio < 10:
+                    result['income_expense_comparison'] = 2
+                elif ratio == 1:
+                    result['income_expense_comparison'] = 3
+                elif 0.1 < ratio < 1:
+                    result['income_expense_comparison'] = 4
+                else:
+                    result['income_expense_comparison'] = 5
         except Exception:
-            pass
-
-        amount_list = [str(x) for x in range(0, 10)]
-        amount_list = amount_list + ['a', 'b', 'c', 'd', 'e', 'f']
-        amount_list = amount_list + [str(x) for x in range(10, 20)]
-        amount_list = amount_list + ['1a', '1b', '1c', '1d', '1e', '1f']
-        amount_list = amount_list + [str(x) for x in range(20, 26)]
-        if income_level is not None and expense_level is not None:
-            income_level_index = amount_list.index(income_level)
-            expense_level_index = amount_list.index(expense_level)
-            ratio = income_level_index/expense_level_index
-            if ratio >= 10:
-                result['income_expense_comparison'] = 1
-            elif 1 < ratio < 10:
-                result['income_expense_comparison'] = 2
-            elif ratio == 1:
-                result['income_expense_comparison'] = 3
-            elif 0.1 < ratio < 1:
-                result['income_expense_comparison'] = 4
-            else:
-                result['income_expense_comparison'] = 5
+            return result
 
         return result
