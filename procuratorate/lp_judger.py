@@ -10,6 +10,7 @@
 import logging
 
 from apps.remote.models import FeatureFieldRel
+from apps.datasource.models import InterfaceFieldRel
 from apps.etl.context import ApplyContext
 from apps.etl.context import PortraitContext
 from vendor.errors.api_errors import *
@@ -64,9 +65,15 @@ class Judger(object):
                 exc_info=True
             )
             raise GetArgumentsError  # E06
-        arg_msg_list = FeatureFieldRel.objects.filter(
+        feature_msg_list = FeatureFieldRel.objects.filter(
             feature_name__in=self.feature_list,
             is_delete=False,
+        )
+        data_identity_list = [feature.data_identity for feature in feature_msg_list]
+
+        arg_msg_list = InterfaceFieldRel.objects.filter(
+            data_identity__in=data_identity_list,
+            is_delete=False
         )
         for arg_msg in arg_msg_list:
             if arg_msg.raw_field_name in self.arguments.keys():
@@ -80,7 +87,6 @@ class Judger(object):
                 else:
                     temp_msg = {
                         'data_identity': arg_msg.data_identity,
-                        'target_field_name': arg_msg.feature_name,
                         'arguments': {
                             arg_msg.raw_field_name: self.arguments[arg_msg.raw_field_name],
                         }

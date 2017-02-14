@@ -14,10 +14,7 @@ def feature_post():
             'apply_id': 'APPLY20170213143121831017716',
             'callback_url': 'http://0.0.0.0:10086',
             'res_keys': [
-                'is_netsky_gray',
-                'is_netsky_black',
-                'is_netsky_longloan',
-                'is_skyeye_black',
+                'online_time'
             ],
         },
     }
