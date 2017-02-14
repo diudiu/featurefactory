@@ -20,10 +20,10 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'featurefactory.settings')
 import django
 django.setup()
 
-from apps.remote.models import FeatureFieldRel
+from apps.datasource.models import InterfaceFieldRel
 
 
-def load_feature_field_from_xls(file_path):
+def load_interface_field_from_xls(file_path):
     rule_base_list = []
 
     xls = xlrd.open_workbook(file_path)
@@ -34,28 +34,28 @@ def load_feature_field_from_xls(file_path):
         row = sheet1.row_values(row_num)
         rule_base_info = {
             'id': int(row[0]),
-            'feature_name': row[1],
-            'data_identity': row[2],
+            'data_identity': row[1],
+            'raw_field_name': row[2],
         }
         rule_base_list.append(rule_base_info)
     return rule_base_list
 
 
-def init_feature_field():
-    all_rule_base = load_feature_field_from_xls('feature_field_rel.xlsx')
-    for rule_base in all_rule_base:
-        if FeatureFieldRel.objects.filter(
-                feature_name=rule_base['feature_name'],
-                data_identity=rule_base['data_identity'],
+def init_interface_field():
+    interface_field_base = load_interface_field_from_xls('interface_field_rel.xlsx')
+    for interface_field in interface_field_base:
+        if InterfaceFieldRel.objects.filter(
+                data_identity=interface_field['data_identity'],
+                raw_field_name=interface_field['raw_field_name'],
         ).count() > 0:
             continue
         else:
-            ffr = FeatureFieldRel(
-                id=rule_base['id'],
-                feature_name=rule_base['feature_name'],
-                data_identity=rule_base['data_identity'],
+            ffr = InterfaceFieldRel(
+                id=interface_field['id'],
+                data_identity=interface_field['data_identity'],
+                raw_field_name=interface_field['raw_field_name'],
             )
             ffr.save()
 
 if __name__ == '__main__':
-    init_feature_field()
+    init_interface_field()
