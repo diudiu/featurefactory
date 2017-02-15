@@ -24,6 +24,19 @@ class ResponseCode(object):
     DATABASE_ERROR = 40101
 
     UNAVAILABLE_CLIENT_CODE = 50001
+    MISSING_JUDGE_TYPE = 50002
+    JUDGE_INIT_ERROR = 50003
+    JUDGE_WORK_ERROR = 50004
+    JUDGE_RET_ERROR = 50005
+
+    FEATURE_UNFOUND = 50010
+    DATAIDENTITY_UNFOUND = 50011
+    JUNKMAN_INIT_ERROR = 50012
+    JUNKMAN_WORK_ERROR = 50013
+
+    HANDLE_INIT_ERROR = 50020
+    HANDLE_WORK_ERROR = 50021
+
 
     RESPONSE_MESSAGE = {
         FAILED:                         u"操作失败",
@@ -45,6 +58,18 @@ class ResponseCode(object):
 
         UNAVAILABLE_CLIENT_CODE:        u"client_code 无效 不存在的客户",
         FEATURE_SUCCESS:                u"特征处理成功",
+        MISSING_JUDGE_TYPE:             u"没有匹配该客户的judger逻辑",
+        JUDGE_INIT_ERROR:               u"检查方法类内部错误: 无法初始化",
+        JUDGE_WORK_ERROR:               u"检查方法执行错误: 空的执行结果",
+        JUDGE_RET_ERROR:                u"检车方法执行返回结果有缺失: 空的apply_Id 或 空的 useful_args",
+
+        FEATURE_UNFOUND:                u"无该特征名的配置信息, FeatureFieldRel",
+        DATAIDENTITY_UNFOUND:           u"无该数据源标识配置信息, DsInterfaceInfo",
+        JUNKMAN_INIT_ERROR:             u"原始数据获取方法内部错误: 无法初始化",
+        JUNKMAN_WORK_ERROR:             u"原始数据获取方法执行作物: 空的执行结果",
+
+        HANDLE_INIT_ERROR:              u"特征处理方法内部错误: 无法初始化",
+        HANDLE_WORK_ERROR:              u"特征数理方法执行错误: 空的执行结果",
     }
 
     @classmethod

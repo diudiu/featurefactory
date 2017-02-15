@@ -30,26 +30,27 @@ def client_dispatch(client_code, content):
     """
     handle_base = ClientOverview.objects.filter(client_code=client_code)
     if not handle_base.count():
-        logger.error('client code unavailable, no such client %s', client_code)
+        logger.error('client code unavailable, no such client %s' % client_code)
         raise ClientCodeInexistence
 
     data = handle_base[0]
     obj_string = data.manage_type
 
     if not obj_string:
-        # TODO 这个记录里面的manage_type字段没有值
-        raise
+        logger.error('No judge manage type in database, check this client: %s' % client_code)
+        raise MissingManageType
 
     try:
         obj = import_string(obj_string)
         judger = obj(content, client_code)
     except Exception as e:
-        # TODO 初始化对象失败, 可能是manage_type错误 或者参数错误乱七八糟的  具体异常会抛出
-        raise
+        logger.error('judger init error , massage is :\n %s' % e)
+        raise JudgeInitializeFailed
 
     base_data = judger.work_stream()
     if not base_data:
-        raise
+        logger.error('judger work complete, nothing return')
+        raise JudgeWorkError
     return base_data
 
 
@@ -68,16 +69,23 @@ def data_get_dispatch(base_data):
     base_data_list = []
 
     if not apply_id or not useful_args:
-        raise
+        logger.error('judge return error , no apply_id or no usrful_args')
+        raise JudgeReturenError
     collect_type_list = FeatureFieldRel.objects.filter(
         feature_name__in=feature_list,
         is_delete=False
     )
+    if not collect_type_list.count():
+        logger.error('no config in database about those features : %s' % feature_list)
+        raise FeatureNameUnfound
     data_identity_list = [data['data_identity'] for data in useful_args]
     interface_data = DsInterfaceInfo.objects.filter(
         data_identity__in=data_identity_list,
         is_delete=False,
     )
+    if not interface_data.count():
+        logger.error('no config in database about those data_identity : %s' % data_identity_list)
+        raise DataIdentityUnfound
     api_manager = interface_data[0].data_source.api_manager
     # TODO 这下面有BUG 当api_manager有多个时  需要对interface_data 和 useful_args做一下分组
     api_manager_list = [api_manager + '.' + collect_type.collect_type
@@ -88,10 +96,12 @@ def data_get_dispatch(base_data):
             obj = import_string(api_manager)
             junkman = obj(apply_id, useful_args, interface_data)
         except Exception as e:
-            raise
+            logger.error('junkman init error , massage is :\n %s' % e)
+            raise JunkmanInitializeFailed
         base_data = junkman.work_stream()
         if not base_data:
-            raise
+            logger.error('junkman work complete, nothing return')
+            raise JunkmanWorkError
         base_data_list.append(base_data)
     return base_data_list, collect_type_list
 
@@ -111,11 +121,18 @@ def process_dispatch(original_data_list, target_field_name, collect_type_list):
         for feature_name in target_field_name:
             obj_string = cons.LP_BASE_HANDLE + cons.HANDLE_COMBINE + 'lp_' + \
                          feature_name + cons.HANDLE_COMBINE + cons.HANDLE_CLASS
-            obj = import_string(obj_string)
-            handler = obj(original_data.get(feature_map[feature_name], None))
-            logger.info('get handle --%s--', obj_string)
+            try:
+                obj = import_string(obj_string)
+                handler = obj(original_data.get(feature_map[feature_name], None))
+            except Exception as e:
+                logger.error('%s \nhandle init error , massage is :\n %s' % (obj_string, e))
+                raise HandleInitializeFailed
+            logger.info('get handle --%s--' % obj_string)
             ret = handler.handle()
-            logger.info('Handle completed, result is %s', ret)
+            logger.info('Handle completed, result is %s' % ret)
+            if not ret:
+                logger.error('handle work complete, nothing return: %s' % obj_string)
+                raise HandleWorkError
             ret_data.update(ret)
         # TODO ret中是处理出来的特征 这一层循环结束 储存一下子
     return ret_data
