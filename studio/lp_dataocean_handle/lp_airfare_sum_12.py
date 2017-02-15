@@ -11,6 +11,7 @@ import logging
 from featurefactory.vendor.errors.fecture_error import MyException
 logger = logging.getLogger('apps.common')
 
+
 class Handle(object):
 
     def __init__(self, data):
@@ -27,7 +28,7 @@ class Handle(object):
         """
         try:
             result = {
-                'airfare_sum_12': 999999
+                'airfare_sum_12': 9999.0
             }
             tip = self.data.get('result', None)
             if not tip:
@@ -36,7 +37,7 @@ class Handle(object):
                 average_price = self.data['content'].get('average_price', None)
                 flight_times = self.data['content'].get('flight_times', None)
                 if average_price and flight_times:
-                    result['airfare_sum_12'] = average_price * flight_times
+                    result['airfare_sum_12'] = float(average_price * flight_times)
         except MyException as e:
             logging.error(e.message)
         except Exception as e:

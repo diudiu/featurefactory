@@ -42,7 +42,7 @@ class Handle(object):
         'name': 姓名 str
         """
         try:
-            result = {'name': 9999}
+            result = {'name': '9999'}
             base_data = self.data.get("name", '')
             if base_data and isinstance(base_data, basestring):
                 result['name'] = base_data

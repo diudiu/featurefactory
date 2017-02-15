@@ -23,7 +23,7 @@ class Handle(object):
         特征名称：graduate_college_check 学信网查得院校
         """
 
-        result = {'graduate_college_check': 9999}
+        result = {'graduate_college_check': '9999'}
 
         try:
             college_name = self.data['content']['degree'].get('college', None)

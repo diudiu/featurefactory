@@ -26,7 +26,7 @@ class Handle(object):
         特征名称：mobile_activeness   申请人手机号活跃度
         """
 
-        mobile_activeness_dic = {'mobile_activeness': 9999}  # 9999：异常
+        mobile_activeness_dic = {'mobile_activeness': 9999.0}  # 9999.0：异常
 
         try:
             tags = self.data['data']['tags']

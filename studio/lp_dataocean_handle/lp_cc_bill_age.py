@@ -23,7 +23,7 @@ class Handle(object):
 
         输出:
         特征名称:
-        'cc_bill_age': 贷记卡账龄 str
+        'cc_bill_age': 贷记卡账龄 int
         """
 
         result = {
@@ -31,7 +31,8 @@ class Handle(object):
         }
         try:
             base_data = self.data["result"]["rrx_once_all"]["credit_card_account_age"]
-            if not base_data or not isinstance(base_data, str):
+            base_data = int(base_data)
+            if not base_data or not isinstance(base_data, int):
                 return result
 
             result["cc_bill_age"] = base_data

@@ -24,7 +24,7 @@ class Handle(object):
         特征名称：cur_work_status  当前工作状态
         """
 
-        result = {'cur_work_status': 9999}
+        result = {'cur_work_status': '9999'}
 
         try:
             cur_work_status = self.data.get('cur_status', None)

@@ -29,7 +29,7 @@ class Handle(object):
         特征名称：max_flight_class           一年内飞机出行中最多机舱类型
         """
         try:
-            result = {'max_flight_class': 9999}  # 9999：异常
+            result = {'max_flight_class': '9999'}  # 9999：异常
             tip = self.data.get('result', None)
             if not tip:
                 raise MyException(message='get (result) fail')

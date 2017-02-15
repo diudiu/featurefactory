@@ -31,8 +31,8 @@ class Handle(object):
         'mobile': 手机号 str
         """
         try:
-            result = {'mobile': 9999}
-            base_data = self.data.get("mobile", '')
+            result = {'mobile': '9999'}
+            base_data = self.data.get('mobile', '')
             if str(base_data).isdigit():
                 result['mobile'] = base_data
 

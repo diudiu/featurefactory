@@ -23,7 +23,7 @@ class Handle(object):
         特征名称：college_type 毕业/在读学校类型
         """
 
-        result = {'college_type': 9999}
+        result = {'college_type': '9999'}
 
         try:
             college_nature = self.data['content']['college'].get('school_nature', None)

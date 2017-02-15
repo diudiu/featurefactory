@@ -23,7 +23,7 @@ class Handle(object):
         特征名称：degree_code                学历code
         """
 
-        result = {'education_degree_check': 9999}
+        result = {'education_degree_check': '9999'}
 
         try:
             degree = self.data['content'].get('degree', None)

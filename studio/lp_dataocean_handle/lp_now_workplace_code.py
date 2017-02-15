@@ -28,7 +28,7 @@ class Handle(object):
         """
 
         # TODO 抽取DataOcean返回的源数据
-        now_workplace_code_dic = {'now_workplace_code': 9999}  # 9999：异常
+        now_workplace_code_dic = {'now_workplace_code': '9999'}  # 9999：异常
 
         try:
             work_exp_form = self.data['work_exp_form']

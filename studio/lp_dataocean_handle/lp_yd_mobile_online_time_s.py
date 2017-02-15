@@ -24,7 +24,7 @@ class Handle(object):
         :return:
         """
         try:
-            result = {"online_time": 9999}
+            result = {"online_time": '9999'}
             tip = self.data.get('result', None)
             if not tip:
                 raise MyException(message='get (result) fail')

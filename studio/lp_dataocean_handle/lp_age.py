@@ -26,11 +26,11 @@ class Handle(object):
         输出:
         特征名称:
         'age': 年龄 int
-        'gender': 性别 str
+        'gender': 性别 int
         """
 
         result = {
-            'age': 9999,
+            'age': '9999',
         }
         try:
             base_data_age = self.data["content"]["age"]

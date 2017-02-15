@@ -13,6 +13,7 @@ import logging
 from featurefactory.vendor.errors.fecture_error import MyException
 logger = logging.getLogger('apps.common')
 
+
 class Handle(object):
 
     def __init__(self, liantong_data, liepin_data):
@@ -34,7 +35,7 @@ class Handle(object):
         特征名称：income_level        年入账
         """
 
-        result = {'income_level': 999999}  # 999999：异常
+        result = {'income_level': 9999}  # 999999：异常
 
         liantong_income_range = None
         try:

@@ -23,7 +23,7 @@ class Handle(object):
 
         输出:
         特征名称:
-        'creditcard_count': 信用卡张数 str
+        'creditcard_count': 信用卡张数 int
         """
 
         result = {
@@ -31,7 +31,8 @@ class Handle(object):
         }
         try:
             base_data = self.data["result"]["rrx_once_all"]["credit_cards_num"]
-            if not base_data or not isinstance(base_data, str):
+            base_data = int(base_data)
+            if not base_data or not isinstance(base_data, int):
                 return result
 
             result["creditcard_count"] = base_data

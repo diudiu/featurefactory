@@ -44,7 +44,7 @@ class Handle(object):
         work_end_list = []
         for work_exp in work_exp_form:
             work_end = work_exp.get('work_end', None)
-            if not isinstance(work_end, (str, int)):
+            if not isinstance(work_end, (basestring, int)):
                 return now_work_time_dic
             else:
                 work_end_list.append(int(work_end))

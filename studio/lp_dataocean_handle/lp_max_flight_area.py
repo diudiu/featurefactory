@@ -28,7 +28,7 @@ class Handle(object):
         特征名称：max_flight_area            一年内飞机最多出行区域
         """
         try:
-            result = {'max_flight_area': 9999}  # 9999：异常
+            result = {'max_flight_area': '9999'}  # 9999：异常
             tip = self.data.get('result', None)
             if not tip:
                 raise MyException(message='get (result) fail')

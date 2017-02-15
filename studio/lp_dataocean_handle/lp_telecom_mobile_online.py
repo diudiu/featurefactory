@@ -11,6 +11,7 @@ import logging
 from featurefactory.vendor.errors.fecture_error import MyException
 logger = logging.getLogger('apps.common')
 
+
 class Handle(object):
 
     def __init__(self, data):
@@ -21,7 +22,7 @@ class Handle(object):
             输出：电信手机号在网时长
               '''
         result = {
-             "online_time": 9999
+             "online_time": '9999'
         }
 
         try:

@@ -34,7 +34,7 @@ class Handle(object):
 
         try:
             result = {
-                'application_on': 999999,
+                'application_on': '9999',
             }
             apply_data = self.data["application_on"]
 

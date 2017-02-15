@@ -35,7 +35,7 @@ class Handle(object):
 
         try:
             result = {
-                'apply_register_duration': 999999,
+                'apply_register_duration': 9999.0,
             }
             apply_data = self.data["apply_data"]["application_on"][:10]
             if not apply_data:

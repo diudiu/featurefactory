@@ -27,7 +27,7 @@ class Handle(object):
         特征名称：mobile_stability    申请人手机号稳定度
         """
 
-        mobile_stability_dic = {'mobile_stability': 9999}  # 9999：异常
+        mobile_stability_dic = {'mobile_stability': 9999.0}  # 9999：异常
 
         try:
             tags = self.data['data']['tags']

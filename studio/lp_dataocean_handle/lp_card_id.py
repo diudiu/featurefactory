@@ -28,11 +28,11 @@ class Handle(object):
         """
 
         result = {
-            'card_id': 9999,
+            'card_id': '9999',
         }
         try:
             base_data = self.data['card_id']
-            if not base_data or not isinstance(base_data, str):
+            if not base_data or not isinstance(base_data, basestring):
                 return result
 
             result['card_id'] = base_data

@@ -41,7 +41,7 @@ class Handle(object):
         'mobile_mark': 用户标注标签 str
         """
         try:
-            result = {'mobile_mark': 9999}
+            result = {'mobile_mark': '9999'}
             base_data = self.data.get("tags", {}).get("contactMain_IMSI1_IMEI1", {}).get("label", '')
             if base_data and isinstance(base_data, basestring):
                 result['mobile_mark'] = base_data

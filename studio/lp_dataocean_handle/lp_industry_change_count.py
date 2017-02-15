@@ -34,7 +34,7 @@ class Handle(object):
             industry_list = []
             for work_exp in work_exp_form:
                 industry = work_exp.get('industry', None)
-                if not isinstance(industry, (str, int)):
+                if not isinstance(industry, (basestring, int)):
                     return result
                 else:
                     industry_list.append(int(industry))
