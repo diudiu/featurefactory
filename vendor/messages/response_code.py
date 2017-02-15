@@ -7,6 +7,7 @@ class ResponseCode(object):
     """
     FAILED = 0
     SUCCESS = 1
+    FEATURE_SUCCESS = 1
 
     SERVER_BUSY = 5000
     REQUEST_TYPE_ERROR = 30001
@@ -16,8 +17,13 @@ class ResponseCode(object):
     MISSING_APPLY_ID = 30010
     MISSING_RES_KEYS = 30011
     MISSING_ARGUMENTS = 30012
+    MISSING_CALLBACK_URL = 30013
+    MISSING_PROPOSER_ID = 30014
+    MISSING_CLIENT_CODE = 30015
 
     DATABASE_ERROR = 40101
+
+    UNAVAILABLE_CLIENT_CODE = 50001
 
     RESPONSE_MESSAGE = {
         FAILED:                         u"操作失败",
@@ -31,8 +37,14 @@ class ResponseCode(object):
         MISSING_APPLY_ID:               u"传入数据内容缺失 apply_id",
         MISSING_RES_KEYS:               u"传入数据内容缺失 res_keys",
         MISSING_ARGUMENTS:              u"受信人输入数据缺失",
+        MISSING_CALLBACK_URL:           u"传入数据内容缺失 callback_url",
+        MISSING_PROPOSER_ID:            u"proposer_id 查询获取失败",
+        MISSING_CLIENT_CODE:            u"传入数据内容缺失 client_code",
 
         DATABASE_ERROR:                 u"数据库服务错误",
+
+        UNAVAILABLE_CLIENT_CODE:        u"client_code 无效 不存在的客户",
+        FEATURE_SUCCESS:                u"特征处理成功",
     }
 
     @classmethod

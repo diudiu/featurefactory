@@ -76,9 +76,5 @@ class FeatureExtract(CsrfExemptMixin, View):
                 cons.RESPONSE_REQUEST_MESSAGE: e.message,
             }
 
-        # TODO finaly packing the response messages
-        finally:
-            pass
-
         # TODO return JSONResponse
         return JSONResponse(data)

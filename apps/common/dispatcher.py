@@ -7,14 +7,16 @@
     Date:  2016/12/26
     Change Activity:
 """
-
+import logging
 from django.utils.module_loading import import_string
 
 from apps.common.models import ClientOverview
 from apps.datasource.models import DsInterfaceInfo
-from apps.etl.models import FeatureProcessInfo
 from apps.remote.models import FeatureFieldRel
 from vendor.utils.constant import cons
+from vendor.errors.contact_error import *
+
+logger = logging.getLogger('apps.etl')
 
 
 def client_dispatch(client_code, content):
@@ -28,8 +30,8 @@ def client_dispatch(client_code, content):
     """
     handle_base = ClientOverview.objects.filter(client_code=client_code)
     if not handle_base.count():
-        # TODO 数据库里面查不到这个客户端code
-        raise
+        logger.error('client code unavailable, no such client %s', client_code)
+        raise ClientCodeInexistence
 
     data = handle_base[0]
     obj_string = data.manage_type
@@ -40,7 +42,7 @@ def client_dispatch(client_code, content):
 
     try:
         obj = import_string(obj_string)
-        judger = obj(content)
+        judger = obj(content, client_code)
     except Exception as e:
         # TODO 初始化对象失败, 可能是manage_type错误 或者参数错误乱七八糟的  具体异常会抛出
         raise
@@ -111,7 +113,9 @@ def process_dispatch(original_data_list, target_field_name, collect_type_list):
                          feature_name + cons.HANDLE_COMBINE + cons.HANDLE_CLASS
             obj = import_string(obj_string)
             handler = obj(original_data.get(feature_map[feature_name], None))
+            logger.info('get handle --%s--', obj_string)
             ret = handler.handle()
+            logger.info('Handle completed, result is %s', ret)
             ret_data.update(ret)
         # TODO ret中是处理出来的特征 这一层循环结束 储存一下子
     return ret_data
