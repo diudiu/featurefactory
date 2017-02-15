@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 import unittest
-from featurefactory.studio.lp_dataocean_handle.lp_airfare_sum_12 import Handle
+from studio.lp_dataocean_handle.lp_airfare_sum_12 import Handle
 
 data = {
           "result": "00",

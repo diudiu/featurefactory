@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 import unittest
-from featurefactory.studio.lp_dataocean_handle.lp_tianwang_black import Handle
+from studio.lp_dataocean_handle.lp_tianwang_black import Handle
 data = {
     "result": "00",
     "result_message": "检测通过或查询有记录",

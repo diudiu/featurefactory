@@ -7,7 +7,8 @@
     Date:  2017/01/20
     Change Activity:
 """
-# TODO
+import logging
+logger = logging.getLogger('apps.common')
 
 
 class Handle(object):
@@ -21,14 +22,13 @@ class Handle(object):
         data_identity: court_shixin_a_s
         :return:
         """
-        result = {
-            'is_court_shixin': False
-        }
-        tip = self.data.get('result', None)
-        if not tip:
-            return result
-
-        if self.data['result'] == u'00':
-            result['is_court_shixin'] = True
+        try:
+            result = {
+                'is_court_shixin': False
+            }
+            if self.data['result'] == u'00':
+                result['is_court_shixin'] = True
+        except Exception as e:
+            logging.info(e.message)
 
         return result

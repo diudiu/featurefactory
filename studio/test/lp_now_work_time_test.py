@@ -1,5 +1,8 @@
+# -*- coding:utf-8 -*-
+
 import unittest
-from studio.lp_dataocean_handle.lp_lp_income_level import Handle
+from studio.lp_dataocean_handle.lp_now_work_time import Handle
+
 data = {
         "product_code": "string",
         "registration_on": "2016-01-18",
@@ -13,7 +16,7 @@ data = {
         "now_indust_name": "string",
         "work_age": 0,
         "complete_degree": 65,
-        "cur_status": "string",
+        "cur_status": "在职",
         "upload_contact": 0,
         "sns_friends_cnt": 0,
         "sns_sd_friend_cnt": 0,
@@ -30,10 +33,10 @@ data = {
                 "has_certified": "string",
                 "certified_num": 0,
                 "comp_name": "string",
-                "months": 12,
-                "salary": 1000,
-                "work_start": "string",
-                "work_end": "11",
+                "months": 0,
+                "salary": 0,
+                "work_start": "201602",
+                "work_end": "201702",
                 "industry": "string",
                 "industry_name": "string",
                 "dq": "string",
@@ -58,7 +61,7 @@ class TestPlugin(unittest.TestCase):
     def setUp(self):
         self.data = data
 
-    def test_lp_income_level(self):
+    def test_lp_net_black_a_s(self):
         data = self.data.copy()
         handler = Handle(data)
         res = handler.handle()

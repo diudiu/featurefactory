@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 import unittest
-from featurefactory.studio.lp_dataocean_handle.lp_application_on import Handle
+from studio.lp_dataocean_handle.lp_application_on import Handle
 data = {
     "product_code": "890wefjf320if0i302f0j3f0f",
     "apply_id": "APPLY20161011111111890934",
