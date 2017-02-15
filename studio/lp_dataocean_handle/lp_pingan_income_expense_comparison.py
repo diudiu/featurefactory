@@ -13,6 +13,8 @@ class Handle(object):
 
     def __init__(self, data):
         self.data = data
+        # self.raise_error = False
+        self.exception = None
 
     def handle(self):
         """
@@ -25,12 +27,12 @@ class Handle(object):
         输出：
         特征名称：income_expense_comparison  入账与支出关系
         """
-
         result = {"income_expense_comparison": 9999}
 
         try:
             income_level = self.data['result']['rrx_inc_12m']['debit_card_12m_passentry_amount']
             expense_level = self.data['result']['rrx_inc_12m']['debit_card_12m_chargeoff_amount']
+
             amount_list = ['0' + str(x) for x in range(0, 10)]
             amount_list = amount_list + [str(x) for x in range(10, 40)]
             if income_level is not None and expense_level is not None:
