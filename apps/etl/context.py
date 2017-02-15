@@ -174,3 +174,9 @@ class PortraitContext(BaseContext):
         query = {'proposer_id': self.apply_id}
         data = self.portrait_base.search(query)
         return data
+
+    def get(self, key):
+        pass
+
+    def set(self, **kwargs):
+        pass

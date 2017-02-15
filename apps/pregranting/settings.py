@@ -5,7 +5,7 @@ from django.utils.importlib import import_module
 
 logger = logging.getLogger('apps.openapi')
 
-PRE_GRANT_MODEL_CLS = 'apps.pregrant.sublevel.LinearPreGrant'
+PRE_GRANT_MODEL_CLS = 'apps.pregranting.sublevel.LinearPreGrant'
 
 
 def get_pre_grant_model(identity):

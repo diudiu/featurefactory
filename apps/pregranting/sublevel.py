@@ -3,7 +3,7 @@
 import logging
 import operator
 
-from apps.etl.context import AuditInfoContext
+from apps.etl.context import PortraitContext
 
 from .base import GrantCreditAbstract
 from .dao import PreModelDao
@@ -17,7 +17,7 @@ class BasePreGrant(object):
 
     def __init__(self, identity):
         self.feature_library = {}
-        self.feature_context = AuditInfoContext(identity)
+        self.feature_context = PortraitContext(identity)
 
 
 class LinearPreGrant(GrantCreditAbstract, BasePreGrant):
@@ -126,7 +126,7 @@ class LinearPreGrant(GrantCreditAbstract, BasePreGrant):
             })
 
         # save
-        self.feature_context.set(lazy=False, **to_be_init_features)
+        self.feature_context.set(**to_be_init_features)
 
         all_field_by_model = self.dao.get_model_field_list(self.name)
         self.feature_library = {feature: self.feature_context.get(feature) for feature in all_field_by_model}

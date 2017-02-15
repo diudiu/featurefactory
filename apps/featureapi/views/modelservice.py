@@ -7,7 +7,7 @@ from django.http.response import JsonResponse
 from django.views.generic import View
 
 from apps.common.models import ClientOverview
-
+from apps.pregranting.settings import get_pre_grant_model
 from vendor.messages.response_code import ResponseCode
 from vendor.errors.api_errors import UserIdentityError
 
@@ -47,13 +47,15 @@ class ModelPreGranting(CsrfExemptMixin, IdentityVerifyMixin, View):
             if not self.verify():
                 raise UserIdentityError()
 
-            # TODO 调用实际的预授信处理方法
+            # 用proposer_id 获取
+            model = get_pre_grant_model(proposer_id)
+            pre_grant_amount = model.grant()
 
             data.update({
                 'res_data': {
                     'result': 1,
                     'result_message': u'业务处理成功',
-                    'pre_grant_amount': 10000
+                    'pre_grant_amount': pre_grant_amount
                 }
             })
         except (UserIdentityError, ) as e:
