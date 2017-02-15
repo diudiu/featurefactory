@@ -46,6 +46,21 @@ class ArgumentsAvailableError(ServerError):
     message = ResponseCode.message(status)
 
 
+class CallBackUrlMissing(ServerError):
+    status = ResponseCode.MISSING_CALLBACK_URL
+    message = ResponseCode.message(status)
+
+
+class ProposerIdMissing(ServerError):
+    status = ResponseCode.MISSING_PROPOSER_ID
+    message = ResponseCode.message(status)
+
+
+class ClientCodeMissing(ServerError):
+    status = ResponseCode.MISSING_CLIENT_CODE
+    message = ResponseCode.message(status)
+
+
 class ServerBusy(ServerError):
     status = ResponseCode.SERVER_BUSY
     message = ResponseCode.message(status)
