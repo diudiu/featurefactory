@@ -6,7 +6,23 @@
     Author: ZL
     Date:  2017/01/18
     Change Activity:
+
+    data = {
+    "product_code": "890wefjf320if0i302f0j3f0f",
+    "apply_id": "APPLY20161011111111890934",
+    "callback": "http://10.20.1.110/api/credit/result/",
+    "name": "张三",
+    "card_id": "411402198002039872",
+    "mobile": "18989821092",
+    "longitudu": 23.45678,
+    "latitude": 145.23342,
+    "contacts": 30,
+    "application_on": "2017-02-01 12:20:10",
+}
 """
+import logging
+
+logger = logging.getLogger('apps.common')
 
 
 class Handle(object):
@@ -17,7 +33,7 @@ class Handle(object):
     def handle(self):
 
         """
-        接口名称：猎聘
+        接口名称：猎聘申请信息上传接口
         字段名称：
         'name': 姓名
 
@@ -25,18 +41,13 @@ class Handle(object):
         特征名称:
         'name': 姓名 str
         """
-
-        result = {
-            "name": 999999,
-        }
         try:
-            base_data = self.data["name"]
+            result = {'name': 9999}
+            base_data = self.data.get("name", '')
+            if base_data and isinstance(base_data, basestring):
+                result['name'] = base_data
         except Exception as e:
-            # TODO log this error
-            return result
-        if not base_data or not isinstance(base_data, str):
-            return result
-
-        result["name"] = base_data
-
+            logging.error(e.message)
         return result
+
+
