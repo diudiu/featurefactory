@@ -2,15 +2,15 @@ import unittest
 from studio.lp_dataocean_handle.lp_telecom_mobile_identity_s import Handle
 
 data = {
-        "result": "00",
-        "result_message": "",
-        "content": {}
-    }
+    "result": "00",
+    "result_message": "",
+    "content": {}
+}
 
 results = [u'00', u'11', u'22', '', None]
 
-class TestPlugin(unittest.TestCase):
 
+class TestPlugin(unittest.TestCase):
     def setUp(self):
         self.data = data
         self.results = results

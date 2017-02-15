@@ -2,7 +2,7 @@
 
 import unittest
 
-from  studio.lp_dataocean_handle.lp_unicom_income_expense_comparison import Handle
+from studio.lp_dataocean_handle.lp_unicom_income_expense_comparison import Handle
 
 data = {
     "result": "00",
