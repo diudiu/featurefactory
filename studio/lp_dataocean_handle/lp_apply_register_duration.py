@@ -8,13 +8,13 @@
     Change Activity:
 """
 from datetime import datetime
-import time
+
 import logging
-from featurefactory.vendor.errors.fecture_error import MyException
+
 logger = logging.getLogger('apps.common')
 
-class Handle(object):
 
+class Handle(object):
     def __init__(self, data):
         self.data = data
 
@@ -34,27 +34,17 @@ class Handle(object):
         """
         try:
             result = {
-                'apply_register_duration': 999999,
+                'apply_register_duration': 9999,
             }
             apply_data = self.data["apply_data"]["application_on"][:10]
-            if not apply_data:
-                raise MyException(message='get (label) fail')
-            if not isinstance(apply_data, basestring):
-                raise MyException(message='get (label) fail')
-            apply_data = datetime.strptime(apply_data, "%Y-%m-%d")
             register_data = self.data["portrait_data"]["registration_on"][:10]
-            if not register_data:
-                raise MyException(message='get (label) fail')
-            if not isinstance(register_data, basestring):
-                raise MyException(message='get (label) fail')
+            apply_data = datetime.strptime(apply_data, "%Y-%m-%d")
             register_data = datetime.strptime(register_data, "%Y-%m-%d")
-            register_time = datetime(register_data.year, register_data.month, register_data.day)
-            apply_time = datetime(apply_data.year, apply_data.month, apply_data.day)
-            apply_register = (apply_time - register_time).days/30.0
-            result['apply_register_duration'] = apply_register
-        except MyException as e:
-                logging.error(e.message)
+            apply_register = (apply_data - register_data).days / 30.0
+            if apply_register > 0:
+                result['apply_register_duration'] = apply_register
+
         except Exception as e:
-                logging.error(e.message)
-        finally:
-            return result
+            logging.error(e.message)
+
+        return result

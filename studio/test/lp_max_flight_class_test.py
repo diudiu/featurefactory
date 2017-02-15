@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 import unittest
-from featurefactory.studio.lp_dataocean_handle.lp_max_flight_class import Handle
+from studio.lp_dataocean_handle.lp_max_flight_class import Handle
 
 data = {
           "result": "00",

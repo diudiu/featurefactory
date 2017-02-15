@@ -47,7 +47,7 @@ class LinearPreGrant(GrantCreditAbstract, BasePreGrant):
         feature_val_weight = {feature: _get_weight(option_weight_map, feature, val) for feature, val
                               in self.feature_library.iteritems()}
 
-        annual_income = self.feature_context.get('annual_income')
+        annual_income = self.feature_context.get_data('annual_income')
         feature_val_weight.update({'annual_income': annual_income})
         sub_level = self.dao.get_sub_level(self.name, annual_income)
         if sub_level is not None:
@@ -88,7 +88,7 @@ class LinearPreGrant(GrantCreditAbstract, BasePreGrant):
         }
 
         # process industry_code, is_on_the_job, highest_education, annual_income
-        work_exp_form = self.feature_context.get('work_exp_form')
+        work_exp_form = self.feature_context.get_data('work_exp_form')
         logger.debug('\n\twork_exp_form=%s', work_exp_form)
 
         # for is_on_the_job annual_income
@@ -105,7 +105,7 @@ class LinearPreGrant(GrantCreditAbstract, BasePreGrant):
             })
 
         # for highest_education
-        edu_exp_form = self.feature_context.get('edu_exp_form')
+        edu_exp_form = self.feature_context.get_data('edu_exp_form')
         logger.debug('\n\twork_exp_form=%s', work_exp_form)
         if edu_exp_form and isinstance(edu_exp_form, list):
             edu_first = edu_exp_form[:1][0]
@@ -126,10 +126,10 @@ class LinearPreGrant(GrantCreditAbstract, BasePreGrant):
             })
 
         # save
-        self.feature_context.set(**to_be_init_features)
+        self.feature_context.set_data(**to_be_init_features)
 
         all_field_by_model = self.dao.get_model_field_list(self.name)
-        self.feature_library = {feature: self.feature_context.get(feature) for feature in all_field_by_model}
+        self.feature_library = {feature: self.feature_context.get_data(feature) for feature in all_field_by_model}
         logger.debug('\n\t===> all field by model=%s\n feature library=%s', all_field_by_model, self.feature_library)
 
         logger.info('\n\t===> init features=%s\n\n===> end for %s.pre_process', to_be_init_features, self.__class__.name)

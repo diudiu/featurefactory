@@ -13,4 +13,5 @@ urlpatterns = patterns(
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^syph-ff/feature/', include(feature_url)),
+    url(r'^api/', include(feature_url)),
 )

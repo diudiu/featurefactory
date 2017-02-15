@@ -14,7 +14,8 @@ def feature_post():
             'apply_id': 'APPLY20170213143121831017716',
             'callback_url': 'http://0.0.0.0:10086',
             'res_keys': [
-                'online_time'
+                'online_time',
+                'mobile_identity',
             ],
         },
     }

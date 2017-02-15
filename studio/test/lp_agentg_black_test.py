@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 import unittest
-from featurefactory.studio.lp_dataocean_handle.lp_agentg_black import Handle
+from studio.lp_dataocean_handle.lp_agentg_black import Handle
 
 data = {
         "result": "00",

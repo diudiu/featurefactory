@@ -7,10 +7,12 @@
     Date:  2017/02/10
     Change Activity:
 """
+import logging
+
+logger = logging.getLogger('apps.common')
 
 
 class Handle(object):
-
     def __init__(self, data):
         self.data = data
 
@@ -24,9 +26,8 @@ class Handle(object):
         """
 
         result = {'education_degree_check': 9999}
-
         try:
-            degree = self.data['data']['result'].get('degree', None)
+            degree = self.data['content'].get('degree', None)
             if degree:
                 education_degree = degree.get('degree', None)
                 if '博士后' in education_degree:
@@ -51,8 +52,7 @@ class Handle(object):
                     result['education_degree_check'] = '90'
                 else:
                     result['education_degree_check'] = '999'
-        except Exception:
-            # TODO log this error
-            return result
+        except Exception as e:
+            logging.error(e.message)
 
         return result

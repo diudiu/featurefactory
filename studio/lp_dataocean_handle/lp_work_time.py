@@ -11,7 +11,6 @@
 import numpy as np
 from datetime import datetime
 import logging
-from featurefactory.vendor.errors.fecture_error import MyException
 logger = logging.getLogger('apps.common')
 
 class Handle(object):
@@ -31,8 +30,7 @@ class Handle(object):
         try:
             work_time_dic = {'work_time': 9999}  # 9999：异常
             work_exp_form = self.data['work_exp_form']
-            if not isinstance(work_exp_form, list):
-                raise MyException(message='get (work_exp_form) data format error')
+            assert type(work_exp_form) == list
            # TODO 计算维度
             work_start_list = []
             for work_exp in work_exp_form:
@@ -48,9 +46,8 @@ class Handle(object):
                 worktime = datetime.now() - work_start
                 worktime_month = worktime.days / 30
                 work_time_dic['work_time'] = worktime_month
-        except MyException as e:
-                logging.error(e.message)
+
         except Exception as e:
                 logging.error(e.message)
-        finally:
-            return work_time_dic
+
+        return work_time_dic

@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 import unittest
-from  featurefactory.studio.lp_dataocean_handle.lp_unicom_mobile_online_time_s import Handle
+from studio.lp_dataocean_handle.lp_unicom_mobile_online_time_s import Handle
 
 data = {
     "result": "00",
