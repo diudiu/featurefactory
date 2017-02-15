@@ -1,13 +1,17 @@
+# -*- coding:utf-8 -*-
+
 import unittest
-from studio.lp_dataocean_handle.lp_telecom_mobile_identity_s import Handle
 
-data = {
-        "result": "00",
-        "result_message": "",
-        "content": {}
-    }
+from studio.lp_dataocean_handle.lp_mobile_locale import Handle
 
-results = [u'00', u'11', u'22', '', None]
+data = {"result": "00",
+        "result_message": "检测通过或查询有记录",
+        "content": {
+            "mobile_area": "北京",
+        },
+}
+results = [u'00', u'11', u'22', '']
+
 
 class TestPlugin(unittest.TestCase):
 
@@ -15,7 +19,7 @@ class TestPlugin(unittest.TestCase):
         self.data = data
         self.results = results
 
-    def test_unicom_mobile_identity_s(self):
+    def test_agentg_black(self):
         data = self.data.copy()
         for result in results:
             data["result"] = result

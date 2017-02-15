@@ -1,13 +1,14 @@
+# -*- coding:utf-8 -*-
+
 import unittest
-from studio.lp_dataocean_handle.lp_telecom_mobile_identity_s import Handle
-
+from studio.lp_dataocean_handle.lp_court_zhixing_a_s import  Handle
 data = {
+    "result_message": "检测通过或查询有记录",
         "result": "00",
-        "result_message": "",
         "content": {}
-    }
 
-results = [u'00', u'11', u'22', '', None]
+    }
+results = [u'00', u'11', u'22', '']
 
 class TestPlugin(unittest.TestCase):
 
@@ -15,14 +16,13 @@ class TestPlugin(unittest.TestCase):
         self.data = data
         self.results = results
 
-    def test_unicom_mobile_identity_s(self):
+    def test_court_shixin_a_s(self):
         data = self.data.copy()
         for result in results:
             data["result"] = result
             handler = Handle(data)
             res = handler.handle()
             print res
-
 
 if __name__ == '__main__':
     unittest.main()

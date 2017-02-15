@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 import unittest
-from featurefactory.studio.lp_dataocean_handle.lp_apply_register_duration import Handle
+from studio.lp_dataocean_handle.lp_apply_register_duration import Handle
 data = {
     "apply_data": {
         "product_code": "890wefjf320if0i302f0j3f0f",

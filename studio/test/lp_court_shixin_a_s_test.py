@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 
 import unittest
-from featurefactory.studio.lp_dataocean_handle.lp_court_shixin_a_s import  Handle
+from studio.lp_dataocean_handle.lp_court_shixin_a_s import  Handle
 data = {
     "result_message": "检测通过或查询有记录",
         "result": "00",

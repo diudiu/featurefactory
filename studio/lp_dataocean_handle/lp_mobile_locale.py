@@ -8,7 +8,9 @@
     Change Activity:
 """
 # TODO
-
+import logging
+from vendor.errors.fecture_error import MyException
+logger = logging.getLogger('apps.common')
 
 class Handle(object):
 
@@ -21,15 +23,21 @@ class Handle(object):
         输出：手机号码归属地
         :return:
         """
-        result = {
-             "mobile_area": "",
-        }
         try:
-            mobile_area = self.data['content']['mobile_area']
-        except Exception:
-            # TODO log this error
-            mobile_area = "NONE"
-
-        result['mobile_area'] = mobile_area
-
-        return result
+            result = {
+             "mobile_area": "",
+            }
+            tip = self.data.get('result', None)
+            if not tip:
+                raise MyException(message='get (result) fail')
+            if self.data['result'] == u'00':
+                mobile_area = self.data['content']['mobile_area']
+            else:
+                mobile_area = "NONE"
+            result['mobile_area'] = mobile_area
+        except MyException as e:
+            logging.error(e.message)
+        except Exception as e:
+            logging.error(e.message)
+        finally:
+            return result

@@ -7,7 +7,6 @@
     Date:  2017/01/20
     Change Activity:
 """
-
 import logging
 
 logger = logging.getLogger('apps.common')

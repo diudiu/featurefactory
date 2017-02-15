@@ -10,7 +10,7 @@
 from datetime import datetime
 import time
 import logging
-from featurefactory.vendor.errors.fecture_error import MyException
+from vendor.errors.fecture_error import MyException
 logger = logging.getLogger('apps.common')
 
 class Handle(object):

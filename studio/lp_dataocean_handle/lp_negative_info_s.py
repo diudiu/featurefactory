@@ -8,7 +8,9 @@
     Change Activity:
 """
 # TODO
-
+import logging
+from vendor.errors.fecture_error import MyException
+logger = logging.getLogger('apps.common')
 
 class Handle(object):
 
@@ -21,14 +23,18 @@ class Handle(object):
         data_identity: negative_info_s
         :return:
         """
-        result = {
-            'has_negative_info': False
-        }
-        tip = self.data.get('result', None)
-        if not tip:
+        try:
+            result = {
+                'has_negative_info': False
+            }
+            tip = self.data.get('result', None)
+            if not tip:
+                raise MyException(message='get (result) fail')
+            if self.data['result'] == u'00':
+                result['has_negative_info'] = True
+        except MyException as e:
+            logging.error(e.message)
+        except Exception as e:
+            logging.error(e.message)
+        finally:
             return result
-
-        if self.data['result'] == u'00':
-            result['has_negative_info'] = True
-
-        return result
