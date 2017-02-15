@@ -8,7 +8,6 @@
     Change Activity:
 """
 import logging
-from vendor.errors.fecture_error import MyException
 logger = logging.getLogger('apps.common')
 
 class Handle(object):
@@ -31,9 +30,8 @@ class Handle(object):
                 mobile_identity_dic['mobile_identity'] = 1
             else:
                 mobile_identity_dic['mobile_identity'] = 0
-        except MyException as e:
-            logging.error(e.message)
+
         except Exception as e:
             logging.error(e.message)
-        finally:
-            return mobile_identity_dic
+
+        return mobile_identity_dic

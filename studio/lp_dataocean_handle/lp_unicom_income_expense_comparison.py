@@ -8,7 +8,6 @@
     Change Activity:
 """
 import logging
-from vendor.errors.fecture_error import MyException
 logger = logging.getLogger('apps.common')
 
 class Handle(object):
@@ -29,7 +28,6 @@ class Handle(object):
         """
         try:
             result = {"income_expense_comparison": 9999}
-            tip = self.data.get('result', None)
             ls_dic = {'0': 500,
                       '1': 1500,
                       '2': 2500,
@@ -62,8 +60,7 @@ class Handle(object):
                       '1f': 2500000,
 
                       }
-            if not tip:
-                raise MyException(message='get (result) fail')
+
             if self.data['result'] == u'00':
                 income_level = None
                 expense_level = None
@@ -85,9 +82,8 @@ class Handle(object):
                     result['income_expense_comparison'] = 4
                 else:
                     result['income_expense_comparison'] = 5
-        except MyException as e:
-            logging.error(e.message)
+
         except Exception as e:
             logging.error(e.message)
-        finally:
-            return result
+
+        return result

@@ -10,7 +10,6 @@
 
 import numpy as np
 import logging
-from vendor.errors.fecture_error import MyException
 logger = logging.getLogger('apps.common')
 
 
@@ -32,23 +31,18 @@ class Handle(object):
         try:
             now_industry_code_dic = {'now_industry_code': 9999}  # 9999：异常
             work_exp_form = self.data['work_exp_form']
-            if not isinstance(work_exp_form, list):
-                raise MyException(message='get (work_exp_form) fail')
 
             # TODO 计算维度
             # 计算最近一份工作的工作行业
             work_end_list = []
             for work_exp in work_exp_form:
                 work_end = work_exp.get('work_end', None)
-                if not isinstance(work_end, (str, int)):
-                    raise MyException(message='get (work_end fail')
-                else:
+                if isinstance(work_end, (str, int)):
                     work_end_list.append(int(work_end))
             now_industry_code_dic['now_industry_code'] = work_exp_form[
                 np.argmax(work_end_list)].get('industry', None)
-        except MyException as e:
-            logging.error(e.message)
+
         except Exception as e:
             logging.error(e.message)
-        finally:
-            return now_industry_code_dic
+
+        return now_industry_code_dic

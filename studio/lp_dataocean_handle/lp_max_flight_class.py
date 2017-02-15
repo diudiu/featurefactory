@@ -8,7 +8,6 @@
     Change Activity:
 """
 import logging
-from vendor.errors.fecture_error import MyException
 logger = logging.getLogger('apps.common')
 
 
@@ -30,9 +29,7 @@ class Handle(object):
         """
         try:
             result = {'max_flight_class': 9999}  # 9999：异常
-            tip = self.data.get('result', None)
-            if not tip:
-                raise MyException(message='get (result) fail')
+
             if self.data['result'] == u'00':
                 content = self.data.get('content', None)
                 if content:
@@ -52,8 +49,7 @@ class Handle(object):
                         result['max_flight_class'] = '公务舱'
                     elif temp_index == 2:
                         result['max_flight_class'] = '商务舱'
-        except MyException as e:
-            logging.error(e.message)
+
         except Exception as e:
             logging.error(e.message)
         finally:

@@ -30,7 +30,7 @@ data = {
                 "total_distance": 2810,
           },
 }
-results = [u'00', u'11', u'22', '']
+results = ['00', '11', '22', '']
 
 
 class TestPlugin(unittest.TestCase):

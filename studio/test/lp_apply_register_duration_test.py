@@ -1,6 +1,10 @@
 # -*- coding:utf-8 -*-
 import unittest
 from studio.lp_dataocean_handle.lp_apply_register_duration import Handle
+<<<<<<< HEAD
+
+=======
+>>>>>>> ed2dd7ad4669a84c046eb83ac35f79ee9fc1c10c
 data = {
     "apply_data": {
         "product_code": "890wefjf320if0i302f0j3f0f",
@@ -71,8 +75,8 @@ data = {
 applications_on = ['2017-02-01 12:20:10', 'None']
 registrations_on = ['2017-02-01', 'None']
 
-class TestPlugin(unittest.TestCase):
 
+class TestPlugin(unittest.TestCase):
     def setUp(self):
         self.data = data
 

@@ -13,7 +13,7 @@ data = {
     "contacts": 30,
     "application_on": "2017-02-01 12:20:10",
 }
-apply_datas = ['2017-04-01 12:20:10', 'None', '']
+apply_datas = ['2017-04-01 12:20:10', '']
 
 
 class TestPlugin(unittest.TestCase):
