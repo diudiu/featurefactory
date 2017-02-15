@@ -10,7 +10,6 @@
 
 import numpy as np
 import logging
-from featurefactory.vendor.errors.fecture_error import MyException
 logger = logging.getLogger('apps.common')
 
 class Handle(object):
@@ -32,12 +31,8 @@ class Handle(object):
             result = {'income_level': 9999}  # 999999：异常
             work_exp_form = self.data.get('work_exp_form', None)
             work_end_list = []
-            if not work_exp_form:
-                raise MyException(message='get (work_exp_form) fail')
             for work_exp in work_exp_form:
                 work_end = work_exp.get('work_end', None)
-                if not work_end:
-                    raise MyException(message='get (work_end) fail')
                 work_end_list.append(int(work_end))
                 months = work_exp_form[np.argmax(work_end_list)].get('months', None)
                 salary = work_exp_form[np.argmax(work_end_list)].get('salary', None)
@@ -55,9 +50,7 @@ class Handle(object):
                         result['income_level'] = 4
                     elif 1000000 < lp_income_level:
                         result['income_level'] = 5
-        except MyException as e:
-                logging.error(e.message)
+
         except Exception as e:
                 logging.error(e.message)
-        finally:
-            return result
+        return result

@@ -7,14 +7,13 @@
     Date:  2017/01/18
     Change Activity:
 """
-from datetime import datetime
-import time
+
 import logging
-from featurefactory.vendor.errors.fecture_error import MyException
+
 logger = logging.getLogger('apps.common')
 
-class Handle(object):
 
+class Handle(object):
     def __init__(self, data):
         self.data = data
 
@@ -33,17 +32,13 @@ class Handle(object):
 
         try:
             result = {
-                'application_on': 999999,
+                'application_on': 9999,
             }
             apply_data = self.data["application_on"]
-            if not apply_data:
-                raise MyException(message='get (label) fail')
-            if not isinstance(apply_data, basestring):
-                raise MyException(message='get (label) data format error')
-            result['application_on'] = apply_data
-        except MyException as e:
-                logging.error(e.message)
+            if apply_data and isinstance(apply_data, basestring):
+                result['application_on'] = apply_data
+
         except Exception as e:
-                logging.error(e.message)
-        finally:
-            return result
+            logging.error(e.message)
+
+        return result

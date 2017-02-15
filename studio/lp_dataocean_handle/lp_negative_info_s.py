@@ -7,11 +7,13 @@
     Date:  2017/01/20
     Change Activity:
 """
-# TODO
+
+import logging
+
+logger = logging.getLogger('apps.common')
 
 
 class Handle(object):
-
     def __init__(self, data):
         self.data = data
 
@@ -21,14 +23,15 @@ class Handle(object):
         data_identity: negative_info_s
         :return:
         """
-        result = {
-            'has_negative_info': False
-        }
-        tip = self.data.get('result', None)
-        if not tip:
-            return result
+        try:
+            result = {
+                'has_negative_info': False
+            }
 
-        if self.data['result'] == u'00':
-            result['has_negative_info'] = True
+            if self.data['result'] == u'00':
+                result['has_negative_info'] = True
+
+        except Exception as e:
+            logging.error(e.message)
 
         return result

@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 
 import unittest
-from  featurefactory.studio.lp_dataocean_handle.lp_yd_mobile_online_time_s import Handle
+from studio.lp_dataocean_handle.lp_yd_mobile_online_time_s import Handle
 
 data = {
     "result": "00",
@@ -13,8 +13,8 @@ data = {
 online_times = ["(-2,-1)", "(0,3)", "[3,6)", "[6,12)", "[12,18)", "[18,24]", "(24,+)", "None", 5]
 results = ['00', '11', '22', None]
 
-class TestPlugin(unittest.TestCase):
 
+class TestPlugin(unittest.TestCase):
     def setUp(self):
         self.data = data
 
@@ -32,6 +32,7 @@ class TestPlugin(unittest.TestCase):
                     handler = Handle(data)
                     res = handler.handle()
                     print res
+
 
 if __name__ == '__main__':
     unittest.main()

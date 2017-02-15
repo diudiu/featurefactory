@@ -49,5 +49,5 @@ class Handle(object):
                 result['contacts_count'] = base_data
         except Exception as e:
             logging.error(e.message)
-        finally:
-            return result
+
+        return result

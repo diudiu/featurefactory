@@ -10,11 +10,11 @@
 
 import numpy as np
 import logging
-from featurefactory.vendor.errors.fecture_error import MyException
+
 logger = logging.getLogger('apps.common')
 
-class Handle(object):
 
+class Handle(object):
     def __init__(self, liantong_data, liepin_data):
         self.liantong_data = liantong_data
         self.liepin_data = liepin_data
