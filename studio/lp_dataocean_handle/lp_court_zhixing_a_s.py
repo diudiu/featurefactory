@@ -24,15 +24,14 @@ class Handle(object):
         data_identity: court_zhixing_a_s
         :return:
         """
+        result = {
+            'is_court_zhixing': False
+        }
         try:
-            result = {
-                'is_court_zhixing': False
-            }
-
             if self.data['result'] == '00':
                 result['is_court_zhixing'] = True
 
         except Exception as e:
             logging.info(e.message)
-
+            return result
         return result
