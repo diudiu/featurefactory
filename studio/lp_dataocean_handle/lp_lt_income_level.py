@@ -9,7 +9,9 @@
 """
 
 import numpy as np
-
+import logging
+from featurefactory.vendor.errors.fecture_error import MyException
+logger = logging.getLogger('apps.common')
 
 class Handle(object):
 
@@ -75,7 +77,7 @@ class Handle(object):
                     np.argmax(work_end_list)].get('months', None)
                 salary = work_exp_form[
                     np.argmax(work_end_list)].get('salary', None)
-                if isinstance(months, (int, str)) and isinstance(salary, (int, str)):
+                if isinstance(months, (int, basestring)) and isinstance(salary, (int, basestring)):
                     lp_income_level = round(
                         int(months) * int(salary) * 0.56, 2)
                     if lp_income_level < 10000:

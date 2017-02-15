@@ -6,11 +6,24 @@
     Author: LJY
     Date:  2017/01/23
     Change Activity:
+
+    data = {
+    "result": "00" ,
+    "result_message" : "检测通过或查询有记录",
+    "content" : {
+    "constellation" : "水瓶座",
+    "age": 24,
+    "home_address" : "江西-九江",
+    "sex" : "男"
+    },
+    }
 """
+import logging
+
+logger = logging.getLogger('apps.common')
 
 
 class Handle(object):
-
     def __init__(self, data):
         self.data = data
 
@@ -26,18 +39,14 @@ class Handle(object):
         字段名称:
         'gender': 性别
         """
-
-        result = {
-            'gender': 999999,
-        }
         try:
-            base_data = self.data['content']['sex']
+            result = {
+                'gender': 9999,
+            }
+            if self.data['result'] == '00':
+                base_data = self.data['content']['sex']
+                if base_data and isinstance(base_data, basestring):
+                    result['gender'] = base_data
         except Exception as e:
-            # TODO log this error
-            return result
-        if not base_data or not isinstance(base_data, str):
-            return result
-
-        result['gender'] = base_data
-
+            logging.info(e.message)
         return result

@@ -7,10 +7,12 @@
     Date:  2017/01/20
     Change Activity:
 """
+import logging
+
+logger = logging.getLogger('apps.common')
 
 
 class Handle(object):
-
     def __init__(self, data):
         self.data = data
 
@@ -25,35 +27,34 @@ class Handle(object):
         特征名称:
         'pingan_multi_loan_count': 多头借贷公司数量 int
         """
-
-        result = {
-            'pingan_multi_loan_count': 999999,
-        }
         try:
-            base_data = self.data["data"]["record"]["classification"]
+            result = {
+                'pingan_multi_loan_count': 9999,
+            }
+            if self.data.get('result', 0) == 0:
+                org_count = 0
+                records = self.data["data"]["record"]
+                for record in records:
+                    base_data = record.get("classification", [])
+                    for data in base_data:
+                        for in_data in data:
+                            try:
+                                other_org = int(data[in_data]["other"]["orgNums"])
+                            except:
+                                other_org = 0
+                            try:
+                                bank_org = int(data[in_data]["bank"]["orgNums"])
+                            except:
+                                bank_org = 0
+                            org_count = org_count + other_org + bank_org
+
+                result['pingan_multi_loan_count'] = org_count
+
         except Exception as e:
-            # TODO log this error
-            return result
-        if not base_data:
-            result['pingan_multi_loan_count'] = 0
-            return result
-        if isinstance(base_data, list):
+            logging.info(e.message)
+        finally:
             return result
 
-        org_count = 0
-        for data in base_data:
-            for in_data in data:
-                try:
-                    other_org = data[in_data]["other"]["orgNums"]
-                except Exception as e:
-                    # TODO log this error
-                    other_org = 0
-                try:
-                    bank_org = data[in_data]["bank"]["orgNums"]
-                except Exception as e:
-                    # TODO log this error
-                    bank_org = 0
-                org_count = org_count + other_org + bank_org
 
-        result['pingan_multi_loan_count'] = org_count
-        return result
+
+

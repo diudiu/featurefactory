@@ -6,13 +6,49 @@
     Author: ZL
     Date:  2017/01/18
     Change Activity:
+    data={
+        'loanInfos':[
+            {
+                'borrowType': 1,
+                'borrowState': 2,
+                'borrowAmount': 3,
+                'contractDate': 1343779200000,
+                'loanPeriod': 24,
+                'repayState': 7,
+                'arrearsAmount': 0,
+                'companyCode': 'P2P4HJK0000100010'
+            },
+            {
+                'borrowType': 1,
+                'borrowState': 1,
+                'borrowAmount': 3,
+                'contractDate': 1343779200000,
+                'loanPeriod': 24,
+                'repayState': 7,
+                'arrearsAmount': 0,
+                'companyCode': 'P2P4HJK0000100011'
+            },
+            {
+                'borrowType': 1,
+                'borrowState': 1,
+                'borrowAmount': 3,
+                'contractDate': 1343779200000,
+                'loanPeriod': 24,
+                'repayState': 7,
+                'arrearsAmount': 0,
+                'companyCode': 'P2P4HJK0000100011'
+            }
+        ]
+    }
 """
 from datetime import datetime
 import time
+import logging
+
+logger = logging.getLogger('apps.common')
 
 
 class Handle(object):
-
     def __init__(self, data):
         self.data = data
 
@@ -29,40 +65,24 @@ class Handle(object):
         字段名称:
         'jiuyao_multi_loan_denied_count': 拒贷次数
         """
-
-        result = {
-            'jiuyao_multi_loan_denied_count': 999999,
-        }
         try:
+            result = {
+                'jiuyao_multi_loan_denied_count': 9999,
+            }
+            count = 0
             base_data = self.data['loanInfos']
+            assert type(base_data) == list
+            for data in base_data:
+                base_time = data.get('contractDate', '')
+                if not str(base_time).isdigit():
+                    continue
+                times = int(time.time()) - (base_time / 1000)
+                if times <= 180 * 3600:
+                    count += 1
+            result['jiuyao_multi_loan_denied_count'] = count
 
         except Exception as e:
-            # TODO log this error
-            return result
-        if not base_data or not isinstance(base_data, list):
-            return result
+            logging.info(e.message)
 
-        base_time_list = [data.get('contractDate', 1) for data in base_data]
-        register_duration_list=[]
-        index_list=[]
-        index = 0
-        for base_time in base_time_list:
-
-            time_now = datetime.now()
-            value = time.localtime(base_time / 1000)
-            base_time = time.strftime('%Y-%m-%d %H:%M:%S', value)
-            base_time = datetime.strptime(base_time, '%Y-%m-%d %H:%M:%S')
-            register_duration = (time_now - base_time).days
-            register_duration_list.append(register_duration)
-
-        for register_duration in register_duration_list:
-            if register_duration <= 180:
-                index_list.append(index)
-            index += 1
-
-        denied_loan_list = []
-        for index in index_list:
-            denied_loan_list.append(base_data[index].get('borrowState', None))
-
-        result['jiuyao_multi_loan_denied_count'] = denied_loan_list.count(1)
         return result
+

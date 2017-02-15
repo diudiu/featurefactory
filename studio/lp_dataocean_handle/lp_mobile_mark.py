@@ -1,4 +1,5 @@
 # -*- coding:utf-8 -*-
+
 """
     License SYPH-L.
     Copyright (c) 2013- SYPH, All Rights Reserved.
@@ -6,11 +7,24 @@
     Author: ZL
     Date:  2017/01/20
     Change Activity:
+
+    data = {
+    "tags": {
+        "contactMain_IMSI1_IMEI1":
+            {
+                "city": "上海市上海市",
+                "label": "未被标记",
+                "operator": "上海移动",
+            },
+    },
+}
 """
+import logging
+
+logger = logging.getLogger('apps.common')
 
 
 class Handle(object):
-
     def __init__(self, data):
         self.data = data
 
@@ -26,18 +40,13 @@ class Handle(object):
         特征名称:
         'mobile_mark': 用户标注标签 str
         """
-
-        result = {
-            'mobile_mark': 999999,
-        }
         try:
-            base_data = self.data["tags"]["contactMain_IMSI1_IMEI1"]["label"]
+            result = {'mobile_mark': 9999}
+            base_data = self.data.get("tags", {}).get("contactMain_IMSI1_IMEI1", {}).get("label", '')
+            if base_data and isinstance(base_data, basestring):
+                result['mobile_mark'] = base_data
+
         except Exception as e:
-            # TODO log this error
+            logging.error(e.message)
+        finally:
             return result
-        if not base_data or not isinstance(base_data, str):
-            return result
-
-        result['mobile_mark'] = base_data
-
-        return result
