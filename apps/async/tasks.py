@@ -28,8 +28,27 @@ def audit_task(base_data):
     # TODO 这里调用一个原始数据收集分发器  再次返回一个数据对象
     original_data_list = data_get_dispatch(base_data)
     # TODO 这里调用一个特征处理分发器  依然返回一个数据对象
-    ret_data = process_dispatch(original_data_list)
+    target_field_list = [data['target_field_name'] for data in base_data['useful_args']]
+    ##################################################
+    # TODO 未来用消息队列做链接
+    #        _==/          i     i           \==_
+    #      /XX/            |\___/|            \XX\
+    #    /XXXX\            |XXXXX|            /XXXX\
+    #   |XXXXXX\_         _XXXXXXX_         _/XXXXXX|
+    #  XXXXXXXXXXXxxxxxxxXXXXXXXXXXXxxxxxxxXXXXXXXXXXX
+    # |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
+    # XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    # |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
+    #  XXXXXX/^^^^^\XXXXXXXXXXXXXXXXXXXXX/^^^^^\XXXXXX
+    #   |XXX|       \XXX/^^\XXXXX/^^\XXX/       |XXX|
+    #     \XX\       \X/    \XXX/    \X/       /XX/
+    #        "\       "      \X/      "      /"
+    ##################################################
+    ret_data = process_dispatch(original_data_list, target_field_list)
+
+    # TODO 这里有按要求取特征逻辑, 计算结束的特征全部存在mongo里面  而且已经准备就绪  取出来返回
+    # TODO 未来这里讲调用异步任务流
     if not ret_data:
         raise
 
-    logger.info('**********\nin the tasks\n**********\n')
+    logger.info('\n**********\nin the tasks\n**********\n')

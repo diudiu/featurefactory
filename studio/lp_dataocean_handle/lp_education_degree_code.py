@@ -34,11 +34,23 @@ class Handle(object):
             degree_list = []
             for edu_exp in edu_exp_form:
                 degree = edu_exp.get('degree', None)
-                if not isinstance(degree, (str, int)):
-                    return edu_exp_form
-                else:
-                    degree_list.append(int(degree))
-            result['education_degree_code'] = str(min(degree_list))
+                degree_list.append(degree)
+
+            if "5" in degree_list:
+                highest_degree = "1"
+            elif "10" in degree_list:
+                highest_degree = "1"
+            elif "20" in degree_list:
+                highest_degree = "2"
+            elif "30" in degree_list:
+                highest_degree = "2"
+            elif "40" in degree_list:
+                highest_degree = "3"
+            elif "50" in degree_list:
+                highest_degree = "4"
+            else:
+                highest_degree = "5"
+            result['education_degree_code'] = highest_degree
         except Exception:
             # TODO log this error
             return result

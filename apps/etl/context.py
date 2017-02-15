@@ -19,6 +19,7 @@ ORIGINAL_BASE_NAME = 'original_base'
 PROCESS_BASE_NAME = 'process_base'
 CACHE_BASE_NAME = 'cache_base'
 APPLY_BASE_NAME = 'apply_base'
+PORTRAIT_BASE_NAME = 'portrait_base'
 
 
 class BaseContext(object):
@@ -56,7 +57,7 @@ class ApplyContext(BaseContext):
         # self.cache_base = MongoBase(collection_name=CACHE_BASE_NAME)
 
     def load(self):
-        query = {'apply_id': self.apply_id}
+        query = {'apply_id': self.apply_id, 'is_delete': False}
         data = self.apply_base.search(query)
         return data
 
@@ -107,7 +108,7 @@ class ProcessContext(BaseContext):
 
     def save(self):
         """save kwargs to backend"""
-        query = {'apply_id': self.apply_id}
+        query = {'apply_id': self.apply_id, 'is_delete': False}
         original_info = self.process_base.search(query=query)
         self.kwargs.update(query)
         if original_info:
@@ -152,3 +153,24 @@ class CacheContext(BaseContext):
             return ret
         else:
             return None
+
+
+class PortraitContext(BaseContext):
+    """
+        这是一个储存受信人预授信的Mongo集合
+        以受信人为文档标识
+        每一组数据包含:
+            受信人预授信的基本数据
+            以proposer_id为唯一标识
+        储存模式:永久
+        """
+
+    def __init__(self, proposer_id, **kwargs):
+        super(PortraitContext, self).__init__(proposer_id, **kwargs)
+        self.portrait_base = MongoBase(collection_name=PORTRAIT_BASE_NAME)
+        # self.cache_base = MongoBase(collection_name=CACHE_BASE_NAME)
+
+    def load(self):
+        query = {'proposer_id': self.apply_id}
+        data = self.portrait_base.search(query)
+        return data

@@ -7,7 +7,9 @@
     Date: 2017/01/18
     Change Activity:
 """
-# TODO
+import logging
+from featurefactory.vendor.errors.fecture_error import MyException
+logger = logging.getLogger('apps.common')
 
 class Handle(object):
 
@@ -19,7 +21,7 @@ class Handle(object):
             输出：电信手机号在网时长
               '''
         result = {
-             "online_time":999999999
+             "online_time": 9999
         }
 
         try:

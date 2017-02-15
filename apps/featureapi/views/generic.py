@@ -6,6 +6,19 @@
     Date:  2016/12/22
     Change Activity:
 
+
+        _==/          i     i           \==_
+      /XX/            |\___/|            \XX\
+    /XXXX\            |XXXXX|            /XXXX\
+   |XXXXXX\_         _XXXXXXX_         _/XXXXXX|
+  XXXXXXXXXXXxxxxxxxXXXXXXXXXXXxxxxxxxXXXXXXXXXXX
+ |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
+ XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+ |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
+  XXXXXX/^^^^^\XXXXXXXXXXXXXXXXXXXXX/^^^^^\XXXXXX
+   |XXX|       \XXX/^^\XXXXX/^^\XXX/       |XXX|
+     \XX\       \X/    \XXX/    \X/       /XX/
+        "\       "      \X/      "      /"
 """
 
 import json
@@ -28,7 +41,7 @@ logger = logging.getLogger('apps.featureapi')
 class FeatureExtract(CsrfExemptMixin, View):
 
     @staticmethod
-    def get(self, request):
+    def get(request):
         return HttpResponse("Feature Factory !!!!!")
 
     # @装饰器验证一下request包完整性
@@ -47,17 +60,8 @@ class FeatureExtract(CsrfExemptMixin, View):
             # TODO 这里调用分发器->客户端分发器  返回一个数据对象
             base_data = client_dispatch(client_code, content)
 
-            audit_task.apply_async((base_data, ), retry=True,
-                                   queue='re_task_audit', routing_key='re_task_audit')
-            # TODO 这里调用一个原始数据收集分发器  再次返回一个数据对象
-            # original_data_list = data_get_dispatch(base_data)
-            # TODO 这里调用一个特征处理分发器  依然返回一个数据对象
-            # ret_data = process_dispatch(original_data_list)
-            # if not ret_data:
-            #     raise
-            # data.update({'res_data': ret_data})
-            # TODO 这里有按要求取特征逻辑, 计算结束的特征全部存在mongo里面  而且已经准备就绪  取出来返回
-            # TODO 未来这里讲调用异步任务流
+            audit_task.apply_async((base_data, ), retry=True, queue='re_task_audit', routing_key='re_task_audit')
+
         # TODO except Exceptions and do somethings
         except (UserIdentityError, EncryptError, GetApplyIdError, GetResKeysError,
                 GetArgumentsError, ArgumentsAvailableError) as e:

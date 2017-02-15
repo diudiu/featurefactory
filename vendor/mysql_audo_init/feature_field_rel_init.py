@@ -35,8 +35,7 @@ def load_feature_field_from_xls(file_path):
         rule_base_info = {
             'id': int(row[0]),
             'feature_name': row[1],
-            'raw_field_name': row[2],
-            'data_identity': row[3],
+            'data_identity': row[2],
         }
         rule_base_list.append(rule_base_info)
     return rule_base_list
@@ -47,7 +46,6 @@ def init_feature_field():
     for rule_base in all_rule_base:
         if FeatureFieldRel.objects.filter(
                 feature_name=rule_base['feature_name'],
-                raw_field_name=rule_base['raw_field_name'],
                 data_identity=rule_base['data_identity'],
         ).count() > 0:
             continue
@@ -55,7 +53,6 @@ def init_feature_field():
             ffr = FeatureFieldRel(
                 id=rule_base['id'],
                 feature_name=rule_base['feature_name'],
-                raw_field_name=rule_base['raw_field_name'],
                 data_identity=rule_base['data_identity'],
             )
             ffr.save()

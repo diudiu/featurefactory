@@ -9,6 +9,11 @@
 """
 
 
+import logging
+
+logger = logging.getLogger('apps.common')
+
+
 class Handle(object):
 
     def __init__(self, data):
@@ -17,7 +22,7 @@ class Handle(object):
     def handle(self):
 
         """
-        接口名称：猎聘
+        接口名称：猎聘申请信息上传接口
         字段名称：
         'mobile': 手机号 str
 
@@ -25,18 +30,13 @@ class Handle(object):
         特征名称:
         'mobile': 手机号 str
         """
-
-        result = {
-            "mobile": 999999,
-        }
         try:
-            base_data = self.data["mobile"]
+            result = {'mobile': 9999}
+            base_data = self.data.get("mobile", '')
+            if str(base_data).isdigit():
+                result['mobile'] = base_data
+
         except Exception as e:
-            # TODO log this error
+            logging.error(e.message)
+        finally:
             return result
-        if not base_data or not isinstance(base_data, str):
-            return result
-
-        result["mobile"] = base_data
-
-        return result

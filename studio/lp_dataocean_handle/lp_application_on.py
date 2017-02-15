@@ -9,6 +9,9 @@
 """
 from datetime import datetime
 import time
+import logging
+from featurefactory.vendor.errors.fecture_error import MyException
+logger = logging.getLogger('apps.common')
 
 
 class Handle(object):
@@ -29,17 +32,20 @@ class Handle(object):
         'application_on': 申请提交时间 str
         """
 
-        result = {
-            'application_on': 9999,
-        }
         try:
+            result = {
+                'application_on': 999999,
+            }
             apply_data = self.data["application_on"]
-            if not apply_data or not isinstance(apply_data, str):
-                return result
 
+            if not apply_data:
+                raise MyException(message='get (label) fail')
+            if not isinstance(apply_data, basestring):
+                raise MyException(message='get (label) data format error')
             result['application_on'] = apply_data
-            return result
+        except MyException as e:
+                logging.error(e.message)
         except Exception as e:
-            # TODO log this error
+                logging.error(e.message)
+        finally:
             return result
-
