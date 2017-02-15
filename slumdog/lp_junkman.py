@@ -14,6 +14,7 @@ import time
 from django.utils.timezone import datetime
 
 from apps.etl.context import OriginalContext, CacheContext
+from vendor.utils.phone_operator_judge import PhoneOperator
 
 logger = logging.getLogger('apps.remote')
 
@@ -105,13 +106,55 @@ class ShuntCourier(object):
         return self.get_data_by_keys()
 
     def get_data_by_keys(self):
-        pass
+        cache_data = {}
+        fresh_data = {}
+        shunt_key = self.args[self.data_identity_list[0]]['mobile']
+        po = PhoneOperator(shunt_key)
+        shunt = po.distinguish()
+        for interface in self.interface_conf.iterator():
+            if shunt != interface.comment:
+                continue
+            data_identity = interface.data_identity
+            data = self.cache_base.get(data_identity)
+            if data:
+                cache_data.update({
+                    data_identity: data[data_identity]
+                })
+            else:
+                prams = self.args[interface.data_identity]
+                if not prams:
+                    raise
+                data = self._get_data_from_interface(interface, prams)
+                if data:
+                    fresh_data.update(data)
+                    self.cache_base.kwargs.update(data)
+                    self.cache_base.data_identity = data.keys()[0]
+                self.cache_base.save()
+            self.original_base.save()
+        fresh_data.update(cache_data)
+        return fresh_data
 
     def _get_data_from_interface(self, interface, prams):
-        pass
+        url = interface.data_source.backend_url + interface.route
+        data_prams = eval(interface.must_data % prams)
+        origin_data = self.do_request(url, data_prams)
+        if not origin_data:
+            raise  # TODO get data error
+        self.original_base.kwargs.update({
+            interface.data_identity: {
+                'origin_data': origin_data,
+                'prams': prams,
+            }
+        })
+        return {interface.data_identity: origin_data}
 
     def do_request(self, url, data):
-        pass
+        # json_data = json.dumps(data, encoding="UTF-8", ensure_ascii=False)
+        # response = requests.post(url, json_data)
+        # content = response.content
+        # content = json.loads(content)
+        result = {'time': time.ctime(time.time())}
+        return result
 
 
 class RelevanceCourier(object):
