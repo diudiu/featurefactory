@@ -7,7 +7,6 @@
     Date:  2017/01/20
     Change Activity:
 """
-# TODO
 
 
 class Handle(object):
@@ -24,11 +23,7 @@ class Handle(object):
         result = {
             'is_court_shixin': False
         }
-        tip = self.data.get('result', None)
-        if not tip:
-            return result
-
-        if self.data['result'] == u'00':
+        if self.data.get('result', None) == u'00':
             result['is_court_shixin'] = True
 
         return result

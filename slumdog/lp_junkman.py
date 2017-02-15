@@ -11,7 +11,6 @@ import logging
 import json
 import requests
 import time
-from django.utils.timezone import datetime
 
 from apps.etl.context import OriginalContext, CacheContext
 from vendor.utils.phone_operator_judge import PhoneOperator
@@ -36,8 +35,9 @@ class Courier(object):
         self.cache_base = CacheContext(self.apply_id)  # MongoDB data
 
     def work_stream(self):
-        return self._get_data_by_keys()
+        return self._get_data_by_keys
 
+    @property
     def _get_data_by_keys(self):
         cache_data = {}
         fresh_data = {}
@@ -103,9 +103,11 @@ class ShuntCourier(object):
         self.cache_base = CacheContext(self.apply_id)  # MongoDB data
 
     def work_stream(self):
-        return self.get_data_by_keys()
+        # TODO 分流逻辑 现在这个不好使 重做!
+        return self._get_data_by_keys()
 
-    def get_data_by_keys(self):
+    def _get_data_by_keys(self):
+        self._get_useful_key()
         cache_data = {}
         fresh_data = {}
         shunt_key = self.args[self.data_identity_list[0]]['mobile']
@@ -133,6 +135,11 @@ class ShuntCourier(object):
             self.original_base.save()
         fresh_data.update(cache_data)
         return fresh_data
+
+    def _get_useful_key(self):
+        data_identity = ''
+
+        return data_identity
 
     def _get_data_from_interface(self, interface, prams):
         url = interface.data_source.backend_url + interface.route
@@ -170,12 +177,18 @@ class RelevanceCourier(object):
     """
 
     def __init__(self, apply_id, useful_args, interface_data):
-        pass
+        self.apply_id = apply_id
+        self.interface_conf = interface_data
+        self.args = {arg['data_identity']: arg['arguments'] for arg in useful_args}
+        self.data_identity_list = self.args.keys()
+        self.original_base = OriginalContext(self.apply_id)  # MongoDB data
+        self.cache_base = CacheContext(self.apply_id)  # MongoDB data
 
     def work_stream(self):
-        pass
+        # TODO 依赖逻辑  现在这个更不好使  重做
+        return self._get_data_by_keys()
 
-    def get_data_by_keys(self):
+    def _get_data_by_keys(self):
         pass
 
     def _get_data_from_interface(self, interface, prams):
