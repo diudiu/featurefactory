@@ -13,8 +13,8 @@ data = {"result": "00",
 
 results = [u'00', u'11', u'22', '']
 
-class TestPlugin(unittest.TestCase):
 
+class TestPlugin(unittest.TestCase):
     def setUp(self):
         self.data = data
         self.results = results

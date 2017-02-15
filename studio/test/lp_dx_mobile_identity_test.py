@@ -1,8 +1,7 @@
 # -*- coding:utf-8 -*-
 
 import unittest
-
-from studio.lp_dataocean_handle.lp_court_shixin_a_s import  Handle
+from studio.lp_dataocean_handle.lp_dx_mobile_identity import Handle
 
 data = {
     "result_message": "检测通过或查询有记录",

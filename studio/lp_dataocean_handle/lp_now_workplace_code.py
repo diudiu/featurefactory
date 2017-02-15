@@ -10,11 +10,11 @@
 
 import numpy as np
 import logging
-from vendor.errors.fecture_error import MyException
+
 logger = logging.getLogger('apps.common')
 
-class Handle(object):
 
+class Handle(object):
     def __init__(self, data):
         self.data = data
 
@@ -33,9 +33,6 @@ class Handle(object):
         try:
             now_workplace_code_dic = {'now_workplace_code': 9999}  # 9999：异常
             work_exp_form = self.data['work_exp_form']
-            if not isinstance(work_exp_form, list):
-                raise MyException(message='get (work_exp_form) fail')
-
             # TODO 计算维度
             # 计算最近一份工作的工作地点
             work_end_list = []
@@ -53,8 +50,7 @@ class Handle(object):
             elif len(now_workplace_code) > 6:
                 now_workplace_code = now_workplace_code[0:6]
             now_workplace_code_dic['now_workplace_code'] = now_workplace_code
-        except MyException as e:
-            logging.error(e.message)
+
         except Exception as e:
             logging.error(e.message)
         finally:

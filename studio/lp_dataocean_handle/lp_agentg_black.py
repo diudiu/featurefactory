@@ -14,24 +14,23 @@ logger = logging.getLogger('apps.common')
 
 
 class Handle(object):
+
     def __init__(self, data):
         self.data = data
 
     def handle(self):
         """
-        个人不良信息
-        data_identity: negative_info_s
+        机构G黑名单
+        data_identity: agentg_black
         :return:
         """
         try:
             result = {
-                'has_negative_info': False
+                'is_organization_g_black': False
             }
-
-            if self.data['result'] == u'00':
-                result['has_negative_info'] = True
-
+            if self.data['result'] == '00':
+                result['is_organization_g_black'] = True
         except Exception as e:
-            logging.error(e.message)
+            logging.info(e.message)
 
         return result

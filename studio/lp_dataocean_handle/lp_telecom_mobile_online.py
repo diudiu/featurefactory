@@ -8,11 +8,11 @@
     Change Activity:
 """
 import logging
-from vendor.errors.fecture_error import MyException
+
 logger = logging.getLogger('apps.common')
 
-class Handle(object):
 
+class Handle(object):
     def __init__(self, data):
         self.data = data
 
@@ -21,7 +21,7 @@ class Handle(object):
             输出：电信手机号在网时长
               '''
         result = {
-             "online_time": 9999
+            "online_time": 9999
         }
 
         try:
@@ -30,7 +30,7 @@ class Handle(object):
             # TODO log this error
             online_time = "-1"
 
-        if online_time is "[0-6)" :
+        if online_time is "[0-6)":
             online_time = "00"
         elif online_time is "[6-12)":
             online_time = "11"
@@ -41,6 +41,3 @@ class Handle(object):
 
         result['online_time'] = online_time
         return result
-
-
-

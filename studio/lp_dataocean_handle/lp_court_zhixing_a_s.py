@@ -7,8 +7,9 @@
     Date:  2017/01/20
     Change Activity:
 """
-# TODO
+
 import logging
+
 logger = logging.getLogger('apps.common')
 
 
@@ -25,10 +26,12 @@ class Handle(object):
         """
         try:
             result = {
-            'is_court_zhixing': False
+                'is_court_zhixing': False
             }
-            if self.data['result'] == u'00':
+
+            if self.data['result'] == '00':
                 result['is_court_zhixing'] = True
+
         except Exception as e:
             logging.info(e.message)
 

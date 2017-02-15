@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 import unittest
-from  studio.lp_dataocean_handle.lp_work_time import Handle
+from studio.lp_dataocean_handle.lp_work_time import Handle
 
 data = {
         "product_code": "string",

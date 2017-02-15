@@ -8,6 +8,7 @@
     Change Activity:
 """
 import logging
+
 logger = logging.getLogger('apps.common')
 
 
@@ -26,8 +27,9 @@ class Handle(object):
             result = {
                 'is_court_shixin': False
             }
-            if self.data['result'] == u'00':
+            if self.data['result'] == '00':
                 result['is_court_shixin'] = True
+
         except Exception as e:
             logging.info(e.message)
 
