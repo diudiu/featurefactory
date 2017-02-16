@@ -7,10 +7,12 @@
     Date:  2017/02/10
     Change Activity:
 """
+import logging
+
+logger = logging.getLogger('apps.common')
 
 
 class Handle(object):
-
     def __init__(self, data):
         self.data = data
 
@@ -22,17 +24,14 @@ class Handle(object):
         输出：
         特征名称：mobile_identity 电信查询返回结果
         """
-
-        result = {'mobile_identity': 9999}
-
         try:
+            result = {'mobile_identity': 9999}
             mobile_identity = self.data['result']
             if mobile_identity == '00':
                 result['mobile_identity'] = 1
             else:
                 result['mobile_identity'] = 0
-        except Exception:
-            # TODO log this error
-            return result
+        except Exception as e:
+            logging.error(e.message)
 
         return result

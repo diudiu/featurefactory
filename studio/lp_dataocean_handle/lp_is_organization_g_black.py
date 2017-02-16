@@ -7,7 +7,9 @@
     Date:  2017/01/20
     Change Activity:
 """
-# TODO
+import logging
+
+logger = logging.getLogger('apps.common')
 
 
 class Handle(object):
@@ -21,14 +23,13 @@ class Handle(object):
         data_identity: agentg_black
         :return:
         """
-        result = {
-            'is_organization_g_black': False
-        }
-        tip = self.data.get('result', None)
-        if not tip:
-            return result
-
-        if self.data['result'] == u'00':
-            result['is_organization_g_black'] = True
+        try:
+            result = {
+                'is_organization_g_black': False
+            }
+            if self.data['result'] == u'00':
+                result['is_organization_g_black'] = True
+        except Exception as e:
+            logging.info(e.message)
 
         return result

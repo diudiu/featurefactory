@@ -9,10 +9,12 @@
 """
 
 import numpy as np
+import logging
+
+logger = logging.getLogger('apps.common')
 
 
 class Handle(object):
-
     def __init__(self, liantong_data, liepin_data):
         self.liantong_data = liantong_data
         self.liepin_data = liepin_data
@@ -75,7 +77,7 @@ class Handle(object):
                     np.argmax(work_end_list)].get('months', None)
                 salary = work_exp_form[
                     np.argmax(work_end_list)].get('salary', None)
-                if isinstance(months, (int, str)) and isinstance(salary, (int, str)):
+                if isinstance(months, (int, basestring)) and isinstance(salary, (int, basestring)):
                     lp_income_level = round(
                         int(months) * int(salary) * 0.56, 2)
                     if lp_income_level < 10000:

@@ -7,12 +7,13 @@
     Date:  2017/01/18
     Change Activity:
 """
-from datetime import datetime
-import time
+
+import logging
+
+logger = logging.getLogger('apps.common')
 
 
 class Handle(object):
-
     def __init__(self, data):
         self.data = data
 
@@ -29,17 +30,15 @@ class Handle(object):
         'application_on': 申请提交时间 str
         """
 
-        result = {
-            'application_on': 999999,
-        }
         try:
+            result = {
+                'application_on': 9999,
+            }
             apply_data = self.data["application_on"]
-        except Exception as e:
-            # TODO log this error
-            return result
-        if not apply_data or not isinstance(apply_data, str):
-            return result
+            if apply_data and isinstance(apply_data, basestring):
+                result['application_on'] = apply_data
 
-        result['application_on'] = apply_data
+        except Exception as e:
+            logging.error(e.message)
 
         return result

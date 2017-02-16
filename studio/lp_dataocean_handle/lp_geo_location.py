@@ -7,7 +7,9 @@
     Date:  2017/01/18
     Change Activity:
 """
-# TODO
+import logging
+
+logger = logging.getLogger('apps.common')
 
 
 class Handle(object):
@@ -28,16 +30,16 @@ class Handle(object):
         特征名称:
         'gps_city_code': GPS定位城市 str
         """
-        result = {
-            'gps_city_code': 999999,
-        }
-        try:
-            base_data = self.data["content"]["result"]["addressComponent"]["city"]
-        except Exception as e:
-            # TODO log this error
-            return result
-        if not base_data or not isinstance(base_data, str):
-            return result
 
-        result['gps_city_code'] = base_data
+        try:
+            result = {
+                'gps_city_code': 9999,
+            }
+            if self.data['result'] == '00':
+                base_data = self.data["content"]["result"]["addressComponent"]["city"]
+                if base_data and isinstance(base_data, basestring):
+                    result['gps_city_code'] = base_data
+        except Exception as e:
+            logging.info(e.message)
+
         return result

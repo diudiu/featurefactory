@@ -7,7 +7,8 @@
     Date:  2017/01/20
     Change Activity:
 """
-# TODO
+import logging
+logger = logging.getLogger('apps.common')
 
 
 class Handle(object):
@@ -21,14 +22,15 @@ class Handle(object):
         data_identity: tianwang_gray
         :return:
         """
-        result = {
-            'is_netsky_gray': False
-        }
-        tip = self.data.get('result', None)
-        if not tip:
-            return result
+        try:
+            result = {
+                'is_netsky_gray': False
+            }
 
-        if self.data['result'] == u'00':
-            result['is_netsky_gray'] = True
+            if self.data['result'] == u'00':
+                result['is_netsky_gray'] = True
+
+        except Exception as e:
+            logging.error(e.message)
 
         return result

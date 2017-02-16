@@ -7,7 +7,8 @@
     Date:  2017/01/20
     Change Activity:
 """
-# TODO
+import logging
+logger = logging.getLogger('apps.common')
 
 
 class Handle(object):
@@ -21,14 +22,15 @@ class Handle(object):
         data_identity: tianwang_multi_loan
         :return:
         """
-        result = {
-            'is_netsky_longloan': False
-        }
-        tip = self.data.get('result', None)
-        if not tip:
-            return result
+        try:
+            result = {
+                'is_netsky_longloan': False
+            }
 
-        if self.data['result'] == u'00':
-            result['is_netsky_longloan'] = True
+            if self.data['result'] == u'00':
+                result['is_netsky_longloan'] = True
+
+        except Exception as e:
+            logging.error(e.message)
 
         return result

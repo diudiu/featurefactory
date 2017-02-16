@@ -27,8 +27,11 @@ class Judger(object):
         5.finally check all works
     """
 
-    def __init__(self, content):
+    def __init__(self, content, client_code):
+        if not client_code:
+            raise ClientCodeMissing
         self.content = content
+        self.client_code = client_code
         self.apply_id = ''
         self.proposer_id = ''
         self.callback_url = ''
@@ -39,6 +42,7 @@ class Judger(object):
     def work_stream(self):
         self._fill_attributes()
         base_data = {
+            'client_code': self.client_code,
             'callback_url': self.callback_url,
             'apply_id': self.apply_id,
             'feature_list': self.feature_list,
@@ -48,13 +52,15 @@ class Judger(object):
 
     def _fill_attributes(self):
         self.apply_id = self.content.get('apply_id', None)
-        self.callback_url = self.content.get('callback', None)
+        self.callback_url = self.content.get('callback_url', None)
+        if not self.callback_url:
+            raise CallBackUrlMissing
         self.feature_list = self.content.get('res_keys', None)
         apply_base = ApplyContext(self.apply_id)
         apply_data = apply_base.load()
         self.proposer_id = apply_data.get('proposer_id', None)
         if not self.proposer_id:
-            raise
+            raise ProposerIdMissing
 
         portrait_base = PortraitContext(self.proposer_id)
         portrait_data = portrait_base.load()

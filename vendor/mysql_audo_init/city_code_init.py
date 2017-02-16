@@ -70,5 +70,20 @@ def init_city_code():
         )
         cc.save()
 
+
+def city_level_update():
+    xls = xlrd.open_workbook('city_code.xlsx')
+    sheet1 = xls.sheets()[1]
+    for row_num in range(sheet1.nrows):
+        if row_num == 0:
+            continue
+        row = sheet1.row_values(row_num)
+        ccf = CityCodeField.objects.filter(
+            city_name_cn=str(row[2])
+        )
+        ccf.update(city_level=int(row[0]))
+        ccf.save()
+
 if __name__ == '__main__':
-    init_city_code()
+    # init_city_code()
+    city_level_update()

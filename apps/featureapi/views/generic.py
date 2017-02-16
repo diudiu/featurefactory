@@ -63,8 +63,7 @@ class FeatureExtract(CsrfExemptMixin, View):
             audit_task.apply_async((base_data, ), retry=True, queue='re_task_audit', routing_key='re_task_audit')
 
         # TODO except Exceptions and do somethings
-        except (UserIdentityError, EncryptError, GetApplyIdError, GetResKeysError,
-                GetArgumentsError, ArgumentsAvailableError) as e:
+        except ServerError as e:
             data = {
                 cons.RESPONSE_REQUEST_STATUS: e.status,
                 cons.RESPONSE_REQUEST_MESSAGE: e.message,
@@ -75,10 +74,6 @@ class FeatureExtract(CsrfExemptMixin, View):
                 cons.RESPONSE_REQUEST_STATUS: ResponseCode.FAILED,
                 cons.RESPONSE_REQUEST_MESSAGE: e.message,
             }
-
-        # TODO finaly packing the response messages
-        finally:
-            pass
 
         # TODO return JSONResponse
         return JSONResponse(data)

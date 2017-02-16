@@ -7,7 +7,10 @@
     Date:  2017/01/20
     Change Activity:
 """
-# TODO
+
+import logging
+
+logger = logging.getLogger('apps.common')
 
 
 class Handle(object):
@@ -24,11 +27,11 @@ class Handle(object):
         result = {
             'is_court_zhixing': False
         }
-        tip = self.data.get('result', None)
-        if not tip:
+        try:
+            if self.data['result'] == '00':
+                result['is_court_zhixing'] = True
+
+        except Exception as e:
+            logging.info(e.message)
             return result
-
-        if self.data['result'] == u'00':
-            result['is_court_zhixing'] = True
-
         return result
