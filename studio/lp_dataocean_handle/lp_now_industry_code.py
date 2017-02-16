@@ -9,6 +9,8 @@
 """
 
 import numpy as np
+import logging
+logger = logging.getLogger('apps.common')
 
 
 class Handle(object):
@@ -31,24 +33,24 @@ class Handle(object):
 
         try:
             work_exp_form = self.data['work_exp_form']
+            if not isinstance(work_exp_form, list):
+                return now_industry_code_dic
+
+            # TODO 计算维度
+            # 计算最近一份工作的工作行业
+            work_end_list = []
+            for work_exp in work_exp_form:
+                work_end = work_exp.get('work_end', None)
+                if not isinstance(work_end, (basestring, int)):
+                    return now_industry_code_dic
+                else:
+                    work_end_list.append(int(work_end))
+
+            now_industry_code_dic['now_industry_code'] = work_exp_form[
+                np.argmax(work_end_list)].get('industry', None)
+
         except Exception:
             # TODO log this error
             return now_industry_code_dic
-
-        if not isinstance(work_exp_form, list):
-            return now_industry_code_dic
-
-        # TODO 计算维度
-        # 计算最近一份工作的工作行业
-        work_end_list = []
-        for work_exp in work_exp_form:
-            work_end = work_exp.get('work_end', None)
-            if not isinstance(work_end, (basestring, int)):
-                return now_industry_code_dic
-            else:
-                work_end_list.append(int(work_end))
-
-        now_industry_code_dic['now_industry_code'] = work_exp_form[
-            np.argmax(work_end_list)].get('industry', None)
 
         return now_industry_code_dic

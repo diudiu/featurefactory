@@ -7,7 +7,6 @@
     Date:  2017/01/20
     Change Activity:
 """
-
 import logging
 
 logger = logging.getLogger('apps.common')
@@ -28,7 +27,7 @@ class Handle(object):
             result = {
                 'is_organization_g_black': False
             }
-            if self.data['result'] == '00':
+            if self.data['result'] == u'00':
                 result['is_organization_g_black'] = True
         except Exception as e:
             logging.info(e.message)

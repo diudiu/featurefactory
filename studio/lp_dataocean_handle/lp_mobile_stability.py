@@ -7,6 +7,9 @@
     Date:  2017/1/22
     Change Activity:
 """
+import logging
+
+logger = logging.getLogger('apps.common')
 
 
 class Handle(object):

@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 
 import unittest
-from  featurefactory.studio.lp_dataocean_handle.lp_yd_mobile_identity_s import Handle
+from studio.lp_dataocean_handle.lp_yd_mobile_identity_s import Handle
 
 data = {
         "result": "00",

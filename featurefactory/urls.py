@@ -12,5 +12,6 @@ urlpatterns = patterns(
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^feature/', include(feature_url)),
+    url(r'^syph-ff/feature/', include(feature_url)),
+    url(r'^api/', include(feature_url)),
 )

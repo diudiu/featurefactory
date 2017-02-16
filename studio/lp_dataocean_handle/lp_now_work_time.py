@@ -10,6 +10,8 @@
 
 import numpy as np
 from datetime import datetime
+import logging
+logger = logging.getLogger('apps.common')
 
 
 class Handle(object):
@@ -27,47 +29,39 @@ class Handle(object):
         输出：
         特征名称：now_work_time       本份工作工作时间
         """
-
-        now_work_time_dic = {'now_work_time': 9999}  # 9999：异常
-
         try:
+            now_work_time_dic = {'now_work_time': 9999}  # 9999：异常
             work_exp_form = self.data['work_exp_form']
-        except Exception:
-            # TODO log this error
-            return now_work_time_dic
 
-        if not isinstance(work_exp_form, list):
-            return now_work_time_dic
-
-        # TODO 计算维度
-        # 计算最近一份工作的结束时间
-        work_end_list = []
-        for work_exp in work_exp_form:
-            work_end = work_exp.get('work_end', None)
-            if not isinstance(work_end, (basestring, int)):
+            if not isinstance(work_exp_form, list):
                 return now_work_time_dic
-            else:
-                work_end_list.append(int(work_end))
 
-        cur_status = self.data.get('cur_status', '9999')
-        if '离职' in cur_status:
-            now_work_start_str = work_exp_form[
-                np.argmax(work_end_list)].get('work_start', None)
-            now_work_start = datetime.strptime(now_work_start_str, '%Y%m')
-            now_work_end_str = work_exp_form[
-                np.argmax(work_end_list)].get('work_end', None)
-            now_work_end = datetime.strptime(now_work_end_str, '%Y%m')
-            now_work_time = now_work_end - now_work_start
-            now_work_time_dic['now_work_time'] = now_work_time.days / 30
+            # TODO 计算维度
+            # 计算最近一份工作的结束时间
+            work_end_list = []
+            for work_exp in work_exp_form:
+                work_end = work_exp.get('work_end', None)
+                if isinstance(work_end, (str, int)):
+                    work_end_list.append(int(work_end))
+            cur_status = self.data.get('cur_status', '9999')
+            if '离职' in cur_status:
+                now_work_start_str = work_exp_form[
+                    np.argmax(work_end_list)].get('work_start', None)
+                now_work_start = datetime.strptime(now_work_start_str, '%Y%m')
+                now_work_end_str = work_exp_form[
+                    np.argmax(work_end_list)].get('work_end', None)
+                now_work_end = datetime.strptime(now_work_end_str, '%Y%m')
+                now_work_time = now_work_end - now_work_start
+                now_work_time_dic['now_work_time'] = now_work_time.days / 30
 
-        elif '在职' in cur_status:
-            now_work_start_str = work_exp_form[
-                np.argmax(work_end_list)].get('work_start', None)
-            now_work_start = datetime.strptime(now_work_start_str, '%Y%m')
-            now_work_time = datetime.now() - now_work_start
-            now_work_time_dic['now_work_time'] = now_work_time.days / 30
+            elif '在职' in cur_status:
+                now_work_start_str = work_exp_form[
+                    np.argmax(work_end_list)].get('work_start', None)
+                now_work_start = datetime.strptime(now_work_start_str, '%Y%m')
+                now_work_time = datetime.now() - now_work_start
+                now_work_time_dic['now_work_time'] = now_work_time.days / 30
 
-        else:
+        except Exception as e:
+            logging.error(e.message)
+        finally:
             return now_work_time_dic
-
-        return now_work_time_dic

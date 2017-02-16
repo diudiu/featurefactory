@@ -44,6 +44,7 @@ INSTALLED_APPS = (
     'apps.remote',
     'apps.etl',
     'apps.async',
+    'apps.pregranting',
 )
 
 MIDDLEWARE_CLASSES = (

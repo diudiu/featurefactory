@@ -7,10 +7,12 @@
     Date:  2017/02/10
     Change Activity:
 """
+import logging
+
+logger = logging.getLogger('apps.common')
 
 
 class Handle(object):
-
     def __init__(self, data):
         self.data = data
 
@@ -42,5 +44,3 @@ class Handle(object):
         except Exception:
             # TODO log this error
             return result
-
-        return result

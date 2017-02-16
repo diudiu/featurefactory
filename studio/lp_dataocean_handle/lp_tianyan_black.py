@@ -8,7 +8,6 @@
     Change Activity:
 """
 import logging
-from featurefactory.vendor.errors.fecture_error import MyException
 logger = logging.getLogger('apps.common')
 
 
@@ -27,15 +26,11 @@ class Handle(object):
             result = {
                 'is_net_black': False
             }
-            tip = self.data.get('result', None)
-            if not tip:
-                raise MyException(message='get (result) fail')
 
             if self.data['result'] == u'00':
                 result['is_net_black'] = True
-        except MyException as e:
-            logging.error(e.message)
+
         except Exception as e:
             logging.error(e.message)
-        finally:
-            return result
+
+        return result

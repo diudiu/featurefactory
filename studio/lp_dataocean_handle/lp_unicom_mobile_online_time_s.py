@@ -8,7 +8,6 @@
     Change Activity:
 """
 import logging
-from featurefactory.vendor.errors.fecture_error import MyException
 logger = logging.getLogger('apps.common')
 
 
@@ -25,9 +24,7 @@ class Handle(object):
         try:
             result = {"online_time": '9999'}
             online_time = self.data['content']['online_time']
-            tip = self.data.get('result', None)
-            if not tip:
-                raise MyException(message='get (label) fail')
+
             if self.data['result'] == u'00':
                 if online_time in ["[0-1]", "(1-2]", "[3-6]"]:
                     online_time = "(0,6)"
@@ -40,12 +37,11 @@ class Handle(object):
                 else:
                     online_time = "-1"
                 result['online_time'] = online_time
-        except MyException as e:
-            logging.error(e.message)
+
         except Exception as e:
             logging.error(e.message)
-        finally:
-            return result
+
+        return result
 
 
 
