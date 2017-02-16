@@ -13,7 +13,8 @@ import requests
 import time
 
 from apps.etl.context import OriginalContext, CacheContext
-from apps.etl.models import FeatureShuntConf
+from apps.etl.models import FeatureShuntConf, FeatureRelevanceConf
+from apps.remote.models import FeatureFieldRel
 from vendor.utils.phone_operator_judge import PhoneOperator
 
 logger = logging.getLogger('apps.remote')
@@ -198,22 +199,33 @@ class RelevanceCourier(object):
     def __init__(self, apply_id, base_data, interface_data):
         self.apply_id = apply_id
         self.interface_conf = interface_data
+        self.feature_list = base_data['feature_list']
         self.args = {arg['data_identity']: arg['arguments'] for arg in base_data['useful_args']}
         self.data_identity_list = self.args.keys()
+        self.stop = False
+        self.index = 0
+        self.fresh_data = {}
+        self.feature_conf_list = FeatureRelevanceConf.objects.filter(
+            feature_name__in=self.feature_list,
+            is_delete=False
+        )
+        self.sum = self.feature_conf_list.count()
         self.original_base = OriginalContext(self.apply_id)  # MongoDB data
         self.cache_base = CacheContext(self.apply_id)  # MongoDB data
 
     def work_stream(self):
-        # TODO 依赖逻辑  现在这个更不好使  重做
-        return self._get_data_by_keys()
+        # TODO 太恶心啦 重构!
+        while not self.stop:
+            target_data_identity = self._data_prepare()
+            self._get_data_by_keys(target_data_identity)
+        return self.fresh_data
 
-    def _get_data_by_keys(self):
-        useful_identity_list = self._get_ordered_data_identity()
+    def _get_data_by_keys(self, target_data_identity):
         cache_data = {}
         fresh_data = {}
         for interface in self.interface_conf.iterator():
             data_identity = interface.data_identity
-            if data_identity not in useful_identity_list:
+            if target_data_identity != data_identity:
                 continue
             data = self.cache_base.get(data_identity)
             if data:
@@ -232,12 +244,21 @@ class RelevanceCourier(object):
                 self.cache_base.save()
             self.original_base.save()
         fresh_data.update(cache_data)
-        return fresh_data
+        self.fresh_data = fresh_data
 
-    def _get_ordered_data_identity(self):
-        ordered_data_identity = []
+    def _data_prepare(self):
 
-        return ordered_data_identity
+        feature_conf = self.feature_conf_list[self.index]
+        self.index += 1
+
+        depend_feature = feature_conf.depend_feature
+        f_c = FeatureFieldRel.objects.filter(
+            feature_name=depend_feature,
+            is_delete=False
+        )
+        if self.index == self.sum:
+            self.stop = True
+        return f_c[0].data_identity
 
     def _get_data_from_interface(self, interface, prams):
         url = interface.data_source.backend_url + interface.route
@@ -254,4 +275,9 @@ class RelevanceCourier(object):
         return {interface.data_identity: origin_data}
 
     def do_request(self, url, data):
-        pass
+        # json_data = json.dumps(data, encoding="UTF-8", ensure_ascii=False)
+        # response = requests.post(url, json_data)
+        # content = response.content
+        # content = json.loads(content)
+        result = {'time': time.ctime(time.time())}
+        return result
