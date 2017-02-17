@@ -1,9 +1,9 @@
 # -*- coding:utf-8 -*-
 """
-    License SYPH-L.
-    Copyright (c) 2013- SYPH, All Rights Reserved.
+    License DIGCREDIT-L.
+    Copyright (c) 2013- DIGCREDIT, All Rights Reserved.
     -----------------------------------------------------------
-    Author: ZL
+    Author: Z.L
     Date:  2017/01/18
     Change Activity:
 """
@@ -20,10 +20,11 @@ class Handle(object):
     def handle(self):
 
         """
-        接口名称：
-        猎聘申请信息上传接口
-        字段名称：
-        'application_on': 贷款申请时间 str
+        输入:
+        接口名称：猎聘申请信息上传接口
+        字段名称：'application_on' 贷款申请时间 str
+
+        计算逻辑: 直接从接口提取申请时间
 
         输出:
         特征名称:
@@ -34,7 +35,7 @@ class Handle(object):
             result = {
                 'application_on': '9999',
             }
-            apply_data = self.data["application_on"]
+            apply_data = self.data["application_on"]  # 提取申请时间字段
 
             if not apply_data:
                 raise Exception(message='get (label) fail')

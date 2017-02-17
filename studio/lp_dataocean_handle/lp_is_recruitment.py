@@ -3,7 +3,7 @@
     License DIGCREDIT-L.
     Copyright (c) 2017- DIGCREDIT, All Rights Reserved.
     ----------------------------------------------
-    Author: ZL
+    Author: Z.L
     Date:  2017/02/15
     Change Activity:
 """
@@ -17,8 +17,12 @@ class Handle(object):
     def handle(self):
 
         """
+        输入:
         接口名称：education_review_s 数据堂学历信息查询接口
         字段名称：education_approach 学习形式
+
+        计算逻辑: 如果学习形式为全日制,则为统招,否则为非统招
+
         输出：
         特征名称：is_recruitment 是否统招
         """

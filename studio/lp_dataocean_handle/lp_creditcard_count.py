@@ -1,9 +1,9 @@
 # -*- coding:utf-8 -*-
 """
-    License SYPH-L.
-    Copyright (c) 2013- SYPH, All Rights Reserved.
+    License DIGCREDIT-L.
+    Copyright (c) 2013- DIGCREDIT, All Rights Reserved.
     -----------------------------------------------------------
-    Author: ZL
+    Author: Z.L
     Date:  2017/01/18
     Change Activity:
 """
@@ -17,13 +17,14 @@ class Handle(object):
     def handle(self):
 
         """
+        输入:
         接口名称：人人信
-        字段名称：
-        'credit_cards_num': 信用卡张数 str
+        字段名称：'credit_cards_num': 信用卡张数 str
+
+        计算逻辑: 直接从接口提取,输出类型为int
 
         输出:
-        特征名称:
-        'creditcard_count': 信用卡张数 int
+        特征名称: 'creditcard_count': 信用卡张数 int
         """
 
         result = {
@@ -36,8 +37,8 @@ class Handle(object):
                 return result
 
             result["creditcard_count"] = base_data
-
             return result
+
         except Exception as e:
             # TODO log this error
             return result

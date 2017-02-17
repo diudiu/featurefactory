@@ -1,9 +1,9 @@
 # -*- coding:utf-8 -*-
 """
-    License SYPH-L.
-    Copyright (c) 2013- SYPH, All Rights Reserved.
+    License DIGCREDIT-L.
+    Copyright (c) 2013- DIGCREDIT, All Rights Reserved.
     -----------------------------------------------------------
-    Author: ZL
+    Author: Z.L
     Date:  2017/01/22
     Change Activity:
 """
@@ -17,9 +17,11 @@ class Handle(object):
     def handle(self):
 
         """
+        输入:
         接口名称：贷款信息
-        字段名称：
-        'result': int
+        字段名称：'result': int
+
+        计算逻辑: 直接从接口提取result值,值为'2'为未命中,否则为命中,输出为int
 
         输出:
         特征名称:

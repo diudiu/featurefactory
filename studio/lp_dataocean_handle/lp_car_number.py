@@ -1,9 +1,9 @@
 # -*- coding:utf-8 -*-
 """
-    License SYPH-L.
-    Copyright (c) 2013- SYPH, All Rights Reserved.
+    License DIGCREDIT-L.
+    Copyright (c) 2013- DIGCREDIT, All Rights Reserved.
     -----------------------------------------------------------
-    Author: ZL
+    Author: Z.L
     Date:  2017/01/24
     Change Activity:
 """
@@ -17,13 +17,14 @@ class Handle(object):
     def handle(self):
 
         """
-        接口名称：人人信
-        字段名称：
-        'license_no': 车牌号 str
+        输入:
+        接口名称：人人信车辆信息查询
+        字段名称：'license_no' 车牌号 str
+
+        计算逻辑:从人人信车辆信息接口提取车辆信息列表,输出车牌号列表,类型为list
 
         输出:
-        特征名称:
-        'car_number': 车牌号 list
+        特征名称: 'car_number' 车牌号 list
         """
 
         result = {
@@ -34,6 +35,7 @@ class Handle(object):
             if not base_data or not isinstance(base_data, list):
                 return result
 
+            # 遍历车辆信息,提取所有车牌号组成list
             car_list = []
             for data in base_data:
                 car_list.append(data.get("license_no"))

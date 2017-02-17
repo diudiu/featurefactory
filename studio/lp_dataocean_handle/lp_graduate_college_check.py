@@ -3,7 +3,7 @@
     License DIGCREDIT-L.
     Copyright (c) 2017- DIGCREDIT, All Rights Reserved.
     ----------------------------------------------
-    Author: ZL
+    Author: Z.L
     Date:  2017/02/15
     Change Activity:
 """
@@ -17,10 +17,14 @@ class Handle(object):
     def handle(self):
 
         """
+        输入:
         接口名称：education_review_s 数据堂学历信息查询接口
-        字段名称：college 院校名称
+        字段名称：college 院校名称 string
+
+        计算逻辑: 直接从接口提取,输出为string
+
         输出：
-        特征名称：graduate_college_check 学信网查得院校
+        特征名称：graduate_college_check 学信网查得院校 string
         """
 
         result = {'graduate_college_check': '9999'}

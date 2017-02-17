@@ -1,9 +1,9 @@
 # -*- coding:utf-8 -*-
 """
-    License SYPH-L.
-    Copyright (c) 2013- SYPH, All Rights Reserved.
+    License DIGCREDIT-L.
+    Copyright (c) 2013- DIGCREDIT, All Rights Reserved.
     -----------------------------------------------------------
-    Author: ZL
+    Author: Z.L
     Date:  2017/01/24
     Change Activity:
 """
@@ -19,7 +19,10 @@ class Handle(object):
     def handle(self):
 
         """
+        输入:
         接口名称：贷款信息
+
+        计算逻辑: 提取贷款信息列表,将其中为空的部分删掉
 
         输出:
         特征名称:
@@ -36,7 +39,7 @@ class Handle(object):
                     for data in base_data:
                         for in_data in data.keys():
                             time_org = data[in_data]
-                            if not time_org or not isinstance(time_org, dict):
+                            if not time_org or not isinstance(time_org, dict):  # 避免出现为空继续执行出错的情况
                                 continue
                             for other_bank_data in time_org.keys():
                                 if not time_org[other_bank_data]:

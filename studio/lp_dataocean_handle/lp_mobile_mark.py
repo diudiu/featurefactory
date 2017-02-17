@@ -1,10 +1,10 @@
 # -*- coding:utf-8 -*-
 
 """
-    License SYPH-L.
-    Copyright (c) 2013- SYPH, All Rights Reserved.
+    License DIGCREDIT-L.
+    Copyright (c) 2013- DIGCREDIT, All Rights Reserved.
     -----------------------------------------------------------
-    Author: ZL
+    Author: Z.L
     Date:  2017/01/20
     Change Activity:
 
@@ -31,14 +31,14 @@ class Handle(object):
     def handle(self):
 
         """
-        接口名称：
-        'tags': 电话标记
-        字段名称：
-        'label': 用户标注标签 str
+        输入:
+        接口名称：'tags': 电话标记
+        字段名称：'label': 用户标注标签 str
+
+        计算逻辑:直接从接口提取电话标记信息,输出为string
 
         输出:
-        特征名称:
-        'mobile_mark': 用户标注标签 str
+        特征名称: 'mobile_mark': 用户标注标签 str
         """
         try:
             result = {'mobile_mark': '9999'}

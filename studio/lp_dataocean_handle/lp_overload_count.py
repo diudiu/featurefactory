@@ -1,9 +1,9 @@
 # -*- coding:utf-8 -*-
 """
-    License SYPH-L.
-    Copyright (c) 2013- SYPH, All Rights Reserved.
+    License DIGCREDIT-L.
+    Copyright (c) 2013- DIGCREDIT, All Rights Reserved.
     -----------------------------------------------------------
-    Author: ZL
+    Author: Z.L
     Date:  2017/01/24
     Change Activity:
 
@@ -52,18 +52,20 @@ class Handle(object):
     def handle(self):
 
         """
+        输入:
         接口名称：
         'high_way_over_load': 高速超载统计查询
-        字段名称：
-        'month_times': 超载总次数 str
+        字段名称：'month_times': 超载总次数 str
+
+        计算逻辑: 先从车牌号(car_umber)特征获取车牌号列表,再汇总所有车的超载次数
 
         输出:
-        特征名称:
-        'overload_count': 超速次数 int
+        特征名称: 'overload_count': 超速次数 int
         """
         try:
             result = {'overload_count': 9999}
             month_times = 0
+            # 查询所有车的超载次数进行汇总
             for card, card_record in self.data.items():
                 if card_record.get('result') == '00':
                     base_data = card_record.get("content", {}).get("over_load_list", [])

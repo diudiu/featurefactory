@@ -3,7 +3,7 @@
     License DIGCREDIT-L.
     Copyright (c) 2017- DIGCREDIT, All Rights Reserved.
     ----------------------------------------------
-    Author: S,G
+    Author: Z.L
     Date:  2017/02/10
     Change Activity:
 """
@@ -17,9 +17,12 @@ class Handle(object):
     def handle(self):
 
         """
-        接口名称：猎聘
-        字段名称：edu_exp_form               教育信息
-                  degree                    学历code
+        输入:
+        接口名称：猎聘预授信接口
+        字段名称：edu_exp_form     教育信息
+                  degree          学历code
+
+        计算逻辑: 提取猎聘学历信息并标准化为编码, 编码需要与学信网编码一致, 输出类型为int
 
         输出：
         特征名称：education_degree_code      学历
@@ -36,21 +39,26 @@ class Handle(object):
                 degree = edu_exp.get('degree', None)
                 degree_list.append(degree)
 
-            if "5" in degree_list:
-                highest_degree = "1"
-            elif "10" in degree_list:
-                highest_degree = "1"
-            elif "20" in degree_list:
-                highest_degree = "2"
-            elif "30" in degree_list:
-                highest_degree = "2"
-            elif "40" in degree_list:
-                highest_degree = "3"
-            elif "50" in degree_list:
-                highest_degree = "4"
-            else:
-                highest_degree = "5"
-            result['education_degree_code'] = highest_degree
+            degree_code = {
+                '5': '1',
+                '10': '1',
+                '20': '2',
+                '30': '2',
+                '40': '3',
+                '50': '4',
+                '60': '5',
+                '70': '5',
+                '80': '5',
+                '90': '5',
+                '999': '5',
+            }
+            # 匹配学历编码
+            for degree_data in degree_code:
+                if degree_data in degree_list:
+                    result['education_degree_code'] = degree_code['degree_data']
+            # 无匹配结果返回其他
+            if result['education_degree_code'] == 9999:
+                result['education_degree_code'] = '5'
         except Exception:
             # TODO log this error
             return result
