@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 
+import operator
+from collections import Iterable
+
 from vendor.utils.constant import cons
 
 
@@ -15,6 +18,8 @@ class GenericUtils(object):
             GenericUtils.get_mapped_value(collection, 10)
         ```
     """
+    mapped_tuple_length = 2
+    arithmetic_method_common_prefix = '_arithmetic_'
 
     @classmethod
     def get_mapped_value(cls, collection, original_val, arithmetic_type=cons.ARITHMETIC_LEFT_CLOSE_RIGHT_OPEN):
@@ -30,7 +35,46 @@ class GenericUtils(object):
 
         :return: 被映射之后的值
         """
-        for item in collection:
-            pass
+        if not isinstance(collection, Iterable):
+            raise
 
-        return None
+        mapped_value = None
+
+        for item in collection:
+            if isinstance(item, tuple) and \
+                    operator.ge(len(item), cls.mapped_tuple_length):
+                mapped_option = item[0]
+                if isinstance(mapped_option, basestring):
+                    if mapped_option == original_val:
+                        mapped_value = item[1]
+                        break
+                elif isinstance(mapped_option, list):
+                    is_hit = cls._arithmetic_by_type(mapped_option, original_val, arithmetic_type=arithmetic_type)
+                    if is_hit:
+                        mapped_value = item[1]
+                        break
+
+        return mapped_value
+
+    @classmethod
+    def _arithmetic_by_type(cls, option_list, original_val, arithmetic_type=cons.ARITHMETIC_LEFT_CLOSE_RIGHT_OPEN):
+        invoke_method_str = "%s%s" % (cls.arithmetic_method_common_prefix, arithmetic_type.lower())
+        invoke_method = getattr(cls, invoke_method_str)
+        if callable(invoke_method):
+            return invoke_method(option_list, original_val)
+
+        raise Exception("")
+
+    @classmethod
+    def _arithmetic_left_close_right_open(cls, option_list, original_val):
+        if operator.le(option_list[0], original_val) and operator.lt(original_val, option_list[1]):
+            return True
+
+        return False
+
+    @classmethod
+    def _arithmetic_left_open_right_close(cls, option_list, original_val):
+        if operator.lt(option_list[0], original_val) and operator.le(original_val, option_list[1]):
+            return True
+
+        return False
