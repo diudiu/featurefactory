@@ -67,14 +67,16 @@ class GenericUtils(object):
 
     @classmethod
     def _arithmetic_left_close_right_open(cls, option_list, original_val):
-        if operator.le(option_list[0], original_val) and operator.lt(original_val, option_list[1]):
+        if operator.le(option_list[0], original_val) and \
+                operator.lt(original_val, option_list[1]):
             return True
 
         return False
 
     @classmethod
     def _arithmetic_left_open_right_close(cls, option_list, original_val):
-        if operator.lt(option_list[0], original_val) and operator.le(original_val, option_list[1]):
+        if operator.lt(option_list[0], original_val) and \
+                operator.le(original_val, option_list[1]):
             return True
 
         return False
