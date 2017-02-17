@@ -4,9 +4,12 @@
     Copyright (c) 2017- DIGCREDIT, All Rights Reserved.
     ----------------------------------------------
     Author: Z.L
-    Date:  2017/02/10
+    Date:  2017/02/17
     Change Activity:
 """
+from apps.common.cache import feature_global_code
+from vendor.utils.analyzer import GenericUtils
+from vendor.utils.defaults import PositiveSignedTypeDefault
 import logging
 
 logger = logging.getLogger('apps.common')
@@ -23,33 +26,25 @@ class Handle(object):
         接口名称：数据堂学历信息查询接口
         字段名称：degree   学历 str
 
-        计算逻辑:将学历标准化为编码,输出为int
+        计算逻辑:从学历信息查询接口提取'学历'字段,并将学历转化为编码,输出为int
 
         输出：
         特征名称：degree_code   学信网学历 int
         """
 
-        result = {'education_degree_check': '9999'}
+        result = {'education_degree_check': PositiveSignedTypeDefault}
 
         try:
             degree = self.data['content'].get('degree', None)
             if degree:
                 education_degree = degree.get('degree', None)
-                degree_code = {
-                    '博士': '1',
-                    '硕士': '2',
-                    '本科': '3',
-                    '专科': '4',
-                    '其他': '5',
-                }
-                # 匹配学历信息与编码
-                for degree_data in degree_code:
-                    if degree_data in education_degree:
-                        result['education_degree_check'] = degree_code['degree_data']
-                # 若无匹配结果,输出其他
-                if result['education_degree_check'] == 9999:
-                    result['education_degree_check'] = '5'
+                code_collection = feature_global_code.get("education_degree_check")   # 提取码值字典
+                mapped_value = GenericUtils.get_mapped_value(code_collection, education_degree)  # 匹配学历与字典中的值
+                result['education_degree_check'] = mapped_value
+                if not mapped_value:   # 若无匹配结果,输出5(代表其他)
+                    result['education_degree_check'] = 5
 
-        except Exception:
-            # TODO log this error
+        except Exception as e:
+                logging.error(e.message)
+        finally:
             return result

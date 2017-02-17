@@ -4,9 +4,15 @@
     Copyright (c) 2017- DIGCREDIT, All Rights Reserved.
     ----------------------------------------------
     Author: Z.L
-    Date:  2017/02/10
+    Date:  2017/02/17
     Change Activity:
 """
+from apps.common.cache import feature_global_code
+from vendor.utils.analyzer import GenericUtils
+from vendor.utils.defaults import PositiveSignedTypeDefault
+import logging
+
+logger = logging.getLogger('apps.common')
 
 
 class Handle(object):
@@ -22,45 +28,31 @@ class Handle(object):
         字段名称：edu_exp_form     教育信息
                   degree          学历code
 
-        计算逻辑: 提取猎聘学历信息并标准化为编码, 编码需要与学信网编码一致, 输出类型为int
+        计算逻辑: 提取猎聘学历信息并转化为编码, 编码需要与学信网编码一致, 输出类型为int
 
         输出：
         特征名称：education_degree_code      学历
         """
 
-        result = {'education_degree_code': 9999}
+        result = {'education_degree_code': PositiveSignedTypeDefault}
 
         try:
             edu_exp_form = self.data['edu_exp_form']
-            if not isinstance(edu_exp_form, list):
-                return result
-            degree_list = []
-            for edu_exp in edu_exp_form:
-                degree = edu_exp.get('degree', None)
-                degree_list.append(degree)
+            if edu_exp_form and isinstance(edu_exp_form, list):  # 判断学历信息是非空的list
+                degree_list = []
+                for edu_exp in edu_exp_form:
+                    degree = edu_exp.get('degree', None)   # 提取学历,提取失败则返回空
+                    degree_list.append(degree)
 
-            degree_code = {
-                '5': '1',
-                '10': '1',
-                '20': '2',
-                '30': '2',
-                '40': '3',
-                '50': '4',
-                '60': '5',
-                '70': '5',
-                '80': '5',
-                '90': '5',
-                '999': '5',
-            }
-            # 匹配学历编码
-            for degree_data in degree_code:
-                if degree_data in degree_list:
-                    result['education_degree_code'] = degree_code['degree_data']
-            # 无匹配结果返回其他
-            if result['education_degree_code'] == 9999:
-                result['education_degree_code'] = '5'
-        except Exception:
-            # TODO log this error
+                code_collection = feature_global_code.get("education_degree_code")
+                for degree_data in code_collection:
+                    mapped_value = GenericUtils.get_mapped_value(code_collection, degree_data)
+                    if mapped_value:   # 匹配学历编码,若匹配成功则将学历列表中code值转化为对应int型code
+                        degree_list = [mapped_value if x == degree_data else x for x in degree_list]
+                degree_list = [5 if isinstance(x, str) else x for x in degree_list]  # 将学历列表中未匹配成功的全部替换为5
+                result['education_degree_code'] = min(degree_list)  # 取学历列表的最小值,即最高学历编码
+
+        except Exception as e:
+                logging.error(e.message)
+        finally:
             return result
-
-        return result

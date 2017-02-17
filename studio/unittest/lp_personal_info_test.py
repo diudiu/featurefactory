@@ -2,7 +2,7 @@
 
 import unittest
 
-from studio.lp_dataocean_handle.lp_personal_info import Handle
+from studio.lp_dataocean_handle.lp_age import Handle
 
 data = {
     'content': {
@@ -12,7 +12,7 @@ data = {
         'sex': '男',
     },
 }
-age_test = [20, ""]
+age_test = [20, -4,""]
 
 
 class TestPlugin(unittest.TestCase):

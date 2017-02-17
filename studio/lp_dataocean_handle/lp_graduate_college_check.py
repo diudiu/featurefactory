@@ -4,9 +4,13 @@
     Copyright (c) 2017- DIGCREDIT, All Rights Reserved.
     ----------------------------------------------
     Author: Z.L
-    Date:  2017/02/15
+    Date:  2017/02/17
     Change Activity:
 """
+from vendor.utils.defaults import StringTypeDefault
+import logging
+
+logger = logging.getLogger('apps.common')
 
 
 class Handle(object):
@@ -21,20 +25,20 @@ class Handle(object):
         接口名称：education_review_s 数据堂学历信息查询接口
         字段名称：college 院校名称 string
 
-        计算逻辑: 直接从接口提取,输出为string
+        计算逻辑: 从学历信息查询接口提取院校名称并输出,输出为string
 
         输出：
         特征名称：graduate_college_check 学信网查得院校 string
         """
 
-        result = {'graduate_college_check': '9999'}
+        result = {'graduate_college_check': StringTypeDefault}
 
         try:
             college_name = self.data['content']['degree'].get('college', None)
-            if not college_name or not isinstance(college_name, basestring):
-                return result
-            result['graduate_college_check'] = college_name
-            return result
-        except Exception:
-            # TODO log this error
+            if college_name and isinstance(college_name, basestring):  # 判断院校名称是否为非空字符串
+                result['graduate_college_check'] = college_name
+
+        except Exception as e:
+                logging.error(e.message)
+        finally:
             return result

@@ -4,9 +4,14 @@
     Copyright (c) 2013- DIGCREDIT, All Rights Reserved.
     -----------------------------------------------------------
     Author: Z.L
-    Date:  2017/01/18
+    Date:  2017/02/17
     Change Activity:
 """
+from vendor.utils.defaults import PositiveSignedTypeDefault
+
+import logging
+
+logger = logging.getLogger('apps.common')
 
 
 class Handle(object):
@@ -21,23 +26,19 @@ class Handle(object):
         接口名称：'personal_info': 个人基本信息查询
         字段名称：'age': 年龄 int
 
-        计算逻辑: 直接从接口提取年龄,输出类型为int
+        计算逻辑: 直接从个人基本信息查询接口提取'年龄'字段并输出, 输出类型为int
 
         输出:
         特征名称: 'age': 年龄 int
         """
 
-        result = {
-            'age': '9999',
-        }
+        result = {'age': PositiveSignedTypeDefault}
         try:
             base_data_age = self.data["content"]["age"]    # 提取年龄字段
-            if not base_data_age or not isinstance(base_data_age, int):
-                return result
+            if isinstance(base_data_age, int) and 0 <= base_data_age <= 100:  # 判断年龄是否是int且在0-100之间
+                result['age'] = base_data_age
 
-            result['age'] = base_data_age
-            return result
         except Exception as e:
-            # TODO log this error
+                logging.error(e.message)
+        finally:
             return result
-

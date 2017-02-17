@@ -48,7 +48,7 @@ data = {
             "school": "string",
             "start": "string",
             "end": "string",
-            "degree": "10",
+            "degree": "40",
             "degree_name": "中专",
             "tz": 0
         },
@@ -64,14 +64,14 @@ data = {
             "school": "string",
             "start": "string",
             "end": "string",
-            "degree": "90",
+            "degree": "70",
             "degree_name": "中专",
             "tz": 0
         }
     ]
 }
 
-degrees = ["5", "10", "20", "None", ""]
+# degrees = ["5", "10", "20", "None", ""]
 
 
 class TestPlugin(unittest.TestCase):
@@ -81,11 +81,11 @@ class TestPlugin(unittest.TestCase):
 
     def test_lp_highest_degree(self):
         data = self.data.copy()
-        for degree in degrees:
-            data['edu_exp_form'][0]['degree'] = degree
-            handler = Handle(data)
-            res = handler.handle()
-            print res
+        # for degree in degrees:
+            # data['edu_exp_form'][0]['degree'] = degree
+        handler = Handle(data)
+        res = handler.handle()
+        print res
 
 if __name__ == '__main__':
     unittest.main()

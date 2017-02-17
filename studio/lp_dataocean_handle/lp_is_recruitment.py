@@ -4,9 +4,13 @@
     Copyright (c) 2017- DIGCREDIT, All Rights Reserved.
     ----------------------------------------------
     Author: Z.L
-    Date:  2017/02/15
+    Date:  2017/02/17
     Change Activity:
 """
+from vendor.utils.defaults import UnsignedIntTypeDefault
+import logging
+
+logger = logging.getLogger('apps.common')
 
 
 class Handle(object):
@@ -21,23 +25,23 @@ class Handle(object):
         接口名称：education_review_s 数据堂学历信息查询接口
         字段名称：education_approach 学习形式
 
-        计算逻辑: 如果学习形式为全日制,则为统招,否则为非统招
+        计算逻辑: 从学历信息查询接口提取学习形式,如果学习形式为全日制,则为统招,输出为1;否则为非统招,输出为0
 
         输出：
-        特征名称：is_recruitment 是否统招
+        特征名称：is_recruitment 是否统招 int
         """
 
-        result = {'is_recruitment': 9999}
+        result = {'is_recruitment': UnsignedIntTypeDefault}
 
         try:
             education_info = self.data['content']['degree'].get('education_approach', None)
-            if not education_info or not isinstance(education_info, basestring):
-                return result
-            if '全日制' in education_info:
-                result['is_recruitment'] = 1
-            else:
-                result['is_recruitment'] = 0
-            return result
-        except Exception:
-            # TODO log this error
+            if education_info and isinstance(education_info, basestring):  # 判断学习形式是否为非空字符串
+                if '全日制' in education_info:
+                    result['is_recruitment'] = 1  # 学习形式包含全日制则为统招,返回1,否则返回0
+                else:
+                    result['is_recruitment'] = 0
+
+        except Exception as e:
+                logging.error(e.message)
+        finally:
             return result
