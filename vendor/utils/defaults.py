@@ -1,10 +1,23 @@
 # -*- coding: utf-8 -*-
 """
 Usage:
+   - 特征取值是字符串的场景
    from vendor.utils.defaults import StringTypeDefault
 
    result = {
        "city_name": StringTypeDefault
+   }
+
+   - 特征取值是布尔类型的场景
+   from vendor.utils.defaults import BooleanTypeDefault
+   result = {
+       "is_net_black": BooleanTypeDefault
+   }
+
+   - 特征取值是正整数类型的场景
+   from vendor.utils.defaults import PositiveSignedTypeDefault
+   result = {
+       "is_net_black": PositiveSignedTypeDefault
    }
 
 """
