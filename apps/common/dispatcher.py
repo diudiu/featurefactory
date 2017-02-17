@@ -11,9 +11,6 @@ import logging
 from django.utils.module_loading import import_string
 
 from apps.common.models import ClientOverview
-from apps.datasource.models import DsInterfaceInfo
-from apps.remote.models import FeatureFieldRel
-from vendor.utils.constant import cons
 from vendor.errors.contact_error import *
 
 logger = logging.getLogger('apps.etl')

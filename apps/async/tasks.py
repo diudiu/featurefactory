@@ -8,13 +8,6 @@
 
 """
 
-import logging
-from celery import shared_task
-import django
-from django.apps.registry import apps
-if django.VERSION >= (1, 7) and not apps.ready:
-    django.setup()
-
 import requests
 import json
 
@@ -22,6 +15,13 @@ from apps.etl.feature_collect import CollectFeature
 from vendor.utils.constant import cons
 from vendor.errors.common import ServerError
 from vendor.messages.response_code import ResponseCode
+
+import logging
+from celery import shared_task
+import django
+from django.apps.registry import apps
+if django.VERSION >= (1, 7) and not apps.ready:
+    django.setup()
 
 logger = logging.getLogger('apps.featureapi')
 
