@@ -57,9 +57,42 @@ class FeatureGlobalCode(object):
 
     def _load_data_from_db(self):
         if self._feature_code_context is None:
-            self.feature_repository.find_all()
+            self._feature_code_context = {}
+
+            feature_code_sets = self.feature_repository.find_all()
+            for feature_code_obj in feature_code_sets.iterator():
+                _option = []
+
+                if feature_code_obj.value_type in ("int", ):
+                    if feature_code_obj.max_value in ("", None, " "):
+                        _option = int(feature_code_obj.base_value)
+                    else:
+                        _option.append(int(feature_code_obj.base_value))
+                        _option.append(int(feature_code_obj.max_value))
+                elif feature_code_obj.value_type in ("float", ):
+                    if feature_code_obj.max_value in ("", None, " "):
+                        _option = float(feature_code_obj.base_value)
+                    else:
+                        _option.append(float(feature_code_obj.base_value))
+                        _option.append(float(feature_code_obj.max_value))
+                else:
+                    if feature_code_obj.max_value in ("", None, " "):
+                        _option = feature_code_obj.base_value
+                    else:
+                        _option.append(feature_code_obj.base_value)
+                        _option.append(feature_code_obj.max_value)
+
+                sub_option = (_option, feature_code_obj.mapped_value)
+
+                option_list = self._feature_code_context.get(feature_code_obj.feature_name, [])
+                option_list.append(sub_option)
+
+                self._feature_code_context.update({
+                    feature_code_obj.feature_name: option_list
+                })
 
 feature_global_code = FeatureGlobalCode()
+
 
 if __name__ == "__main__":
     o1 = FeatureGlobalCode()
