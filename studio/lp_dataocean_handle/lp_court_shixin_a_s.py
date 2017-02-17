@@ -23,10 +23,11 @@ class Handle(object):
         data_identity: court_shixin_a_s
         :return:
         """
+        result = {
+            'is_court_shixin': False
+        }
         try:
-            result = {
-                'is_court_shixin': False
-            }
+
             if self.data['result'] == '00':
                 result['is_court_shixin'] = True
 

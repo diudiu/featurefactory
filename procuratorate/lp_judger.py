@@ -52,7 +52,7 @@ class Judger(object):
 
     def _fill_attributes(self):
         self.apply_id = self.content.get('apply_id', None)
-        self.callback_url = self.content.get('callback', None)
+        self.callback_url = self.content.get('callback_url', None)
         if not self.callback_url:
             raise CallBackUrlMissing
         self.feature_list = self.content.get('res_keys', None)

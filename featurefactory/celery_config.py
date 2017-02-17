@@ -8,7 +8,7 @@ import djcelery
 djcelery.setup_loader()
 
 BROKER_BACKEND = 'redis'
-BROKER_URL = 'redis://:syph@dev@192.168.1.198:6379/15'
+BROKER_URL = 'redis://:syph@dev@192.168.1.198:6379/12'
 # BROKER_URL = ''
 # HOME BROKER_URL
 # BROKER_URL = 'redis://:123456@192.168.232.128:6379/1'
