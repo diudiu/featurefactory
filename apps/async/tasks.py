@@ -8,21 +8,20 @@
 
 """
 
+import requests
+import json
+
+from apps.etl.feature_collect import CollectFeature
+from vendor.utils.constant import cons
+from vendor.errors.common import ServerError
+from vendor.messages.response_code import ResponseCode
+
 import logging
 from celery import shared_task
 import django
 from django.apps.registry import apps
 if django.VERSION >= (1, 7) and not apps.ready:
     django.setup()
-
-import requests
-import json
-
-from apps.common.dispatcher import data_get_dispatch
-from apps.common.dispatcher import process_dispatch
-from vendor.utils.constant import cons
-from vendor.errors.common import ServerError
-from vendor.messages.response_code import ResponseCode
 
 logger = logging.getLogger('apps.featureapi')
 
@@ -35,27 +34,12 @@ def audit_task(base_data):
         cons.RESPONSE_REQUEST_MESSAGE: ResponseCode.message(ResponseCode.FEATURE_SUCCESS)
     }
     try:
-        # TODO 这里调用一个原始数据收集分发器  再次返回一个数据对象
-        original_data_list, collect_type_list = data_get_dispatch(base_data)
-        ##################################################
-        # TODO 未来用消息队列做链接
-        #        _==/          i     i           \==_
-        #      /XX/            |\___/|            \XX\
-        #    /XXXX\            |XXXXX|            /XXXX\
-        #   |XXXXXX\_         _XXXXXXX_         _/XXXXXX|
-        #  XXXXXXXXXXXxxxxxxxXXXXXXXXXXXxxxxxxxXXXXXXXXXXX
-        # |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
-        # XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-        # |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
-        #  XXXXXX/^^^^^\XXXXXXXXXXXXXXXXXXXXX/^^^^^\XXXXXX
-        #   |XXX|       \XXX/^^\XXXXX/^^\XXX/       |XXX|
-        #     \XX\       \X/    \XXX/    \X/       /XX/
-        #        "\       "      \X/      "       /"
-        ##################################################
-        #  TODO 这里调用一个特征处理分发器  依然返回一个数据对象
-        ret_data = process_dispatch(original_data_list, base_data['feature_list'], collect_type_list)
-        # TODO 这里有按要求取特征逻辑, 计算结束的特征全部存在mongo里面  而且已经准备就绪  取出来返回
-        # TODO 未来这里讲调用异步任务流
+        collecter = CollectFeature(base_data)
+        collecter.get_feature_value()
+        if collecter.error_list:
+            # TODO 特征处理有异常
+            pass
+        ret_data = collecter.feature_ret
         logger.info('\n**********\nfeature compared completed\n**********\n')
         logger.info('All feature is %s', ret_data)
         data.update({
@@ -63,6 +47,28 @@ def audit_task(base_data):
             'apply_id': base_data.get('apply_id', None),
             'ret_msg': ret_data
         })
+        # # TODO 这里调用一个原始数据收集分发器  再次返回一个数据对象
+        # original_data_list, collect_type_list = data_get_dispatch(base_data)
+        # ##################################################
+        # # TODO 未来用消息队列做链接
+        # #        _==/          i     i           \==_
+        # #      /XX/            |\___/|            \XX\
+        # #    /XXXX\            |XXXXX|            /XXXX\
+        # #   |XXXXXX\_         _XXXXXXX_         _/XXXXXX|
+        # #  XXXXXXXXXXXxxxxxxxXXXXXXXXXXXxxxxxxxXXXXXXXXXXX
+        # # |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
+        # # XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+        # # |XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
+        # #  XXXXXX/^^^^^\XXXXXXXXXXXXXXXXXXXXX/^^^^^\XXXXXX
+        # #   |XXX|       \XXX/^^\XXXXX/^^\XXX/       |XXX|
+        # #     \XX\       \X/    \XXX/    \X/       /XX/
+        # #        "\       "      \X/      "      /"
+        # ##################################################
+        # #  TODO 这里调用一个特征处理分发器  依然返回一个数据对象
+        # ret_data = process_dispatch(original_data_list, base_data['feature_list'], collect_type_list)
+        # # TODO 这里有按要求取特征逻辑, 计算结束的特征全部存在mongo里面  而且已经准备就绪  取出来返回
+        # # TODO 未来这里讲调用异步任务流
+
     except ServerError as e:
         data = {
             cons.RESPONSE_REQUEST_STATUS: e.status,
