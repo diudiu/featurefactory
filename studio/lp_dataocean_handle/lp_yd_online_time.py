@@ -21,7 +21,7 @@ class Handle(object):
         输出：移动手机号在网时长
         """
 
-        result = { "online_time": "9999"}
+        result = {"online_time": "9999"}
 
         try:
             online_time = self.data['content']['online_time']

@@ -11,8 +11,7 @@ import logging
 
 from apps.remote.models import FeatureFieldRel
 from apps.datasource.models import InterfaceFieldRel
-from apps.etl.context import ApplyContext
-from apps.etl.context import PortraitContext
+from apps.etl.context import ApplyContext, ArgsContext, PortraitContext
 from vendor.errors.api_errors import *
 
 logger = logging.getLogger('apps.featureapi')
@@ -56,15 +55,7 @@ class Judger(object):
         if not self.callback_url:
             raise CallBackUrlMissing
         self.feature_list = self.content.get('res_keys', None)
-        apply_base = ApplyContext(self.apply_id)
-        apply_data = apply_base.load()
-        self.proposer_id = apply_data.get('proposer_id', None)
-        if not self.proposer_id:
-            raise ProposerIdMissing
-
-        portrait_base = PortraitContext(self.proposer_id)
-        portrait_data = portrait_base.load()
-        self._prepare_args(apply_data, portrait_data)
+        self._prepare_args()
         if not self.arguments:
             logger.error(
                 'Response from the function of `judge._decrypt`, error_msg=%s, rel_err_msg=%s, apply_id=%s'
@@ -111,6 +102,16 @@ class Judger(object):
                 )
                 raise ArgumentsAvailableError  # E07
 
-    def _prepare_args(self, apply_data, portrait_data):
-        self.arguments = portrait_data.get('data', None)
-        self.arguments.update(apply_data.get('data', None))
+    def _prepare_args(self):
+        args_base = ArgsContext(self.apply_id)
+        args_data = args_base.load()
+        if args_data:
+            self.arguments = args_data
+        else:
+            apply_base = ApplyContext(self.apply_id)
+            apply_data = apply_base.load()
+            self.proposer_id = apply_data.get('proposer_id', None)
+            if not self.proposer_id:
+                raise ProposerIdMissing
+            portrait_base = PortraitContext(self.proposer_id)
+            portrait_data = portrait_base.load()

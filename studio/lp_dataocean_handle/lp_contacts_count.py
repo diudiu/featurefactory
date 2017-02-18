@@ -31,7 +31,6 @@ class Handle(object):
         self.data = data
 
     def handle(self):
-
         """
         接口名称：个人基本信息查询
         字段名称：
@@ -42,8 +41,8 @@ class Handle(object):
         字段名称:
         'contacts_count': 联系人数量
         """
+        result = {'contacts_count': 9999}
         try:
-            result = {'contacts_count': 9999}
             base_data = self.data.get("contacts", '')
             if str(base_data).isdigit():
                 result['contacts_count'] = base_data
