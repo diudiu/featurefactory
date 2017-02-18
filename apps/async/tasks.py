@@ -29,7 +29,6 @@ logger = logging.getLogger('apps.featureapi')
 
 @shared_task
 def audit_task(base_data):
-    callback_url = base_data.get('callback_url', None)
     # TODO 向callback_url回推结果
     data = {
         cons.RESPONSE_REQUEST_STATUS: ResponseCode.FEATURE_SUCCESS,
@@ -51,7 +50,7 @@ def audit_task(base_data):
         #  XXXXXX/^^^^^\XXXXXXXXXXXXXXXXXXXXX/^^^^^\XXXXXX
         #   |XXX|       \XXX/^^\XXXXX/^^\XXX/       |XXX|
         #     \XX\       \X/    \XXX/    \X/       /XX/
-        #        "\       "      \X/      "      /"
+        #        "\       "      \X/      "       /"
         ##################################################
         #  TODO 这里调用一个特征处理分发器  依然返回一个数据对象
         ret_data = process_dispatch(original_data_list, base_data['feature_list'], collect_type_list)

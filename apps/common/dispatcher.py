@@ -67,6 +67,9 @@ def data_get_dispatch(base_data):
     useful_args = base_data.get('useful_args', None)
     feature_list = base_data.get('feature_list', None)
     base_data_list = []
+    for feature_name in feature_list:
+        # TODO 初始化特征处理类
+        pass
 
     if not apply_id or not useful_args:
         logger.error('judge return error , no apply_id or no usrful_args')
