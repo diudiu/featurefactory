@@ -4,10 +4,13 @@
     Copyright (c) 2017- SYPH, All Rights Reserved.
     -----------------------------------------------------------
     Author: S.G
-    Date: 2017/02/10
+    Date: 2017/2017/2/17
     Change Activity:
 """
 
+import logging
+logger = logging.getLogger('apps.common')
+from vendor.utils.defaults import PositiveSignedTypeDefault
 
 class Handle(object):
 
@@ -18,23 +21,39 @@ class Handle(object):
 
         """
         接口：反欺诈服务接口——3借贷信息——3.4其他机构查询情况
+
+        计算逻辑：取data的所有key组成date_list,遍历date_list，将所有元素转化为int，组成新的列表date_int_list，
+                  将新列表的元素按照从大到小顺序排列，遍历data_int_list前六个元素，得到data字典中其对应value(类型为字典)，
+                  得到各个新字典的value组成列表orgNums_list，求orgNums_list元素的和作为近六个月其他信贷机构数量。
+
         输出：其他信贷机构数量（近6个月）
         """
 
-        result = {"pingan_overdue_corp_count": 9999}
+        result = {"pingan_overdue_corp_count": PositiveSignedTypeDefault}
+        date_int_list = []
+        orgNums_list = [0]
 
         try:
-            data_list = self.data.keys().reverse()
-            orgNums_list = []
+            date_list = self.data.get('data').keys()
+            for x in date_list:
+                date_int_list.append(int(x))
+            date_int_list.sort(reverse=True)
             for a in range(6):
-                orgNums_list.append(self.data.get(data_list[a]).get('orgNums'))
-            pingan_ovredue_corp_count = sum(orgNums_list)
+                orgNums_date = self.data.get('data').get(str(date_int_list[a]))
+                if orgNums_date is None:
+                    continue
+                else:
+                    orgNums = orgNums_date.get('orgNums')
+                    if orgNums is None:
+                        continue
+                    else:
+                        orgNums_list.append(int(orgNums))
 
-            result['pingan_overdue_corp_count'] = pingan_ovredue_corp_count
-        except Exception:
+            result['pingan_overdue_corp_count'] = sum(orgNums_list)
+        except Exception as e:
+            logging.error(e.message)
+        finally:
             return result
-
-        return result
 
 
 
