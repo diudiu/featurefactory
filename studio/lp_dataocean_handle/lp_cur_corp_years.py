@@ -4,12 +4,15 @@
     Copyright (c) 2017- DIGCREDIT, All Rights Reserved.
     ----------------------------------------------
     Author: S.G
-    Date:  2017/2/8
+    Date:  2017/2/17
     Change Activity:
 """
-
+import logging
+logger = logging.getLogger('apps.common')
 from datetime import datetime
-
+from vendor.utils.defaults import PositiveSignedTypeDefault
+from apps.common.cache import feature_global_code
+from vendor.utils.analyzer import GenericUtils
 
 class Handle(object):
 
@@ -20,40 +23,31 @@ class Handle(object):
 
         """
         接口：企业工商信息查询s(industrial_commercial_s)
+
         字段：start_business_date      开业日期
-        输出：cur_corp_years           现工作单位工作年限（年数）
+
+        计算逻辑：提取企业的开业日期，并将其转化为datetime格式，然后跟现在时间作差，得到企业已开业天数，
+                  除以365.0得到浮点型的企业已开业年数。然后对企业已开业年数进行分段并输出对应code值。
+
+        输出：cur_corp_years           现工作单位年限（年数）
         """
 
-        result = {'cur_corp_years': 9999}
+        result = {'cur_corp_years': PositiveSignedTypeDefault}
 
         try:
-            start_business_date = self.data['content']['start_business_date']
+            start_business_date = self.data['content']['start_business_date']    # 提取企业的开业日期,得到现在的时间
             now = datetime.now()
-            start = datetime.strptime(start_business_date, '%Y-%m-%d')
-            delta = now - start
-            years = delta.days/365
-            if years <= 1:
-                cur_corp_years = 1
-            elif 1 < years <= 2:
-                cur_corp_years = 2
-            elif 2 < years <= 3:
-                cur_corp_years = 3
-            elif 3 < years <= 4:
-                cur_corp_years = 4
-            elif 4 < years <= 5:
-                cur_corp_years = 5
-            elif 5 < years <= 8:
-                cur_corp_years = 6
-            elif 8 < years <= 10:
-                cur_corp_years = 7
-            else:
-                cur_corp_years = 8
-            result['cur_corp_years'] = cur_corp_years
-        except Exception:
-            # TODO log this error
-            return result
+            start = datetime.strptime(start_business_date, '%Y-%m-%d')   # 转化为datetime格式
+            delta = now - start   # 现在时间作差，得到企业已开业天数
+            years = delta.days/365.0   # 除以365.0得到浮点型的企业已开业年数
 
-        return result
+            code_collection = feature_global_code.get("cur_corp_years")
+            mapped_value = GenericUtils.get_mapped_value(code_collection, years)
+            result['cur_corp_years'] = mapped_value
+        except Exception as e:
+            logging.error(e.message)
+        finally:
+            return result
 
 
 
