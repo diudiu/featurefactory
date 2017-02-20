@@ -32,6 +32,10 @@ class Handle(object):
         try:
             now_work_time_dic = {'now_work_time': 9999}  # 9999：异常
             work_exp_form = self.data['work_exp_form']
+
+            if not isinstance(work_exp_form, list):
+                return now_work_time_dic
+
             # TODO 计算维度
             # 计算最近一份工作的结束时间
             work_end_list = []

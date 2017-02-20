@@ -36,7 +36,7 @@ class Handle(object):
             degree_list = []
             for edu_exp in edu_exp_form:
                 degree = edu_exp.get('degree', None)
-                if not isinstance(degree, (str, int)):
+                if not isinstance(degree, (basestring, int)):
                     return edu_exp_form
                 else:
                     degree_list.append(int(degree))

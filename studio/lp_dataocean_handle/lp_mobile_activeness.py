@@ -28,8 +28,8 @@ class Handle(object):
         输出：
         特征名称：mobile_activeness   申请人手机号活跃度
         """
+        mobile_activeness_dic = {'mobile_activeness': 9999.0}  # 9999.0：异常
         try:
-            mobile_activeness_dic = {'mobile_activeness': 9999}  # 9999：异常
             tags = self.data['data']['tags']
             if not isinstance(tags, dict):
                 raise MyException(message='get (tags) fail')
@@ -62,8 +62,6 @@ class Handle(object):
 
             mobile_activeness_dic['mobile_activeness'] = round(mobile_activeness, 2)
 
-        except MyException as e:
-            logging.error(e.message)
         except Exception as e:
             logging.error(e.message)
         finally:

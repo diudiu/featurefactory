@@ -39,15 +39,15 @@ class Handle(object):
                 income_level_index = amount_list.index(income_level)
                 expense_level_index = amount_list.index(expense_level)
                 ratio = income_level_index/expense_level_index
-                if ratio >= 10:   #入账远大于支出
+                if ratio >= 10:   # 入账远大于支出
                     result['income_expense_comparison'] = 1
-                elif 1 < ratio < 10:   #入账大于支出
+                elif 1 < ratio < 10:   # 入账大于支出
                     result['income_expense_comparison'] = 2
-                elif ratio == 1:   #入账接进出账
+                elif ratio == 1:   # 入账接进出账
                     result['income_expense_comparison'] = 3
-                elif 0.1 < ratio < 1:   #入账小于出账
+                elif 0.1 < ratio < 1:   # 入账小于出账
                     result['income_expense_comparison'] = 4
-                elif ratio <= 0.1:   #入账远小于支出
+                elif ratio <= 0.1:   # 入账远小于支出
                     result['income_expense_comparison'] = 5
         except Exception:
             # TODO log this error

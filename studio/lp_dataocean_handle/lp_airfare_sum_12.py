@@ -27,15 +27,14 @@ class Handle(object):
         """
         try:
             result = {
-                'airfare_sum_12': 9999
+                'airfare_sum_12': 9999.0
             }
 
             if self.data['result'] == '00':
                 average_price = self.data['content'].get('average_price', None)
                 flight_times = self.data['content'].get('flight_times', None)
                 if average_price and flight_times:
-                    result['airfare_sum_12'] = average_price * flight_times
-
+                    result['airfare_sum_12'] = float(average_price * flight_times)
         except Exception as e:
             logging.error(e.message)
 

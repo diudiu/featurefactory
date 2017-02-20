@@ -22,7 +22,7 @@ class Handle(object):
         输出：联通手机号在网时长
         """
         try:
-            result = {"online_time": 9999}
+            result = {"online_time": '9999'}
             online_time = self.data['content']['online_time']
 
             if self.data['result'] == u'00':

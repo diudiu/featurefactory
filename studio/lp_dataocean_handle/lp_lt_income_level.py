@@ -34,7 +34,7 @@ class Handle(object):
         特征名称：income_level        年入账
         """
 
-        result = {'income_level': 999999}  # 999999：异常
+        result = {'income_level': 9999}  # 999999：异常
 
         liantong_income_range = None
         try:

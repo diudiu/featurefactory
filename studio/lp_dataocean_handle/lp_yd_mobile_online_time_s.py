@@ -24,7 +24,8 @@ class Handle(object):
         :return:
         """
         try:
-            result = {"online_time": 9999}
+            result = {"online_time": '9999'}
+
             if self.data['result'] == u'00':
                 online_time = self.data['content']['online_time']
                 if online_time in ["(0,3)", "[3,6)"]:
