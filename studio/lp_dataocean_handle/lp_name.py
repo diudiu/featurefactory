@@ -1,10 +1,10 @@
 # -*- coding:utf-8 -*-
 """
-    License SYPH-L.
-    Copyright (c) 2013- SYPH, All Rights Reserved.
+    License DIGCREDIT-L.
+    Copyright (c) 2013- DIGCREDIT, All Rights Reserved.
     -----------------------------------------------------------
-    Author: ZL
-    Date:  2017/01/18
+    Author: Z.L
+    Date:  2017/02/20
     Change Activity:
 
     data = {
@@ -38,6 +38,8 @@ class Handle(object):
         接口名称：猎聘申请信息上传接口
         字段名称：
         'name': 姓名
+
+        计算逻辑: 从猎聘申请信息上传接口提取姓名并输出,输出类型为string
 
         输出:
         特征名称:

@@ -33,7 +33,7 @@ class Handle(object):
         特征名称: 'car_number' 车牌号 list
         """
 
-        result = {"car_number": 9999}
+        result = {"car_number": ListTypeDefault}
         try:
             base_data = self.data["result"]
             if base_data and isinstance(base_data, list):  # 判断车辆信息列表不为空且为list
@@ -44,6 +44,7 @@ class Handle(object):
                     else:
                         car_list.append(data.get("license_no"))  # 遍历车辆信息,提取所有车牌号组成list
                 result["car_number"] = car_list
+
         except Exception as e:
                 logging.error(e.message)
         finally:

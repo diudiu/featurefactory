@@ -36,11 +36,11 @@ class Handle(object):
                     inland_count = content.get('inland_count', None)
                     international_count = content.get('international_count', None)
                     if int(flight_times) == 0:
-                        result['max_flight_area'] = '乘机次数为零'
+                        result['max_flight_area'] = 3
                     elif int(inland_count) >= int(international_count):
-                        result['max_flight_area'] = '国内'
+                        result['max_flight_area'] = 1
                     elif int(inland_count) < int(international_count):
-                        result['max_flight_area'] = '国外'
+                        result['max_flight_area'] = 2
 
         except Exception as e:
             logging.error(e.message)

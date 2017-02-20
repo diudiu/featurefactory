@@ -55,14 +55,15 @@ class Handle(object):
     def handle(self):
 
         """
-        接口名称：
-        'high_way_over_speed': 高速超速统计查询
-        字段名称：
-        'month_times': 超速次数 str
+        输入:
+        接口名称：'high_way_over_speed'  高速超速统计查询
+        字段名称：'month_times'  超速次数 str
+
+        计算逻辑: 先从车牌号(car_umber)特征根据车牌号查询每月每辆车的超速信息,
+                 再汇总所有车的超速次数,输出类型为int
 
         输出:
-        特征名称:
-        'overspeed_count': 超速次数 int
+        特征名称: 'overspeed_count' 超速次数 str
         """
         result = {'overspeed_count': UnsignedIntTypeDefault}
         try:
