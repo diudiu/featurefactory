@@ -37,6 +37,7 @@ class ResponseCode(object):
     HANDLE_INIT_ERROR = 50020
     HANDLE_WORK_ERROR = 50021
 
+    FEATURE_PROCESS_ERROR = 50014
 
     RESPONSE_MESSAGE = {
         FAILED:                         u"操作失败",
@@ -70,6 +71,8 @@ class ResponseCode(object):
 
         HANDLE_INIT_ERROR:              u"特征处理方法内部错误: 无法初始化",
         HANDLE_WORK_ERROR:              u"特征数理方法执行错误: 空的执行结果",
+
+        FEATURE_PROCESS_ERROR:          u"特征加工计算出现错误",
     }
 
     @classmethod
