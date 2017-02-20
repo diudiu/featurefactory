@@ -2,6 +2,8 @@
 
 from apps.common.dao import FeatureRepository
 
+from vendor.errors.feature import FeatureProcessError
+
 
 class Singleton(type):
     def __init__(cls, name, bases, dicts):
@@ -48,7 +50,7 @@ class FeatureGlobalCode(object):
             self._load_data_from_db()
 
         if not isinstance(self._feature_code_context, dict):
-            raise Exception("Feature code context is not initialize.")
+            raise FeatureProcessError("Feature code context is not initialize.")
 
         return self._feature_code_context.get(feature_name, None)
 
@@ -65,22 +67,22 @@ class FeatureGlobalCode(object):
 
                 if feature_code_obj.value_type in ("int", ):
                     if feature_code_obj.max_value in ("", None, " "):
-                        _option = int(feature_code_obj.base_value)
+                        _option = int(feature_code_obj.unitary_value)
                     else:
-                        _option.append(int(feature_code_obj.base_value))
-                        _option.append(int(feature_code_obj.max_value))
+                        _option.append(int(feature_code_obj.unitary_value))
+                        _option.append(int(feature_code_obj.dual_value))
                 elif feature_code_obj.value_type in ("float", ):
                     if feature_code_obj.max_value in ("", None, " "):
-                        _option = float(feature_code_obj.base_value)
+                        _option = float(feature_code_obj.unitary_value)
                     else:
-                        _option.append(float(feature_code_obj.base_value))
-                        _option.append(float(feature_code_obj.max_value))
+                        _option.append(float(feature_code_obj.unitary_value))
+                        _option.append(float(feature_code_obj.dual_value))
                 else:
                     if feature_code_obj.max_value in ("", None, " "):
-                        _option = feature_code_obj.base_value
+                        _option = feature_code_obj.unitary_value
                     else:
-                        _option.append(feature_code_obj.base_value)
-                        _option.append(feature_code_obj.max_value)
+                        _option.append(feature_code_obj.unitary_value)
+                        _option.append(feature_code_obj.dual_value)
 
                 sub_option = (_option, feature_code_obj.mapped_value)
 
