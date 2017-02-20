@@ -29,7 +29,7 @@ class Handle(object):
         特征名称:
         'pingan_multi_loan_count': 多头借贷公司数量 int
         """
-        result = {'pingan_multi_loan_count': PositiveSignedTypeDefault}
+        result = {'pingan_multi_loan_count': UnsignedIntTypeDefault}
         try:
 
             if self.data.get('result', None) == 0:

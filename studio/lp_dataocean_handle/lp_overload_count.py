@@ -63,7 +63,7 @@ class Handle(object):
         特征名称:
         'overload_count': 超速次数 int
         """
-        result = {'overload_count': PositiveSignedTypeDefault}
+        result = {'overload_count': UnsignedIntTypeDefault}
         try:
             month_times = 0
             for card, card_record in self.data.items():

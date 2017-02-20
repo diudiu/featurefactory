@@ -35,7 +35,7 @@ class Handle(object):
         'apply_register_duration': 注册时间长度 float
         """
         result = {
-            'apply_register_duration': PositiveSignedFloatTypeDefault,
+            'apply_register_duration': UnsignedFloatTypeDefault,
         }
         try:
             apply_data = self.data["apply_data"]["application_on"][:10]

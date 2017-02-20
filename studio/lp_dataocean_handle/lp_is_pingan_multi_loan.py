@@ -7,7 +7,7 @@
     Date:  2017/02/17
     Change Activity:
 """
-from vendor.utils.defaults import UnsignedIntTypeDefault
+from vendor.utils.defaults import *
 import logging
 
 logger = logging.getLogger('apps.common')
@@ -31,7 +31,7 @@ class Handle(object):
         特征名称: 'is_pingan_multi_loan' 是否命中多头借贷名单 int
         """
 
-        result = {'is_pingan_multi_loan': UnsignedIntTypeDefault}
+        result = {'is_pingan_multi_loan': BooleanTypeDefault}
         try:
             base_data = self.data["data"]["record"]
             result_data = self.data["result"]
