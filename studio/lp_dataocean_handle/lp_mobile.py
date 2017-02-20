@@ -11,6 +11,8 @@
 
 import logging
 
+from vendor.utils.defaults import *
+
 logger = logging.getLogger('apps.common')
 
 
@@ -30,13 +32,12 @@ class Handle(object):
         特征名称:
         'mobile': 手机号 str
         """
+        result = {'mobile': StringTypeDefault}
         try:
-            result = {'mobile': 9999}
             base_data = self.data.get("mobile", '')
             if str(base_data).isdigit():
                 result['mobile'] = base_data
 
         except Exception as e:
             logging.error(e.message)
-        finally:
-            return result
+        return result

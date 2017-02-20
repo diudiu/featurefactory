@@ -166,6 +166,9 @@ class PortraitContext(BaseContext):
         """
 
     def __init__(self, proposer_id, **kwargs):
+
+        self.context_data = None
+
         super(PortraitContext, self).__init__(proposer_id, **kwargs)
         self.portrait_base = MongoBase(collection_name=PORTRAIT_BASE_NAME)
         # self.cache_base = MongoBase(collection_name=CACHE_BASE_NAME)
@@ -174,3 +177,16 @@ class PortraitContext(BaseContext):
         query = {'proposer_id': self.apply_id}
         data = self.portrait_base.search(query)
         return data
+
+    def get_data(self, key):
+        if self.context_data is None:
+            self.context_data = self.load()
+
+        return self.context_data.get(key) if self.context_data else None
+
+    def set_data(self, **kwargs):
+        if self.context_data is None:
+            cache_data = self.load()
+            self.context_data = cache_data if cache_data is not None else {}
+
+        self.context_data.update(**kwargs)

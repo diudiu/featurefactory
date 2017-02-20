@@ -51,3 +51,26 @@ class CityCodeField(BaseModel):
         db_table = 'fic_city_code_field'
         verbose_name = u''
         verbose_name_plural = u''
+
+
+class FeatureCodeMapping(BaseModel):
+    """
+    feature code mapping list
+    """
+    VALUE_TYPE_OPTIONS = [
+        ("string", "string"),
+        ("int", "int"),
+        ("float", "float"),
+    ]
+
+    feature_name = models.CharField(u'特征名称', max_length=128)
+    feature_desc = models.CharField(u'特征中文解释', max_length=128)
+    base_value = models.CharField(u'取值基准值', max_length=64)
+    max_value = models.CharField(u'取值的最大值', max_length=64, null=True)
+    mapped_value = models.IntegerField(u'映射之后的值')
+    value_type = models.CharField(u'特征原来值的类型', max_length=20, choices=VALUE_TYPE_OPTIONS)
+
+    class Meta:
+        db_table = 'fic_feature_code_mapping'
+        verbose_name = u'特征码值对应表'
+        verbose_name_plural = u'特征码值对应表'

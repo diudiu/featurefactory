@@ -9,6 +9,10 @@
 """
 import logging
 
+from apps.common.cache import feature_global_code
+from vendor.utils.analyzer import GenericUtils
+from vendor.utils.defaults import *
+
 logger = logging.getLogger('apps.common')
 
 
@@ -22,36 +26,28 @@ class Handle(object):
         接口名称：数据堂学历信息查询接口
         字段名称：degree                     学历code
         输出：
-        特征名称：degree_code                学历
+        特征名称：education_degree_check                学历
         """
 
-        result = {'education_degree_check': 9999}
+        result = {'education_degree_check': StringTypeDefault}
         try:
+            # code_collection = feature_global_code.get("education_degree_check")  # 传入的参数是特征名称
+            # feature_value = u"博士"  # 这个需要自己实际从self.data中获取
+            # mapped_value = GenericUtils.get_mapped_value(code_collection, feature_value)
             degree = self.data['content'].get('degree', None)
             if degree:
                 education_degree = degree.get('degree', None)
+                degree = {'博士': '10', 'MBA/EMBA': '20',
+                          '硕士': '30', '本科': '40', '大专': '50',
+                          '中专': '60', '中技': '70', '高中': '80', '初中': '90'}
+                result['education_degree_check'] = '999'
+
+                for d, v in degree.items():
+                    if d in education_degree:
+                        result['education_degree_check'] = v
                 if '博士后' in education_degree:
                     result['education_degree_check'] = '5'
-                elif '博士' in education_degree:
-                    result['education_degree_check'] = '10'
-                elif 'MBA/EMBA' in education_degree:
-                    result['education_degree_check'] = '20'
-                elif '硕士' in education_degree:
-                    result['education_degree_check'] = '30'
-                elif '本科' in education_degree:
-                    result['education_degree_check'] = '40'
-                elif '大专' in education_degree:
-                    result['education_degree_check'] = '50'
-                elif '中专' in education_degree:
-                    result['education_degree_check'] = '60'
-                elif '中技' in education_degree:
-                    result['education_degree_check'] = '70'
-                elif '高中' in education_degree:
-                    result['education_degree_check'] = '80'
-                elif '初中' in education_degree:
-                    result['education_degree_check'] = '90'
-                else:
-                    result['education_degree_check'] = '999'
+
         except Exception as e:
             logging.error(e.message)
 

@@ -15,9 +15,9 @@ class Handle(object):
         self.data = data
 
     def handle(self):
-        ''' 接口：反欺诈服务接口——3借贷信息——3.1逾期信息
+        """接口：反欺诈服务接口——3借贷信息——3.1逾期信息
             输出：最长逾期天数（近6个月）
-              '''
+        """
         result = {"pingan_max_overdue_days": 9999}
 
         try:

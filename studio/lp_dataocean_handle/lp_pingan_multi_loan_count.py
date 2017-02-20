@@ -9,6 +9,8 @@
 """
 import logging
 
+from vendor.utils.defaults import *
+
 logger = logging.getLogger('apps.common')
 
 
@@ -27,11 +29,10 @@ class Handle(object):
         特征名称:
         'pingan_multi_loan_count': 多头借贷公司数量 int
         """
+        result = {'pingan_multi_loan_count': PositiveSignedTypeDefault}
         try:
-            result = {
-                'pingan_multi_loan_count': 9999,
-            }
-            if self.data.get('result', 0) == 0:
+
+            if self.data.get('result', None) == 0:
                 org_count = 0
                 records = self.data["data"]["record"]
                 for record in records:
@@ -51,9 +52,9 @@ class Handle(object):
                 result['pingan_multi_loan_count'] = org_count
 
         except Exception as e:
-            logging.info(e.message)
-        finally:
-            return result
+            logging.error(e.message)
+
+        return result
 
 
 

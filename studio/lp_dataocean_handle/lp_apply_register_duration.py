@@ -7,9 +7,11 @@
     Date:  2017/01/18
     Change Activity:
 """
-from datetime import datetime
 
 import logging
+from datetime import datetime
+
+from vendor.utils.defaults import *
 
 logger = logging.getLogger('apps.common')
 
@@ -32,16 +34,16 @@ class Handle(object):
         特征名称:
         'apply_register_duration': 注册时间长度 float
         """
+        result = {
+            'apply_register_duration': PositiveSignedFloatTypeDefault,
+        }
         try:
-            result = {
-                'apply_register_duration': 9999,
-            }
             apply_data = self.data["apply_data"]["application_on"][:10]
             register_data = self.data["portrait_data"]["registration_on"][:10]
             apply_data = datetime.strptime(apply_data, "%Y-%m-%d")
             register_data = datetime.strptime(register_data, "%Y-%m-%d")
             apply_register = (apply_data - register_data).days / 30.0
-            if apply_register > 0:
+            if apply_register >= 0:
                 result['apply_register_duration'] = apply_register
 
         except Exception as e:

@@ -7,6 +7,7 @@
     Date:  2017/01/20
     Change Activity:
 """
+from vendor.utils.defaults import BooleanTypeDefault
 import logging
 logger = logging.getLogger('apps.common')
 
@@ -22,15 +23,14 @@ class Handle(object):
         data_identity: tianwang_gray
         :return:
         """
-        try:
-            result = {
-                'is_netsky_gray': False
+        result = {
+            'is_netsky_gray': BooleanTypeDefault
             }
-
+        try:
             if self.data['result'] == u'00':
-                result['is_netsky_gray'] = True
-
+                result['is_netsky_gray'] = 1
+            else:
+                result['is_netsky_gray'] = 0
         except Exception as e:
             logging.error(e.message)
-
         return result

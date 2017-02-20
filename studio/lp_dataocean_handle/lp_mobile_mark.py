@@ -48,5 +48,4 @@ class Handle(object):
 
         except Exception as e:
             logging.error(e.message)
-        finally:
-            return result
+        return result

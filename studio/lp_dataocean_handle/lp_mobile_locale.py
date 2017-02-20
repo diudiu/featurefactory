@@ -7,7 +7,7 @@
     Date: 2017/01/18
     Change Activity:
 """
-
+from vendor.utils.defaults import StringTypeDefault
 import logging
 
 logger = logging.getLogger('apps.common')
@@ -23,18 +23,14 @@ class Handle(object):
         输出：手机号码归属地
         :return:
         """
-        try:
-            result = {
-                "mobile_area": "",
+        result = {
+                "mobile_area": StringTypeDefault,
             }
-
+        try:
             if self.data['result'] == u'00':
                 mobile_area = self.data['content']['mobile_area']
-            else:
-                mobile_area = "NONE"
-            result['mobile_area'] = mobile_area
-
+                if mobile_area != "":
+                    result = mobile_area
         except Exception as e:
             logging.error(e.message)
-        finally:
-            return result
+        return result

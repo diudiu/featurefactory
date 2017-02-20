@@ -7,7 +7,7 @@
     Date: 2017/01/18
     Change Activity:
 """
-
+from vendor.utils.defaults import StringTypeDefault
 import logging
 
 logger = logging.getLogger('apps.common')
@@ -23,8 +23,8 @@ class Handle(object):
         输出：移动手机号在网时长
         :return:
         """
+        result = {"online_time": StringTypeDefault}
         try:
-            result = {"online_time": 9999}
             if self.data['result'] == u'00':
                 online_time = self.data['content']['online_time']
                 if online_time in ["(0,3)", "[3,6)"]:
@@ -38,8 +38,6 @@ class Handle(object):
                 else:
                     online_time = "-1"
                 result['online_time'] = online_time
-
         except Exception as e:
             logging.error(e.message)
-
         return result

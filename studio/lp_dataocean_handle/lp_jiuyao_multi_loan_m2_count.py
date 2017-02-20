@@ -14,7 +14,7 @@
                 'borrowAmount': 3,
                 'contractDate': 1343779200000,
                 'loanPeriod': 24,
-                'repayState': 1,
+                'repayState': '',
                 'arrearsAmount': 0,
                 'companyCode': 'P2P4HJK0000100010'
             },
@@ -43,6 +43,8 @@
 """
 import logging
 
+from vendor.utils.defaults import *
+
 logger = logging.getLogger('apps.common')
 
 
@@ -61,20 +63,20 @@ class Handle(object):
         字段名称:
         'jiuyao_multi_loan_m2_count'   M2及M2以上次数
         """
-
+        result = {
+            'jiuyao_multi_loan_m2_count': PositiveSignedTypeDefault,
+        }
         try:
-            result = {
-                'jiuyao_multi_loan_m2_count': 9999,
-            }
-            base_data = self.data['loanInfos']
             count = 0
-            for data in base_data:
-                times = data.get('repayState', 0)
-                if times >= 3 and times <= 8:
-                    count += 1
+            base_data = self.data['loanInfos']
+            if type(base_data) == list:
+                for data in base_data:
+                    times = data.get('repayState', 0)
+                    if 3 <= times <= 8:
+                        count += 1
             result['jiuyao_multi_loan_m2_count'] = count
         except Exception as e:
-            logging.info(e.message)
+            logging.error(e.message)
         return result
 
 

@@ -9,6 +9,7 @@
 """
 
 import numpy as np
+from vendor.utils.defaults import StringTypeDefault
 import logging
 logger = logging.getLogger('apps.common')
 
@@ -29,9 +30,8 @@ class Handle(object):
         特征名称：now_industry_code   当前工作行业code
         """
         try:
-            now_industry_code_dic = {'now_industry_code': 9999}  # 9999：异常
+            now_industry_code_dic = {'now_industry_code': StringTypeDefault}  # 9999：异常
             work_exp_form = self.data['work_exp_form']
-
             # TODO 计算维度
             # 计算最近一份工作的工作行业
             work_end_list = []
@@ -41,8 +41,6 @@ class Handle(object):
                     work_end_list.append(int(work_end))
             now_industry_code_dic['now_industry_code'] = work_exp_form[
                 np.argmax(work_end_list)].get('industry', None)
-
         except Exception as e:
             logging.error(e.message)
-
         return now_industry_code_dic

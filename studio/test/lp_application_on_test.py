@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 import unittest
 from studio.lp_dataocean_handle.lp_application_on import Handle
+from vendor.utils.defaults import StringTypeDefault
 data = {
     "product_code": "890wefjf320if0i302f0j3f0f",
     "apply_id": "APPLY20161011111111890934",
@@ -13,7 +14,6 @@ data = {
     "contacts": 30,
     "application_on": "2017-02-01 12:20:10",
 }
-apply_datas = ['2017-04-01 12:20:10', '']
 
 
 class TestPlugin(unittest.TestCase):
@@ -21,10 +21,14 @@ class TestPlugin(unittest.TestCase):
     def setUp(self):
         self.data = data
 
-    def test_application_on(self):
-        for apply_data in apply_datas:
-            data = self.data.copy()
-            data["application_on"] = apply_data
-            handler = Handle(data)
-            res = handler.handle()
-            print res
+    def test_application_on_true(self):
+        data = self.data.copy()
+        handler = Handle(data)
+        res = handler.handle()
+        self.assertEquals(res.get('application_on'), "2017-02-01 12:20:10")
+
+    def test_application_on_default(self):
+        data = {}
+        handler = Handle(data)
+        res = handler.handle()
+        self.assertEquals(res.get('application_on'), StringTypeDefault)

@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 
 import unittest
-
+from vendor.utils.defaults import *
 from studio.lp_dataocean_handle.lp_gender import Handle
 
 data = {
@@ -29,13 +29,13 @@ class TestPlugin(unittest.TestCase):
         data['result'] = '11'
         h = Handle(data)
         res = h.handle()
-        self.assertEqual(res['gender'], 9999)
+        self.assertEqual(res['gender'], StringTypeDefault)
 
         data['content']['sex'] = None
 
         handler = Handle(data)
         res = handler.handle()
-        self.assertEqual(res['gender'], 9999)
+        self.assertEqual(res['gender'], StringTypeDefault)
 
 
 if __name__ == '__main__':

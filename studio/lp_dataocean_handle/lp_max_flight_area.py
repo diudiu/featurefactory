@@ -7,6 +7,7 @@
     Date:  2017/1/23
     Change Activity:
 """
+from vendor.utils.defaults import PositiveSignedTypeDefault
 import logging
 logger = logging.getLogger('apps.common')
 
@@ -26,8 +27,8 @@ class Handle(object):
         输出：
         特征名称：max_flight_area            一年内飞机最多出行区域
         """
+        result = {'max_flight_area': PositiveSignedTypeDefault}
         try:
-            result = {'max_flight_area': 9999}  # 9999：异常
             if self.data['result'] == u'00':
                 content = self.data.get('content', None)
                 if content:
@@ -43,7 +44,7 @@ class Handle(object):
 
         except Exception as e:
             logging.error(e.message)
-        finally:
-            return result
+
+        return result
 
 

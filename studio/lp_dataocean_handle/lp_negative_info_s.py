@@ -10,6 +10,8 @@
 
 import logging
 
+from vendor.utils.defaults import *
+
 logger = logging.getLogger('apps.common')
 
 
@@ -23,13 +25,12 @@ class Handle(object):
         data_identity: negative_info_s
         :return:
         """
+        result = {'has_negative_info': BooleanTypeDefault}
         try:
-            result = {
-                'has_negative_info': False
-            }
-
             if self.data['result'] == u'00':
-                result['has_negative_info'] = True
+                result['has_negative_info'] = 1
+            else:
+                result['has_negative_info'] = 0
 
         except Exception as e:
             logging.error(e.message)

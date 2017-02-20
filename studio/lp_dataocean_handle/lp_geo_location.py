@@ -9,6 +9,8 @@
 """
 import logging
 
+from vendor.utils.defaults import *
+
 logger = logging.getLogger('apps.common')
 
 
@@ -30,16 +32,15 @@ class Handle(object):
         特征名称:
         'gps_city_code': GPS定位城市 str
         """
-
+        result = {
+            'gps_city_code': StringTypeDefault,
+        }
         try:
-            result = {
-                'gps_city_code': 9999,
-            }
             if self.data['result'] == '00':
                 base_data = self.data["content"]["result"]["addressComponent"]["city"]
                 if base_data and isinstance(base_data, basestring):
                     result['gps_city_code'] = base_data
         except Exception as e:
-            logging.info(e.message)
+            logging.error(e.message)
 
         return result

@@ -7,6 +7,7 @@
     Date:  2017/1/18
     Change Activity:
 """
+from vendor.utils.defaults import PositiveSignedTypeDefault
 import logging
 
 logger = logging.getLogger('apps.common')
@@ -25,10 +26,9 @@ class Handle(object):
         输出：
         特征名称：mobile_identity 电信查询返回结果
         """
+        mobile_identity_dic = {'mobile_identity': PositiveSignedTypeDefault}
         try:
-            mobile_identity_dic = {'mobile_identity': 9999}  # 9999：异常
             mobile_identity = self.data.get('result', None)
-
             if mobile_identity == '00':
                 mobile_identity_dic['mobile_identity'] = 1
             else:
@@ -36,5 +36,4 @@ class Handle(object):
 
         except Exception as e:
             logging.error(e.message)
-
         return mobile_identity_dic

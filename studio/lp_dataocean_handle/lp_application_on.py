@@ -7,7 +7,7 @@
     Date:  2017/01/18
     Change Activity:
 """
-
+from vendor.utils.defaults import StringTypeDefault
 import logging
 
 logger = logging.getLogger('apps.common')
@@ -29,16 +29,13 @@ class Handle(object):
         特征名称:
         'application_on': 申请提交时间 str
         """
-
-        try:
-            result = {
-                'application_on': 9999,
+        result = {
+                'application_on': StringTypeDefault,
             }
+        try:
             apply_data = self.data["application_on"]
             if apply_data and isinstance(apply_data, basestring):
                 result['application_on'] = apply_data
-
         except Exception as e:
             logging.error(e.message)
-
         return result

@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 
 import unittest
-
+from vendor.utils.defaults import *
 from studio.lp_dataocean_handle.lp_is_unclear_loan import Handle
 
 data = {
@@ -12,7 +12,7 @@ data = {
     },
 }
 test_data = [0, 1, '']
-result = [0, 1, 9999]
+result = [0, 1, BooleanTypeDefault]
 
 
 class TestPlugin(unittest.TestCase):
@@ -30,7 +30,7 @@ class TestPlugin(unittest.TestCase):
         del data['res_data']
         handler = Handle(data)
         res = handler.handle()
-        self.assertEqual(res['is_unclear_loan'], 9999)
+        self.assertEqual(res['is_unclear_loan'], BooleanTypeDefault)
 
 
 if __name__ == '__main__':

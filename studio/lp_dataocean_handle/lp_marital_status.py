@@ -51,7 +51,7 @@ class Handle(object):
         """
         try:
             result = {
-                'marital_status': 9999,
+                'marital_status': '9999',
             }
             if self.data['result'] == '00':
                 base_data = self.data['content']['marital_status']

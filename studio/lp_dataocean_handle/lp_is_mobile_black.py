@@ -30,9 +30,9 @@ class Handle(object):
             is_mobile_black = self.data.get('result')
             grayscale = self.data.get('grayscale')
             if is_mobile_black == 0:
-                is_mobile_black_dic['is_mobile_black'] = 1
+                result['is_mobile_black'] = 1
             elif is_mobile_black == 2 and grayscale == {}:
-                is_mobile_black_dic['is_mobile_black'] = 0
+                result['is_mobile_black'] = 0
         except Exception:
             return result
 

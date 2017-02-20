@@ -10,6 +10,7 @@
 
 import numpy as np
 from datetime import datetime
+from vendor.utils.defaults import PositiveSignedTypeDefault
 import logging
 logger = logging.getLogger('apps.common')
 
@@ -27,8 +28,8 @@ class Handle(object):
         输出：
         特征名称：work_time       工作时间
         """
+        work_time_dic = {'work_time': PositiveSignedTypeDefault}
         try:
-            work_time_dic = {'work_time': 9999}  # 9999：异常
             work_exp_form = self.data['work_exp_form']
             assert type(work_exp_form) == list
            # TODO 计算维度
@@ -46,8 +47,6 @@ class Handle(object):
                 worktime = datetime.now() - work_start
                 worktime_month = worktime.days / 30
                 work_time_dic['work_time'] = worktime_month
-
         except Exception as e:
                 logging.error(e.message)
-
         return work_time_dic

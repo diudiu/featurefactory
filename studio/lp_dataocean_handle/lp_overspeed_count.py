@@ -43,6 +43,8 @@
 """
 import logging
 
+from vendor.utils.defaults import *
+
 logger = logging.getLogger('apps.common')
 
 
@@ -62,8 +64,8 @@ class Handle(object):
         特征名称:
         'overspeed_count': 超速次数 int
         """
+        result = {'overload_count': PositiveSignedTypeDefault}
         try:
-            result = {'overload_count': 9999}
             month_times = 0
             for card, card_record in self.data.items():
                 if card_record.get('result') == '00':
@@ -75,7 +77,6 @@ class Handle(object):
             result['overload_count'] = month_times
 
         except Exception as e:
-            print e.message
             logging.error(e.message)
-        finally:
-            return result
+
+        return result

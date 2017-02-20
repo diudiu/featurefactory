@@ -10,6 +10,8 @@
 
 import logging
 
+from vendor.utils.defaults import *
+
 logger = logging.getLogger('apps.common')
 
 
@@ -24,13 +26,15 @@ class Handle(object):
         data_identity: agentg_black
         :return:
         """
+        result = {'is_organization_g_black': BooleanTypeDefault}
         try:
-            result = {
-                'is_organization_g_black': False
-            }
+
             if self.data['result'] == '00':
-                result['is_organization_g_black'] = True
+                result['is_organization_g_black'] = 1
+            else:
+                result['is_organization_g_black'] = 0
+
         except Exception as e:
-            logging.info(e.message)
+            logging.error(e.message)
 
         return result

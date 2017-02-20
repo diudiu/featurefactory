@@ -22,6 +22,8 @@
 """
 import logging
 
+from vendor.utils.defaults import *
+
 logger = logging.getLogger('apps.common')
 
 
@@ -42,8 +44,8 @@ class Handle(object):
         字段名称:
         'contacts_count': 联系人数量
         """
+        result = {'contacts_count': PositiveSignedTypeDefault}
         try:
-            result = {'contacts_count': 9999}
             base_data = self.data.get("contacts", '')
             if str(base_data).isdigit():
                 result['contacts_count'] = base_data

@@ -22,6 +22,8 @@
 """
 import logging
 
+from vendor.utils.defaults import *
+
 logger = logging.getLogger('apps.common')
 
 
@@ -41,8 +43,8 @@ class Handle(object):
         特征名称:
         'name': 姓名 str
         """
+        result = {'name': StringTypeDefault}
         try:
-            result = {'name': 9999}
             base_data = self.data.get("name", '')
             if base_data and isinstance(base_data, basestring):
                 result['name'] = base_data

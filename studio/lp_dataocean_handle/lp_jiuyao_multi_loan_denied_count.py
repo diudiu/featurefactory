@@ -44,6 +44,8 @@
 import time
 import logging
 
+from vendor.utils.defaults import *
+
 logger = logging.getLogger('apps.common')
 
 
@@ -64,24 +66,23 @@ class Handle(object):
         字段名称:
         'jiuyao_multi_loan_denied_count': 拒贷次数
         """
+        result = {
+            'jiuyao_multi_loan_denied_count': PositiveSignedTypeDefault,
+        }
         try:
-            result = {
-                'jiuyao_multi_loan_denied_count': 9999,
-            }
             count = 0
             base_data = self.data['loanInfos']
-            assert type(base_data) == list
-            for data in base_data:
-                base_time = data.get('contractDate', '')
-                if not str(base_time).isdigit():
-                    continue
-                times = int(time.time()) - (base_time / 1000)
-                if times <= 180 * 3600:
-                    count += 1
+            if type(base_data) == list:
+                for data in base_data:
+                    base_time = data.get('contractDate', '')
+                    if not str(base_time).isdigit():
+                        continue
+                    times = int(time.time()) - (base_time / 1000)
+                    if times <= 180 * 3600 * 24:
+                        count += 1
             result['jiuyao_multi_loan_denied_count'] = count
 
         except Exception as e:
-            logging.info(e.message)
+            logging.error(e.message)
 
         return result
-
