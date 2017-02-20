@@ -9,8 +9,10 @@
 """
 
 import numpy as np
+from vendor.utils.defaults import PositiveSignedTypeDefault
 import logging
 logger = logging.getLogger('apps.common')
+
 
 class Handle(object):
 
@@ -27,8 +29,8 @@ class Handle(object):
         输出：
         特征名称：income_level        年入账
         """
+        result = {'income_level': PositiveSignedTypeDefault}
         try:
-            result = {'income_level': 9999}  # 999999：异常
             work_exp_form = self.data.get('work_exp_form', None)
             work_end_list = []
             for work_exp in work_exp_form:
@@ -50,7 +52,6 @@ class Handle(object):
                         result['income_level'] = 4
                     elif 1000000 < lp_income_level:
                         result['income_level'] = 5
-
         except Exception as e:
                 logging.error(e.message)
         return result

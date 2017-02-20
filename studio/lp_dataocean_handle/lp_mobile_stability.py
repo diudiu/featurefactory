@@ -7,13 +7,13 @@
     Date:  2017/1/22
     Change Activity:
 """
+from vendor.utils.defaults import PositiveSignedTypeDefault
 import logging
 
 logger = logging.getLogger('apps.common')
 
 
 class Handle(object):
-
     def __init__(self, data, tel_number):
         self.data = data
         self.tel_number = tel_number
@@ -29,64 +29,50 @@ class Handle(object):
         输出：
         特征名称：mobile_stability    申请人手机号稳定度
         """
-
-        mobile_stability_dic = {'mobile_stability': 9999.0}  # 9999：异常
-
+        mobile_stability_dic = {'mobile_stability': PositiveSignedTypeDefault}
         try:
-            tags = self.data['data']['tags']
-        except Exception:
-            # TODO log this error
-            return mobile_stability_dic
+            if self.data['result'] == 0:
+                tags = self.data['data']['tags']
+                tel_number = self.tel_number
+                tel_str = '%s__' % tel_number
 
-        if not isinstance(tags, dict):
-            return mobile_stability_dic
+                def get_tel_value(strs):
+                    tmp = []
+                    for i in ['M1', 'M2', 'M3', 'M4', 'M5']:
+                        if i in tags[strs]:
+                            callTimes = tags[strs].get(i, {}).get('callTimes', 0)
+                            calledTimes = tags[strs].get(i, {}).get('calledTimes', 0)
+                            if not str(callTimes).replace('.', '').isdigit():
+                                callTimes = 0
+                            if not str(calledTimes).replace('.', '').isdigit():
+                                calledTimes = 0
+                            tmp.append(callTimes + calledTimes)
+                    return tmp
 
-        tel_number = self.tel_number
-        tel_str = str(tel_number) + '__'
+                # 假如存在'138xxxxxxxx__'的格式，以此为准取m1-m5
+                if tel_str in tags:
+                    m1_m5_max = get_tel_value(tel_str)
 
-        # 假如存在'138xxxxxxxx__'的格式，以此为准取m1-m5
-        if tel_str in tags:
-            m1 = tags[tel_str]['M1'].get(
-                'callTimes', 0) + tags[tel_str]['M1'].get('calledTimes', 0)
-            m2 = tags[tel_str]['M2'].get(
-                'callTimes', 0) + tags[tel_str]['M2'].get('calledTimes', 0)
-            m3 = tags[tel_str]['M3'].get(
-                'callTimes', 0) + tags[tel_str]['M3'].get('calledTimes', 0)
-            m4 = tags[tel_str]['M4'].get(
-                'callTimes', 0) + tags[tel_str]['M4'].get('calledTimes', 0)
-            m5 = tags[tel_str]['M5'].get(
-                'callTimes', 0) + tags[tel_str]['M5'].get('calledTimes', 0)
-        # 其他情况，以前5月加和最大值取m1-m5
-        else:
-            tel_total_calltimes_dic = {}
-            for tel_str in tags:
-                tel_total_calltimes_dic[tel_str] = tags[tel_str]['M1'].get(
-                    'callTimes', 0) + tags[tel_str]['M1'].get('calledTimes', 0)
-                + tags[tel_str]['M2'].get(
-                    'callTimes', 0) + tags[tel_str]['M2'].get('calledTimes', 0)
-                + tags[tel_str]['M3'].get(
-                    'callTimes', 0) + tags[tel_str]['M3'].get('calledTimes', 0)
-                + tags[tel_str]['M4'].get(
-                    'callTimes', 0) + tags[tel_str]['M4'].get('calledTimes', 0)
-                + tags[tel_str]['M5'].get(
-                    'callTimes', 0) + tags[tel_str]['M5'].get('calledTimes', 0)
-            tel_str_final = max(
-                tel_total_calltimes_dic.items(), key=lambda x: x[1])[0]
-            m1 = tags[tel_str_final]['M1'].get(
-                'callTimes', 0) + tags[tel_str_final]['M1'].get('calledTimes', 0)
-            m2 = tags[tel_str_final]['M2'].get(
-                'callTimes', 0) + tags[tel_str_final]['M2'].get('calledTimes', 0)
-            m3 = tags[tel_str_final]['M3'].get(
-                'callTimes', 0) + tags[tel_str_final]['M3'].get('calledTimes', 0)
-            m4 = tags[tel_str_final]['M4'].get(
-                'callTimes', 0) + tags[tel_str_final]['M4'].get('calledTimes', 0)
-            m5 = tags[tel_str_final]['M5'].get(
-                'callTimes', 0) + tags[tel_str_final]['M5'].get('calledTimes', 0)
+                # 其他情况，以前5月加和最大值取m1-m5
+                else:
+                    m1_m5_max = []
+                    for strs in tags:
+                        m1_m5 = get_tel_value(strs)
+                        if sum(m1_m5) > sum(m1_m5_max):
+                            m1_m5_max = m1_m5
+                total_calltimes_ave = 0
+                mobile_stability = 0
+                if len(m1_m5_max) > 0:
+                    total_calltimes_ave = sum(m1_m5_max) / len(m1_m5_max)
 
-        total_calltimes_ave = (m1 + m2 + m3 + m4 + m5) / 5
-        mobile_stability = ((m1 ** 2 + m2 ** 2 + m3 ** 2 +
-                             m4 ** 2 + m5 ** 2) / 5) ** 0.5 / total_calltimes_ave
-        mobile_stability_dic['mobile_stability'] = round(
-            mobile_stability, 4)
+                if total_calltimes_ave > 0 and len(m1_m5_max) > 0:
+                    mobile_stability = (sum([i ** 2 for i in m1_m5_max]) / len(m1_m5_max)) ** 0.5
+                    mobile_stability = mobile_stability / total_calltimes_ave
+                mobile_stability_dic['mobile_stability'] = round(mobile_stability, 4)
+
+        except Exception as e:
+            logging.error(e.message)
 
         return mobile_stability_dic
+
+

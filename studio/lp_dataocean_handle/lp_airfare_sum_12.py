@@ -7,6 +7,7 @@
     Date:  2017/1/23
     Change Activity:
 """
+from vendor.utils.defaults import PositiveSignedFloatTypeDefault
 import logging
 
 logger = logging.getLogger('apps.common')
@@ -25,17 +26,15 @@ class Handle(object):
         输出：
         特征名称：airfare_sum_12             一年中乘机总票价
         """
-        try:
-            result = {
-                'airfare_sum_12': 9999.0
+        result = {
+                'airfare_sum_12': PositiveSignedFloatTypeDefault
             }
-
+        try:
             if self.data['result'] == '00':
                 average_price = self.data['content'].get('average_price', None)
                 flight_times = self.data['content'].get('flight_times', None)
                 if average_price and flight_times:
-                    result['airfare_sum_12'] = float(average_price * flight_times)
+                    result['airfare_sum_12'] = average_price * flight_times
         except Exception as e:
             logging.error(e.message)
-
         return result

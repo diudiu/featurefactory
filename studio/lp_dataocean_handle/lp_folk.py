@@ -29,6 +29,8 @@
 """
 import logging
 
+from vendor.utils.defaults import *
+
 logger = logging.getLogger('apps.common')
 
 
@@ -49,17 +51,14 @@ class Handle(object):
         字段名称:
         'nation': 民族
         """
-
+        result = {'folk': StringTypeDefault}
         try:
-            result = {
-                'folk': 9999,
-            }
             if self.data['result'] == '00':
                 base_data = self.data['content']['nation']
                 if base_data and isinstance(base_data, basestring):
                     result['folk'] = base_data
 
         except Exception as e:
-            logging.info(e.message)
+            logging.error(e.message)
         return result
 

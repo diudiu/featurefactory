@@ -21,8 +21,8 @@ class Handle(object):
         接口：联通号码在网时长查询s(unicome_mobile_online_time_s)
         输出：联通手机号在网时长
         """
+        result = {"online_time": 9999}
         try:
-            result = {"online_time": '9999'}
             online_time = self.data['content']['online_time']
 
             if self.data['result'] == u'00':
@@ -40,7 +40,6 @@ class Handle(object):
 
         except Exception as e:
             logging.error(e.message)
-
         return result
 
 

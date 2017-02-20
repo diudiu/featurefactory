@@ -60,9 +60,9 @@ class Handle(object):
                 result['pingan_multi_loan_infos'] = tmp
 
         except Exception as e:
-            logging.info(e.message)
-        finally:
-            return result
+            logging.error(e.message)
+
+        return result
 
 
 

@@ -1,4 +1,7 @@
 # -*- coding:utf-8 -*-
+from vendor.utils.defaults import StringTypeDefault
+import logging
+logger = logging.getLogger('apps.common')
 """
     License SYPH-L.
     Copyright (c) 2017- SYPH, All Rights Reserved.
@@ -20,9 +23,7 @@ class Handle(object):
         接口：移动号码在网时长查询s(yd_mobile_online_time_s)
         输出：移动手机号在网时长
         """
-
-        result = { "online_time": "9999"}
-
+        result = {"online_time": StringTypeDefault}
         try:
             online_time = self.data['content']['online_time']
             if online_time in ["(0,3)", "[3,6)"]:
@@ -34,10 +35,8 @@ class Handle(object):
             else:
                 online_time = "33"
             result['online_time'] = online_time
-        except Exception:
-            # TODO log this error
-            return result
-
+        except Exception as e:
+            logging.error(e.message)
         return result
 
 

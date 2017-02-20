@@ -7,6 +7,7 @@
     Date: 2017/01/18
     Change Activity:
 """
+from vendor.utils.defaults import PositiveSignedTypeDefault
 import logging
 
 logger = logging.getLogger('apps.common')
@@ -17,11 +18,11 @@ class Handle(object):
         self.data = data
 
     def handle(self):
-        """ 接口：手机在网时长查询s(telecom_mobile_online)
+        ''' 接口：手机在网时长查询s(telecom_mobile_online)
             输出：电信手机号在网时长
-        """
+              '''
         result = {
-             "online_time": '9999'
+            "online_time": PositiveSignedTypeDefault
         }
 
         try:

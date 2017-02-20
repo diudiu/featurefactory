@@ -20,6 +20,8 @@
 """
 import logging
 
+from vendor.utils.defaults import *
+
 logger = logging.getLogger('apps.common')
 
 
@@ -32,25 +34,19 @@ class Handle(object):
         """
         接口名称：个人基本信息查询
         字段名称：
-        gender 性别 str
+        gender 性别
 
         输出:
         特征名称: 性别
         字段名称:
-        'gender': 性别 int
+        'gender': 性别
         """
+        result = {'gender': StringTypeDefault}
         try:
-            result = {
-                'gender': 9999,
-            }
             if self.data['result'] == '00':
                 base_data = self.data['content']['sex']
                 if base_data and isinstance(base_data, basestring):
                     result['gender'] = base_data
-                if '男' in base_data:
-                    result['gender'] = 0
-                elif '女' in base_data:
-                    result['gender'] = 1
         except Exception as e:
-            logging.info(e.message)
+            logging.error(e.message)
         return result
