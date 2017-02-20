@@ -3,14 +3,15 @@
     License DIGCREDIT-L.
     Copyright (c) 2017- DIGCREDIT, All Rights Reserved.
     ----------------------------------------------
-    Author: Z.L
-    Date:  2017/02/17
+    Author: S.G
+    Date:  2017/02/10
     Change Activity:
 """
+import logging
+
 from apps.common.cache import feature_global_code
 from vendor.utils.analyzer import GenericUtils
-from vendor.utils.defaults import PositiveSignedTypeDefault
-import logging
+from vendor.utils.defaults import *
 
 logger = logging.getLogger('apps.common')
 
@@ -22,29 +23,32 @@ class Handle(object):
     def handle(self):
 
         """
-        输入:
         接口名称：数据堂学历信息查询接口
-        字段名称：degree   学历 str
-
-        计算逻辑:从学历信息查询接口提取'学历'字段,并将学历转化为编码,输出为int
-
+        字段名称：degree                     学历code
         输出：
-        特征名称：degree_code   学信网学历 int
+        特征名称：education_degree_check                学历
         """
 
-        result = {'education_degree_check': PositiveSignedTypeDefault}
-
+        result = {'education_degree_check': StringTypeDefault}
         try:
+            # code_collection = feature_global_code.get("education_degree_check")  # 传入的参数是特征名称
+            # feature_value = u"博士"  # 这个需要自己实际从self.data中获取
+            # mapped_value = GenericUtils.get_mapped_value(code_collection, feature_value)
             degree = self.data['content'].get('degree', None)
             if degree:
                 education_degree = degree.get('degree', None)
-                code_collection = feature_global_code.get("education_degree_check")   # 提取码值字典
-                mapped_value = GenericUtils.get_mapped_value(code_collection, education_degree)  # 匹配学历与字典中的值
-                result['education_degree_check'] = mapped_value
-                if not mapped_value:   # 若无匹配结果,输出5(代表其他)
-                    result['education_degree_check'] = 5
+                degree = {'博士': '10', 'MBA/EMBA': '20',
+                          '硕士': '30', '本科': '40', '大专': '50',
+                          '中专': '60', '中技': '70', '高中': '80', '初中': '90'}
+                result['education_degree_check'] = '999'
+
+                for d, v in degree.items():
+                    if d in education_degree:
+                        result['education_degree_check'] = v
+                if '博士后' in education_degree:
+                    result['education_degree_check'] = '5'
 
         except Exception as e:
-                logging.error(e.message)
-        finally:
-            return result
+            logging.error(e.message)
+
+        return result

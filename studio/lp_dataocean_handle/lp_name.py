@@ -1,10 +1,10 @@
 # -*- coding:utf-8 -*-
 """
-    License DIGCREDIT-L.
-    Copyright (c) 2013- DIGCREDIT, All Rights Reserved.
+    License SYPH-L.
+    Copyright (c) 2013- SYPH, All Rights Reserved.
     -----------------------------------------------------------
-    Author: Z.L
-    Date:  2017/02/17
+    Author: ZL
+    Date:  2017/01/18
     Change Activity:
 
     data = {
@@ -20,8 +20,9 @@
     "application_on": "2017-02-01 12:20:10",
 }
 """
-from vendor.utils.defaults import StringTypeDefault
 import logging
+
+from vendor.utils.defaults import *
 
 logger = logging.getLogger('apps.common')
 
@@ -34,22 +35,19 @@ class Handle(object):
     def handle(self):
 
         """
-        输入:
         接口名称：猎聘申请信息上传接口
-        字段名称：'name': 姓名
-
-        计算逻辑: 从猎聘申请信息上传接口提取姓名并输出,输出类型为string
+        字段名称：
+        'name': 姓名
 
         输出:
-        特征名称: 'name': 姓名 str
+        特征名称:
+        'name': 姓名 str
         """
         result = {'name': StringTypeDefault}
-
         try:
             base_data = self.data.get("name", '')
-            if base_data and isinstance(base_data, basestring):  # 判断姓名是否为非空字符串
+            if base_data and isinstance(base_data, basestring):
                 result['name'] = base_data
-
         except Exception as e:
             logging.error(e.message)
         return result

@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 import unittest
 from studio.lp_dataocean_handle.lp_apply_register_duration import Handle
+from vendor.utils.defaults import *
 
 data = {
     "apply_data": {
@@ -69,8 +70,9 @@ data = {
 
 }
 
-applications_on = ['2017-02-01 12:20:10', 'None']
-registrations_on = ['2017-02-01', 'None']
+app_reg = [['2017-02-01 12:20:10', '2017-02-01', 0],
+           ['2017-02-01', '2017-02-02 12:20:10', PositiveSignedFloatTypeDefault],
+           ['', '2017-02-02 12:20:10', PositiveSignedFloatTypeDefault]]
 
 
 class TestPlugin(unittest.TestCase):
@@ -79,20 +81,12 @@ class TestPlugin(unittest.TestCase):
 
     def test_application(self):
         data = self.data.copy()
-        for application_on in applications_on:
-            data["apply_data"]["application_on"] = application_on
+        for app, reg, v in app_reg:
+            data["apply_data"]["application_on"] = app
+            data["portrait_data"]["registration_on"] = reg
             handler = Handle(data)
             res = handler.handle()
-            print res
-
-    def test_registration(self):
-        data = self.data.copy()
-        for registration_on in registrations_on:
-            data["portrait_data"]["registration_on"] = registration_on
-            handler = Handle(data)
-            res = handler.handle()
-            print res
-
+            assert res.values()[0] == v
 
 if __name__ == '__main__':
     unittest.main()

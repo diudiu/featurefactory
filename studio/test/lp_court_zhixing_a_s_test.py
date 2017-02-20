@@ -59,28 +59,21 @@ data = {
                 ]
         }
 }
-results = [u'00', u'11', u'22', '']
+test = [u'00', u'11', u'22']
+result = [1, 0, 0]
 
 
 class TestPlugin(unittest.TestCase):
-
     def setUp(self):
         self.data = data
-        self.results = results
 
-    def test_court_shixin_a_s(self):
+    def test_test(self):
         data = self.data.copy()
-        for result in results:
-            data["result"] = result
-
-            if data["result"] != '00':
-                handler = Handle(data)
-                res = handler.handle()
-                print res
-            elif data["result"] == '00':
-                handler = Handle(data)
-                res = handler.handle()
-                print res
+        for t, r in zip(test, result):
+            data["result"] = t
+            handler = Handle(data)
+            res = handler.handle()
+            assert res.values()[0] == r
 
 if __name__ == '__main__':
     unittest.main()

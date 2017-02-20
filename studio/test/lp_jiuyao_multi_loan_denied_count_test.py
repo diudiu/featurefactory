@@ -10,7 +10,7 @@ data = {
             'borrowType': 1,
             'borrowState': 2,
             'borrowAmount': 3,
-            'contractDate': 1343779200000,
+            'contractDate': 1487224222000,
             'loanPeriod': 24,
             'repayState': 7,
             'arrearsAmount': 0,
@@ -20,7 +20,7 @@ data = {
             'borrowType': 1,
             'borrowState': 1,
             'borrowAmount': 3,
-            'contractDate': 1343779200000,
+            'contractDate': 1487224222000,
             'loanPeriod': 24,
             'repayState': 7,
             'arrearsAmount': 0,
@@ -30,7 +30,7 @@ data = {
             'borrowType': 1,
             'borrowState': 1,
             'borrowAmount': 3,
-            'contractDate': 1343779200000,
+            'contractDate': '',
             'loanPeriod': 24,
             'repayState': 7,
             'arrearsAmount': 0,
@@ -47,7 +47,7 @@ class TestPlugin(unittest.TestCase):
     def test_lp_jiuyao_multi_loan_denied_count(self):
         handler = Handle(self.data)
         res = handler.handle()
-        print res
+        assert res.values()[0] == 2
 
 
 if __name__ == '__main__':

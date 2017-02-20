@@ -47,7 +47,7 @@ class TestPlugin(unittest.TestCase):
     def test_lp_jiuyao_multi_loan_m2_count(self):
         handler = Handle(self.data)
         res = handler.handle()
-        print res
+        assert res.values()[0] == 1
 
 
 if __name__ == '__main__':

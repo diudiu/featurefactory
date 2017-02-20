@@ -9,6 +9,8 @@
 """
 import logging
 
+from vendor.utils.defaults import *
+
 logger = logging.getLogger('apps.common')
 
 
@@ -24,14 +26,15 @@ class Handle(object):
         :return:
         """
         result = {
-            'is_court_shixin': False
+            'is_court_shixin': BooleanTypeDefault
         }
         try:
-
             if self.data['result'] == '00':
-                result['is_court_shixin'] = True
+                result['is_court_shixin'] = 1
+            else:
+                result['is_court_shixin'] = 0
 
         except Exception as e:
-            logging.info(e.message)
+            logging.error(e.message)
 
         return result

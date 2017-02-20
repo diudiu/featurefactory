@@ -7,6 +7,7 @@
     Date:  2017/01/20
     Change Activity:
 """
+from vendor.utils.defaults import BooleanTypeDefault
 import logging
 logger = logging.getLogger('apps.common')
 
@@ -22,15 +23,15 @@ class Handle(object):
         data_identity: net_black_a_s
         :return:
         """
-        try:
-            result = {
-                'is_net_black': False
+        result = {
+                'is_net_black': BooleanTypeDefault
             }
 
+        try:
             if self.data['result'] == u'00':
-                result['is_net_black'] = True
-
+                result['is_net_black'] = 1
+            else:
+                result['is_net_black'] = 0
         except Exception as e:
             logging.error(e.message)
-
         return result

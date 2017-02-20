@@ -44,6 +44,8 @@
 """
 import logging
 
+from vendor.utils.defaults import *
+
 logger = logging.getLogger('apps.common')
 
 
@@ -62,16 +64,16 @@ class Handle(object):
         字段名称:
         'is_pingan_financial_shixin' 是否命中金融失信名单
         """
+        result = {'is_pingan_financial_shixin': BooleanTypeDefault}
         try:
-            result = {'is_pingan_financial_shixin': 9999}
             base_data = self.data["data"]['others']
             assert type(base_data) == list
             if len(base_data) > 0:
-                result['is_pingan_financial_shixin'] = True
+                result['is_pingan_financial_shixin'] = 1
             else:
-                result['is_pingan_financial_shixin'] = False
+                result['is_pingan_financial_shixin'] = 0
 
         except Exception as e:
             logging.error(e.message)
-        finally:
-            return result
+
+        return result

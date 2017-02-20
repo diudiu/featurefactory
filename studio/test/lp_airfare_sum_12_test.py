@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 import unittest
 from studio.lp_dataocean_handle.lp_airfare_sum_12 import Handle
+from vendor.utils.defaults import PositiveSignedFloatTypeDefault
 
 data = {
     "result": "00",
@@ -30,21 +31,26 @@ data = {
         "total_distance": 2810,
     },
 }
-results = ['00', '11', '22', '']
+
 
 
 class TestPlugin(unittest.TestCase):
     def setUp(self):
         self.data = data
-        self.results = results
 
     def test_airfare_sum_12(self):
         data = self.data.copy()
-        for result in results:
-            data["result"] = result
-            handler = Handle(data)
-            res = handler.handle()
-            print res
+        data["result"] = '00'
+        handler = Handle(data)
+        res = handler.handle()
+        self.assertEquals(res.get('airfare_sum_12'), 1340.00*2)
+
+    def test_airfare_sum_default(self):
+        data = self.data.copy()
+        data["result"] = '11'
+        handler = Handle(data)
+        res = handler.handle()
+        self.assertEquals(res.get('airfare_sum_12'), PositiveSignedFloatTypeDefault)
 
 
 if __name__ == '__main__':
