@@ -37,7 +37,7 @@ data = {
                          "other": {"orgNums": 2, "loanAmount": None, "totalAmount": "(1000, 2000]",
                                    "repayAmount": None},
                          "bank": None,
-                     }}
+                     }},
              ]
              }
         ],
@@ -47,6 +47,10 @@ data = {
     }
 }
 result_test = ["0", "2", ""]
+classification_test = [
+    {},
+    {"M6": {"other": {"orgNums": 1, "loanAmount": None, "totalAmount": "(200, 500]", "repayAmount": None},
+            "bank": None, }}]
 
 
 class TestPlugin(unittest.TestCase):
@@ -57,6 +61,7 @@ class TestPlugin(unittest.TestCase):
     def test_lp_is_pingan_multi_loan(self):
         data = self.data.copy()
         data["result"] = result_test
+        data["data"]["record"][0]["classification"] = classification_test
         for result_data in result_test:
             data["result"] = result_data
             handler = Handle(data)

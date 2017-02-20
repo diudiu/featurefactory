@@ -33,11 +33,14 @@ class Handle(object):
 
         result = {'is_pingan_multi_loan': UnsignedIntTypeDefault}
         try:
-            base_data = self.data["result"]
-            if base_data == "2":
-                result['is_pingan_multi_loan'] = 0  # 若接口result值返回为'2',返回未命中
-            else:
-                result['is_pingan_multi_loan'] = 1
+            base_data = self.data["data"]["record"]
+            result_data = self.data["result"]
+            for data in base_data:
+                if result_data == "0" and data["classification"]:
+                    result['is_pingan_multi_loan'] = 1  # 若接口result值返回为'0',且返回结果不为空,返回命中
+                    break
+                else:
+                    result['is_pingan_multi_loan'] = 0
 
         except Exception as e:
                 logging.error(e.message)
