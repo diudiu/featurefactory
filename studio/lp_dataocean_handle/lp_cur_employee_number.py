@@ -7,6 +7,10 @@
     Date:  2017/2/8
     Change Activity:
 """
+import logging
+from vendor.utils.defaults import UnsignedIntTypeDefault
+
+logger = logging.getLogger('apps.common')
 
 
 class Handle(object):
@@ -22,7 +26,7 @@ class Handle(object):
         输出：cur_employee_number      现工作单位规模（人数）
         """
 
-        result = {'cur_employee_number': 9999}
+        result = {'cur_employee_number': UnsignedIntTypeDefault}
 
         try:
             staff_count = int(self.data['content']['staff_count'])
@@ -39,9 +43,8 @@ class Handle(object):
             else:
                 cur_employee_number = 6
             result['cur_employee_number'] = cur_employee_number
-        except Exception:
-            # TODO log this error
-            return result
+        except Exception as e:
+            logger.error(e.message)
 
         return result
 

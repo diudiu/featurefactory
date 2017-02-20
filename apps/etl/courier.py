@@ -96,9 +96,7 @@ class Courier(object):
             raise
         dp = DataPrepare(data_identity, self.apply_id)
         data = dp.get_original_data()
-        useful_data.update({
-            data_identity: data
-        })
+        useful_data.update(data)
         return useful_data
 
     def get_shunt_di(self):

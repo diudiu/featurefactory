@@ -10,7 +10,7 @@
 import logging
 import time
 
-from apps.etl.context import CacheContext, ApplyContext
+from apps.etl.context import CacheContext, ArgsContext
 from apps.datasource.models import InterfaceFieldRel, DsInterfaceInfo
 
 logger = logging.getLogger('apps.remote')
@@ -22,6 +22,7 @@ class DataPrepare(object):
         self.data_identity = data_identity
         self.apply_id = apply_id
         self.cache_base = CacheContext(self.apply_id)
+        self.argument_base = ArgsContext(self.apply_id)
         self.parm_keys = []
         self.parm_dict = {}
 
@@ -47,7 +48,7 @@ class DataPrepare(object):
         ds_conf = DsInterfaceInfo.objects.filter(
             data_identity=self.data_identity,
             is_delete=False
-        )
+        )[0]
         if not ds_conf:
             raise
         self.prepare_parms()
@@ -62,6 +63,7 @@ class DataPrepare(object):
                 'prams': self.parm_dict,
             }
         })
+        self.cache_base.save()
         return {self.data_identity: origin_data}
 
     def prepare_parms(self):
@@ -72,10 +74,9 @@ class DataPrepare(object):
         if not parm_conf:
             raise
         self.parm_keys = [conf.raw_field_name for conf in parm_conf]
-        apply_base = ApplyContext(self.apply_id)
-        apply_data = apply_base.load()
+        arguments = self.argument_base.load()
         for key in self.parm_keys:
-            value = apply_data.get('key', None)
+            value = arguments.get(key, None)
             if not value:
                 raise
             self.parm_dict.update({

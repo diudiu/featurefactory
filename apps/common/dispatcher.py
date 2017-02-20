@@ -69,7 +69,9 @@ def pretreatment(apply_id):
     arg_conf = InterfaceFieldRel.objects.filter(
         is_delete=False,
     )
-    arg_list = list(set([conf.raw_field_rel for conf in arg_conf]))
+    arg_list = list(set([conf.raw_field_name for conf in arg_conf]))
+    if '' in arg_list:
+        arg_list.remove('')
     feature_conf = FeatureFieldRel.objects.filter(
         feature_name__in=arg_list,
         is_delete=False
@@ -86,12 +88,15 @@ def pretreatment(apply_id):
     base_args.update({
         'portrait_data': portrait_data.get('data', None)
     })
-    arg_base.kwargs.update({
+    base_args.update({
         'apply_id': apply_id,
     })
+    arg_base.kwargs.update(base_args['portrait_data'])
+    arg_base.kwargs.update(base_args['apply_data'])
+    arg_base.kwargs.update({'proposer_id': proposer_id})
     for conf in feature_conf:
         feature_name = conf.feature_name
-        data = feature_conf.data_identity
+        data = conf.data_identity
         if data in ('apply_data', 'portrait_data'):
             obj_string = cons.LP_BASE_HANDLE + cons.HANDLE_COMBINE \
                          + 'lp_' + feature_name + cons.HANDLE_COMBINE + cons.HANDLE_CLASS
@@ -111,4 +116,5 @@ def pretreatment(apply_id):
                 # TODO 配置错误 返回的特征名和期待的不同
                 raise
             arg_base.kwargs.update(ret)
-        arg_base.save()
+    arg_base.save()
+    return True

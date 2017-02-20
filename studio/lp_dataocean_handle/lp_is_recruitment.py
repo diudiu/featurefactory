@@ -42,6 +42,6 @@ class Handle(object):
                     result['is_recruitment'] = 0
 
         except Exception as e:
-                logging.error(e.message)
+            logging.error(e.message)
         finally:
             return result

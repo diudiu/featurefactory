@@ -9,7 +9,9 @@
 """
 from vendor.utils.defaults import PositiveSignedTypeDefault
 import logging
+
 logger = logging.getLogger('apps.common')
+
 
 class Handle(object):
 
@@ -71,7 +73,7 @@ class Handle(object):
                 expense_level = self.data['content']['last12']['debit']['charge_off_range']
                 if expense_level is not None:
                     expense_level_value = ls_dic.get(expense_level)
-                ratio = income_level_value/expense_level_value
+                ratio = income_level_value / expense_level_value
                 print ratio
                 if ratio >= 10:
                     result['income_expense_comparison'] = 1

@@ -7,6 +7,10 @@
     Date:  2017/2/8
     Change Activity:
 """
+import logging
+from vendor.utils.defaults import BooleanTypeDefault
+
+logger = logging.getLogger('apps.common')
 
 
 class Handle(object):
@@ -21,14 +25,13 @@ class Handle(object):
         输出：is_cur_corp_shixin     现工作单位是否为失信被执行
         """
 
-        result = {'is_cur_corp_shixin': 9999}
-
-        if self.data['result'] == "00":
-            result['is_cur_corp_shixin'] = 1
-        else:
-            result['is_cur_corp_shixin'] = 0
+        result = {'is_cur_corp_shixin': BooleanTypeDefault}
+        try:
+            if self.data['result'] == "00":
+                result['is_cur_corp_shixin'] = 1
+            else:
+                result['is_cur_corp_shixin'] = 0
+        except Exception as e:
+            logging.error(e.message)
 
         return result
-
-
-

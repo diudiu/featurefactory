@@ -24,13 +24,13 @@ class Handle(object):
         :return:
         """
         result = {
-                'is_netsky_longloan': BooleanTypeDefault
+                'is_netsky_multi_loan': BooleanTypeDefault
             }
         try:
             if self.data['result'] == u'00':
-                result['is_netsky_longloan'] = 1
+                result['is_netsky_multi_loan'] = 1
             else:
-                result['is_netsky_longloan'] = 0
+                result['is_netsky_multi_loan'] = 0
         except Exception as e:
             logging.error(e.message)
         return result

@@ -7,8 +7,12 @@
     Date:  2017/2/8
     Change Activity:
 """
+import logging
 
 from datetime import datetime
+from vendor.utils.defaults import UnsignedIntTypeDefault
+
+logger = logging.getLogger('apps.common')
 
 
 class Handle(object):
@@ -24,7 +28,7 @@ class Handle(object):
         输出：cur_corp_years           现工作单位工作年限（年数）
         """
 
-        result = {'cur_corp_years': 9999}
+        result = {'cur_corp_years': UnsignedIntTypeDefault}
 
         try:
             start_business_date = self.data['content']['start_business_date']
@@ -49,9 +53,8 @@ class Handle(object):
             else:
                 cur_corp_years = 8
             result['cur_corp_years'] = cur_corp_years
-        except Exception:
-            # TODO log this error
-            return result
+        except Exception as e:
+            logger.error(e.message)
 
         return result
 

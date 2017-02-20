@@ -179,7 +179,6 @@ class PortraitContext(BaseContext):
         data = self.portrait_base.search(query)
         return data
 
-<<<<<<< HEAD
     def get_data(self, key):
         if self.context_data is None:
             self.context_data = self.load()
@@ -192,7 +191,7 @@ class PortraitContext(BaseContext):
             self.context_data = cache_data if cache_data is not None else {}
 
         self.context_data.update(**kwargs)
-=======
+
 
 class ArgsContext(BaseContext):
     """
@@ -224,4 +223,3 @@ class ArgsContext(BaseContext):
             return value
         else:
             return (self.load()).get(key, None)
->>>>>>> 93eae5a35dfbc9189db8c57ec4bcfb3d4da864cd
