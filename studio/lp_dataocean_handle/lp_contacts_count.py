@@ -43,11 +43,7 @@ class Handle(object):
         字段名称:
         'contacts_count': 联系人数量
         """
-<<<<<<< HEAD
         result = {'contacts_count': PositiveSignedTypeDefault}
-=======
-        result = {'contacts_count': 9999}
->>>>>>> 93eae5a35dfbc9189db8c57ec4bcfb3d4da864cd
         try:
             base_data = self.data.get("contacts", '')
             if str(base_data).isdigit():

@@ -10,6 +10,7 @@
 
 import numpy as np
 import logging
+from vendor.utils.defaults import StringTypeDefault
 
 logger = logging.getLogger('apps.common')
 
@@ -30,9 +31,8 @@ class Handle(object):
         """
 
         # TODO 抽取DataOcean返回的源数据
-
+        now_workplace_code_dic = {'now_workplace_code': StringTypeDefault}
         try:
-            now_workplace_code_dic = {'now_workplace_code': '9999'}  # 9999：异常
             work_exp_form = self.data['work_exp_form']
             # TODO 计算维度
             # 计算最近一份工作的工作地点
