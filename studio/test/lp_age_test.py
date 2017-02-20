@@ -12,7 +12,7 @@ data = {
         'sex': '男',
     },
 }
-age_test = [20, -4,""]
+age_test = [20, -4, ""]
 
 
 class TestPlugin(unittest.TestCase):
