@@ -22,8 +22,6 @@ Usage:
 
 """
 
-import sys
-
 
 class Default(object):
     """ 所有缺省值的顶级父类 """
@@ -82,3 +80,13 @@ class UnsignedFloatTypeDefault(Default):
     # float_sizeof_bit = sys.getsizeof(1.0) * 8
     # float_sizeof_bit = 16 * 8
     value = float(UnsignedIntTypeDefault.value)
+
+
+class ListTypeDefault(Default):
+    """ 特征取值如果是列表类型的，将此类型作为缺省值 """
+    value = None
+
+
+class DictTypeDefault(Default):
+    """ 特征取值如果是字典类型的，将此类型作为缺省值 """
+    value = None
