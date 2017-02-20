@@ -23,7 +23,13 @@ class Handle(object):
         接口：移动号码在网时长查询s(yd_mobile_online_time_s)
         输出：移动手机号在网时长
         """
+<<<<<<< HEAD
         result = {"online_time": StringTypeDefault}
+=======
+
+        result = {"online_time": "9999"}
+
+>>>>>>> 93eae5a35dfbc9189db8c57ec4bcfb3d4da864cd
         try:
             online_time = self.data['content']['online_time']
             if online_time in ["(0,3)", "[3,6)"]:

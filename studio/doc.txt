@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 -----------------------------------
 lp_age.py    Document   ----------
 
@@ -11,6 +12,8 @@ lp_age.py    Document   ----------
 特征名称:'age':年龄int
 
 
+=======
+>>>>>>> 93eae5a35dfbc9189db8c57ec4bcfb3d4da864cd
 --------------------------------------------
 lp_agentg_black.py    Document   ----------
 
@@ -33,11 +36,18 @@ flight_times一年中飞行次数
 ----------------------------------------------
 lp_application_on.py    Document   ----------
 
+<<<<<<< HEAD
 输入:
 接口名称：猎聘申请信息上传接口
 字段名称：'application_on'贷款申请时间str
 
 计算逻辑:直接从猎聘申请信息上传接口提取申请时间并输出,输出类型为string
+=======
+接口名称：
+猎聘申请信息上传接口
+字段名称：
+'application_on':贷款申请时间str
+>>>>>>> 93eae5a35dfbc9189db8c57ec4bcfb3d4da864cd
 
 输出:
 特征名称:
@@ -47,6 +57,7 @@ lp_application_on.py    Document   ----------
 -------------------------------------------------------
 lp_apply_register_duration.py    Document   ----------
 
+<<<<<<< HEAD
 输入:
 接口名称：猎聘申请信息上传接口猎聘预授信接口
 字段名称：'application_on'贷款申请时间str
@@ -57,11 +68,24 @@ lp_apply_register_duration.py    Document   ----------
 
 输出:
 特征名称:'apply_register_duration'注册时间长度float
+=======
+接口名称：
+猎聘申请信息上传接口
+猎聘预授信接口
+字段名称：
+'registration_on':用户注册时间str
+'application_on':贷款申请时间str
+
+输出:
+特征名称:
+'apply_register_duration':注册时间长度float
+>>>>>>> 93eae5a35dfbc9189db8c57ec4bcfb3d4da864cd
 
 
 ---------------------------------------
 lp_card_id.py    Document   ----------
 
+<<<<<<< HEAD
 输入:
 接口名称：猎聘申请信息上传接口
 字段名称：card_id身份证号str
@@ -71,11 +95,22 @@ lp_card_id.py    Document   ----------
 输出:
 特征名称:身份证号
 字段名称:'card_id':身份证号string
+=======
+接口名称：猎聘
+字段名称：
+card_id身份证号str
+
+输出:
+特征名称:身份证号
+字段名称:
+'card_id':身份证号str
+>>>>>>> 93eae5a35dfbc9189db8c57ec4bcfb3d4da864cd
 
 
 -----------------------------------------
 lp_car_count.py    Document   ----------
 
+<<<<<<< HEAD
 输入:
 接口名称：人人信车辆信息查询
 字段名称：'result':取值范围为[object,null]
@@ -85,11 +120,21 @@ lp_car_count.py    Document   ----------
 
 输出:
 特征名称:'car_count':车辆个数int
+=======
+接口名称：人人信
+字段名称：
+'result':取值范围为[object,null]
+
+输出:
+特征名称:
+'car_count':车辆个数int
+>>>>>>> 93eae5a35dfbc9189db8c57ec4bcfb3d4da864cd
 
 
 ------------------------------------------
 lp_car_number.py    Document   ----------
 
+<<<<<<< HEAD
 输入:
 接口名称：人人信车辆信息查询
 字段名称：'license_no'车牌号str
@@ -99,11 +144,21 @@ lp_car_number.py    Document   ----------
 
 输出:
 特征名称:'car_number'车牌号list
+=======
+接口名称：人人信
+字段名称：
+'license_no':车牌号str
+
+输出:
+特征名称:
+'car_number':车牌号list
+>>>>>>> 93eae5a35dfbc9189db8c57ec4bcfb3d4da864cd
 
 
 -------------------------------------------
 lp_cc_bill_age.py    Document   ----------
 
+<<<<<<< HEAD
 输入:
 接口名称：人人信征信服务接口
 字段名称：'credit_card_account_age':信用卡账龄str
@@ -113,12 +168,22 @@ lp_cc_bill_age.py    Document   ----------
 
 输出:
 特征名称:'cc_bill_age':贷记卡账龄int
+=======
+接口名称：人人信
+字段名称：
+'credit_card_account_age':信用卡账龄str
+
+输出:
+特征名称:
+'cc_bill_age':贷记卡账龄str
+>>>>>>> 93eae5a35dfbc9189db8c57ec4bcfb3d4da864cd
 
 
 ----------------------------------------------------
 lp_china_mobile_ability.py    Document   ----------
 
 
+<<<<<<< HEAD
 --------------------------------------------
 lp_college_type.py    Document   ----------
 
@@ -148,6 +213,23 @@ lp_complete_degree.py    Document   ----------
 
 ----------------------------------------
 lp_contacts.py    Document   ----------
+=======
+-----------------------------------------------
+lp_complete_degree.py    Document   ----------
+
+接口名称：
+猎聘
+字段名称：
+'complete_degree':简历完成度int
+
+输出:
+特征名称:
+'complete_degree':简历完成度int
+
+
+----------------------------------------------
+lp_contacts_count.py    Document   ----------
+>>>>>>> 93eae5a35dfbc9189db8c57ec4bcfb3d4da864cd
 
 接口名称：个人基本信息查询
 字段名称：
@@ -178,6 +260,7 @@ data_identity:court_zhixing_a_s
 ------------------------------------------------
 lp_creditcard_count.py    Document   ----------
 
+<<<<<<< HEAD
 输入:
 接口名称：人人信征信服务接口
 字段名称：'credit_cards_num':信用卡张数str
@@ -186,6 +269,15 @@ lp_creditcard_count.py    Document   ----------
 
 输出:
 特征名称:'creditcard_count':信用卡张数int
+=======
+接口名称：人人信
+字段名称：
+'credit_cards_num':信用卡张数str
+
+输出:
+特征名称:
+'creditcard_count':信用卡张数str
+>>>>>>> 93eae5a35dfbc9189db8c57ec4bcfb3d4da864cd
 
 
 -------------------------------------------
@@ -229,6 +321,7 @@ cur_status当前工作状态
 -------------------------------------------
 lp_dc_bill_age.py    Document   ----------
 
+<<<<<<< HEAD
 输入:
 接口名称：人人信
 字段名称：'debit_card_account_age':借记卡账龄str
@@ -237,6 +330,15 @@ lp_dc_bill_age.py    Document   ----------
 
 输出:
 特征名称:'dc_bill_age':借记卡账龄int
+=======
+接口名称：人人信
+字段名称：
+'debit_card_account_age':借记卡账龄str
+
+输出:
+特征名称:
+'dc_bill_age':借记卡账龄str
+>>>>>>> 93eae5a35dfbc9189db8c57ec4bcfb3d4da864cd
 
 
 --------------------------------------------------
@@ -259,6 +361,7 @@ lp_dx_online_time.py    Document   ----------
 ------------------------------------------------------
 lp_education_degree_check.py    Document   ----------
 
+<<<<<<< HEAD
 输入:
 接口名称：数据堂学历信息查询接口
 字段名称：degree学历str
@@ -267,11 +370,18 @@ lp_education_degree_check.py    Document   ----------
 
 输出：
 特征名称：degree_code学信网学历int
+=======
+接口名称：数据堂学历信息查询接口
+字段名称：degree学历code
+输出：
+特征名称：degree_code学历
+>>>>>>> 93eae5a35dfbc9189db8c57ec4bcfb3d4da864cd
 
 
 -----------------------------------------------------
 lp_education_degree_code.py    Document   ----------
 
+<<<<<<< HEAD
 输入:
 接口名称：猎聘预授信接口
 字段名称：edu_exp_form教育信息
@@ -279,6 +389,12 @@ degree学历code
 
 计算逻辑:提取猎聘学历信息并转化为编码,编码需要与学信网编码一致,输出类型为int
 
+=======
+接口名称：猎聘
+字段名称：edu_exp_form教育信息
+degree学历code
+
+>>>>>>> 93eae5a35dfbc9189db8c57ec4bcfb3d4da864cd
 输出：
 特征名称：education_degree_code学历
 
@@ -313,12 +429,20 @@ lp_gender.py    Document   ----------
 
 接口名称：个人基本信息查询
 字段名称：
+<<<<<<< HEAD
 gender性别str
+=======
+gender性别
+>>>>>>> 93eae5a35dfbc9189db8c57ec4bcfb3d4da864cd
 
 输出:
 特征名称:性别
 字段名称:
+<<<<<<< HEAD
 'gender':性别int
+=======
+'gender':性别
+>>>>>>> 93eae5a35dfbc9189db8c57ec4bcfb3d4da864cd
 
 
 --------------------------------------------
@@ -347,6 +471,7 @@ school毕业院校
 特征名称：graduate_college院校
 
 
+<<<<<<< HEAD
 ------------------------------------------------------
 lp_graduate_college_check.py    Document   ----------
 
@@ -360,6 +485,8 @@ lp_graduate_college_check.py    Document   ----------
 特征名称：graduate_college_check学信网查得院校string
 
 
+=======
+>>>>>>> 93eae5a35dfbc9189db8c57ec4bcfb3d4da864cd
 ----------------------------------------------
 lp_highest_degree.py    Document   ----------
 
@@ -385,8 +512,13 @@ lp_is_cur_corp_shixin.py    Document   ----------
 输出：is_cur_corp_shixin现工作单位是否为失信被执行
 
 
+<<<<<<< HEAD
 ----------------------------------------------------
 lp_is_jiuyao_multi_loan.py    Document   ----------
+=======
+---------------------------------------------------
+lp_is_jiuyao_multiloan.py    Document   ----------
+>>>>>>> 93eae5a35dfbc9189db8c57ec4bcfb3d4da864cd
 
 接口名称：91征信接口
 字段名称：loan_infos申请人借贷信息
@@ -429,6 +561,7 @@ lp_is_pingan_financial_shixin.py    Document   ----------
 ----------------------------------------------------
 lp_is_pingan_multi_loan.py    Document   ----------
 
+<<<<<<< HEAD
 输入:
 接口名称：凭安贷款信息
 字段名称：'result'int
@@ -437,6 +570,15 @@ lp_is_pingan_multi_loan.py    Document   ----------
 
 输出:
 特征名称:'is_pingan_multi_loan'是否命中多头借贷名单int
+=======
+接口名称：贷款信息
+字段名称：
+'result':int
+
+输出:
+特征名称:
+'is_pingan_multi_loan':是否命中多头借贷名单int
+>>>>>>> 93eae5a35dfbc9189db8c57ec4bcfb3d4da864cd
 
 
 ----------------------------------------------------
@@ -453,6 +595,7 @@ lp_is_pingan_overdue_loan.py    Document   ----------
 输出：是否命中凭安逾期名单（近24个月）
 
 
+<<<<<<< HEAD
 ----------------------------------------------
 lp_is_recruitment.py    Document   ----------
 
@@ -466,6 +609,8 @@ lp_is_recruitment.py    Document   ----------
 特征名称：is_recruitment是否统招int
 
 
+=======
+>>>>>>> 93eae5a35dfbc9189db8c57ec4bcfb3d4da864cd
 -----------------------------------------------
 lp_is_unclear_loan.py    Document   ----------
 
@@ -632,6 +777,7 @@ tourist_class_count经济舱乘机次数
 --------------------------------------
 lp_mobile.py    Document   ----------
 
+<<<<<<< HEAD
 输入:
 接口名称：猎聘申请信息上传接口
 字段名称：'mobile'手机号str
@@ -640,6 +786,15 @@ lp_mobile.py    Document   ----------
 
 输出:
 特征名称:'mobile'手机号str
+=======
+接口名称：猎聘申请信息上传接口
+字段名称：
+'mobile':手机号str
+
+输出:
+特征名称:
+'mobile':手机号str
+>>>>>>> 93eae5a35dfbc9189db8c57ec4bcfb3d4da864cd
 
 
 -------------------------------------------------
@@ -665,6 +820,7 @@ lp_mobile_locale.py    Document   ----------
 -------------------------------------------
 lp_mobile_mark.py    Document   ----------
 
+<<<<<<< HEAD
 输入:
 接口名称：'tags':电话标记
 字段名称：'label':用户标注标签str
@@ -673,6 +829,16 @@ lp_mobile_mark.py    Document   ----------
 
 输出:
 特征名称:'mobile_mark':用户标注标签str
+=======
+接口名称：
+'tags':电话标记
+字段名称：
+'label':用户标注标签str
+
+输出:
+特征名称:
+'mobile_mark':用户标注标签str
+>>>>>>> 93eae5a35dfbc9189db8c57ec4bcfb3d4da864cd
 
 
 ------------------------------------------------
@@ -705,6 +871,7 @@ marital_status婚姻状况
 ------------------------------------
 lp_name.py    Document   ----------
 
+<<<<<<< HEAD
 输入:
 接口名称：猎聘申请信息上传接口
 字段名称：'name':姓名
@@ -713,6 +880,15 @@ lp_name.py    Document   ----------
 
 输出:
 特征名称:'name':姓名str
+=======
+接口名称：猎聘申请信息上传接口
+字段名称：
+'name':姓名
+
+输出:
+特征名称:
+'name':姓名str
+>>>>>>> 93eae5a35dfbc9189db8c57ec4bcfb3d4da864cd
 
 
 -----------------------------------------------
@@ -770,6 +946,7 @@ work_end工作经历结束时间
 ----------------------------------------------
 lp_overload_count.py    Document   ----------
 
+<<<<<<< HEAD
 输入:
 接口名称：
 'high_way_over_load':高速超载统计查询
@@ -780,11 +957,22 @@ lp_overload_count.py    Document   ----------
 
 输出:
 特征名称:'overload_count':超速次数int
+=======
+接口名称：
+'high_way_over_load':高速超载统计查询
+字段名称：
+'month_times':超载总次数str
+
+输出:
+特征名称:
+'overload_count':超速次数int
+>>>>>>> 93eae5a35dfbc9189db8c57ec4bcfb3d4da864cd
 
 
 -----------------------------------------------
 lp_overspeed_count.py    Document   ----------
 
+<<<<<<< HEAD
 输入:
 接口名称：
 'high_way_over_speed':高速超速统计查询
@@ -795,6 +983,31 @@ lp_overspeed_count.py    Document   ----------
 
 输出:
 特征名称:'overspeed_count':超速次数int
+=======
+接口名称：
+'high_way_over_speed':高速超速统计查询
+字段名称：
+'month_times':超速次数str
+
+输出:
+特征名称:
+'overspeed_count':超速次数int
+
+
+---------------------------------------------
+lp_personal_info.py    Document   ----------
+
+接口名称：
+'personal_info':个人基本信息查询
+字段名称：
+'age':年龄int
+'gender':性别str
+
+输出:
+特征名称:
+'age':年龄int
+'gender':性别str
+>>>>>>> 93eae5a35dfbc9189db8c57ec4bcfb3d4da864cd
 
 
 --------------------------------------------
@@ -819,13 +1032,51 @@ debit_card_12m_chargeoff_amount借记卡近12个月出账累计总金额
 
 -------------------------------------------------------
 lp_pingan_max_overdue_days.py    Document   ----------
+<<<<<<< HEAD
 接口：反欺诈服务接口——3借贷信息——3.1逾期信息
 输出：最长逾期天数（近6个月）
+=======
+ndle(self):
+'''接口：反欺诈服务接口——3借贷信息——3.1逾期信息
+输出：最长逾期天数（近6个月）
+'''
+result={"pingan_max_overdue_days":9999}
+
+try:
+M_list=self.data['record'][0]['classification']
+overdue_days_list={}
+M3_bankLoan_max_overdue_days=int(M_list[0].get('M3').get('bankLoan').get('longestDays'))
+overdue_days_list.append(M3_bankLoan_max_overdue_days)
+M3_bankCredit_max_overdue_days=int(M_list[0].get('M3').get('bankCredit').get('longestDays'))
+overdue_days_list.append(M3_bankCredit_max_overdue_days)
+M3_otherLoan_max_overdue_days=int(M_list[0].get('M3').get('otherLoan').get('longestDays'))
+overdue_days_list.append(M3_otherLoan_max_overdue_days)
+M3_otherCredit_max_overdue_days=int(M_list[0].get('M3').get('otherCredit').get('longestDays'))
+overdue_days_list.append(M3_otherCredit_max_overdue_days)
+M6_bankLoan_max_overdue_days=int(M_list[1].get('M6').get('bankLoan').get('longestDays'))
+overdue_days_list.append(M6_bankLoan_max_overdue_days)
+M6_bankCredit_max_overdue_days=int(M_list[1].get('M6').get('bankCredit').get('longestDays'))
+overdue_days_list.append(M6_bankCredit_max_overdue_days)
+M6_otherLoan_max_overdue_days=int(M_list[1].get('M6').get('otherLoan').get('longestDays'))
+overdue_days_list.append(M6_otherLoan_max_overdue_days)
+M6_otherCredit_max_overdue_days=int(M_list[1].get('M6').get('otherCredit').get('longestDays'))
+overdue_days_list.append(M6_otherCredit_max_overdue_days)
+pingan_max_overdue_days=max(overdue_days_list)
+result['pingan_max_overdue_days']=pingan_max_overdue_days
+exceptException:
+#TODOlogthiserror
+returnresult
+
+returnresult
+
+
+>>>>>>> 93eae5a35dfbc9189db8c57ec4bcfb3d4da864cd
 
 
 -------------------------------------------------------
 lp_pingan_multi_loan_count.py    Document   ----------
 
+<<<<<<< HEAD
 输入:
 接口名称：贷款信息
 字段名称：'org_names':涉及机构数int
@@ -835,17 +1086,31 @@ lp_pingan_multi_loan_count.py    Document   ----------
 
 输出:
 特征名称:'pingan_multi_loan_count':多头借贷公司数量int
+=======
+接口名称：贷款信息
+字段名称：
+'org_names':涉及机构数int
+
+输出:
+特征名称:
+'pingan_multi_loan_count':多头借贷公司数量int
+>>>>>>> 93eae5a35dfbc9189db8c57ec4bcfb3d4da864cd
 
 
 -------------------------------------------------------
 lp_pingan_multi_loan_infos.py    Document   ----------
 
+<<<<<<< HEAD
 输入:
 接口名称：贷款信息
 
 计算逻辑:贷款信息接口返回信息包括按月汇总的银行机构及非银机构发生的贷款信息,
 提取贷款信息列表,将其中为空的部分删掉
 
+=======
+接口名称：贷款信息
+
+>>>>>>> 93eae5a35dfbc9189db8c57ec4bcfb3d4da864cd
 输出:
 特征名称:
 'pingan_multi_loan_infos':多头借贷信息
@@ -914,9 +1179,37 @@ lp_telecom_mobile_identity_s.py    Document   ----------
 
 -----------------------------------------------------
 lp_telecom_mobile_online.py    Document   ----------
+<<<<<<< HEAD
 接口：手机在网时长查询s(telecom_mobile_online)
 输出：电信手机号在网时长
 
+=======
+ndle(self):
+'''接口：手机在网时长查询s(telecom_mobile_online)
+输出：电信手机号在网时长
+'''
+result={
+"online_time":9999
+}
+
+try:
+online_time=self.data['content']['online_time']
+exceptException:
+#TODOlogthiserror
+online_time="-1"
+
+ifonline_timeis"[0-6)":
+online_time="00"
+elifonline_timeis"[6-12)":
+online_time="11"
+elifonline_timeis"[12-24)":
+online_time="22"
+else:
+online_time="33"
+
+result['online_time']=online_time
+returnresult
+>>>>>>> 93eae5a35dfbc9189db8c57ec4bcfb3d4da864cd
 
 ----------------------------------------------
 lp_tianwang_black.py    Document   ----------
