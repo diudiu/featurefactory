@@ -43,11 +43,11 @@ class Handle(object):
         字段名称:
         'contacts_count': 联系人数量
         """
-        result = {'contacts_count': PositiveSignedTypeDefault}
+        result = {'contacts': PositiveSignedTypeDefault}
         try:
             base_data = self.data.get("contacts", '')
             if str(base_data).isdigit():
-                result['contacts_count'] = base_data
+                result['contacts'] = base_data
         except Exception as e:
             logging.error(e.message)
 
