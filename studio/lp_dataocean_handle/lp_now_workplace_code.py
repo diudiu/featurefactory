@@ -54,5 +54,5 @@ class Handle(object):
 
         except Exception as e:
             logging.error(e.message)
-        finally:
-            return now_workplace_code_dic
+
+        return now_workplace_code_dic

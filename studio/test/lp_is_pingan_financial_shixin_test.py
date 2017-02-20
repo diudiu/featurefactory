@@ -47,12 +47,12 @@ class TestPlugin(unittest.TestCase):
     def test_lp_is_pingan_financial_shixin(self):
         handler = Handle(self.data)
         res = handler.handle()
-        self.assertEqual(res['is_pingan_financial_shixin'], True)
+        self.assertEqual(res['is_pingan_financial_shixin'], 1)
 
         self.data['data']['others'] = []
         handler = Handle(self.data)
         res = handler.handle()
-        self.assertEqual(res['is_pingan_financial_shixin'], False)
+        self.assertEqual(res['is_pingan_financial_shixin'], 0)
 
 
 if __name__ == '__main__':

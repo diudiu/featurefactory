@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 
 import unittest
-
+from vendor.utils.defaults import *
 from studio.lp_dataocean_handle.lp_geo_location import Handle
 
 data = {
@@ -44,12 +44,12 @@ class TestPlugin(unittest.TestCase):
     def test_test(self):
         h = Handle(self.data)
         res = h.handle()
-        print res
+        assert res.values()[0] == "咸宁市"
 
         self.data['result'] = '11'
         h = Handle(self.data)
         res = h.handle()
-        print res
+        assert res.values()[0] == StringTypeDefault
 
 
 if __name__ == '__main__':

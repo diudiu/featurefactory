@@ -94,7 +94,7 @@ def data_get_dispatch(base_data):
     for api_manager in api_manager_list:
         try:
             obj = import_string(api_manager)
-            junkman = obj(apply_id, useful_args, interface_data)
+            junkman = obj(apply_id, base_data, interface_data)
         except Exception as e:
             logger.error('junkman init error , massage is :\n %s' % e)
             raise JunkmanInitializeFailed

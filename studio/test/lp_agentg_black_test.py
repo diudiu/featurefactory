@@ -22,22 +22,23 @@ data = {
         }]
     }
 
-results = [u'00', u'11', u'22', '']
+test = [u'00', u'11', u'22']
+result = [1, 0, 0]
 
 
 class TestPlugin(unittest.TestCase):
 
     def setUp(self):
         self.data = data
-        self.results = results
+        self.test = test
 
     def test_agentg_black(self):
         data = self.data.copy()
-        for result in results:
-            data["result"] = result
+        for t, r in zip(self.test, result):
+            data["result"] = t
             handler = Handle(data)
             res = handler.handle()
-            print res
+            self.assertEqual(res['is_organization_g_black'], r)
 
 
 if __name__ == '__main__':

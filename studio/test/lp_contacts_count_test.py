@@ -3,6 +3,7 @@
 import unittest
 
 from studio.lp_dataocean_handle.lp_contacts_count import Handle
+from vendor.utils.defaults import *
 
 data = {
     'product_code': '890wefjf320if0i302f0j3f0f',
@@ -26,12 +27,12 @@ class TestPlugin(unittest.TestCase):
 
         handler = Handle(self.data)
         res = handler.handle()
-        print res
+        assert res.values()[0] == 30
 
         data['contacts'] = None
         handler = Handle(self.data)
         res = handler.handle()
-        print res
+        assert res.values()[0] == PositiveSignedTypeDefault
 
 if __name__ == '__main__':
     unittest.main()

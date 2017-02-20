@@ -10,6 +10,7 @@
 
 import numpy as np
 from datetime import datetime
+from vendor.utils.defaults import PositiveSignedTypeDefault
 import logging
 logger = logging.getLogger('apps.common')
 
@@ -30,12 +31,8 @@ class Handle(object):
         特征名称：now_work_time       本份工作工作时间
         """
         try:
-            now_work_time_dic = {'now_work_time': 9999}  # 9999：异常
+            now_work_time_dic = {'now_work_time': PositiveSignedTypeDefault}
             work_exp_form = self.data['work_exp_form']
-
-            if not isinstance(work_exp_form, list):
-                return now_work_time_dic
-
             # TODO 计算维度
             # 计算最近一份工作的结束时间
             work_end_list = []
@@ -63,5 +60,4 @@ class Handle(object):
 
         except Exception as e:
             logging.error(e.message)
-        finally:
-            return now_work_time_dic
+        return now_work_time_dic

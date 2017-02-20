@@ -2,6 +2,7 @@
 
 import unittest
 
+from vendor.utils.defaults import *
 from studio.lp_dataocean_handle.lp_folk import Handle
 
 data = {
@@ -34,19 +35,19 @@ class TestPlugin(unittest.TestCase):
         data['result'] = '11'
         h = Handle(data)
         res = h.handle()
-        self.assertEqual(res['folk'], 9999)
+        self.assertEqual(res.values()[0], StringTypeDefault)
 
     def test_reslut_00(self):
         data['result'] = '00'
         h = Handle(data)
         res = h.handle()
-        self.assertEqual(res['folk'], data['content']['nation'])
+        self.assertEqual(res.values()[0], data['content']['nation'])
 
         data['content']['nation'] = ''
 
         handler = Handle(data)
         res = handler.handle()
-        self.assertEqual(res['folk'], 9999)
+        self.assertEqual(res.values()[0], StringTypeDefault)
 
 
 if __name__ == '__main__':

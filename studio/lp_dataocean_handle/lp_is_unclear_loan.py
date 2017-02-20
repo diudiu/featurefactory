@@ -17,6 +17,8 @@
 """
 import logging
 
+from vendor.utils.defaults import *
+
 logger = logging.getLogger('apps.common')
 
 
@@ -37,13 +39,13 @@ class Handle(object):
         字段名称:
         'is_unclear_loan': 是否有未结清贷款
         """
+        result = {
+            "is_unclear_loan": BooleanTypeDefault,
+        }
         try:
-            result = {
-                "is_unclear_loan": 9999,
-            }
             base_data = self.data.get("res_data", {}).get("is_unclear_loan", '')
-            if str(base_data).isdigit():
+            if base_data in (0, 1):
                 result['is_unclear_loan'] = base_data
         except Exception as e:
-            logging.info(e.message)
+            logging.error(e.message)
         return result
