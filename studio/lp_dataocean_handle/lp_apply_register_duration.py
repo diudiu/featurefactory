@@ -23,6 +23,7 @@ class Handle(object):
     def handle(self):
 
         """
+        输入:
         接口名称：
         猎聘申请信息上传接口
         猎聘预授信接口
@@ -30,12 +31,14 @@ class Handle(object):
         'registration_on': 用户注册时间 str
         'application_on': 贷款申请时间 str
 
+        计算逻辑:从申请信息上传接口提从预授信接口提取用户注册时间,计算二者时间差,输出单位为月, 类型为float
+
         输出:
         特征名称:
         'apply_register_duration': 注册时间长度 float
         """
         result = {
-            'apply_register_duration': PositiveSignedFloatTypeDefault,
+            'apply_register_duration': UnsignedFloatTypeDefault,
         }
         try:
             apply_data = self.data["apply_data"]["application_on"][:10]
@@ -43,6 +46,7 @@ class Handle(object):
             apply_data = datetime.strptime(apply_data, "%Y-%m-%d")
             register_data = datetime.strptime(register_data, "%Y-%m-%d")
             apply_register = (apply_data - register_data).days / 30.0
+            apply_register = round(apply_register, 2)
             if apply_register >= 0:
                 result['apply_register_duration'] = apply_register
 

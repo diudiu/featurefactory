@@ -7,7 +7,7 @@
     Date:  2017/02/17
     Change Activity:
 """
-from vendor.utils.defaults import UnsignedIntTypeDefault
+from vendor.utils.defaults import *
 import logging
 
 logger = logging.getLogger('apps.common')
@@ -31,7 +31,7 @@ class Handle(object):
         特征名称：is_recruitment 是否统招 int
         """
 
-        result = {'is_recruitment': UnsignedIntTypeDefault}
+        result = {'is_recruitment': BooleanTypeDefault}
 
         try:
             education_info = self.data['content']['degree'].get('education_approach', None)

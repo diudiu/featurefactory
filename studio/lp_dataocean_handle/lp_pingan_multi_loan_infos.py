@@ -7,7 +7,11 @@
     Date:  2017/02/17
     Change Activity:
 """
+from vendor.utils.defaults import *
+
 import logging
+
+from vendor.utils.defaults import *
 
 logger = logging.getLogger('apps.common')
 
@@ -29,24 +33,24 @@ class Handle(object):
         特征名称:
         'pingan_multi_loan_infos': 多头借贷信息
         """
-        result = {'pingan_multi_loan_infos': 9999}
+        result = {'pingan_multi_loan_infos': ListTypeDefault}
         try:
 
             if self.data.get('result', 0) == 0:
                 records = self.data["data"]["record"]
-                for record in records:   # 遍历贷款信息列表
+                for record in records:
                     base_data = record.get("classification", [])
-                    for data in base_data:   # 遍历每条贷款信息M3,M6等时间段的信息
-                        for in_data in data.keys():   # 遍历每个时间段内的贷款信息
+                    for data in base_data:
+                        for in_data in data.keys():
                             time_org = data[in_data]
-                            if not time_org or not isinstance(time_org, dict):  # 避免出现为空继续执行出错的情况
+                            if not time_org or not isinstance(time_org, dict):
                                 continue
-                            for other_bank_data in time_org.keys():  # 遍历银行机构或非银机构的贷款信息
+                            for other_bank_data in time_org.keys():
                                 if not time_org[other_bank_data]:
-                                    del time_org[other_bank_data]  # 如果机构贷款信息字典为空,则删除
+                                    del time_org[other_bank_data]
                                 else:
-                                    for detail_data in time_org[other_bank_data].keys():  # 如果字典非空,遍历字典内字段
-                                        if not time_org[other_bank_data][detail_data]:   # 字段为空则删除
+                                    for detail_data in time_org[other_bank_data].keys():
+                                        if not time_org[other_bank_data][detail_data]:
                                             del time_org[other_bank_data][detail_data]
                                             if not time_org[other_bank_data]:
                                                 del time_org[other_bank_data]

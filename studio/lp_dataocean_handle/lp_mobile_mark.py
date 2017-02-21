@@ -1,11 +1,11 @@
 # -*- coding:utf-8 -*-
 
 """
-    License SYPH-L.
-    Copyright (c) 2013- SYPH, All Rights Reserved.
+    License DIGCREDIT-L.
+    Copyright (c) 2013- DIGCREDIT, All Rights Reserved.
     -----------------------------------------------------------
-    Author: ZL
-    Date:  2017/01/20
+    Author: Z.L
+    Date:  2017/02/20
     Change Activity:
 
     data = {
@@ -32,14 +32,13 @@ class Handle(object):
     def handle(self):
 
         """
-        接口名称：
-        'tags': 电话标记
-        字段名称：
-        'label': 用户标注标签 str
+        接口名称：'tags': 电话标记
+        字段名称：'label': 用户标注标签 str
+
+        计算逻辑:从电话标记接口提取电话标记信息并输出,输出类型为string
 
         输出:
-        特征名称:
-        'mobile_mark': 用户标注标签 str
+        特征名称: 'mobile_mark': 用户标注标签 str
         """
         result = {'mobile_mark': StringTypeDefault}
         try:

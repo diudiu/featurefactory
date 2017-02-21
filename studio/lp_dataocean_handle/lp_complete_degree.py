@@ -7,8 +7,9 @@
     Date:  2017/02/17
     Change Activity:
 """
-from vendor.utils.defaults import UnsignedIntTypeDefault
 import logging
+
+from vendor.utils.defaults import UnsignedIntTypeDefault
 
 logger = logging.getLogger('apps.common')
 
@@ -33,14 +34,14 @@ class Handle(object):
         """
 
         result = {self.name: UnsignedIntTypeDefault}
+
         try:
             base_data = self.data[self.name]
             if str(base_data).isdigit():  # 检验简历完成度是否只由数字组成,是则转化为int类型
                 base_data = int(base_data)
                 result[self.name] = base_data
-
         except Exception as e:
                 logging.error(e.message)
-        finally:
-            return result
+
+        return result
 

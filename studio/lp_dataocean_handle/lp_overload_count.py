@@ -54,16 +54,15 @@ class Handle(object):
     def handle(self):
 
         """
-        接口名称：
-        'high_way_over_load': 高速超载统计查询
-        字段名称：
-        'month_times': 超载总次数 str
+        接口名称：'high_way_over_load': 高速超载统计查询
+        字段名称：'month_times': 超载总次数 str
 
-        输出:
-        特征名称:
-        'overload_count': 超速次数 int
+        计算逻辑: 先从车牌号(car_umber)特征根据车牌号查询每月每辆车的超载信息,
+                 再汇总所有车的超载次数,输出类型为int
+
+        输出: 特征名称: 'overload_count': 超速次数 int
         """
-        result = {'overload_count': PositiveSignedTypeDefault}
+        result = {'overload_count': UnsignedIntTypeDefault}
         try:
             month_times = 0
             for card, card_record in self.data.items():

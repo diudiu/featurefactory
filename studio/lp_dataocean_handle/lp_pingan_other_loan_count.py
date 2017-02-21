@@ -7,10 +7,14 @@
     Date: 2017/02/10
     Change Activity:
 """
+import logging
+
+from vendor.utils.defaults import *
+
+logger = logging.getLogger('apps.common')
 
 
 class Handle(object):
-
     def __init__(self, data):
         self.data = data
 
@@ -21,20 +25,18 @@ class Handle(object):
         输出：其他信贷机构数量（近6个月）
         """
 
-        result = {"pingan_overdue_corp_count": 9999}
+        result = {"pingan_overdue_corp_count": PositiveSignedTypeDefault}
 
         try:
-            data_list = self.data.keys().reverse()
-            orgNums_list = []
-            for a in range(6):
-                orgNums_list.append(self.data.get(data_list[a]).get('orgNums'))
-            pingan_ovredue_corp_count = sum(orgNums_list)
+            if self.data['result'] == 0:
+                orgNums_list = []
+                data = sorted(self.data['data'].items(), key=lambda x: x[0], reverse=True)
+                for dates, v in data[0:6]:
+                    if v and str(v.get('orgNums', None)).isdigit():
+                        orgNums_list.append(int(v['orgNums']))
+                pingan_ovredue_corp_count = sum(orgNums_list)
 
-            result['pingan_overdue_corp_count'] = pingan_ovredue_corp_count
-        except Exception:
-            return result
-
+                result['pingan_overdue_corp_count'] = pingan_ovredue_corp_count
+        except Exception as e:
+            logging.error(e.message)
         return result
-
-
-

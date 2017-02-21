@@ -22,11 +22,10 @@ Usage:
 
 """
 
-import sys
-
 
 class Default(object):
     """ 所有缺省值的顶级父类 """
+    value = None
 
 
 class StringTypeDefault(Default):
@@ -52,15 +51,16 @@ class NegativeSignedTypeDefault(Default):
 class UnsignedIntTypeDefault(Default):
     """ 特征取值如果是无符号整数类型的，将此类型作为缺省值 """
     # 32位的系统最大值是2的32次方，64位系统最大值是2的64次方
-    value = sys.maxint
+    # value = sys.maxint
+    value = 2 ** 31 - 1
 
 
 class UnsignedLongTypeDefault(Default):
     """ 特征取值如果是无符号长整数类型的，将此类型作为缺省值 """
     # 为了考虑32位系统的兼容性问题，考虑使用16字节的最大值进行表示
     # long_sizeof_bit = sys.getsizeof(1L) * 8
-    long_sizeof_bit = 16 * 8
-    value = 2 ** long_sizeof_bit
+    # long_sizeof_bit = 16 * 8
+    value = UnsignedIntTypeDefault.value
 
 
 class PositiveSignedFloatTypeDefault(Default):
@@ -78,5 +78,15 @@ class UnsignedFloatTypeDefault(Default):
 
     # 为了考虑32位系统的兼容性问题，考虑使用16字节的最大值进行表示
     # float_sizeof_bit = sys.getsizeof(1.0) * 8
-    float_sizeof_bit = 16 * 8
-    value = 2 ** float_sizeof_bit
+    # float_sizeof_bit = 16 * 8
+    value = float(UnsignedIntTypeDefault.value)
+
+
+class ListTypeDefault(Default):
+    """ 特征取值如果是列表类型的，将此类型作为缺省值 """
+    value = None
+
+
+class DictTypeDefault(Default):
+    """ 特征取值如果是字典类型的，将此类型作为缺省值 """
+    value = None

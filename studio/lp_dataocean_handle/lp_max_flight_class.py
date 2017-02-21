@@ -42,13 +42,13 @@ class Handle(object):
                     count_list.append(int(business_class_count))
                     temp_index = count_list.index(max(count_list))
                     if sum(count_list) == 0:
-                        result['max_flight_class'] = '乘机次数为零'
+                        result['max_flight_class'] = 4
                     elif temp_index == 0:
-                        result['max_flight_class'] = '经济舱'
+                        result['max_flight_class'] = 3
                     elif temp_index == 1:
-                        result['max_flight_class'] = '公务舱'
+                        result['max_flight_class'] = 2
                     elif temp_index == 2:
-                        result['max_flight_class'] = '商务舱'
+                        result['max_flight_class'] = 1
 
         except Exception as e:
             logging.error(e.message)

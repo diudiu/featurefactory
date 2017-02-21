@@ -7,14 +7,15 @@
     Date:  2017/02/17
     Change Activity:
 """
-from vendor.utils.defaults import UnsignedIntTypeDefault
+
 import logging
+
+from vendor.utils.defaults import *
 
 logger = logging.getLogger('apps.common')
 
 
 class Handle(object):
-
     def __init__(self, data):
         self.data = data
 
@@ -32,18 +33,14 @@ class Handle(object):
         """
 
         result = {
-            "dc_bill_age": UnsignedIntTypeDefault,
+            "dc_bill_age": PositiveSignedTypeDefault,
         }
         try:
-            base_data = self.data["result"]["rrx_once_all"]["debit_card_account_age"]
-            base_data = int(base_data)
-            if str(base_data).isdigit():  # 检验借记卡账龄是否只由数字组成,是则转化为int类型
-                base_data = int(base_data)
-                result["dc_bill_age"] = base_data
+            base_data = self.data.get("result", {}).get("rrx_once_all", {}).get("debit_card_account_age", None)
+            if str(base_data.replace('.', '')).isdigit():  # 检验借记卡账龄是否只由数字组成,是则转化为int类型
+                result["dc_bill_age"] = int(eval(str(base_data)))
 
         except Exception as e:
-                logging.error(e.message)
-        finally:
-            return result
+            logging.error(e.message)
 
-
+        return result
