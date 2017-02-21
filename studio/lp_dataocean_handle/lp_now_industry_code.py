@@ -29,8 +29,8 @@ class Handle(object):
         输出：
         特征名称：now_industry_code   当前工作行业code
         """
+        now_industry_code_dic = {'now_industry_code': StringTypeDefault}  # 9999：异常
         try:
-            now_industry_code_dic = {'now_industry_code': StringTypeDefault}  # 9999：异常
             work_exp_form = self.data['work_exp_form']
             # TODO 计算维度
             # 计算最近一份工作的工作行业

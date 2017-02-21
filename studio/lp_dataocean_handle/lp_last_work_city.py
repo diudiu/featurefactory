@@ -7,6 +7,11 @@
     Date:  2017/02/10
     Change Activity:
 """
+import logging
+
+from vendor.utils.defaults import *
+
+logger = logging.getLogger('apps.common')
 
 
 class Handle(object):
@@ -23,15 +28,14 @@ class Handle(object):
         特征名称：dq_name             地点名称
         """
 
-        result = {'last_work_city': '9999'}
+        result = {'last_work_city': StringTypeDefault}
 
         try:
             work_exp_form = self.data['work_exp_form']
             if not isinstance(work_exp_form, list):
-                return last_work_city_dic
+                raise
             result['last_work_city'] = work_exp_form[-1].get('dq_name', None)
         except Exception:
             # TODO log this error
             return result
-
         return result

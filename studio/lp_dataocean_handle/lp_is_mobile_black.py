@@ -30,7 +30,7 @@ class Handle(object):
         特征名称：is_mobile_black     手机号是否染黑
         """
 
-        result = {'is_mobile_black':BooleanTypeDefault}
+        result = {'is_mobile_black': BooleanTypeDefault}
         try:
             is_mobile_black = self.data.get('result')
             grayscale = self.data.get('data', {}).get('grayscale')
