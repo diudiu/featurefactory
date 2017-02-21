@@ -7,8 +7,9 @@
     Date:  2017/02/17
     Change Activity:
 """
-from vendor.utils.defaults import UnsignedIntTypeDefault
 import logging
+
+from vendor.utils.defaults import *
 
 logger = logging.getLogger('apps.common')
 
@@ -31,19 +32,21 @@ class Handle(object):
         特征名称: 'is_pingan_multi_loan' 是否命中多头借贷名单 int
         """
 
-        result = {'is_pingan_multi_loan': UnsignedIntTypeDefault}
+        result = {'is_pingan_multi_loan': BooleanTypeDefault}
         try:
-            base_data = self.data["data"]["record"]
-            result_data = self.data["result"]
-            for data in base_data:
-                if result_data == "0" and data["classification"]:
-                    result['is_pingan_multi_loan'] = 1  # 若接口result值返回为'0',且返回结果不为空,返回命中
-                    break
-                else:
-                    result['is_pingan_multi_loan'] = 0
+            if self.data["result"] == 0:
+                record = self.data.get("data", {}).get("record", [])
+                for i in record:
+                    if i.get("classification"):#且返回结果不为空,返回命中
+                        result['is_pingan_multi_loan'] = 1
+                        break
+                    else:
+                        result['is_pingan_multi_loan'] = 0
 
         except Exception as e:
-                logging.error(e.message)
-        finally:
-            return result
+            import traceback
+            traceback.print_exc()
+            logging.error(e.message)
+
+        return result
 

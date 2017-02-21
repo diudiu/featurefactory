@@ -2,6 +2,8 @@
 
 import unittest
 
+from vendor.utils.defaults import *
+
 from studio.lp_dataocean_handle.lp_creditcard_count import Handle
 
 data = {
@@ -18,6 +20,8 @@ data = {
 }
 credit_cards_num_test = ["0", "2", ""]
 
+result = [0, 2, PositiveSignedTypeDefault]
+
 
 class TestPlugin(unittest.TestCase):
 
@@ -25,13 +29,11 @@ class TestPlugin(unittest.TestCase):
         self.data = data
 
     def test_lp_creditcard_count(self):
-        data = self.data.copy()
-        data["result"]["rrx_once_all"]["credit_cards_num"] = credit_cards_num_test
-        for card_data in credit_cards_num_test:
+        for card_data, r in zip(credit_cards_num_test, result):
             data["result"]["rrx_once_all"]["credit_cards_num"] = card_data
             handler = Handle(data)
             res = handler.handle()
-            print res
+            assert res.values()[0] == r
 
 
 if __name__ == '__main__':

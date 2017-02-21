@@ -7,7 +7,7 @@
     Date:  2017/02/17
     Change Activity:
 """
-from vendor.utils.defaults import UnsignedIntTypeDefault
+from vendor.utils.defaults import *
 
 import logging
 
@@ -33,17 +33,14 @@ class Handle(object):
         特征名称: 'car_count': 车辆个数 int
         """
 
-        result = {"car_count": UnsignedIntTypeDefault}
+        result = {"car_count": PositiveSignedTypeDefault}
         try:
             base_data = self.data["result"]
-            for data in base_data:
-                if not data:
-                    base_data.remove(data)  # 删除列表中为空的元素
-            if base_data and isinstance(base_data, list):
-                result["car_count"] = len(base_data)  # 计算列表长度
+            if isinstance(base_data, list):
+                result["car_count"] = len([i for i in base_data if i])
 
         except Exception as e:
                 logging.error(e.message)
-        finally:
-            return result
+
+        return result
 

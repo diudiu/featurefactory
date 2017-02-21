@@ -2,6 +2,8 @@
 
 import unittest
 
+from vendor.utils.defaults import *
+
 from studio.lp_dataocean_handle.lp_card_id import Handle
 
 data = {
@@ -25,13 +27,14 @@ class TestPlugin(unittest.TestCase):
         self.data = data
 
     def test_lp_card_id(self):
-        data = self.data.copy()
-        data["card_id"] = card_id_test
-        for card_data in card_id_test:
-            data["card_id"] = card_data
-            handler = Handle(data)
-            res = handler.handle()
-            print res
+        handler = Handle(self.data)
+        res = handler.handle()
+        assert res.values()[0] == self.data['card_id']
+
+        self.data['card_id'] = ''
+        handler = Handle(self.data)
+        res = handler.handle()
+        assert res.values()[0] == StringTypeDefault
 
 
 if __name__ == '__main__':

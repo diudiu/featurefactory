@@ -2,6 +2,8 @@
 
 import unittest
 
+from vendor.utils.defaults import *
+
 from studio.lp_dataocean_handle.lp_complete_degree import Handle
 
 data = {
@@ -19,6 +21,7 @@ data = {
     ],
 }
 complete_degree_test = [50, 0, ""]
+result = [50, 0, PositiveSignedTypeDefault]
 
 
 class TestPlugin(unittest.TestCase):
@@ -29,11 +32,11 @@ class TestPlugin(unittest.TestCase):
     def test_lp_complete_degree(self):
         data = self.data.copy()
         data["complete_degree"] = complete_degree_test
-        for degree_data in complete_degree_test:
+        for degree_data, r in zip(complete_degree_test, result):
             data["complete_degree"] = degree_data
             handler = Handle(data)
             res = handler.handle()
-            print res
+            assert res.values()[0] == r
 
 
 if __name__ == '__main__':

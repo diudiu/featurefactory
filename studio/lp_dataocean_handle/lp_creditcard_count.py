@@ -7,8 +7,10 @@
     Date:  2017/02/17
     Change Activity:
 """
-from vendor.utils.defaults import UnsignedIntTypeDefault
+
 import logging
+
+from vendor.utils.defaults import *
 
 logger = logging.getLogger('apps.common')
 
@@ -31,15 +33,14 @@ class Handle(object):
         特征名称: 'creditcard_count': 信用卡张数 int
         """
 
-        result = {"creditcard_count": UnsignedIntTypeDefault}
+        result = {"creditcard_count": PositiveSignedTypeDefault}
         try:
-            base_data = self.data["result"]["rrx_once_all"]["credit_cards_num"]
+            base_data = self.data.get("result", {}).get("rrx_once_all", {}).get("credit_cards_num", None)
             if str(base_data).isdigit():  # 检验信用卡张数是否只由数字组成,是则转化为int类型
-                base_data = int(base_data)
-                result["creditcard_count"] = base_data
+                result["creditcard_count"] = int(base_data)
 
         except Exception as e:
                 logging.error(e.message)
-        finally:
-            return result
+
+        return result
 

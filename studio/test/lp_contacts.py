@@ -2,7 +2,7 @@
 
 import unittest
 
-from studio.lp_dataocean_handle.lp_contacts_count import Handle
+from studio.lp_dataocean_handle.lp_contacts import Handle
 from vendor.utils.defaults import *
 
 data = {
