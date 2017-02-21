@@ -29,7 +29,6 @@ logger = logging.getLogger('apps.featureapi')
 
 @shared_task
 def audit_task(base_data):
-    # TODO 向callback_url回推结果
     data = {
         cons.RESPONSE_REQUEST_STATUS: ResponseCode.FEATURE_SUCCESS,
         cons.RESPONSE_REQUEST_MESSAGE: ResponseCode.message(ResponseCode.FEATURE_SUCCESS)

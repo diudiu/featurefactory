@@ -7,7 +7,7 @@
     Date:  2017/02/17
     Change Activity:
 """
-from vendor.utils.defaults import UnsignedIntTypeDefault
+from vendor.utils.defaults import PositiveSignedTypeDefault
 
 import logging
 
@@ -33,7 +33,7 @@ class Handle(object):
         特征名称: 'cc_bill_age': 贷记卡账龄 int
         """
 
-        result = {"cc_bill_age": UnsignedIntTypeDefault}
+        result = {"cc_bill_age": PositiveSignedTypeDefault}
         try:
             base_data = self.data.get("result", {}).get("rrx_once_all", {}).get("credit_card_account_age", None)
             if str(base_data.replace('.', '')).isdigit():  # 检验贷记卡账龄是否只由数字组成,是则转化为int类型

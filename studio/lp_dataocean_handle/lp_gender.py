@@ -20,7 +20,7 @@
 """
 import logging
 
-from vendor.utils.defaults import *
+from vendor.utils.defaults import PositiveSignedTypeDefault
 
 logger = logging.getLogger('apps.common')
 
@@ -41,12 +41,15 @@ class Handle(object):
         字段名称:
         'gender': 性别
         """
-        result = {'gender': StringTypeDefault}
+        result = {'gender': PositiveSignedTypeDefault}
         try:
             if self.data['result'] == '00':
                 base_data = self.data['content']['sex']
                 if base_data and isinstance(base_data, basestring):
-                    result['gender'] = base_data
+                    if '男' in base_data:
+                        result['gender'] = 0
+                    if '女' in base_data:
+                        result['gender'] = 1
         except Exception as e:
             logging.error(e.message)
         return result

@@ -7,7 +7,7 @@
     Date: 2017/01/18
     Change Activity:
 """
-from vendor.utils.defaults import UnsignedIntTypeDefault
+from vendor.utils.defaults import PositiveSignedTypeDefault
 from apps.common.models import CityCodeField
 import logging
 
@@ -25,7 +25,7 @@ class Handle(object):
         :return:
         """
         result = {
-                "mobile_area_city_level": UnsignedIntTypeDefault,
+                "mobile_area_city_level": PositiveSignedTypeDefault,
             }
         try:
             if self.data['result'] == u'00':

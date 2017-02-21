@@ -11,7 +11,7 @@ import logging
 
 from apps.common.cache import feature_global_code
 from vendor.utils.analyzer import GenericUtils
-from vendor.utils.defaults import *
+from vendor.utils.defaults import PositiveSignedTypeDefault
 
 logger = logging.getLogger('apps.common')
 
@@ -29,7 +29,7 @@ class Handle(object):
         特征名称：education_degree_check                学历
         """
 
-        result = {'education_degree_check': StringTypeDefault}
+        result = {'education_degree_check': PositiveSignedTypeDefault}
         try:
             # code_collection = feature_global_code.get("education_degree_check")  # 传入的参数是特征名称
             # feature_value = u"博士"  # 这个需要自己实际从self.data中获取
@@ -37,17 +37,13 @@ class Handle(object):
             degree = self.data['content'].get('degree', None)
             if degree:
                 education_degree = degree.get('degree', None)
-                degree = {'博士': '10', 'MBA/EMBA': '20',
-                          '硕士': '30', '本科': '40', '大专': '50',
-                          '中专': '60', '中技': '70', '高中': '80', '初中': '90'}
-                result['education_degree_check'] = '999'
-
-                for d, v in degree.items():
+                degree_map = {
+                    '博士后': 5, '博士': 10, 'MBA/EMBA': 20,
+                    '硕士': 30, '本科': 40, '大专': 50,
+                    '中专': 60, '中技': 70, '高中': 80, '初中': 90}
+                for d, v in degree_map.items():
                     if d in education_degree:
                         result['education_degree_check'] = v
-                if '博士后' in education_degree:
-                    result['education_degree_check'] = '5'
-
         except Exception as e:
             logging.error(e.message)
 
