@@ -10,7 +10,7 @@
 import logging
 import time
 
-from apps.etl.context import CacheContext, ArgsContext
+from apps.etl.context import CacheContext, ArgsContext, ApplyContext, PortraitContext
 from apps.datasource.models import InterfaceFieldRel, DsInterfaceInfo
 
 logger = logging.getLogger('apps.remote')
@@ -48,13 +48,19 @@ class DataPrepare(object):
         ds_conf = DsInterfaceInfo.objects.filter(
             data_identity=self.data_identity,
             is_delete=False
-        )[0]
+        )
         if not ds_conf:
             raise
+        else:
+            ds_conf = ds_conf[0]
         self.prepare_parms()
         url = ds_conf.data_source.backend_url + ds_conf.route
         data_prams = eval(ds_conf.must_data % self.parm_dict)
-        origin_data = self.do_request(url, data_prams)
+        origin_data = None
+        if ds_conf.method == 'LOCAL':
+            origin_data = self.do_local_request(ds_conf, data_prams)
+        elif ds_conf.method == 'REMOTE':
+            origin_data = self.do_request(url, data_prams)
         if not origin_data:
             raise  # TODO get data error
         self.cache_base.kwargs.update({
@@ -90,3 +96,14 @@ class DataPrepare(object):
         # content = json.loads(content)
         result = {'time': time.ctime(time.time())}
         return result
+
+    @staticmethod
+    def do_local_request(ds_conf, data_prams):
+        base_index = ds_conf.data_identity
+        data_bases = None
+        if base_index == 'apply_base':
+            data_bases = ApplyContext((data_prams.values())[0])
+        if base_index == 'portrait_base':
+            data_bases = PortraitContext((data_prams.values())[0])
+        return data_bases.load() if data_bases else None
+

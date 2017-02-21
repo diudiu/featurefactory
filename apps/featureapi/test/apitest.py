@@ -22,11 +22,11 @@ def feature_post():
             'res_keys': [
                 'income_level',
                 'income_expense_comparison',
-                'register_city_level',
-                'company_addr_city_level',
-
-                'application_on_plus',  # 张璐在写
-                'education_degree_check',
+                # 'register_city_level',
+                # 'company_addr_city_level',
+                #
+                # 'application_on_plus',  # 张璐在写
+                # 'education_degree_check',
             ],
         },
     }

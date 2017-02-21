@@ -122,7 +122,6 @@ class Courier(object):
                 shunt = po.distinguish()
                 if shunt in eval(feature_conf.shunt_value):
                     useful_data_identity = data_identity
-                    break
         return useful_data_identity
 
     def get_relevance_data(self, next_data_identity=None):
