@@ -7,6 +7,11 @@
     Date:  2017/02/10
     Change Activity:
 """
+import logging
+
+from vendor.utils.defaults import *
+
+logger = logging.getLogger('apps.common')
 
 
 class Handle(object):
@@ -25,15 +30,14 @@ class Handle(object):
         特征名称：is_mobile_black     手机号是否染黑
         """
 
-        result = {'is_mobile_black': 9999}
+        result = {'is_mobile_black':BooleanTypeDefault}
         try:
             is_mobile_black = self.data.get('result')
-            grayscale = self.data.get('grayscale')
+            grayscale = self.data.get('data', {}).get('grayscale')
             if is_mobile_black == 0:
                 result['is_mobile_black'] = 1
             elif is_mobile_black == 2 and grayscale == {}:
                 result['is_mobile_black'] = 0
-        except Exception:
-            return result
-
+        except Exception as e:
+            logging.error(e.message)
         return result

@@ -10,6 +10,8 @@
 
 import logging
 
+from vendor.utils.defaults import *
+
 logger = logging.getLogger('apps.common')
 
 
@@ -32,19 +34,13 @@ class Handle(object):
         特征名称: 'car_number' 车牌号 list
         """
 
-        result = {"car_number": 9999}
+        result = {"car_number": ListTypeDefault}
         try:
             base_data = self.data["result"]
             if base_data and isinstance(base_data, list):  # 判断车辆信息列表不为空且为list
-                car_list = []
-                for data in base_data:
-                    if not data:
-                        base_data.remove(data)  # 删除列表中为空的元素
-                    else:
-                        car_list.append(data.get("license_no"))  # 遍历车辆信息,提取所有车牌号组成list
+                car_list = [data.get("license_no", '') for data in base_data if data.get("license_no", '')]
                 result["car_number"] = car_list
         except Exception as e:
                 logging.error(e.message)
-        finally:
-            return result
+        return result
 

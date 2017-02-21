@@ -2,6 +2,8 @@
 
 import unittest
 
+from vendor.utils.defaults import *
+
 from studio.lp_dataocean_handle.lp_age import Handle
 
 data = {
@@ -13,6 +15,7 @@ data = {
     },
 }
 age_test = [20, -4, ""]
+result = [20, PositiveSignedTypeDefault, PositiveSignedTypeDefault]
 
 
 class TestPlugin(unittest.TestCase):
@@ -23,11 +26,11 @@ class TestPlugin(unittest.TestCase):
     def test_lp_personal_info(self):
         data = self.data.copy()
         data["content"]["age"] = age_test
-        for age_data in age_test:
+        for age_data, r in zip(age_test, result):
             data["content"]["age"] = age_data
             handler = Handle(data)
             res = handler.handle()
-            print res
+            assert res.values()[0] == r
 
 
 if __name__ == '__main__':

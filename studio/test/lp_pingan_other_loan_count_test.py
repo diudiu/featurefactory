@@ -22,7 +22,7 @@ data = {
             "queryNums": "123"
         },
         "201511": {
-            "orgNums": "28",
+            "orgNums": "",
             "queryNums": "123"
         },
         "201510": {
@@ -55,7 +55,6 @@ data = {
         }
     }
 }
-M6_orgNums_list = [1, 2, 5, 100, '',  'None']
 
 
 class TestPlugin(unittest.TestCase):
@@ -64,14 +63,11 @@ class TestPlugin(unittest.TestCase):
         self.data = data
 
     def test_lp_pingan_other_laon_count(self):
-        data = self.data.copy()
-        a = open('res.txt', 'w+')
-        for M6_orgNums in M6_orgNums_list:
-            data['data']['201601']['orgNums'] = M6_orgNums
-            handler = Handle(data)
-            res = handler.handle()
-            a.write(json.dumps(res) + '\n')
-        a.close()
+
+        handler = Handle(data)
+        res = handler.handle()
+        assert res.values()[0] == 64
+
 
 if __name__ == '__main__':
     unittest.main()

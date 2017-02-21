@@ -2,6 +2,8 @@
 
 import unittest
 
+from vendor.utils.defaults import *
+
 from studio.lp_dataocean_handle.lp_dc_bill_age import Handle
 
 data = {
@@ -18,20 +20,21 @@ data = {
 }
 debit_card_account_age_test = ["0", "2", "0.5", ""]
 
+result = [0, 2,0, PositiveSignedTypeDefault]
+
 
 class TestPlugin(unittest.TestCase):
 
     def setUp(self):
         self.data = data
 
-    def test_lp_cc_bill_age(self):
+    def test_test(self):
         data = self.data.copy()
-        data["result"]["rrx_once_all"]["debit_card_account_age"] = debit_card_account_age_test
-        for card_data in debit_card_account_age_test:
+        for card_data, r in zip(debit_card_account_age_test, result):
             data["result"]["rrx_once_all"]["debit_card_account_age"] = card_data
             handler = Handle(data)
             res = handler.handle()
-            print res
+            assert res.values()[0] == r
 
 
 if __name__ == '__main__':

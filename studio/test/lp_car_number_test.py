@@ -2,6 +2,8 @@
 
 import unittest
 
+from vendor.utils.defaults import *
+
 from studio.lp_dataocean_handle.lp_car_number import Handle
 
 data = {
@@ -32,7 +34,8 @@ data = {
 
     ]
 }
-result_test = [data["result"], ""]
+
+result = ["豫SFD123", "豫SFD456", "豫SFD**"]
 
 
 class TestPlugin(unittest.TestCase):
@@ -41,13 +44,13 @@ class TestPlugin(unittest.TestCase):
         self.data = data
 
     def test_lp_application_on(self):
-        data = self.data.copy()
-        data["result"] = result_test
-        for result_data in result_test:
-            data["result"] = result_data
-            handler = Handle(data)
-            res = handler.handle()
-            print res
+        handler = Handle(data)
+        res = handler.handle()
+        assert res == result
+        data["result"] = ''
+        handler = Handle(data)
+        res = handler.handle()
+        assert res.values()[0] == ListTypeDefault
 
 
 if __name__ == '__main__':
