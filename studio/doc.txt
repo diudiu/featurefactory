@@ -33,30 +33,49 @@ flight_times一年中飞行次数
 ----------------------------------------------
 lp_application_on.py    Document   ----------
 
-输入:
-接口名称：猎聘申请信息上传接口
-字段名称：'application_on'贷款申请时间str
+接口名称：
+猎聘申请信息上传接口
+字段名称：
+'application_on':贷款申请时间str
 
-计算逻辑:直接从猎聘申请信息上传接口提取申请时间并输出,输出类型为string
+计算逻辑:直接从猎聘申请信息上传接口提取贷款申请时间,输出类型为string
 
 输出:
 特征名称:
 'application_on':申请提交时间str
 
 
+---------------------------------------------------
+lp_application_on_plus.py    Document   ----------
+
+接口名称：
+猎聘申请信息上传接口
+字段名称：
+'application_on':贷款申请时间str
+
+计算逻辑:直接从猎聘申请信息上传接口提取贷款申请时间,只保留时分,输出类型为string
+
+输出:
+特征名称:
+'application_on_plus':申请提交时间str
+
+
 -------------------------------------------------------
 lp_apply_register_duration.py    Document   ----------
 
 输入:
-接口名称：猎聘申请信息上传接口猎聘预授信接口
-字段名称：'application_on'贷款申请时间str
-'registration_on'用户注册时间str
+接口名称：
+猎聘申请信息上传接口
+猎聘预授信接口
+字段名称：
+'registration_on':用户注册时间str
+'application_on':贷款申请时间str
 
-计算逻辑:从申请信息上传接口提取贷款申请时间,从预授信接口提取用户注册时间,计算二者时间差
-输出单位为月,类型为float保留两位小数
+计算逻辑:从申请信息上传接口提从预授信接口提取用户注册时间,计算二者时间差,输出单位为月,类型为float
 
 输出:
-特征名称:'apply_register_duration'注册时间长度float
+特征名称:
+'apply_register_duration':注册时间长度float
 
 
 ---------------------------------------
@@ -159,6 +178,19 @@ contacts联系人数量
 'contacts_count':联系人数量
 
 
+----------------------------------------------
+lp_contacts_count.py    Document   ----------
+
+接口名称：个人基本信息查询
+字段名称：
+contacts联系人数量
+
+输出:
+特征名称:联系人数量
+字段名称:
+'contacts_count':联系人数量
+
+
 ------------------------------------------------
 lp_court_shixin_a_s.py    Document   ----------
 
@@ -191,10 +223,14 @@ lp_creditcard_count.py    Document   ----------
 -------------------------------------------
 lp_cur_company.py    Document   ----------
 
-接口：猎聘
+接口：猎聘预授信
+
 字段：work_exp_form工作信息
 comp_name公司名称
 work_end工作经历结束时间
+
+计算逻辑：如果不存在工作信息，返回异常；否则遍历work_exp_form的所有记录，get所有word_end（如果不存在word_end，返回异常）
+并转化为整形组成work_end_list。取work_end_list中最大值对应的comp_name作为当前工作单位
 
 输出：cur_company当前工作单位
 
@@ -203,15 +239,24 @@ work_end工作经历结束时间
 lp_cur_corp_years.py    Document   ----------
 
 接口：企业工商信息查询s(industrial_commercial_s)
+
 字段：start_business_date开业日期
-输出：cur_corp_years现工作单位工作年限（年数）
+
+计算逻辑：提取企业的开业日期，并将其转化为datetime格式，然后跟现在时间作差，得到企业已开业天数，
+除以365.0得到浮点型的企业已开业年数。然后对企业已开业年数进行分段并输出对应code值。
+
+输出：cur_corp_years现工作单位年限（年数）
 
 
 ---------------------------------------------------
 lp_cur_employee_number.py    Document   ----------
 
 接口：企业工商信息查询s(industrial_commercial_s)
+
 字段：staff_count职工人数
+
+计算逻辑：提取staff_count，对其进行分段并返回对应code值
+
 输出：cur_employee_number现工作单位规模（人数）
 
 
@@ -259,14 +304,10 @@ lp_dx_online_time.py    Document   ----------
 ------------------------------------------------------
 lp_education_degree_check.py    Document   ----------
 
-输入:
 接口名称：数据堂学历信息查询接口
-字段名称：degree学历str
-
-计算逻辑:从学历信息查询接口提取'学历'字段,并将学历转化为编码,输出为int
-
+字段名称：degree学历code
 输出：
-特征名称：degree_code学信网学历int
+特征名称：education_degree_check学历
 
 
 -----------------------------------------------------
@@ -313,12 +354,12 @@ lp_gender.py    Document   ----------
 
 接口名称：个人基本信息查询
 字段名称：
-gender性别str
+gender性别
 
 输出:
 特征名称:性别
 字段名称:
-'gender':性别int
+'gender':性别
 
 
 --------------------------------------------
@@ -364,6 +405,13 @@ lp_graduate_college_check.py    Document   ----------
 lp_highest_degree.py    Document   ----------
 
 接口：猎聘预授信接口
+
+字段：edu_exp_form教育信息
+degree学历code值
+
+计算逻辑：遍历edu_exp_form的所有元素，将元素的degree组成一个degree_list，遍历code_list中的code（按学位从高到低遍历），
+如果某code在degree_list中，则确定为其最高学历的code并跳出循环
+
 输出:简历最高学历
 
 
@@ -382,6 +430,9 @@ industry公司行业名称
 lp_is_cur_corp_shixin.py    Document   ----------
 
 接口：法院失信被执行人查询As（court_shixin_a_s）
+
+计算逻辑：判断result返回值是否为"00",如果是，则命中其他机构查询名单，返回1；否则认为未命中，返回0。
+
 输出：is_cur_corp_shixin现工作单位是否为失信被执行
 
 
@@ -433,7 +484,7 @@ lp_is_pingan_multi_loan.py    Document   ----------
 接口名称：凭安贷款信息
 字段名称：'result'int
 
-计算逻辑:直接从贷款信息接口提取result值,值为'2'为未命中多头借贷名单,否则为命中,输出为int
+计算逻辑:直接从贷款信息接口提取result值,值为'0'且返回贷款信息列表不为空则为命中多头借贷名单,否则为未命中,输出为int
 
 输出:
 特征名称:'is_pingan_multi_loan'是否命中多头借贷名单int
@@ -442,14 +493,16 @@ lp_is_pingan_multi_loan.py    Document   ----------
 ----------------------------------------------------
 lp_is_pingan_other_loan.py    Document   ----------
 
-接口：反欺诈服务接口——3借贷信息——3.4其他机构查询情况
-输出：是否命中凭安其他机构借贷名单（近12个月）
+
 
 
 ------------------------------------------------------
 lp_is_pingan_overdue_loan.py    Document   ----------
 
 接口：反欺诈服务接口——3借贷信息——3.1逾期信息
+
+计算逻辑：判断result返回值是否为0,如果是，则命中凭安逾期名单，返回1；否则认为未命中，返回0。
+
 输出：是否命中凭安逾期名单（近24个月）
 
 
@@ -632,26 +685,27 @@ tourist_class_count经济舱乘机次数
 --------------------------------------
 lp_mobile.py    Document   ----------
 
-输入:
 接口名称：猎聘申请信息上传接口
-字段名称：'mobile'手机号str
+字段名称：
+'mobile':手机号str
 
 计算逻辑:从猎聘信息上传接口提取用户手机号并输出,输出类型为string
 
 输出:
-特征名称:'mobile'手机号str
+特征名称:
+'mobile':手机号str
 
 
 -------------------------------------------------
 lp_mobile_activeness.py    Document   ----------
 
-接口名称：凭安反欺诈服务接口
-字段名称：tel_number申请人手机号
+接口名称:凭安反欺诈服务接口
+字段名称:tel_number申请人手机号
 tags电话标记
 contactAmount联系人个数
 
-输出：
-特征名称：mobile_activeness申请人手机号活跃度
+输出:
+特征名称:mobile_activeness申请人手机号活跃度
 
 
 ---------------------------------------------
@@ -665,7 +719,6 @@ lp_mobile_locale.py    Document   ----------
 -------------------------------------------
 lp_mobile_mark.py    Document   ----------
 
-输入:
 接口名称：'tags':电话标记
 字段名称：'label':用户标注标签str
 
@@ -705,14 +758,15 @@ marital_status婚姻状况
 ------------------------------------
 lp_name.py    Document   ----------
 
-输入:
 接口名称：猎聘申请信息上传接口
-字段名称：'name':姓名
+字段名称：
+'name':姓名
 
 计算逻辑:从猎聘申请信息上传接口提取姓名并输出,输出类型为string
 
 输出:
-特征名称:'name':姓名str
+特征名称:
+'name':姓名str
 
 
 -----------------------------------------------
@@ -770,31 +824,27 @@ work_end工作经历结束时间
 ----------------------------------------------
 lp_overload_count.py    Document   ----------
 
-输入:
-接口名称：
-'high_way_over_load':高速超载统计查询
+接口名称：'high_way_over_load':高速超载统计查询
 字段名称：'month_times':超载总次数str
 
-计算逻辑:先从车牌号(car_umber)特征获取车牌号列表,根据车牌号查询每月每辆车的超载信息,
+计算逻辑:先从车牌号(car_umber)特征根据车牌号查询每月每辆车的超载信息,
 再汇总所有车的超载次数,输出类型为int
 
-输出:
-特征名称:'overload_count':超速次数int
+输出:特征名称:'overload_count':超速次数int
 
 
 -----------------------------------------------
 lp_overspeed_count.py    Document   ----------
 
 输入:
-接口名称：
-'high_way_over_speed':高速超速统计查询
-字段名称：'month_times':超速次数str
+接口名称：'high_way_over_speed'高速超速统计查询
+字段名称：'month_times'超速次数str
 
-计算逻辑:先从车牌号(car_umber)特征获取车牌号列表,根据车牌号查询每月每辆车的超速信息,
+计算逻辑:先从车牌号(car_umber)特征根据车牌号查询每月每辆车的超速信息,
 再汇总所有车的超速次数,输出类型为int
 
 输出:
-特征名称:'overspeed_count':超速次数int
+特征名称:'overspeed_count'超速次数str
 
 
 --------------------------------------------
@@ -819,18 +869,24 @@ debit_card_12m_chargeoff_amount借记卡近12个月出账累计总金额
 
 -------------------------------------------------------
 lp_pingan_max_overdue_days.py    Document   ----------
+
 接口：反欺诈服务接口——3借贷信息——3.1逾期信息
+
+计算逻辑：只考虑近六个月的逾期情况，所以只有四种情况M3和M6都有记录；有M3无M6；无M3有M6；无M3无M6。
+基于各种情况，取各个最长逾期天数组成一个list,并取最大值作为近六个月最长逾期天数。
+（当M_list的第一条记录是M3时，存在两种情况有M3有M6；有M3无M6。在M3的情况下遍历type_list的四种类型，
+取在M3的各类型情况下的逾期天数，如果该逾期天数为None,则进行下一次循环，否则将逾期天数加入overdue_days_list）
+
 输出：最长逾期天数（近6个月）
 
 
 -------------------------------------------------------
 lp_pingan_multi_loan_count.py    Document   ----------
 
-输入:
 接口名称：贷款信息
 字段名称：'org_names':涉及机构数int
 
-计算逻辑:贷款信息接口返回信息包括按月汇总的银行机构及非银机构发生贷款的公司数量,
+计算逻辑:贷款信息接口返回信息包括按月汇总的银行生贷款的公司数量,
 计算银行机构及非银机构发生贷款的公司数量总和
 
 输出:
@@ -855,6 +911,11 @@ lp_pingan_multi_loan_infos.py    Document   ----------
 lp_pingan_other_loan_count.py    Document   ----------
 
 接口：反欺诈服务接口——3借贷信息——3.4其他机构查询情况
+
+计算逻辑：取data的所有key组成date_list,遍历date_list，将所有元素转化为int，组成新的列表date_int_list，
+将新列表的元素按照从大到小顺序排列，遍历data_int_list前六个元素，得到data字典中其对应value(类型为字典)，
+得到各个新字典的value组成列表orgNums_list，求orgNums_list元素的和作为近六个月其他信贷机构数量。
+
 输出：其他信贷机构数量（近6个月）
 
 
@@ -862,6 +923,11 @@ lp_pingan_other_loan_count.py    Document   ----------
 lp_pingan_other_loan_infos.py    Document   ----------
 
 接口：反欺诈服务接口开发指南——3.借贷信息——3.4其他机构查询情况
+
+计算逻辑：提取原数据的data作为dict1，遍历dict1的所有key，如果其对应的value（类型为dict）不存在或者为None，则删除该键值对；
+否则遍历dict1.get(a)的所有key，如果如果其对应的value（类型为str）不存在或者为None，则删除该键值对。
+返回其他机构查询中所有非空的信息。
+
 输出：其他机构借贷信息
 
 
@@ -869,6 +935,10 @@ lp_pingan_other_loan_infos.py    Document   ----------
 lp_pingan_overdue_corp_count.py    Document   ----------
 
 接口：反欺诈服务接口——3借贷信息——3.1逾期信息
+
+计算逻辑：只考虑近六个月的逾期情况，所以只有三种情况M3和M6都有记录；有M3无M6；无M3有M6；无M3无M6。
+基于各种情况，取各个逾期公司数量组成一个list,并求和作为近六个月逾期公司数量。
+
 输出：逾期公司数量（近6个月）
 
 
@@ -876,6 +946,10 @@ lp_pingan_overdue_corp_count.py    Document   ----------
 lp_pingan_overdue_count.py    Document   ----------
 
 接口：反欺诈服务接口——3借贷信息——3.1逾期信息
+
+计算逻辑：只考虑近六个月的逾期情况，所以只有三种情况M3和M6都有记录；有M3无M6；无M3有M6；无M3无M6。
+基于各种情况，取各个逾期次数组成一个list,并求和作为近六个月逾期次数。
+
 输出：逾期次数（近6个月）
 
 
@@ -883,6 +957,11 @@ lp_pingan_overdue_count.py    Document   ----------
 lp_pingan_overdue_loan_infos.py    Document   ----------
 
 接口：反欺诈服务接口开发指南——3.借贷信息——3.1逾期信息
+
+计算逻辑：提取classification的信息作为classification_list，遍历classification_list的所有元素（类型为dict），遍历
+classification_list[x]的所有key，遍历其对应得的value（类型为dict）的所有key，如果其对应的value(类型为dict)，
+则删除该键值对；否则其对应得的value（类型为dict）的所有key，如果其对应的value(类型为dict)，则删除该键值对。
+
 输出：逾期信息
 
 
@@ -914,9 +993,31 @@ lp_telecom_mobile_identity_s.py    Document   ----------
 
 -----------------------------------------------------
 lp_telecom_mobile_online.py    Document   ----------
-接口：手机在网时长查询s(telecom_mobile_online)
+ndle(self):
+'''接口：手机在网时长查询s(telecom_mobile_online)
 输出：电信手机号在网时长
+'''
+result={
+"online_time":PositiveSignedTypeDefault
+}
 
+try:
+online_time=self.data['content']['online_time']
+exceptException:
+#TODOlogthiserror
+online_time="-1"
+
+ifonline_timeis"[0-6)":
+online_time="00"
+elifonline_timeis"[6-12)":
+online_time="11"
+elifonline_timeis"[12-24)":
+online_time="22"
+else:
+online_time="33"
+
+result['online_time']=online_time
+returnresult
 
 ----------------------------------------------
 lp_tianwang_black.py    Document   ----------

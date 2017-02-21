@@ -7,6 +7,7 @@
     Date:  2017/02/17
     Change Activity:
 """
+from vendor.utils.defaults import *
 
 import logging
 
@@ -40,6 +41,7 @@ class Handle(object):
             if base_data and isinstance(base_data, list):  # 判断车辆信息列表不为空且为list
                 car_list = [data.get("license_no", '') for data in base_data if data.get("license_no", '')]
                 result["car_number"] = car_list
+
         except Exception as e:
                 logging.error(e.message)
         return result
