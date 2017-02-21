@@ -7,7 +7,7 @@
     Date:  2017/02/17
     Change Activity:
 """
-from vendor.utils.defaults import UnsignedIntTypeDefault
+from vendor.utils.defaults import PositiveSignedTypeDefault
 from apps.common.models import CityCodeField
 
 import logging
@@ -33,7 +33,7 @@ class Handle(object):
         特征名称：company_addr_city_level 企业所在城市等级 int
         """
 
-        result = {'company_addr_city_level': UnsignedIntTypeDefault}
+        result = {'company_addr_city_level': PositiveSignedTypeDefault}
 
         try:
             if self.data['result'] == '00':

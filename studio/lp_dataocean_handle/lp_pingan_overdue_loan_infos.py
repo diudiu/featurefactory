@@ -7,10 +7,11 @@
     Date: 2017/2017/2/17
     Change Activity:
 """
-
 import logging
+from vendor.utils.defaults import ListTypeDefault
+
 logger = logging.getLogger('apps.common')
-from vendor.utils.defaults import StringTypeDefault
+
 
 class Handle(object):
 
@@ -29,7 +30,7 @@ class Handle(object):
         输出：逾期信息
         """
 
-        result = {"pingan_overdue_loan_infos":  StringTypeDefault}
+        result = {"pingan_overdue_loan_infos":  ListTypeDefault}
 
         try:
             classification_list = self.data.get('data').get('record')[0].get('classification')
