@@ -2,6 +2,8 @@
 
 import unittest
 
+from vendor.utils.defaults import *
+
 from studio.lp_dataocean_handle.lp_pingan_multi_loan_count import Handle
 
 data = {
@@ -53,12 +55,12 @@ class TestPlugin(unittest.TestCase):
     def test_test(self):
         h = Handle(self.data)
         res = h.handle()
-        print res
+        assert res.values()[0] == 7
 
         self.data['result'] = 1
         h = Handle(self.data)
         res = h.handle()
-        print res
+        assert res.values()[0] == PositiveSignedTypeDefault
 
 
 if __name__ == '__main__':

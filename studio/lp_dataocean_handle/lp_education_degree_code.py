@@ -38,10 +38,10 @@ class Handle(object):
 
         try:
             edu_exp_form = self.data['edu_exp_form']
-            if edu_exp_form and isinstance(edu_exp_form, list):  # 判断学历信息是非空的list
+            if edu_exp_form and isinstance(edu_exp_form, list):
                 degree_list = []
                 for edu_exp in edu_exp_form:
-                    degree = edu_exp.get('degree', None)   # 提取学历,提取失败则返回空
+                    degree = edu_exp.get('degree', None)
                     degree_list.append(degree)
 
                 code_collection = feature_global_code.get("education_degree_code")
@@ -54,5 +54,5 @@ class Handle(object):
 
         except Exception as e:
                 logging.error(e.message)
-        finally:
-            return result
+
+        return result

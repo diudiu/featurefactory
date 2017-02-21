@@ -7,8 +7,10 @@
     Date:  2017/02/20
     Change Activity:
 """
-from vendor.utils.defaults import StringTypeDefault
+
 import logging
+
+from vendor.utils.defaults import *
 
 logger = logging.getLogger('apps.common')
 

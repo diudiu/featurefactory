@@ -2,6 +2,8 @@
 
 import unittest
 
+from vendor.utils.defaults import *
+
 from studio.lp_dataocean_handle.lp_is_pingan_multi_loan import Handle
 
 data = {
@@ -9,10 +11,12 @@ data = {
     "message": None,
     "data": {
         "record": [
+            {},
             {"matchType": "phone",
              "matchValue": "18627180708",
              "matchId": "AA28960E040AE2BB960CD4736012A791",
              "classification": [
+
                  {
                      "M6": {
                          "other": {
@@ -46,11 +50,8 @@ data = {
         "imsi": "",
     }
 }
-result_test = ["0", "2", ""]
-classification_test = [
-    {},
-    {"M6": {"other": {"orgNums": 1, "loanAmount": None, "totalAmount": "(200, 500]", "repayAmount": None},
-            "bank": None, }}]
+test = [0, 2, ""]
+result = [1, BooleanTypeDefault, BooleanTypeDefault ]
 
 
 class TestPlugin(unittest.TestCase):
@@ -59,14 +60,11 @@ class TestPlugin(unittest.TestCase):
         self.data = data
 
     def test_lp_is_pingan_multi_loan(self):
-        data = self.data.copy()
-        data["result"] = result_test
-        data["data"]["record"][0]["classification"] = classification_test
-        for result_data in result_test:
-            data["result"] = result_data
+        for t , r in zip(test, result):
+            data["result"] = t
             handler = Handle(data)
             res = handler.handle()
-            print res
+            assert res.values()[0] == r
 
 
 if __name__ == '__main__':

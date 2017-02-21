@@ -2,6 +2,8 @@
 
 import unittest
 
+from vendor.utils.defaults import *
+
 from studio.lp_dataocean_handle.lp_car_count import Handle
 
 data = {
@@ -16,7 +18,6 @@ data = {
         },
     ]
 }
-result_test = [data["result"], ""]
 
 
 class TestPlugin(unittest.TestCase):
@@ -25,13 +26,13 @@ class TestPlugin(unittest.TestCase):
         self.data = data
 
     def test_lp_car_count(self):
-        data = self.data.copy()
-        data["result"] = result_test
-        for result_data in result_test:
-            data["result"] = result_data
-            handler = Handle(data)
-            res = handler.handle()
-            print res
+        handler = Handle(data)
+        res = handler.handle()
+        assert res == 1
+        data["result"] = ''
+        handler = Handle(data)
+        res = handler.handle()
+        assert res.values()[0] == PositiveSignedTypeDefault
 
 
 if __name__ == '__main__':

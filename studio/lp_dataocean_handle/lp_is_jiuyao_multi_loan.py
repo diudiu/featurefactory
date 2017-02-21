@@ -7,6 +7,11 @@
     Date:  2017/02/10
     Change Activity:
 """
+import logging
+
+from vendor.utils.defaults import *
+
+logger = logging.getLogger('apps.common')
 
 
 class Handle(object):
@@ -24,16 +29,15 @@ class Handle(object):
         特征名称：is_jiuyao_multi_loan    是否命中91多头借贷名单
         """
 
-        result = {'is_jiuyao_multi_loan': 9999}
+        result = {'is_jiuyao_multi_loan': BooleanTypeDefault}
 
         try:
-            loan_infos = self.data.get('loanInfos', None)
+            loan_infos = self.data['loanInfos']
             if loan_infos:
-                result['is_jiuyao_multi_loan'] = 0
-            else:
                 result['is_jiuyao_multi_loan'] = 1
-        except Exception:
-            # TODO log the error
-            return result
+            else:
+                result['is_jiuyao_multi_loan'] = 0
+        except Exception as e:
+            logging.error(e.message)
 
         return result
