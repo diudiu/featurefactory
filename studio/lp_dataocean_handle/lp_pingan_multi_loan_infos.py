@@ -7,6 +7,8 @@
     Date:  2017/02/17
     Change Activity:
 """
+from vendor.utils.defaults import *
+
 import logging
 
 logger = logging.getLogger('apps.common')
@@ -29,7 +31,7 @@ class Handle(object):
         特征名称:
         'pingan_multi_loan_infos': 多头借贷信息
         """
-        result = {'pingan_multi_loan_infos': 9999}
+        result = {'pingan_multi_loan_infos': ListTypeDefault}
         try:
 
             if self.data.get('result', 0) == 0:
