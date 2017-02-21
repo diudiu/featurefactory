@@ -7,7 +7,10 @@
     Date:  2017/01/20
     Change Activity:
 """
-# TODO
+import logging
+from vendor.utils.defaults import BooleanTypeDefault
+
+logger = logging.getLogger('apps.common')
 
 
 class Handle(object):
@@ -22,13 +25,13 @@ class Handle(object):
         :return:
         """
         result = {
-            'is_loan_agency': False
+            'is_loan_agency': BooleanTypeDefault
         }
-        tip = self.data.get('result', None)
-        if not tip:
-            return result
-
-        if self.data['result'] == u'00':
-            result['is_loan_agency'] = True
-
+        try:
+            if self.data['result'] == u'00':
+                result['is_loan_agency'] = 1
+            else:
+                result['is_loan_agency'] = 0
+        except Exception as e:
+            logger.error(e.message)
         return result

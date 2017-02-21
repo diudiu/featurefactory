@@ -8,7 +8,9 @@
     Change Activity:
 """
 from vendor.utils.defaults import BooleanTypeDefault
+
 import logging
+
 logger = logging.getLogger('apps.common')
 
 
@@ -19,19 +21,18 @@ class Handle(object):
 
     def handle(self):
         """
-        网贷黑名单
-        data_identity: net_black_a_s
+        天网灰名单
+        data_identity: tianwang_gray
         :return:
         """
         result = {
-                'is_net_black': BooleanTypeDefault
+            'is_netsky_gray': BooleanTypeDefault
             }
-
         try:
             if self.data['result'] == u'00':
-                result['is_net_black'] = 1
+                result['is_netsky_gray'] = 1
             else:
-                result['is_net_black'] = 0
+                result['is_netsky_gray'] = 0
         except Exception as e:
             logging.error(e.message)
         return result

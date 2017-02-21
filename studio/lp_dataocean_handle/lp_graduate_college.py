@@ -7,8 +7,10 @@
     Date:  2017/02/10
     Change Activity:
 """
-
+import logging
 import numpy as np
+
+logger = logging.getLogger('apps.common')
 
 
 class Handle(object):
@@ -36,10 +38,10 @@ class Handle(object):
                 for edu_exp in edu_exp_form:
                     end = edu_exp.get('end', None)
                     end_list.append(int(end))
-            result['graduate_college'] = edu_exp_form[
-                np.argmax(end_list)].get('school')
+                result['graduate_college'] = edu_exp_form[
+                    np.argmax(end_list)].get('school')
         except Exception:
-            # TODO log this error
+            logging.error(e.message)
             return result
 
         return result

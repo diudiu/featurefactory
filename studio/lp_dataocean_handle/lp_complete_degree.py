@@ -9,12 +9,13 @@
 """
 import logging
 
-from vendor.utils.defaults import PositiveSignedTypeDefault
+from vendor.utils.defaults import UnsignedIntTypeDefault
 
 logger = logging.getLogger('apps.common')
 
 
 class Handle(object):
+    name = 'complete_degree'
 
     def __init__(self, data):
         self.data = data
@@ -32,12 +33,13 @@ class Handle(object):
         特征名称: 'complete_degree'  简历完成度 int
         """
 
-        result = {"complete_degree": PositiveSignedTypeDefault}
-        try:
-            base_data = self.data["complete_degree"]
-            if str(base_data).isdigit():  # 检验简历完成度是否只由数字组成,是则转化为int类型
-                result["complete_degree"] = int(base_data)
+        result = {self.name: UnsignedIntTypeDefault}
 
+        try:
+            base_data = self.data[self.name]
+            if str(base_data).isdigit():  # 检验简历完成度是否只由数字组成,是则转化为int类型
+                base_data = int(base_data)
+                result[self.name] = base_data
         except Exception as e:
                 logging.error(e.message)
 

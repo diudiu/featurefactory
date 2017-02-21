@@ -29,6 +29,7 @@
     }
 """
 import logging
+from vendor.utils.defaults import StringTypeDefault
 
 logger = logging.getLogger('apps.common')
 
@@ -49,10 +50,10 @@ class Handle(object):
         字段名称:
         'marital_status': 婚姻状况
         """
+        result = {
+            'marital_status': StringTypeDefault,
+        }
         try:
-            result = {
-                'marital_status': '9999',
-            }
             if self.data['result'] == '00':
                 base_data = self.data['content']['marital_status']
                 if base_data.isdigit():

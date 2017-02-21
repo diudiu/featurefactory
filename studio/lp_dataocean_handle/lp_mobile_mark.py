@@ -19,9 +19,8 @@
     },
 }
 """
-from vendor.utils.defaults import *
-
 import logging
+from vendor.utils.defaults import StringTypeDefault
 
 logger = logging.getLogger('apps.common')
 
@@ -42,7 +41,6 @@ class Handle(object):
         特征名称: 'mobile_mark': 用户标注标签 str
         """
         result = {'mobile_mark': StringTypeDefault}
-
         try:
             base_data = self.data.get("tags", {}).get("contactMain_IMSI1_IMEI1", {}).get("label", '')
             if base_data and isinstance(base_data, basestring):

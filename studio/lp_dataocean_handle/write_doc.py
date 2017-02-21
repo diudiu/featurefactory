@@ -7,6 +7,10 @@
     Date: 2017/01/18
     Change Activity:
 """
+<<<<<<< HEAD
+=======
+
+>>>>>>> 93eae5a35dfbc9189db8c57ec4bcfb3d4da864cd
 import os
 
 
@@ -15,7 +19,11 @@ def get_file_list():
 
 
 def write_doc(files_list):
+<<<<<<< HEAD
     k = open('../doc.txt', 'w+')
+=======
+    k = open('../doc.txt', 'a+')
+>>>>>>> 93eae5a35dfbc9189db8c57ec4bcfb3d4da864cd
     for file_name in files_list:
         if '__init__' in file_name\
                 or '.pyc' in file_name\
@@ -36,7 +44,10 @@ def write_doc(files_list):
         k.write(file_name + '    Document   ----------\n')
         k.write(useful_doc + '\n\n')
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 93eae5a35dfbc9189db8c57ec4bcfb3d4da864cd
 if __name__ == '__main__':
     file_list = get_file_list()
     write_doc(file_list)

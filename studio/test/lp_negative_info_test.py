@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 
 import unittest
-from studio.lp_dataocean_handle.lp_negative_info_s import Handle
+from studio.lp_dataocean_handle.lp_has_negative_info import Handle
 
 data = {"result": "00",
         "result_message": "检测通过或查询有记录",

@@ -20,6 +20,7 @@ PROCESS_BASE_NAME = 'process_base'
 CACHE_BASE_NAME = 'cache_base'
 APPLY_BASE_NAME = 'apply_base'
 PORTRAIT_BASE_NAME = 'portrait_base'
+BASE_ARGS_NAME = 'base_args'
 
 
 class BaseContext(object):
@@ -190,3 +191,35 @@ class PortraitContext(BaseContext):
             self.context_data = cache_data if cache_data is not None else {}
 
         self.context_data.update(**kwargs)
+
+
+class ArgsContext(BaseContext):
+    """
+    """
+
+    def __init__(self, apply_id, **kwargs):
+        super(ArgsContext, self).__init__(apply_id, **kwargs)
+        self.args_base = MongoBase(collection_name=BASE_ARGS_NAME)
+        # self.cache_base = MongoBase(collection_name=CACHE_BASE_NAME)
+
+    def load(self):
+        query = {'apply_id': self.apply_id}
+        data = self.args_base.search(query)
+        return data
+
+    def save(self):
+        """save kwargs to backend"""
+        query = {'apply_id': self.apply_id, 'is_delete': False}
+        original_info = self.args_base.search(query=query)
+        self.kwargs.update(query)
+        if original_info:
+            self.args_base.update(query=query, data=self.kwargs)
+        else:
+            self.args_base.save(self.kwargs)
+
+    def get(self, key):
+        value = self.kwargs.get(key, None)
+        if value:
+            return value
+        else:
+            return (self.load()).get(key, None)

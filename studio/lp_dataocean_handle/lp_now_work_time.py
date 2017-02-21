@@ -30,8 +30,8 @@ class Handle(object):
         输出：
         特征名称：now_work_time       本份工作工作时间
         """
+        now_work_time_dic = {'now_work_time': PositiveSignedTypeDefault}
         try:
-            now_work_time_dic = {'now_work_time': PositiveSignedTypeDefault}
             work_exp_form = self.data['work_exp_form']
             # TODO 计算维度
             # 计算最近一份工作的结束时间
