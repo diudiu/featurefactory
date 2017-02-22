@@ -27,7 +27,7 @@ from braces.views import CsrfExemptMixin
 from django.http.response import HttpResponse
 from django.views.generic import View
 
-from apps.async.tasks import audit_task
+from apps.async.tasks import audit_task, mission_control
 from apps.common.dispatcher import client_dispatch
 from apps.featureapi.decorator import post_data_check
 from apps.featureapi.response import JSONResponse
@@ -57,9 +57,17 @@ class FeatureExtract(CsrfExemptMixin, View):
 
         try:
             base_data = client_dispatch(client_code, content)
-
-            audit_task.apply_async((base_data, ), retry=True, queue='re_task_audit', routing_key='re_task_audit')
-
+            if base_data['is_async']:
+                # ASYNC
+                audit_task.apply_async((base_data, ), retry=True, queue='re_task_audit', routing_key='re_task_audit')
+            else:
+                # SYNC
+                ret_data = mission_control(base_data)
+                data.update({
+                    'client_code': base_data.get('client_code', None),
+                    'apply_id': base_data.get('apply_id', None),
+                    'ret_msg': ret_data
+                })
         # TODO except Exceptions and do somethings
         except ServerError as e:
             data = {

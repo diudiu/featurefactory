@@ -8,8 +8,9 @@
 
 """
 import logging
+from jsonpath_rw_ext import parse
 
-from apps.etl.models import FeatureConf
+from apps.etl.models import FeatureConf, PreFieldInfo
 from apps.etl.context import ApplyContext, ArgsContext, PortraitContext
 from vendor.errors.api_errors import *
 
@@ -29,15 +30,17 @@ class Judger(object):
         self.apply_id = ''
         self.proposer_id = ''
         self.callback_url = ''
+        self.async = True
         self.feature_list = []
         self.ret_msg = []
-        self.arguments = []
+        self.arguments = {}
 
     def work_stream(self):
         self._fill_attributes()
         base_data = {
             'client_code': self.client_code,
             'callback_url': self.callback_url,
+            'is_async': self.async,
             'apply_id': self.apply_id,
             'proposer_id': self.proposer_id,
             'feature_conf': self.ret_msg,
@@ -49,7 +52,7 @@ class Judger(object):
         self.apply_id = self.content.get('apply_id', None)
         self.callback_url = self.content.get('callback_url', None)
         if not self.callback_url:
-            raise CallBackUrlMissing
+            self.async = False
         self.feature_list = self.content.get('res_keys', None)
         self._load_conf()
         if not self.ret_msg:
@@ -77,9 +80,39 @@ class Judger(object):
             self.ret_msg.append({single_conf.feature_name: feature_conf})
 
     def _load_args(self):
-        apply_data = ApplyContext(self.apply_id).load()
-        self.proposer_id = apply_data.get('proposer_id', None)
-        if not self.proposer_id:
-            raise
-        portrait_data = PortraitContext(self.proposer_id).load()
+        arg_base = ArgsContext(self.apply_id)
+        self.arguments = arg_base.load()
+        if not self.arguments:
+            self.arguments = {}
+            apply_data = ApplyContext(self.apply_id).load()
+            self.proposer_id = apply_data.get('proposer_id', None)
+            if not self.proposer_id:
+                raise
+            portrait_data = PortraitContext(self.proposer_id).load()
+            if not portrait_data:
+                raise
+            pre_conf = PreFieldInfo.objects.filter(
+                is_delete=False
+            )
+            full_data = {
+                'apply_data': apply_data,
+                'portrait_data': portrait_data
+            }
+            for pre in pre_conf:
+                self.arguments.update({
+                    pre.field_name: self.get_value(full_data[pre.source], pre.path)
+                })
+            arg_base.kwargs.update(self.arguments)
+            arg_base.save()
 
+    @staticmethod
+    def get_value(data, path):
+        path_expr = parse(path)
+        temp = path_expr.find(data)
+        result = []
+        for val in temp:
+            result.append(val.value)
+        if result:
+            return result[0]
+        else:
+            return None

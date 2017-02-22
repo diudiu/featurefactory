@@ -18,7 +18,7 @@ def feature_post():
         'client_code': 'lp_test',
         'content': {
             'apply_id': 'APPLY20170213143121831017716',
-            'callback_url': 'http://0.0.0.0:0000',
+            'callback_url': '',
             'res_keys': [
                 'age',
                 'airfare_sum_12',
