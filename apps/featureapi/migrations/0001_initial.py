@@ -11,19 +11,22 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='FeatureFieldRel',
+            name='ClientOverview',
             fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('is_delete', models.BooleanField(default=False, verbose_name='\u662f\u5426\u903b\u8f91\u5220\u9664')),
                 ('created_on', models.DateTimeField(auto_now_add=True, verbose_name='\u521b\u5efa\u65f6\u95f4', null=True)),
                 ('updated_on', models.DateTimeField(auto_now=True, verbose_name='\u6700\u540e\u4fee\u6539\u65f6\u95f4')),
-                ('id', models.AutoField(serialize=False, verbose_name='\u4e3b\u952e', primary_key=True)),
-                ('feature_name', models.CharField(max_length=64, verbose_name='\u7279\u5f81\u5b57\u6bb5\u540d')),
-                ('data_identity', models.CharField(max_length=64, verbose_name='\u63a5\u53e3\u6807\u8bc6')),
+                ('client_code', models.CharField(max_length=128, verbose_name='')),
+                ('client_id', models.CharField(max_length=128, verbose_name='')),
+                ('client_secret', models.CharField(max_length=256, verbose_name='')),
+                ('des_key', models.CharField(max_length=128, verbose_name='')),
+                ('manage_type', models.CharField(max_length=256, verbose_name='')),
             ],
             options={
-                'db_table': 'fic_feature_field_rel',
-                'verbose_name': '\u7279\u5f81-\u63a5\u53e3\u6620\u5c04\u8868',
-                'verbose_name_plural': '\u7279\u5f81-\u63a5\u53e3\u6620\u5c04\u8868',
+                'db_table': 'fic_client_overview',
+                'verbose_name': '',
+                'verbose_name_plural': '',
             },
             bases=(models.Model,),
         ),

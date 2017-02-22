@@ -9,8 +9,7 @@
 """
 import logging
 
-from apps.remote.models import FeatureFieldRel
-from apps.datasource.models import InterfaceFieldRel
+from apps.etl.models import FeatureConf
 from apps.etl.context import ApplyContext, ArgsContext, PortraitContext
 from vendor.errors.api_errors import *
 
@@ -19,11 +18,7 @@ logger = logging.getLogger('apps.featureapi')
 
 class Judger(object):
     """
-        1.authentication (_check_identity)
-        2.data decryption (_decrypt)
-        3.check availability of arguments (_args_useful_check)
-        4.throw the Exceptions
-        5.finally check all works
+
     """
 
     def __init__(self, content, client_code):
@@ -35,8 +30,8 @@ class Judger(object):
         self.proposer_id = ''
         self.callback_url = ''
         self.feature_list = []
-        self.arguments = {}
         self.ret_msg = []
+        self.arguments = []
 
     def work_stream(self):
         self._fill_attributes()
@@ -44,8 +39,9 @@ class Judger(object):
             'client_code': self.client_code,
             'callback_url': self.callback_url,
             'apply_id': self.apply_id,
-            'feature_list': self.feature_list,
-            'useful_args': self.ret_msg,
+            'proposer_id': self.proposer_id,
+            'feature_conf': self.ret_msg,
+            'base_args': self.arguments
         }
         return base_data
 
@@ -55,63 +51,35 @@ class Judger(object):
         if not self.callback_url:
             raise CallBackUrlMissing
         self.feature_list = self.content.get('res_keys', None)
-        self._prepare_args()
-        if not self.arguments:
+        self._load_conf()
+        if not self.ret_msg:
             logger.error(
                 'Response from the function of `judge._decrypt`, error_msg=%s, rel_err_msg=%s, apply_id=%s'
                 % (GetArgumentsError.message, "Missing arguments in the post_data", self.apply_id),
                 exc_info=True
             )
             raise GetArgumentsError  # E06
-        feature_msg_list = FeatureFieldRel.objects.filter(
+        self._load_args()
+
+    def _load_conf(self):
+        full_conf = FeatureConf.objects.filter(
             feature_name__in=self.feature_list,
-            is_delete=False,
-        )
-        data_identity_list = [feature.data_identity for feature in feature_msg_list]
-
-        arg_msg_list = InterfaceFieldRel.objects.filter(
-            data_identity__in=data_identity_list,
             is_delete=False
-        ).order_by('data_identity')
-        for arg_msg in arg_msg_list:
-            if arg_msg.raw_field_name in self.arguments.keys():
-                if self.ret_msg and (arg_msg.data_identity == (self.ret_msg[-1])['data_identity']):
-                    sub_msg = self.ret_msg[-1]
-                    sub_msg['arguments'].update({
-                        arg_msg.raw_field_name: self.arguments[arg_msg.raw_field_name],
-                    })
-                    self.ret_msg[-1] = sub_msg
-                else:
-                    temp_msg = {
-                        'data_identity': arg_msg.data_identity,
-                        'arguments': {
-                            arg_msg.raw_field_name: self.arguments[arg_msg.raw_field_name],
-                        }
-                    }
-                    self.ret_msg.append(temp_msg)
-            else:
-                logger.info(
-                    'Arguments are not enough to get all res_keys, \n filed_name=%s, apply_id=%s'
-                    % (arg_msg.raw_field_name, self.apply_id)
-                )
-                logger.error(
-                    'Response from the function of `judge._args_useful_check`, '
-                    'error_msg=%s, rel_err_msg=%s, apply_id=%s'
-                    % (ArgumentsAvailableError.message, "Arguments are not enough to get all res_keys", self.apply_id),
-                    exc_info=True
-                )
-                raise ArgumentsAvailableError  # E07
+        )
+        if full_conf.count() != len(self.feature_list):
+            raise  # TODO 配置有误 数量对不上
 
-    def _prepare_args(self):
-        args_base = ArgsContext(self.apply_id)
-        args_data = args_base.load()
-        if args_data:
-            self.arguments = args_data
-        else:
-            apply_base = ApplyContext(self.apply_id)
-            apply_data = apply_base.load()
-            self.proposer_id = apply_data.get('proposer_id', None)
-            if not self.proposer_id:
-                raise ProposerIdMissing
-            portrait_base = PortraitContext(self.proposer_id)
-            portrait_data = portrait_base.load()
+        for single_conf in full_conf.iterator():
+            try:
+                feature_conf = eval(single_conf.raw_field_name)
+            except (NameError, SyntaxError) as e:
+                raise
+            self.ret_msg.append({single_conf.feature_name: feature_conf})
+
+    def _load_args(self):
+        apply_data = ApplyContext(self.apply_id).load()
+        self.proposer_id = apply_data.get('proposer_id', None)
+        if not self.proposer_id:
+            raise
+        portrait_data = PortraitContext(self.proposer_id).load()
+

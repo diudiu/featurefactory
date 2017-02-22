@@ -11,7 +11,7 @@ import logging
 import time
 
 from apps.etl.context import CacheContext, ArgsContext, ApplyContext, PortraitContext
-from apps.datasource.models import InterfaceFieldRel, DsInterfaceInfo
+from apps.datasource.models import DsInterfaceInfo
 
 logger = logging.getLogger('apps.remote')
 

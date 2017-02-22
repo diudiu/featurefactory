@@ -12,7 +12,6 @@ from django.utils.module_loading import import_string
 
 from apps.etl.context import CacheContext, ApplyContext
 from apps.etl.models import FeatureShuntConf, FeatureRelevanceConf
-from apps.remote.models import FeatureFieldRel
 from apps.remote.call import DataPrepare
 
 from vendor.utils.phone_operator_judge import PhoneOperator

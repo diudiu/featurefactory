@@ -56,7 +56,6 @@ class FeatureExtract(CsrfExemptMixin, View):
         content = post_data.get(cons.RESPONSE_HANDLE_CONTENT, None)
 
         try:
-            # TODO 这里调用分发器->客户端分发器  返回一个数据对象
             base_data = client_dispatch(client_code, content)
 
             audit_task.apply_async((base_data, ), retry=True, queue='re_task_audit', routing_key='re_task_audit')

@@ -20,13 +20,15 @@ def feature_post():
             'apply_id': 'APPLY20170213143121831017716',
             'callback_url': 'http://0.0.0.0:0000',
             'res_keys': [
-                'income_level',
-                'income_expense_comparison',
-                # 'register_city_level',
-                # 'company_addr_city_level',
-                #
-                # 'application_on_plus',  # 张璐在写
-                # 'education_degree_check',
+                'age',
+                'airfare_sum_12',
+                'application_on',
+                'application_on_plus',
+                'apply_register_duration',
+                'car_count',
+                'car_number',
+                'card_id',
+                'cc_bill_age'
             ],
         },
     }
