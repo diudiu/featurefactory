@@ -32,7 +32,7 @@ class Judger(object):
         self.callback_url = ''
         self.async = True
         self.feature_list = []
-        self.ret_msg = []
+        self.ret_msg = {}
         self.arguments = {}
 
     def work_stream(self):
@@ -75,9 +75,12 @@ class Judger(object):
         for single_conf in full_conf.iterator():
             try:
                 feature_conf = eval(single_conf.raw_field_name)
+                feature_conf.update({
+                    'collect_type': single_conf.collect_type
+                })
             except (NameError, SyntaxError) as e:
                 raise
-            self.ret_msg.append({single_conf.feature_name: feature_conf})
+            self.ret_msg.update({single_conf.feature_name: feature_conf})
 
     def _load_args(self):
         arg_base = ArgsContext(self.apply_id)
