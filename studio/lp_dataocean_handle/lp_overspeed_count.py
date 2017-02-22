@@ -64,7 +64,7 @@ class Handle(object):
         特征名称:
         'overspeed_count': 超速次数 int
         """
-        result = {'overload_count': PositiveSignedTypeDefault}
+        result = {'overspeed_count': PositiveSignedTypeDefault}
         try:
             month_times = 0
             for card, card_record in self.data.items():
@@ -74,7 +74,7 @@ class Handle(object):
                         if str(car_data.get("month_times", 0)).isdigit():
                             month_times += int(car_data.get("month_times", 0))
 
-            result['overload_count'] = month_times
+            result['overspeed_count'] = month_times
 
         except Exception as e:
             logging.error(e.message)
