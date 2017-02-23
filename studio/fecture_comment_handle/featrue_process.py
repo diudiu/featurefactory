@@ -92,9 +92,8 @@ class FeatureProcess(object):
         Raises:
             FeatureConfigLoadError  自定义的特征配置加载异常，继承自FeatureProcessError
         """
-        conf_str = self.feature_name + '_config'
         try:
-            self.feature_conf = eval(conf_str)
+            self.feature_conf = eval(self.conf_str)
         except (NameError, TypeError) as e:
             # TODO logger
             raise FeatureProcessError
