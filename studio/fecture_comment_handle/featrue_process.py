@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 
 from jsonparse_handle import JSONPathParser
-from exec_chain_handle import func_exec_chain
+from exec_chain_handle import func_exec_chain, func_exec_operator_chain
 from vendor.errors.feature import FeatureProcessError
 from vendor.utils.defaults import *
 
@@ -33,7 +33,8 @@ class FeatureProcess(object):
         self.default_value = self.load_feature_config()['default_value']
         self.json_path_list = self.load_feature_config()['json_path_list']
         self.map_and_filter_chain = self.load_feature_config()['map_and_filter_chain']
-        self.reduce_chain = self.load_feature_config()['reduce_chain']
+        self.reduce = self.load_feature_config()['reduce']
+        self.operator_chain = self.load_feature_config()['operator_chain']
 
     def run(self):
         """ 实际执行的方法，获取特征加工的结果
@@ -50,11 +51,15 @@ class FeatureProcess(object):
                 seq = seq + i[3]
             if self.map_and_filter_chain:
                 seq = func_exec_chain(seq, self.map_and_filter_chain)
-            if self.reduce_chain:
-                result = func_exec_chain(seq, self.reduce_chain)
+            if not self.reduce:
+                raise FeatureProcessError
+            value = func_exec_chain(seq, self.reduce)
+            if self.operator_chain:
+                value = func_exec_operator_chain(value, self.operator_chain)
         except FeatureProcessError as e:
             print e.message
-        return result
+            return {self.feature_name: eval(self.default_value)}
+        return {self.feature_name: value}
 
     def load_feature_config(self):
         """从特征配置的文件中加载特征的配置，放入特征处理的上下文中
@@ -62,13 +67,23 @@ class FeatureProcess(object):
         Raises:
             FeatureConfigLoadError  自定义的特征配置加载异常，继承自FeatureProcessError
         """
+        # feature_config = {
+        #     "feature_name": "age",
+        #     "feature_data_type": "int",
+        #     "default_value": "PositiveSignedTypeDefault",
+        #     "json_path_list": [("age", "$..content.age", "f_assert_not_null->f_assert_must_digit")],
+        #     "map_and_filter_chain": "",
+        #     "reduce": "reduce_singo_value",
+        #     "operator_chain": ""
+        # }
         feature_config = {
-            "feature_name": "age",
-            "feature_data_type": "int",
-            "default_value": "PositiveSignedTypeDefault",
-            "json_path_list": [("age", "$..content.age", "f_assert_not_null->f_assert_must_digit")],
-            "map_and_filter_chain": "",
-            "reduce_chain": "reduce_singo_value"
+            "feature_name": "apply_register_duration",
+            "feature_data_type": "float",
+            "default_value": "PositiveSignedFloatTypeDefault",
+            "json_path_list": [("application_on", "$.apply_data.application_on", "f_assert_not_null->f_assert_must_basestring"),
+                               ("registration_on", "$.portrait_data.registration_on","f_assert_not_null->f_assert_must_basestring")],
+            "map_and_filter_chain": "map_to_slice(0,10)->map_string_to_datetime",
+            "reduce": "reduce_sub",
+            "operator_chain": "value.days->value/30.0->round(value, 2)->#value>=0"
         }
-
         return feature_config
