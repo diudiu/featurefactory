@@ -41,6 +41,13 @@ class FeatureProcess(object):
         self.conf_str = self.feature_name + '_config'
         self.feature_conf = None
         self.data = data
+        self.default_value = None
+        self.json_path_list = None
+        self.map_and_filter_chain = None
+        self.reduce = None
+        self.operator_chain = None
+
+    def _load(self):
         self.default_value = self.feature_conf['default_value']
         self.json_path_list = self.feature_conf['json_path_list']
         self.map_and_filter_chain = self.feature_conf['map_and_filter_chain']
@@ -55,6 +62,7 @@ class FeatureProcess(object):
         """
         try:
             self.feature_conf = eval(self.conf_str)
+            self._load()
             json_path_parser = JSONPathParser()
             value_list = json_path_parser.parse(self.data, self.json_path_list)
             result = []
@@ -84,9 +92,8 @@ class FeatureProcess(object):
         Raises:
             FeatureConfigLoadError  自定义的特征配置加载异常，继承自FeatureProcessError
         """
-        conf_str = self.feature_name + '_config'
         try:
-            self.feature_conf = eval(conf_str)
+            self.feature_conf = eval(self.conf_str)
         except (NameError, TypeError) as e:
             # TODO logger
             raise FeatureProcessError
