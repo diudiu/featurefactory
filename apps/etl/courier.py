@@ -37,15 +37,15 @@ class Courier(object):
     def get_feature(self):
         self.data_identity_list = self._get_di_from_conf(self.feature_conf)
         if self.collect_type == 'Courier':
-            # TODO 普通逻辑
+            # 普通逻辑
             self.useful_data = self.get_general_data()
 
         elif len(self.data_identity_list) > 1 and self.collect_type == 'ShuntCourier':
-            # TODO 分流逻辑
+            # 分流逻辑
             self.useful_data = self.get_shunt_data()
 
         elif self.collect_type == 'RelevanceCourier' and len(self.data_identity_list) == 1:
-            # TODO 依赖逻辑
+            # 依赖逻辑
             self.useful_data = self.get_relevance_data(self.data_identity_list[0])
 
         if not self.useful_data:
@@ -73,12 +73,18 @@ class Courier(object):
             raise
         return ret
 
+    def get_useful_data(self, data_identity):
+        dp = DataPrepare(data_identity, self.apply_id, self.feature_conf[data_identity])
+        data = dp.get_original_data()
+        # TODO 原始数据预处理
+        # TODO *************
+        return data
+
     def get_general_data(self):
-        # TODO 获取一般情况数据
+        # 获取一般情况数据
         useful_data = {}
         for data_identity in self.data_identity_list:
-            dp = DataPrepare(data_identity, self.apply_id)
-            data = dp.get_original_data()
+            data = self.get_useful_data(data_identity)
             useful_data.update({
                 data_identity: data
             })
@@ -89,13 +95,12 @@ class Courier(object):
         data_identity = self.get_shunt_di()
         if not data_identity:
             raise
-        dp = DataPrepare(data_identity, self.apply_id)
-        data = dp.get_original_data()
+        data = self.get_useful_data(data_identity)
         useful_data.update(data)
         return useful_data
 
     def get_shunt_di(self):
-        # TODO 获取分流逻辑数据useful_data_identity = []
+        # 获取分流逻辑数据useful_data_identity = []
         useful_data_identity = ''
         feature_conf_list = FeatureShuntConf.objects.filter(
             feature_name=self.feature_name,
@@ -133,8 +138,7 @@ class Courier(object):
             if next_di:
                 self.get_relevance_data(next_di)
             else:
-                dp = DataPrepare(next_data_identity, self.apply_id)
-                data = dp.get_original_data()
+                data = self.get_useful_data(next_data_identity)
                 useful_data.update({
                     next_data_identity: data
                 })

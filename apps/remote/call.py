@@ -18,16 +18,15 @@ logger = logging.getLogger('apps.remote')
 
 class DataPrepare(object):
 
-    def __init__(self, data_identity, apply_id):
+    def __init__(self, data_identity, apply_id, args_list):
         self.data_identity = data_identity
         self.apply_id = apply_id
         self.cache_base = CacheContext(self.apply_id)
         self.argument_base = ArgsContext(self.apply_id)
-        self.parm_keys = []
+        self.parm_keys = args_list
         self.parm_dict = {}
 
     def get_original_data(self):
-
         ret_data = self.get_data_from_db()
         if not ret_data:
             ret_data = self.get_data_from_interface()
@@ -57,7 +56,7 @@ class DataPrepare(object):
         url = ds_conf.data_source.backend_url + ds_conf.route
         data_prams = eval(ds_conf.must_data % self.parm_dict)
         origin_data = None
-        if ds_conf.method == 'LOCAL':
+        if ds_conf.method == 'LOCALE':
             origin_data = self.do_local_request(ds_conf, data_prams)
         elif ds_conf.method == 'REMOTE':
             origin_data = self.do_request(url, data_prams)
@@ -73,13 +72,6 @@ class DataPrepare(object):
         return {self.data_identity: origin_data}
 
     def prepare_parms(self):
-        parm_conf = InterfaceFieldRel.objects.filter(
-            data_identity=self.data_identity,
-            is_delete=False
-        )
-        if not parm_conf:
-            raise
-        self.parm_keys = [conf.raw_field_name for conf in parm_conf]
         arguments = self.argument_base.load()
         for key in self.parm_keys:
             value = arguments.get(key, None)
@@ -101,9 +93,9 @@ class DataPrepare(object):
     def do_local_request(ds_conf, data_prams):
         base_index = ds_conf.data_identity
         data_bases = None
-        if base_index == 'apply_base':
+        if base_index == 'apply_data':
             data_bases = ApplyContext((data_prams.values())[0])
-        if base_index == 'portrait_base':
+        if base_index == 'portrait_data':
             data_bases = PortraitContext((data_prams.values())[0])
         return data_bases.load() if data_bases else None
 

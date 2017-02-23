@@ -31,6 +31,7 @@ class DsInterfaceInfo(BaseModel):
     name = models.CharField(u'接口名称', max_length=128)
     data_identity = models.CharField(u'接口标识', max_length=64)
     data_source = models.ForeignKey(DataSourceInfo, verbose_name=u'数据源配置')
+    data_origin_type = models.IntegerField(u'数据源标记', null=True)  # Choice by cons.LP_xxxx
     route = models.CharField(u'访问路由', max_length=128, help_text=u'/api/gateway/')
     method = models.CharField(u'访问方式', max_length=32, choices=cons.HTTP_METHOD)
     comment = models.CharField(u'描述', max_length=512, blank=True, null=True)

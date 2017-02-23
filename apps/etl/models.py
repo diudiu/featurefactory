@@ -62,3 +62,19 @@ class PreFieldInfo(BaseModel):
         db_table = 'fic_pre_field_info'
         verbose_name = u'预处理字段表'
         verbose_name_plural = u'预处理字段表'
+
+
+class FeatureProcess(BaseModel):
+
+    id = models.AutoField(u'主键', primary_key=True)
+    feature_name = models.CharField(u'特征字段名', max_length=64)
+    feature_data_type = models.CharField(u'特征字段类型', max_length=64)
+    default_value = models.CharField(u'特征缺省值', max_length=64)
+    json_path_list = models.CharField(u'特征处理流程', max_length=2048)
+    map_and_filter_chain = models.CharField(u'特征处理map链', max_length=1024, null=True)
+    reduce_chain = models.CharField(u'特征处理reduce链', max_length=1024)
+
+    class Meta:
+        db_table = 'fic_feature_process_info'
+        verbose_name = u'特征计算方式配置表'
+        verbose_name_plural = u'特征计算方式配置表'

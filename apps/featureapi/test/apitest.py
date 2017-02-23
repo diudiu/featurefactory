@@ -21,14 +21,14 @@ def feature_post():
             'callback_url': '',
             'res_keys': [
                 'age',
-                'airfare_sum_12',
-                'application_on',
-                'application_on_plus',
-                'apply_register_duration',
-                'car_count',
-                'car_number',
-                'card_id',
-                'cc_bill_age'
+                # 'airfare_sum_12',
+                # 'application_on',
+                # 'application_on_plus',
+                # 'apply_register_duration',
+                # 'car_count',
+                # 'car_number',
+                # 'card_id',
+                # 'cc_bill_age'
             ],
         },
     }
