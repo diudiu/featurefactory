@@ -36,7 +36,7 @@ class Handle(object):
         result = {"cc_bill_age": PositiveSignedTypeDefault}
         try:
             base_data = self.data.get("result", {}).get("rrx_once_all", {}).get("credit_card_account_age", None)
-            if str(base_data.replace('.', '')).isdigit():  # 检验贷记卡账龄是否只由数字组成,是则转化为int类型
+            if str(base_data).replace('.', '').isdigit():  # 检验贷记卡账龄是否只由数字组成,是则转化为int类型
                 result["cc_bill_age"] = int(eval(str(base_data)))
 
         except Exception as e:

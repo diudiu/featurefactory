@@ -6,7 +6,7 @@ from braces.views import CsrfExemptMixin
 from django.http.response import JsonResponse
 from django.views.generic import View
 
-from apps.common.models import ClientOverview
+from apps.featureapi.models import ClientOverview
 from apps.pregranting.settings import get_pre_grant_model
 from vendor.messages.response_code import ResponseCode
 from vendor.errors.api_errors import UserIdentityError

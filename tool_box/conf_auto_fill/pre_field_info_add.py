@@ -20,11 +20,11 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'featurefactory.settings')
 import django
 django.setup()
 
-from apps.remote.models import FeatureFieldRel
+from apps.etl.models import PreFieldInfo
 
 
-def load_feature_field_from_xls(file_path):
-    rule_base_list = []
+def load_field_info_from_xls(file_path):
+    field_info_conf_list = []
 
     xls = xlrd.open_workbook(file_path)
     sheet1 = xls.sheets()[0]
@@ -32,30 +32,33 @@ def load_feature_field_from_xls(file_path):
         if row_num == 0:
             continue
         row = sheet1.row_values(row_num)
-        rule_base_info = {
+        feature_conf = {
             'id': int(row[0]),
-            'feature_name': row[1],
-            'data_identity': row[2],
+            'field_name': row[1],
+            'field_name_cn': row[2],
+            'source': row[3],
+            'path': row[4],
         }
-        rule_base_list.append(rule_base_info)
-    return rule_base_list
+        field_info_conf_list.append(feature_conf)
+    return field_info_conf_list
 
 
 def init_feature_field():
-    all_rule_base = load_feature_field_from_xls('feature_field_rel.xlsx')
-    for rule_base in all_rule_base:
-        if FeatureFieldRel.objects.filter(
-                feature_name=rule_base['feature_name'],
-                data_identity=rule_base['data_identity'],
+    all_feature_conf = load_field_info_from_xls('pre_field_info.xlsx')
+    for feature_conf in all_feature_conf:
+        if PreFieldInfo.objects.filter(
+                field_name=feature_conf['field_name'],
         ).count() > 0:
             continue
         else:
-            ffr = FeatureFieldRel(
-                id=rule_base['id'],
-                feature_name=rule_base['feature_name'],
-                data_identity=rule_base['data_identity'],
+            pfi = PreFieldInfo(
+                id=feature_conf['id'],
+                field_name=feature_conf['field_name'],
+                field_name_cn=feature_conf['field_name_cn'],
+                source=feature_conf['source'],
+                path=feature_conf['path'],
             )
-            ffr.save()
+            pfi.save()
 
 if __name__ == '__main__':
     init_feature_field()

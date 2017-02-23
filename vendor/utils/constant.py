@@ -87,3 +87,18 @@ cons.HANDLE_COMBINE = '.'
 # Arithmetic type
 cons.ARITHMETIC_LEFT_CLOSE_RIGHT_OPEN = "LEFT_CLOSE_RIGHT_OPEN"
 cons.ARITHMETIC_LEFT_OPEN_RIGHT_CLOSE = "LEFT_OPEN_RIGHT_CLOSE"
+
+# data source type
+cons.LP_DATAOCEAN        = 1            # 1
+cons.LP_91_CREDIT        = 1 << 1       # 2
+cons.LP_PINGAN_CREDIT    = 1 << 2       # 4
+cons.LP_CC_CREDIT        = 1 << 3       # 8
+cons.LP_CC_CAR_CREDIT    = 1 << 4       # 16
+
+cons.SOURCE_TYPE_MESSAGE = {
+    cons.LP_DATAOCEAN:      u'猎聘继承接口-DataOcean',
+    cons.LP_91_CREDIT:      u'猎聘继承接口-91征信',
+    cons.LP_PINGAN_CREDIT:  u'猎聘继承接口-凭安',
+    cons.LP_CC_CREDIT:      u'猎聘继承接口-人人信',
+    cons.LP_CC_CAR_CREDIT:  u'猎聘继承接口-人人信车辆',
+}

@@ -18,7 +18,7 @@ PROJECT_PATH = os.path.dirname(CURRENT_PATH)
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'featuretemp',
+        'NAME': 'featurefactory',
         'PASSWORD': '123456',
         'USER': 'dev',
         'HOST': '192.168.1.198',
@@ -28,7 +28,7 @@ DATABASES = {
 if 'test' in sys.argv:
     DATABASES['default'] = {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'featuretemp',
+        'NAME': 'featurefactory',
         'PASSWORD': '123456',
         'USER': 'root',
         'HOST': '192.168.1.198',
