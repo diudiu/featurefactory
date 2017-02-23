@@ -7,6 +7,11 @@
     Date:  2017/1/20
     Change Activity:
 """
+import logging
+
+from vendor.utils.defaults import *
+
+logger = logging.getLogger('apps.common')
 
 
 class Handle(object):
@@ -23,7 +28,7 @@ class Handle(object):
         特征名称：loan_infos          申请人借贷信息
         """
 
-        loan_infos_dic = {'loan_infos': None}
+        loan_infos_dic = {'loan_infos': ListTypeDefault}
 
         loan_infos = self.data.get('loanInfos', None)
 

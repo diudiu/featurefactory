@@ -29,7 +29,7 @@
 """
 import logging
 
-from vendor.utils.defaults import *
+from vendor.utils.defaults import PositiveSignedTypeDefault
 
 logger = logging.getLogger('apps.common')
 
@@ -51,12 +51,15 @@ class Handle(object):
         字段名称:
         'nation': 民族
         """
-        result = {'folk': StringTypeDefault}
+        result = {'folk': PositiveSignedTypeDefault}
         try:
             if self.data['result'] == '00':
                 base_data = self.data['content']['nation']
                 if base_data and isinstance(base_data, basestring):
-                    result['folk'] = base_data
+                    if '汉' in base_data:
+                        result['folk'] = 1
+                    else:
+                        result['folk'] = 0
 
         except Exception as e:
             logging.error(e.message)

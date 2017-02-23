@@ -9,6 +9,7 @@
 """
 import logging
 import numpy as np
+from vendor.utils.defaults import StringTypeDefault
 
 logger = logging.getLogger('apps.common')
 
@@ -29,7 +30,7 @@ class Handle(object):
         特征名称：graduate_college           院校
         """
 
-        result = {'graduate_college': '9999'}
+        result = {'graduate_college': StringTypeDefault}
 
         try:
             edu_exp_form = self.data['edu_exp_form']
@@ -40,7 +41,7 @@ class Handle(object):
                     end_list.append(int(end))
                 result['graduate_college'] = edu_exp_form[
                     np.argmax(end_list)].get('school')
-        except Exception:
+        except Exception as e:
             logging.error(e.message)
             return result
 

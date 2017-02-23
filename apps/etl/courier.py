@@ -12,7 +12,6 @@ from django.utils.module_loading import import_string
 
 from apps.etl.context import CacheContext, ApplyContext
 from apps.etl.models import FeatureShuntConf, FeatureRelevanceConf
-from apps.remote.models import FeatureFieldRel
 from apps.remote.call import DataPrepare
 
 from vendor.utils.phone_operator_judge import PhoneOperator
@@ -24,9 +23,11 @@ logger = logging.getLogger('apps.etl')
 
 class Courier(object):
 
-    def __init__(self, feature_name, apply_id):
+    def __init__(self, feature_name, feature_conf, apply_id):
+        self.feature_conf = feature_conf
         self.feature_name = feature_name
         self.error_no = 0
+        self.collect_type = ''
         self.apply_id = apply_id
         self.data_identity_list = []
         self.cache_base = CacheContext(self.apply_id)
@@ -34,22 +35,16 @@ class Courier(object):
         self.is_relevance = False
 
     def get_feature(self):
-        di_feature_conf = FeatureFieldRel.objects.filter(
-            feature_name=self.feature_name,
-            is_delete=False
-        )
-        if not di_feature_conf:
-            raise
-        self.data_identity_list = self._get_di_from_conf(di_feature_conf)
-        if di_feature_conf[0].collect_type == 'Courier':
+        self.data_identity_list = self._get_di_from_conf(self.feature_conf)
+        if self.collect_type == 'Courier':
             # TODO 普通逻辑
             self.useful_data = self.get_general_data()
 
-        elif di_feature_conf.count() > 1 and di_feature_conf[0].collect_type == 'ShuntCourier':
+        elif len(self.data_identity_list) > 1 and self.collect_type == 'ShuntCourier':
             # TODO 分流逻辑
             self.useful_data = self.get_shunt_data()
 
-        elif di_feature_conf[0].collect_type == 'RelevanceCourier' and len(self.data_identity_list) == 1:
+        elif self.collect_type == 'RelevanceCourier' and len(self.data_identity_list) == 1:
             # TODO 依赖逻辑
             self.useful_data = self.get_relevance_data(self.data_identity_list[0])
 
@@ -145,9 +140,9 @@ class Courier(object):
                 })
         return useful_data
 
-    @staticmethod
-    def _get_di_from_conf(di_feature_conf):
-        data_identity_list = []
-        for conf in di_feature_conf:
-            data_identity_list.append(conf.data_identity)
+    def _get_di_from_conf(self, base_conf):
+        data_identity_list = base_conf.keys()
+        if 'collect_type' in data_identity_list:
+            self.collect_type = base_conf['collect_type']
+            data_identity_list.remove('collect_type')
         return data_identity_list

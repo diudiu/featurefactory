@@ -9,8 +9,10 @@
 """
 
 import logging
-logger = logging.getLogger('apps.common')
+
 from vendor.utils.defaults import StringTypeDefault
+logger = logging.getLogger('apps.common')
+
 
 class Handle(object):
 

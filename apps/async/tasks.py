@@ -29,20 +29,12 @@ logger = logging.getLogger('apps.featureapi')
 
 @shared_task
 def audit_task(base_data):
-    # TODO 向callback_url回推结果
     data = {
         cons.RESPONSE_REQUEST_STATUS: ResponseCode.FEATURE_SUCCESS,
         cons.RESPONSE_REQUEST_MESSAGE: ResponseCode.message(ResponseCode.FEATURE_SUCCESS)
     }
     try:
-        collecter = CollectFeature(base_data)
-        collecter.get_feature_value()
-        if collecter.error_list:
-            # TODO 特征处理有异常
-            pass
-        ret_data = collecter.feature_ret
-        logger.info('\n**********\nfeature compared completed\n**********\n')
-        logger.info('All feature is %s', ret_data)
+        ret_data = mission_control(base_data)
         data.update({
             'client_code': base_data.get('client_code', None),
             'apply_id': base_data.get('apply_id', None),
@@ -64,3 +56,15 @@ def audit_task(base_data):
         headers = {"Content-type": "application/json; charset=utf-8"}
         response = requests.post(callback_url, headers=headers, data=json.dumps(data))
         logger.info('Results have already arrived, reply %s', response.content)
+
+
+def mission_control(base_data):
+    collecter = CollectFeature(base_data)
+    collecter.get_feature_value()
+    if collecter.error_list:
+        # TODO 特征处理有异常
+        pass
+    ret_data = collecter.feature_ret
+    logger.info('\n**********\nfeature compared completed\n**********\n')
+    logger.info('All feature is %s', ret_data)
+    return ret_data

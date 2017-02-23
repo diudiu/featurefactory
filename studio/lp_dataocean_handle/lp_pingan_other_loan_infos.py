@@ -9,7 +9,7 @@
 """
 import logging
 
-from vendor.utils.defaults import *
+from vendor.utils.defaults import ListTypeDefault
 
 logger = logging.getLogger('apps.common')
 
@@ -31,7 +31,7 @@ class Handle(object):
         输出：其他机构借贷信息
         """
 
-        result = {'pingan_other_loan_infos': StringTypeDefault}
+        result = {'pingan_other_loan_infos': ListTypeDefault}
 
         try:
             if self.data['result'] == 0:

@@ -11,7 +11,7 @@
 import logging
 from datetime import datetime
 
-from vendor.utils.defaults import *
+from vendor.utils.defaults import PositiveSignedFloatTypeDefault
 
 logger = logging.getLogger('apps.common')
 
@@ -38,7 +38,7 @@ class Handle(object):
         'apply_register_duration': 注册时间长度 float
         """
         result = {
-            'apply_register_duration': UnsignedFloatTypeDefault,
+            'apply_register_duration': PositiveSignedFloatTypeDefault,
         }
         try:
             apply_data = self.data["apply_data"]["application_on"][:10]

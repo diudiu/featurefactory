@@ -9,8 +9,11 @@
 """
 
 import logging
-logger = logging.getLogger('apps.common')
+
 from vendor.utils.defaults import PositiveSignedTypeDefault
+
+logger = logging.getLogger('apps.common')
+
 
 class Handle(object):
 

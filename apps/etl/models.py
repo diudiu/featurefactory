@@ -8,17 +8,18 @@ from apps.common.models import BaseModel
 from apps.datasource.models import DsInterfaceInfo
 
 
-# 添加一个表  用来对应受信人特征和计算用的参数和参数来自哪个接口
-class FeatureProcessInfo(BaseModel):
+class FeatureConf(BaseModel):
     id = models.AutoField(u'主键', primary_key=True)
     feature_name = models.CharField(u'特征字段名', max_length=64)
-    process_type = models.CharField(u'特征计算类型', max_length=256)
-    data_identity = models.CharField(u'原始数据标识', max_length=64)
+    feature_name_cn = models.CharField(u'特征中文名', max_length=128)
+    data_identity = models.CharField(u'原始数据标识', max_length=512)
+    collect_type = models.CharField(u'数据获取方式', max_length=64, null=True)
+    raw_field_name = models.CharField(u'参数字段名', max_length=2048)
 
     class Meta:
-        db_table = 'fic_feature_process_info'
-        verbose_name = u'特征与计算参数对照表'
-        verbose_name_plural = u'特征与计算参数对照表'
+        db_table = 'fic_feature_common_conf'
+        verbose_name = u'一般特征处理逻辑配置表'
+        verbose_name_plural = u'一般特征处理逻辑配置表'
 
 
 class FeatureShuntConf(BaseModel):
@@ -47,3 +48,17 @@ class FeatureRelevanceConf(BaseModel):
         db_table = 'fic_feature_relevance_conf'
         verbose_name = u'依赖关系处理逻辑配置表'
         verbose_name_plural = u'依赖关系处理逻辑配置表'
+
+
+class PreFieldInfo(BaseModel):
+
+    id = models.AutoField(u'主键', primary_key=True)
+    field_name = models.CharField(u'字段名称', max_length=64)
+    field_name_cn = models.CharField(u'中文名称', max_length=64)
+    source = models.CharField(u'数据来源', max_length=64)
+    path = models.CharField(u'JsonPath路径', max_length=256)
+
+    class Meta:
+        db_table = 'fic_pre_field_info'
+        verbose_name = u'预处理字段表'
+        verbose_name_plural = u'预处理字段表'

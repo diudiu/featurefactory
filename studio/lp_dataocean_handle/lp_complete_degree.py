@@ -9,7 +9,7 @@
 """
 import logging
 
-from vendor.utils.defaults import UnsignedIntTypeDefault
+from vendor.utils.defaults import PositiveSignedTypeDefault
 
 logger = logging.getLogger('apps.common')
 
@@ -33,7 +33,7 @@ class Handle(object):
         特征名称: 'complete_degree'  简历完成度 int
         """
 
-        result = {self.name: UnsignedIntTypeDefault}
+        result = {self.name: PositiveSignedTypeDefault}
 
         try:
             base_data = self.data[self.name]

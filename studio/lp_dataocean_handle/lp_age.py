@@ -15,6 +15,7 @@ logger = logging.getLogger('apps.common')
 
 
 class Handle(object):
+    name = 'age'
 
     def __init__(self, data):
         self.data = data
@@ -32,11 +33,11 @@ class Handle(object):
         特征名称: 'age': 年龄 int
         """
 
-        result = {'age': PositiveSignedTypeDefault}
+        result = {self.name: PositiveSignedTypeDefault}
         try:
-            base_data_age = self.data["content"]["age"]    # 提取年龄字段
+            base_data_age = self.data["content"][self.name]    # 提取年龄字段
             if str(base_data_age).isdigit() and 0 <= int(base_data_age) <= 100:  # 判断年龄是否是int且在0-100之间
-                result['age'] = int(base_data_age)
+                result[self.name] = int(base_data_age)
 
         except Exception as e:
                 logging.error(e.message)
