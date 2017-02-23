@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 
 from jsonparse_handle import JSONPathParser
-from exec_chain_handle import func_exec_chain
+from exec_chain_handle import func_exec_chain, func_exec_operator_chain
 from vendor.errors.feature import FeatureProcessError
 from studio.fecture_comment_handle.config import *
 from vendor.utils.defaults import *
@@ -34,10 +34,12 @@ class FeatureProcess(object):
         conf_str = self.feature_name + '_config'
         self.feature_conf = eval(conf_str)
         self.data = data
+
         self.default_value = self.feature_conf['default_value']
         self.json_path_list = self.feature_conf['json_path_list']
         self.map_and_filter_chain = self.feature_conf['map_and_filter_chain']
-        self.reduce_chain = self.feature_conf['reduce_chain']
+        self.reduce = self.feature_conf['reduce']
+        self.operator_chain = self.feature_conf['operator_chain']
 
     def run(self):
         """ 实际执行的方法，获取特征加工的结果
@@ -54,11 +56,15 @@ class FeatureProcess(object):
                 seq = seq + i[3]
             if self.map_and_filter_chain:
                 seq = func_exec_chain(seq, self.map_and_filter_chain)
-            if self.reduce_chain:
-                result = func_exec_chain(seq, self.reduce_chain)
+            if not self.reduce:
+                raise FeatureProcessError
+            value = func_exec_chain(seq, self.reduce)
+            if self.operator_chain:
+                value = func_exec_operator_chain(value, self.operator_chain)
         except FeatureProcessError as e:
             print e.message
-        return result
+            return {self.feature_name: eval(self.default_value)}
+        return {self.feature_name: value}
 
     def load_feature_config(self):
         """从特征配置的文件中加载特征的配置，放入特征处理的上下文中

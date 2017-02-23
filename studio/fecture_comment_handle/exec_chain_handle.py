@@ -8,8 +8,8 @@ from vendor.errors.feature import FeatureProcessError
 
 def func_exec_chain(data, chains):
     chain_list = chains.split('->') if chains else []
-    args = ''
     for func in chain_list:
+        args = ''
         try:
             f = re.search("(.*)\\((.*)\\)", func)
             if f:
@@ -24,6 +24,22 @@ def func_exec_chain(data, chains):
             data = func(data)
 
     return data
+
+
+def func_exec_operator_chain(value, chains):
+    chain_list = chains.split('->') if chains else []
+    for operator in chain_list:
+        if '#' in operator:
+            judge = eval(operator[1:])
+            if judge:
+                continue
+            else:
+                raise FeatureProcessError
+        try:
+            value = eval(operator)
+        except:
+            raise FeatureProcessError()
+    return value
 
 if __name__ == '__main__':
     data = [1, 5]
