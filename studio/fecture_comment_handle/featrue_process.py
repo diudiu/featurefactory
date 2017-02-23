@@ -3,7 +3,7 @@
 from jsonparse_handle import JSONPathParser
 from exec_chain_handle import func_exec_chain
 from vendor.errors.feature import FeatureProcessError
-
+from vendor.utils.defaults import *
 
 class FeatureProcess(object):
     def __init__(self, feature_name, data):
@@ -41,7 +41,7 @@ class FeatureProcess(object):
         Raises:
              FeatureProcessError  自定义的特征处理异常，在程序的外层可捕获该异常
         """
-        result = {self.feature_name: self.default_value}
+        result = {self.feature_name: eval(self.default_value)}
         try:
             json_path_parser = JSONPathParser()
             value_list = json_path_parser.parse(self.data, self.json_path_list)

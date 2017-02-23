@@ -10,6 +10,13 @@ def f_assert_not_null(value_list):
     return value_list
 
 
+def f_assert_must_int(value_list):
+    for value in value_list:
+        if not isinstance(value, int):
+            raise FeatureProcessError()
+    return value_list
+
+
 def f_assert_must_digit(value_list):
     for value in value_list:
         if not str(value).isdigit():

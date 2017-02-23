@@ -3,6 +3,8 @@
 from featrue_process import FeatureProcess
 
 data = {
+        'status': u'00',
+        'message': '',
         'content': {
             'constellation': '水瓶座',
             'age': 10,

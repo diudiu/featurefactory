@@ -19,7 +19,7 @@ class JSONPathParser(object):
         Returns:
             :return [("path的key值", "path路径", "断言链", "获取到的值")]，比如：
                         [
-                            ("api_age", "$..content.age", "f_assert_not_null->f_assert_must_digit->f_assert_must_between(0,100)", "40"),
+                            ("api_age", "$..content.age", "f_assert_not_null->f_assert_must_digit->f_assert_must_between(0,100)", [40]),
                         ]
 
         Raises:
