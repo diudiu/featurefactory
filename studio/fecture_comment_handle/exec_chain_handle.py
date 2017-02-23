@@ -22,7 +22,6 @@ def func_exec_chain(data, chains):
             data = func(data, args)
         else:
             data = func(data)
-
     return data
 
 

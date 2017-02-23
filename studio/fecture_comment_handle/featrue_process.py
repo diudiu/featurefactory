@@ -23,7 +23,14 @@ class FeatureProcess(object):
                     "feature_name": "特征名称",
                     "feature_data_type": "特征的数据类型",
                     "default_value": "缺省值",
-                    "json_path_list": [("path的key值", "path的路径，如$..content.age", "断言链，如f_assert_not_null->f_assert_must_int->f_assert_length_must(10)"), (...)],
+                    "json_path_list": [
+                    (
+                        "path的key值",
+                        "path的路径，如$..content.age",
+                        "断言链，如f_assert_not_null->f_assert_must_int->f_assert_length_must(10)"
+                    ),
+                    (...)
+                    ],
                     "map_and_filter_chain": "map和filter的调用链，如m_to_int->m_none_to_zero->f_del_lte(100)->m_all_add(10)",
                     "reduce_chain": "reduce的处理链，如r_add"
                 }
@@ -31,10 +38,9 @@ class FeatureProcess(object):
             :attr json_path_parser  JSONPath的解析对象
         """
         self.feature_name = feature_name
-        conf_str = self.feature_name + '_config'
-        self.feature_conf = eval(conf_str)
+        self.conf_str = self.feature_name + '_config'
+        self.feature_conf = None
         self.data = data
-
         self.default_value = self.feature_conf['default_value']
         self.json_path_list = self.feature_conf['json_path_list']
         self.map_and_filter_chain = self.feature_conf['map_and_filter_chain']
@@ -47,8 +53,8 @@ class FeatureProcess(object):
         Raises:
              FeatureProcessError  自定义的特征处理异常，在程序的外层可捕获该异常
         """
-        result = {self.feature_name: eval(self.default_value)}
         try:
+            self.feature_conf = eval(self.conf_str)
             json_path_parser = JSONPathParser()
             value_list = json_path_parser.parse(self.data, self.json_path_list)
             seq = []
@@ -62,8 +68,13 @@ class FeatureProcess(object):
             if self.operator_chain:
                 value = func_exec_operator_chain(value, self.operator_chain)
         except FeatureProcessError as e:
+            # TODO log here
             print e.message
             return {self.feature_name: eval(self.default_value)}
+        except NameError as e:
+            # TODO log here
+            print e.message
+            return None
         return {self.feature_name: value}
 
     def load_feature_config(self):
@@ -77,4 +88,4 @@ class FeatureProcess(object):
             self.feature_conf = eval(conf_str)
         except (NameError, TypeError) as e:
             # TODO logger
-            raise
+            raise FeatureProcessError

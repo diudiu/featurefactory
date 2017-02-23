@@ -10,6 +10,7 @@
 import logging
 import time
 
+from apps.etl.dataclean import DataClean
 from apps.etl.context import CacheContext, ArgsContext, ApplyContext, PortraitContext
 from apps.datasource.models import DsInterfaceInfo
 
@@ -62,14 +63,19 @@ class DataPrepare(object):
             origin_data = self.do_request(url, data_prams)
         if not origin_data:
             raise  # TODO get data error
+        cleaner = DataClean(origin_data, ds_conf.data_origin_type)
+        clear_data = cleaner.worked()
+        if not clear_data:
+            # TODO 源数据 不符合规范
+            raise
         self.cache_base.kwargs.update({
             self.data_identity: {
-                'origin_data': origin_data,
+                'origin_data': clear_data,
                 'prams': self.parm_dict,
             }
         })
         self.cache_base.save()
-        return {self.data_identity: origin_data}
+        return {self.data_identity: clear_data}
 
     def prepare_parms(self):
         arguments = self.argument_base.load()

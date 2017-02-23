@@ -13,6 +13,7 @@ from django.utils.module_loading import import_string
 from apps.etl.context import CacheContext, ApplyContext
 from apps.etl.models import FeatureShuntConf, FeatureRelevanceConf
 from apps.remote.call import DataPrepare
+from studio.fecture_comment_handle.featrue_process import FeatureProcess
 
 from vendor.utils.phone_operator_judge import PhoneOperator
 from vendor.errors.contact_error import *
@@ -54,16 +55,20 @@ class Courier(object):
         return self.data_analysis()
 
     def data_analysis(self):
-        obj_string = cons.LP_BASE_HANDLE + cons.HANDLE_COMBINE\
+        obj_string = cons.LP_BASE_HANDLE + cons.HANDLE_COMBINE \
                      + 'lp_' + self.feature_name + cons.HANDLE_COMBINE + cons.HANDLE_CLASS
         try:
-            obj = import_string(obj_string)
-            handler = obj(self.useful_data)
+            feature_obj = FeatureProcess(self.feature_name, self.useful_data)
+            ret = feature_obj.run()
+            if not ret:
+                obj = import_string(obj_string)
+                handler = obj(self.useful_data)
+                logger.info('get handle --%s--' % obj_string)
+                ret = handler.handle()
         except Exception as e:
             logger.error('%s \nhandle init error , massage is :\n %s' % (obj_string, e))
             raise HandleInitializeFailed
-        logger.info('get handle --%s--' % obj_string)
-        ret = handler.handle()
+
         logger.info('Handle completed, result is %s' % ret)
         if not ret:
             logger.error('handle work complete, nothing return: %s' % obj_string)
@@ -76,8 +81,6 @@ class Courier(object):
     def get_useful_data(self, data_identity):
         dp = DataPrepare(data_identity, self.apply_id, self.feature_conf[data_identity])
         data = dp.get_original_data()
-        # TODO 原始数据预处理
-        # TODO *************
         return data
 
     def get_general_data(self):
