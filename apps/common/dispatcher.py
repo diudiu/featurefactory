@@ -64,6 +64,7 @@ def pretreatment(apply_id):
     """
     arg_base = ArgsContext(apply_id)
     arg_data = arg_base.load()
+    arg_data={}
     if arg_data:
         return 1
     arg_conf = InterfaceFieldRel.objects.filter(
