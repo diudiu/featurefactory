@@ -57,16 +57,17 @@ class FeatureProcess(object):
             self.feature_conf = eval(self.conf_str)
             json_path_parser = JSONPathParser()
             value_list = json_path_parser.parse(self.data, self.json_path_list)
-            seq = []
+            result = []
             for i in value_list:
-                seq = seq + i[3]
+                result = result + i[3]
             if self.map_and_filter_chain:
-                seq = func_exec_chain(seq, self.map_and_filter_chain)
-            if not self.reduce:
-                raise FeatureProcessError
-            value = func_exec_chain(seq, self.reduce)
+                result = func_exec_chain(result, self.map_and_filter_chain)
+            # if not self.reduce:
+            #     raise FeatureProcessError
+            if self.reduce:
+                result = func_exec_chain(result, self.reduce)
             if self.operator_chain:
-                value = func_exec_operator_chain(value, self.operator_chain)
+                result = func_exec_operator_chain(result, self.operator_chain)
         except FeatureProcessError as e:
             # TODO log here
             print e.message
@@ -75,7 +76,7 @@ class FeatureProcess(object):
             # TODO log here
             print e.message
             return None
-        return {self.feature_name: value}
+        return {self.feature_name: result}
 
     def load_feature_config(self):
         """从特征配置的文件中加载特征的配置，放入特征处理的上下文中

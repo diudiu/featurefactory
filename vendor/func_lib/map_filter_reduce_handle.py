@@ -23,6 +23,11 @@ def map_string_to_datetime(seq):
     return seq
 
 
+def filter_not_null(seq):
+    seq = filter(lambda x: x not in (None, '', {}, [], ()), seq)
+    return seq
+
+
 def reduce_singo_value(seq):
     # if slice:
     #     seq = seq[0][int(slice[0]):int(slice[1])]
@@ -40,6 +45,7 @@ def reduce_sub(seq):
     value = reduce(lambda x, y: x - y, seq)
     return value
 
+
 # def reduce_sub_datetime(seq):
 #     value =
 #     return value
@@ -48,3 +54,8 @@ def reduce_sub(seq):
 def reduce_mul(seq):
     value = reduce(lambda x, y: x * y, seq)
     return value
+
+
+# def reduce_list_len(seq):
+#     value = len(seq)
+#     return value
