@@ -3,7 +3,9 @@
 from jsonparse_handle import JSONPathParser
 from exec_chain_handle import func_exec_chain
 from vendor.errors.feature import FeatureProcessError
+from studio.fecture_comment_handle.config import *
 from vendor.utils.defaults import *
+
 
 class FeatureProcess(object):
     def __init__(self, feature_name, data):
@@ -29,11 +31,13 @@ class FeatureProcess(object):
             :attr json_path_parser  JSONPath的解析对象
         """
         self.feature_name = feature_name
+        conf_str = self.feature_name + '_config'
+        self.feature_conf = eval(conf_str)
         self.data = data
-        self.default_value = self.load_feature_config()['default_value']
-        self.json_path_list = self.load_feature_config()['json_path_list']
-        self.map_and_filter_chain = self.load_feature_config()['map_and_filter_chain']
-        self.reduce_chain = self.load_feature_config()['reduce_chain']
+        self.default_value = self.feature_conf['default_value']
+        self.json_path_list = self.feature_conf['json_path_list']
+        self.map_and_filter_chain = self.feature_conf['map_and_filter_chain']
+        self.reduce_chain = self.feature_conf['reduce_chain']
 
     def run(self):
         """ 实际执行的方法，获取特征加工的结果
@@ -62,13 +66,9 @@ class FeatureProcess(object):
         Raises:
             FeatureConfigLoadError  自定义的特征配置加载异常，继承自FeatureProcessError
         """
-        feature_config = {
-            "feature_name": "age",
-            "feature_data_type": "int",
-            "default_value": "PositiveSignedTypeDefault",
-            "json_path_list": [("age", "$..content.age", "f_assert_not_null->f_assert_must_digit")],
-            "map_and_filter_chain": "",
-            "reduce_chain": "reduce_singo_value"
-        }
-
-        return feature_config
+        conf_str = self.feature_name + '_config'
+        try:
+            self.feature_conf = eval(conf_str)
+        except (NameError, TypeError) as e:
+            # TODO logger
+            raise
