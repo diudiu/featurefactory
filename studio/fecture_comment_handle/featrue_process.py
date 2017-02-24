@@ -80,7 +80,7 @@ class FeatureProcess(object):
             if self.reduce_chain:
                 result = func_exec_chain(result, self.reduce_chain)
             if self.l_map_and_filter_chain:
-                result = func_exec_operator_chain(result, self.l_map_and_filter_chain)
+                result = func_exec_chain(result, self.l_map_and_filter_chain)
 
         except NameError as e:
             logging.error(e.message)
