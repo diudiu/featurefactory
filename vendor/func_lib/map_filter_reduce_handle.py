@@ -2,6 +2,15 @@
 
 from vendor.errors.feature import FeatureProcessError
 from datetime import datetime
+import sys
+import os
+
+from django.core.wsgi import get_wsgi_application
+
+home_path = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+sys.path.append(home_path)
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "featurefactory.settings")
+get_wsgi_application()
 
 
 def m_to_int(result):
@@ -30,6 +39,20 @@ def m_get_mon_sub(result):
         result = map(lambda x: datetime.strptime(x, "%Y-%m-%d %H:%M:%S"), result)
 
     result = (result[0] - result[1]).days / 30.0
+    result = round(result, 2)
+    return result
+
+
+def m_get_date_to_now_years(result):
+    """比较传进来的['2016-01-01'] or '2016-01-01' 距离现在的年数"""
+    if isinstance(result, list):
+        result = result[0]
+    try:
+        result = datetime.strptime(result, "%Y-%m-%d")
+    except:
+        result = datetime.strptime(result, "%Y-%m-%d %H:%M:%S")
+
+    result = (datetime.now() - result).days / 365.0
     result = round(result, 2)
     return result
 
@@ -143,3 +166,7 @@ def r_sub(result):
 def r_mul(result):
     result = reduce(lambda x, y: x * y, result)
     return result
+
+
+if __name__ == '__main__':
+    print m_get_date_to_now_years(['2016-01-01'])
