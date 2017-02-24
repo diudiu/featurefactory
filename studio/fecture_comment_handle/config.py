@@ -6,8 +6,8 @@ age_config = {
     "default_value": "PositiveSignedTypeDefault",
     "json_path_list": [("age", "$..content.age", "f_assert_not_null->f_assert_must_digit_or_float")],
     "map_and_filter_chain": "",
-    "reduce": "reduce_singo_value",
-    "operator_chain": ''
+    "reduce_chain": "",
+    "operator_chain": 'value[0]'
 }
 
 apply_register_duration_config = {
@@ -19,7 +19,7 @@ apply_register_duration_config = {
         ("registration_on", "$.portrait_data.registration_on", "f_assert_not_null->f_assert_must_basestring")
     ],
     "map_and_filter_chain": "map_to_slice(0,10)->map_string_to_datetime",
-    "reduce": "reduce_sub",
+    "reduce_chain": "reduce_sub",
     "operator_chain": "value.days->value/30.0->round(value, 2)->#value>=0"
 }
 
@@ -31,7 +31,7 @@ car_count_config = {
         ("application_on", "$.result", "f_assert_must_list"),
     ],
     "map_and_filter_chain": "filter_not_null",
-    "reduce": "",
+    "reduce_chain": "",
     "operator_chain": "len(value)"
 }
 
@@ -43,6 +43,7 @@ car_number_config = {
         ("license_no", "$..license_no", ""),
     ],
     "map_and_filter_chain": "filter_not_null",
-    "reduce": "",
+    "reduce_chain": "",
     "operator_chain": ""
 }
+

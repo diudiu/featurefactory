@@ -44,14 +44,14 @@ class FeatureProcess(object):
         self.default_value = None
         self.json_path_list = None
         self.map_and_filter_chain = None
-        self.reduce = None
+        self.reduce_chain = None
         self.operator_chain = None
 
     def _load(self):
         self.default_value = self.feature_conf['default_value']
         self.json_path_list = self.feature_conf['json_path_list']
         self.map_and_filter_chain = self.feature_conf['map_and_filter_chain']
-        self.reduce = self.feature_conf['reduce']
+        self.reduce_chain = self.feature_conf['reduce_chain']
         self.operator_chain = self.feature_conf['operator_chain']
 
     def run(self):
@@ -70,10 +70,9 @@ class FeatureProcess(object):
                 result = result + i[3]
             if self.map_and_filter_chain:
                 result = func_exec_chain(result, self.map_and_filter_chain)
-            # if not self.reduce:
-            #     raise FeatureProcessError
-            if self.reduce:
-                result = func_exec_chain(result, self.reduce)
+
+            if self.reduce_chain:
+                result = func_exec_chain(result, self.reduce_chain)
             if self.operator_chain:
                 result = func_exec_operator_chain(result, self.operator_chain)
         except FeatureProcessError as e:

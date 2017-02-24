@@ -31,11 +31,11 @@ def f_assert_must_dict(value_list):
     return value_list
 
 
-# def f_assert_must_digit(value_list):
-#     for value in value_list:
-#         if not str(value).isdigit():
-#             raise FeatureProcessError()
-#     return value_list
+def f_assert_must_digit(value_list):
+    for value in value_list:
+        if not str(value).isdigit():
+            raise FeatureProcessError()
+    return value_list
 
 
 def f_assert_must_basestring(value_list):

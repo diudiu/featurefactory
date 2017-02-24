@@ -28,34 +28,18 @@ def filter_not_null(seq):
     return seq
 
 
-def reduce_singo_value(seq):
-    # if slice:
-    #     seq = seq[0][int(slice[0]):int(slice[1])]
-    # else:
-    value = seq[0]
-    return value
-
-
 def reduce_add(seq):
-    value = reduce(lambda x, y: x + y, seq)
-    return value
+    result = reduce(lambda x, y: x + y, seq)
+    return result
 
 
 def reduce_sub(seq):
-    value = reduce(lambda x, y: x - y, seq)
-    return value
-
-
-# def reduce_sub_datetime(seq):
-#     value =
-#     return value
+    result = reduce(lambda x, y: x - y, seq)
+    return result
 
 
 def reduce_mul(seq):
-    value = reduce(lambda x, y: x * y, seq)
-    return value
+    result = reduce(lambda x, y: x * y, seq)
+    return result
 
 
-# def reduce_list_len(seq):
-#     value = len(seq)
-#     return value
