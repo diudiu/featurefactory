@@ -17,7 +17,7 @@ def func_exec_chain(data, chains):
                 args = f.group(2).split(',')
             func = eval(func)
         except:
-            raise FeatureProcessError()
+            raise FeatureProcessError("exec_chain Error: don't find function %s" % func)
         if args:
             data = func(data, args)
         else:
@@ -33,11 +33,11 @@ def func_exec_operator_chain(value, chains):
             if judge:
                 continue
             else:
-                raise FeatureProcessError
+                raise FeatureProcessError('exec_operator_chain Error value: %s assert: %s' % (value, operator[1:]))
         try:
             value = eval(operator)
         except:
-            raise FeatureProcessError()
+            raise FeatureProcessError('exec_operator_chain Error value: %s operator: %s'% (value, operator))
     return value
 
 if __name__ == '__main__':
