@@ -29,17 +29,17 @@ def filter_not_null(seq):
 
 
 def reduce_add(seq):
-    value = reduce(lambda x, y: x + y, seq)
-    return value
+    result = reduce(lambda x, y: x + y, seq)
+    return result
 
 
 def reduce_sub(seq):
-    value = reduce(lambda x, y: x - y, seq)
-    return value
+    result = reduce(lambda x, y: x - y, seq)
+    return result
 
 
 def reduce_mul(seq):
-    value = reduce(lambda x, y: x * y, seq)
-    return value
+    result = reduce(lambda x, y: x * y, seq)
+    return result
 
 
