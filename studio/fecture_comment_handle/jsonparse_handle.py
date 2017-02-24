@@ -31,7 +31,7 @@ class JSONPathParser(object):
             if value:
                 value = func_exec_chain(value, assert_chain)
             else:
-                raise FeatureProcessError
+                raise FeatureProcessError('(%s, %s) jsonpath value is null ' % (key, path))
 
             json_path_value.append((key, path, assert_chain, value))
 
