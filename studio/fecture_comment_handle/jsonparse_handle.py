@@ -35,7 +35,6 @@ class JSONPathParser(object):
 
             json_path_value.append((key, path, assert_chain, value))
 
-        print json_path_value
         return json_path_value
 
 if __name__ == '__main__':

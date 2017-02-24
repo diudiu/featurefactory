@@ -47,3 +47,14 @@ car_number_config = {
     "operator_chain": ""
 }
 
+cur_company_config = {
+    "feature_name": "cur_company",
+    "feature_data_type": "string",
+    "default_value": "StringTypeDefault",
+    "json_path_list": [
+        ("work_exp_form", "$..work_exp_form", "f_assert_must_list"),
+    ],
+    "map_and_filter_chain": "map_get_new_list(work_end,comp_name)",
+    "reduce_chain": "",
+    "operator_chain": "sorted(value, key=lambda x: x[0], reverse=True)[0][1]->#value != ''"
+}

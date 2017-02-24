@@ -68,6 +68,8 @@ class FeatureProcess(object):
             result = []
             for i in value_list:
                 result = result + i[3]
+            if len(result) == 1 and isinstance(result[0], list):
+                result = result[0]
             if self.map_and_filter_chain:
                 result = func_exec_chain(result, self.map_and_filter_chain)
 
@@ -75,14 +77,16 @@ class FeatureProcess(object):
                 result = func_exec_chain(result, self.reduce_chain)
             if self.operator_chain:
                 result = func_exec_operator_chain(result, self.operator_chain)
-        except FeatureProcessError as e:
-            # TODO log here
-            print e.message
-            return {self.feature_name: eval(self.default_value)}
+
         except NameError as e:
             # TODO log here
             print e.message
             return None
+        except Exception as e:
+            # TODO log here
+            print e.message
+            return {self.feature_name: eval(self.default_value)}
+        print result
         return {self.feature_name: result}
 
     def load_feature_config(self):
