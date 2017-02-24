@@ -4,9 +4,12 @@ from vendor.errors.feature import FeatureProcessError
 
 
 def f_assert_not_null(value_list):
-    for value in value_list:
+    tmp = value_list
+    if not isinstance(tmp, list):
+        tmp = [tmp]
+    for value in tmp:
         if value in (None, '', {}, [], ()):
-            raise FeatureProcessError('%s f_assert_not_null Error' % value_list)
+            raise FeatureProcessError("value:'%s' f_assert_not_null Error" % value_list)
     return value_list
 
 
@@ -59,6 +62,11 @@ def f_assert_must_between(value_list, args):
             raise FeatureProcessError('%s f_assert_must_between %s Error' % (value_list, args))
     return value_list
 
+
+def f_assert_seq0_gte_seq1(value_list):
+    if not value_list[0] >= value_list[1]:
+        raise FeatureProcessError('%s f_assert_seq0_gte_seq1 Error' % value_list)
+    return value_list
 
 if __name__ == '__main__':
     print f_assert_must_digit_or_float([1, '1.0'])

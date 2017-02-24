@@ -6,6 +6,10 @@ from vendor.errors.feature import FeatureProcessError
 from studio.fecture_comment_handle.config import *
 from vendor.utils.defaults import *
 
+import logging
+
+logger = logging.getLogger('apps.common')
+
 
 class FeatureProcess(object):
     def __init__(self, feature_name, data):
@@ -43,16 +47,16 @@ class FeatureProcess(object):
         self.data = data
         self.default_value = None
         self.json_path_list = None
-        self.map_and_filter_chain = None
+        self.f_map_and_filter_chain = None
         self.reduce_chain = None
-        self.operator_chain = None
+        self.l_map_and_filter_chain = None
 
     def _load(self):
         self.default_value = self.feature_conf['default_value']
         self.json_path_list = self.feature_conf['json_path_list']
-        self.map_and_filter_chain = self.feature_conf['map_and_filter_chain']
+        self.f_map_and_filter_chain = self.feature_conf['f_map_and_filter_chain']
         self.reduce_chain = self.feature_conf['reduce_chain']
-        self.operator_chain = self.feature_conf['operator_chain']
+        self.l_map_and_filter_chain = self.feature_conf['l_map_and_filter_chain']
 
     def run(self):
         """ 实际执行的方法，获取特征加工的结果
@@ -70,23 +74,20 @@ class FeatureProcess(object):
                 result = result + i[3]
             if len(result) == 1 and isinstance(result[0], list):
                 result = result[0]
-            if self.map_and_filter_chain:
-                result = func_exec_chain(result, self.map_and_filter_chain)
+            if self.f_map_and_filter_chain:
+                result = func_exec_chain(result, self.f_map_and_filter_chain)
 
             if self.reduce_chain:
                 result = func_exec_chain(result, self.reduce_chain)
-            if self.operator_chain:
-                result = func_exec_operator_chain(result, self.operator_chain)
+            if self.l_map_and_filter_chain:
+                result = func_exec_operator_chain(result, self.l_map_and_filter_chain)
 
         except NameError as e:
-            # TODO log here
-            print e.message
+            logging.error(e.message)
             return None
         except Exception as e:
-            # TODO log here
-            print e.message
+            logging.error(e.message)
             return {self.feature_name: eval(self.default_value)}
-        print result
         return {self.feature_name: result}
 
     def load_feature_config(self):
