@@ -68,7 +68,7 @@ class FeatureProcess(object):
             self.feature_conf = eval(self.conf_str)
             self._load()
             json_path_parser = JSONPathParser()
-            value_list = json_path_parser.parse(self.data, self.json_path_list)
+            value_list = json_path_parser.parsex(self.data, self.json_path_list)
             result = []
             for i in value_list:
                 result = result + i[3]

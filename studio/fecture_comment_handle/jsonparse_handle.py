@@ -8,7 +8,7 @@ from vendor.errors.feature import FeatureProcessError
 
 class JSONPathParser(object):
 
-    def parse(self, data, json_path_list):
+    def parsex(self, data, json_path_list):
         """
         Args:
             :param data 实际的数据
@@ -52,4 +52,4 @@ if __name__ == '__main__':
                         "f_assert_not_null->f_assert_must_digit")]
 
     parse = JSONPathParser()
-    parse.parse(data, json_path_list)
+    parse.parsex(data, json_path_list)
