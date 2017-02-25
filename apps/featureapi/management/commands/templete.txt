@@ -1,0 +1,9 @@
+%s_config = {
+    "feature_name": %s,
+    "default_value": %s,
+    "feature_data_type": %s,     
+    "json_path_list": [],
+    "f_map_and_filter_chain": "",
+    "reduce_chain": "",
+    "l_map_and_filter_chain": "",
+}

@@ -31,4 +31,4 @@ def check_mobile(mobile):
 
 
 if __name__ == '__main__':
-    check_mobile('150 3155 6970')
+    check_mobile('')

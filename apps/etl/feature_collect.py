@@ -18,14 +18,15 @@ logger = logging.getLogger("apps.etl")
 class CollectFeature(object):
 
     def __init__(self, base_data):
-        self.feature_list = base_data.get('feature_list', None)
+        self.feature_config = base_data['feature_conf']
+        self.feature_list = self.feature_config.keys()
         self.feature_ret = {}
         self.error_list = []
         self.apply_id = base_data.get('apply_id', None)
 
     def get_feature_value(self):
         for feature_name in self.feature_list:
-            courier = Courier(feature_name, self.apply_id)
+            courier = Courier(feature_name, self.feature_config[feature_name], self.apply_id)
             ret = courier.get_feature()
             if ret:
                 self.feature_ret.update(ret)

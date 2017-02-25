@@ -100,11 +100,11 @@ USE_TZ = False
 # MEDIA_URL = '/media/'
 #
 # TEMPLATE_DIRS = (os.path.join(BASE_DIR,  'templates'),)
+
+# AUTH_USER_MODEL = ''
 #
-# AUTH_USER_MODEL = 'usercenter.UserModel'
-#
-# LOGIN_URL = '/accounts/login/'
-# LOGIN_REDIRECT_URL = '/accounts/home/'
+# LOGIN_URL = ''
+# LOGIN_REDIRECT_URL = ''
 
 # from .home_settings import *
 from .dev_settings import *
