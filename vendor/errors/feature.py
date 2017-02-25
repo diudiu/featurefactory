@@ -11,7 +11,7 @@ class FeatureProcessError(ServerError):
 
     def __init__(self, message=None):
         if message:
-            self.log_message = message
+            self.message = message
 
         super(FeatureProcessError, self).__init__(self.message)
 
