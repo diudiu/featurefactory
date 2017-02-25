@@ -66,6 +66,7 @@ class Handle(object):
         特征名称: 'overspeed_count' 超速次数 str
         """
         result = {'overspeed_count': UnsignedIntTypeDefault}
+
         try:
             month_times = 0
             for card, card_record in self.data.items():
