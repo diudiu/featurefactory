@@ -65,11 +65,6 @@ class TestPlugin(unittest.TestCase):
         res = h.handle()
         self.assertEqual(res, result)
 
-        # self.data['result'] = 1
-        # h = Handle(self.data)
-        # res = h.handle()
-        print res
-
 
 if __name__ == '__main__':
     unittest.main()

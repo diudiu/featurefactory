@@ -9,11 +9,13 @@
 """
 
 import logging
+from vendor.utils.defaults import ListTypeDefault
 
 logger = logging.getLogger('apps.common')
 
 
 class Handle(object):
+    name = "car_number"
 
     def __init__(self, data):
         self.data = data
@@ -32,7 +34,7 @@ class Handle(object):
         特征名称: 'car_number' 车牌号 list
         """
 
-        result = {"car_number": 9999}
+        result = {self.name: ListTypeDefault}
         try:
             base_data = self.data["result"]
             if base_data and isinstance(base_data, list):  # 判断车辆信息列表不为空且为list
@@ -42,7 +44,7 @@ class Handle(object):
                         base_data.remove(data)  # 删除列表中为空的元素
                     else:
                         car_list.append(data.get("license_no"))  # 遍历车辆信息,提取所有车牌号组成list
-                result["car_number"] = car_list
+                result[self.name] = car_list
         except Exception as e:
                 logging.error(e.message)
         finally:

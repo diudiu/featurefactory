@@ -13,7 +13,8 @@ data = {
         "imsi": ""
     }
 }
-results = [0, "0", 1, 3]
+test = [0, "0", 1, 3]
+result = [1, 0, 0, 0]
 
 
 class TestPlugin(unittest.TestCase):
@@ -23,13 +24,12 @@ class TestPlugin(unittest.TestCase):
 
     def test_lp_is_pingan_other_loan(self):
         data = self.data.copy()
-        a = open('res.txt', 'w+')
-        for result in results:
-            data['result'] = result
+        for t, r in zip(test, result):
+            data['result'] = t
             handler = Handle(data)
             res = handler.handle()
-            a.write(json.dumps(res) + '\n')
-        a.close()
+            assert res.values()[0] == r
+
 
 if __name__ == '__main__':
     unittest.main()

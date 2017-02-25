@@ -8,11 +8,14 @@
     Change Activity:
 """
 import logging
-logger = logging.getLogger('apps.common')
+
 from datetime import datetime
 from vendor.utils.defaults import PositiveSignedTypeDefault
 from apps.common.cache import feature_global_code
 from vendor.utils.analyzer import GenericUtils
+
+logger = logging.getLogger('apps.common')
+
 
 class Handle(object):
 
@@ -48,6 +51,3 @@ class Handle(object):
             logging.error(e.message)
         finally:
             return result
-
-
-

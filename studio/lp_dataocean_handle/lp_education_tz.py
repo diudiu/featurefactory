@@ -10,6 +10,12 @@
 
 import numpy as np
 
+import logging
+
+from vendor.utils.defaults import *
+
+logger = logging.getLogger('apps.common')
+
 
 class Handle(object):
 
@@ -27,23 +33,19 @@ class Handle(object):
         特征名称：education_tz      学历类型
         """
 
-        result = {'education_tz': 9999}
+        result = {'education_tz': PositiveSignedTypeDefault}
 
         try:
             edu_exp_form = self.data['edu_exp_form']
-            if not isinstance(edu_exp_form, list):
-                return result
             degree_list = []
             for edu_exp in edu_exp_form:
                 degree = edu_exp.get('degree', None)
-                if not isinstance(degree, (basestring, int)):
-                    return edu_exp_form
-                else:
+                if str(degree).isdigit():
                     degree_list.append(int(degree))
-            result['education_tz'] = edu_exp_form[
-                np.argmin(degree_list)].get('tz', None)
-        except Exception:
-            # TODO log this error
-            return result
+            tz = edu_exp_form[np.argmin(degree_list)]['tz']
+            if str(tz).isdigit():
+                result['education_tz'] = edu_exp_form[np.argmin(degree_list)]['tz']
+        except Exception as e:
+            logging.error(e.message)
 
         return result

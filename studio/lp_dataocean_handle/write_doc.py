@@ -15,6 +15,7 @@ def get_file_list():
 
 
 def write_doc(files_list):
+
     k = open('../doc.txt', 'w+')
     for file_name in files_list:
         if '__init__' in file_name\
@@ -35,7 +36,6 @@ def write_doc(files_list):
         k.write('-' * length + '\n')
         k.write(file_name + '    Document   ----------\n')
         k.write(useful_doc + '\n\n')
-
 
 if __name__ == '__main__':
     file_list = get_file_list()

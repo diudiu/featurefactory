@@ -7,6 +7,10 @@
     Date:  2017/02/10
     Change Activity:
 """
+import logging
+
+from vendor.utils.defaults import PositiveSignedTypeDefault
+logger = logging.getLogger('apps.common')
 
 
 class Handle(object):
@@ -24,7 +28,7 @@ class Handle(object):
         特征名称：cur_work_status  当前工作状态
         """
 
-        result = {'cur_work_status': '9999'}
+        result = {'cur_work_status': PositiveSignedTypeDefault}
 
         try:
             cur_work_status = self.data.get('cur_status', None)
@@ -36,8 +40,7 @@ class Handle(object):
                 result['cur_work_status'] = 2
             elif cur_work_status == '在职，暂无跳槽打算':
                 result['cur_work_status'] = 3
-        except Exception:
-            # TODO log this error
-            return result
+        except Exception as e:
+            logger.error(e.message)
 
         return result

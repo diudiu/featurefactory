@@ -7,13 +7,15 @@
     Date:  2017/02/17
     Change Activity:
 """
-from vendor.utils.defaults import UnsignedIntTypeDefault
 import logging
+
+from vendor.utils.defaults import PositiveSignedTypeDefault
 
 logger = logging.getLogger('apps.common')
 
 
 class Handle(object):
+    name = 'complete_degree'
 
     def __init__(self, data):
         self.data = data
@@ -31,15 +33,15 @@ class Handle(object):
         特征名称: 'complete_degree'  简历完成度 int
         """
 
-        result = {"complete_degree": UnsignedIntTypeDefault}
+        result = {self.name: PositiveSignedTypeDefault}
+
         try:
-            base_data = self.data["complete_degree"]
+            base_data = self.data[self.name]
             if str(base_data).isdigit():  # 检验简历完成度是否只由数字组成,是则转化为int类型
                 base_data = int(base_data)
-                result["complete_degree"] = base_data
-
+                result[self.name] = base_data
         except Exception as e:
                 logging.error(e.message)
-        finally:
-            return result
+
+        return result
 

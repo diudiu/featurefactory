@@ -7,12 +7,14 @@
     Date:  2017/2/17
     Change Activity:
 """
-
 import logging
-logger = logging.getLogger('apps.common')
+
 from vendor.utils.defaults import PositiveSignedTypeDefault
 from apps.common.cache import feature_global_code
 from vendor.utils.analyzer import GenericUtils
+
+logger = logging.getLogger('apps.common')
+
 
 class Handle(object):
 
@@ -35,7 +37,6 @@ class Handle(object):
 
         try:
             staff_count = int(self.data['content']['staff_count'])
-
             code_collection = feature_global_code.get("cur_employee_number")
             mapped_value = GenericUtils.get_mapped_value(code_collection, staff_count)
             result['cur_employee_number'] = mapped_value

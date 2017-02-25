@@ -1,10 +1,10 @@
 # -*- coding:utf-8 -*-
 """
-    License SYPH-L.
-    Copyright (c) 2013- SYPH, All Rights Reserved.
+    License DIGCREDIT-L.
+    Copyright (c) 2013- DIGCREDIT, All Rights Reserved.
     -----------------------------------------------------------
-    Author: ZL
-    Date:  2017/01/20
+    Author: Z.L
+    Date:  2017/02/20
     Change Activity:
 """
 import logging
@@ -22,12 +22,13 @@ class Handle(object):
 
         """
         接口名称：贷款信息
-        字段名称：
-        'org_names': 涉及机构数 int
+        字段名称：'org_names': 涉及机构数 int
+
+        计算逻辑: 贷款信息接口返回信息包括按月汇总的银行生贷款的公司数量,
+                 计算银行机构及非银机构发生贷款的公司数量总和
 
         输出:
-        特征名称:
-        'pingan_multi_loan_count': 多头借贷公司数量 int
+        特征名称: 'pingan_multi_loan_count': 多头借贷公司数量 int
         """
         result = {'pingan_multi_loan_count': PositiveSignedTypeDefault}
         try:

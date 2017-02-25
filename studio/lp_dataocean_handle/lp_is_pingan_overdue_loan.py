@@ -9,8 +9,11 @@
 """
 
 import logging
+
+from vendor.utils.defaults import BooleanTypeDefault
+
 logger = logging.getLogger('apps.common')
-from vendor.utils.defaults import UnsignedIntTypeDefault
+
 
 class Handle(object):
 
@@ -27,7 +30,7 @@ class Handle(object):
         输出：是否命中凭安逾期名单（近24个月）
         """
 
-        result = {"is_pingan_overdue_loan": UnsignedIntTypeDefault}
+        result = {"is_pingan_overdue_loan": BooleanTypeDefault}
 
         try:
             if self.data['result'] == 0:

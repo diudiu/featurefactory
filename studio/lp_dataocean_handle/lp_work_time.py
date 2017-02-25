@@ -14,6 +14,7 @@ from vendor.utils.defaults import PositiveSignedTypeDefault
 import logging
 logger = logging.getLogger('apps.common')
 
+
 class Handle(object):
 
     def __init__(self, data):
@@ -22,17 +23,16 @@ class Handle(object):
     def handle(self):
         """
         接口名称：猎聘
-        字段名称：work_exp_form   工作信息
+        字段名称： work_exp_form   工作信息
                   work_start      工作经历开始时间
 
         输出：
-        特征名称：work_time       工作时间
+        特征名称： work_time       工作时间
         """
         work_time_dic = {'work_time': PositiveSignedTypeDefault}
         try:
             work_exp_form = self.data['work_exp_form']
             assert type(work_exp_form) == list
-           # TODO 计算维度
             work_start_list = []
             for work_exp in work_exp_form:
                 work_start = work_exp.get('work_start', None)

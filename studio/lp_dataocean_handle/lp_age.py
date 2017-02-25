@@ -7,14 +7,15 @@
     Date:  2017/02/17
     Change Activity:
 """
-from vendor.utils.defaults import PositiveSignedTypeDefault
-
 import logging
+
+from vendor.utils.defaults import *
 
 logger = logging.getLogger('apps.common')
 
 
 class Handle(object):
+    name = 'age'
 
     def __init__(self, data):
         self.data = data
@@ -32,13 +33,13 @@ class Handle(object):
         特征名称: 'age': 年龄 int
         """
 
-        result = {'age': PositiveSignedTypeDefault}
+        result = {self.name: PositiveSignedTypeDefault}
         try:
-            base_data_age = self.data["content"]["age"]    # 提取年龄字段
-            if isinstance(base_data_age, int) and 0 <= base_data_age <= 100:  # 判断年龄是否是int且在0-100之间
-                result['age'] = base_data_age
+            base_data_age = self.data["content"][self.name]    # 提取年龄字段
+            if str(base_data_age).isdigit() and 0 <= int(base_data_age) <= 100:  # 判断年龄是否是int且在0-100之间
+                result[self.name] = int(base_data_age)
 
         except Exception as e:
                 logging.error(e.message)
-        finally:
-            return result
+
+        return result

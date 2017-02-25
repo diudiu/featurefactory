@@ -2,7 +2,7 @@
 
 import unittest
 
-from studio.lp_dataocean_handle.lp_court_zhixing_a_s import Handle
+from studio.lp_dataocean_handle.lp_is_court_zhixing import Handle
 
 data = {
     "result": "00",

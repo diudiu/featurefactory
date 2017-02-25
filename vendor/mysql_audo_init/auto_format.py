@@ -14,6 +14,7 @@ from vendor.mysql_audo_init.data_source_info_init import init_data_source
 from vendor.mysql_audo_init.feature_field_rel_init import init_feature_field
 from vendor.mysql_audo_init.interface_info_init import init_interface_info
 
+
 def run():
     add_client_overview()
     init_data_source()

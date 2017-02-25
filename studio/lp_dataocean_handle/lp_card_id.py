@@ -7,8 +7,10 @@
     Date:  2017/02/17
     Change Activity:
 """
-from vendor.utils.defaults import StringTypeDefault
+
 import logging
+
+from vendor.utils.defaults import StringTypeDefault
 
 logger = logging.getLogger('apps.common')
 
@@ -40,6 +42,6 @@ class Handle(object):
 
         except Exception as e:
                 logging.error(e.message)
-        finally:
-            return result
+
+        return result
 

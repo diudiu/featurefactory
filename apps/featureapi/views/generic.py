@@ -6,7 +6,6 @@
     Date:  2016/12/22
     Change Activity:
 
-
         _==/          i     i           \==_
       /XX/            |\___/|            \XX\
     /XXXX\            |XXXXX|            /XXXX\

@@ -29,6 +29,7 @@
     }
 """
 import logging
+from vendor.utils.defaults import PositiveSignedTypeDefault
 
 logger = logging.getLogger('apps.common')
 
@@ -49,14 +50,14 @@ class Handle(object):
         字段名称:
         'marital_status': 婚姻状况
         """
+        result = {
+            'marital_status': PositiveSignedTypeDefault,
+        }
         try:
-            result = {
-                'marital_status': '9999',
-            }
             if self.data['result'] == '00':
                 base_data = self.data['content']['marital_status']
                 if base_data.isdigit():
-                    result['marital_status'] = base_data
+                    result['marital_status'] = int(base_data) / 10 * 10
         except Exception as e:
             logging.error(e.message)
         return result

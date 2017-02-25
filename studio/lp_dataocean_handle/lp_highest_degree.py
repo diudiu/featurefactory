@@ -12,6 +12,7 @@ import logging
 logger = logging.getLogger('apps.common')
 from vendor.utils.defaults import PositiveSignedTypeDefault
 
+
 class Handle(object):
 
     def __init__(self, data):

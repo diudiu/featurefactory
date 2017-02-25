@@ -7,6 +7,11 @@
     Date:  2017/02/10
     Change Activity:
 """
+import logging
+
+from vendor.utils.defaults import *
+
+logger = logging.getLogger('apps.common')
 
 
 class Handle(object):
@@ -25,28 +30,22 @@ class Handle(object):
         特征名称：industry_change_count       换行次数
         """
 
-        result = {'industry_change_count': 9999}
+        result = {'industry_change_count': PositiveSignedTypeDefault}
 
         try:
             work_exp_form = self.data['work_exp_form']
-            if not isinstance(work_exp_form, list):
-                return result
+
             industry_list = []
             for work_exp in work_exp_form:
                 industry = work_exp.get('industry', None)
-                if not isinstance(industry, (basestring, int)):
-                    return result
-                else:
+                if str(industry).isdigit():
                     industry_list.append(int(industry))
 
-            industry_list_duplicated = list(set(industry_list))
+            industry_list_duplicated = set(industry_list)
             if len(industry_list_duplicated) >= 1:
                 industry_change_count = len(industry_list_duplicated) - 1
-            else:
-                industry_change_count = None
-            result['industry_change_count'] = industry_change_count
-        except Exception:
-            # TODO log this error
-            return result
+                result['industry_change_count'] = industry_change_count
+        except Exception as e:
+            logging.error(e.message)
 
         return result
