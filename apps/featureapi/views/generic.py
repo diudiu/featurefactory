@@ -81,6 +81,6 @@ class FeatureExtract(CsrfExemptMixin, View):
                 cons.RESPONSE_REQUEST_STATUS: ResponseCode.FAILED,
                 cons.RESPONSE_REQUEST_MESSAGE: e.message,
             }
-
+        logger.info('Mission completed request data :\n %s' % data)
         # TODO return JSONResponse
         return JSONResponse(data)

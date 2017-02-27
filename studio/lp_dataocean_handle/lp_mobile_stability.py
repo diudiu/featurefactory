@@ -14,9 +14,8 @@ logger = logging.getLogger('apps.common')
 
 
 class Handle(object):
-    def __init__(self, data, tel_number):
+    def __init__(self, data):
         self.data = data
-        self.tel_number = tel_number
 
     def handle(self):
         """
@@ -33,7 +32,7 @@ class Handle(object):
         try:
             if self.data['result'] == 0:
                 tags = self.data['data']['tags']
-                tel_number = self.tel_number
+                tel_number = '6666666'
                 tel_str = '%s__' % tel_number
 
                 def get_tel_value(strs):

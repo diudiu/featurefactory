@@ -22,17 +22,17 @@ class Handle(object):
     def handle(self):
         """
         天网灰名单
-        data_identity: tianwang_gray
+        data_identity: tianwang_grey
         :return:
         """
         result = {
-            'is_netsky_gray': BooleanTypeDefault
-            }
+            'is_netsky_grey': BooleanTypeDefault
+        }
         try:
             if self.data['result'] == u'00':
-                result['is_netsky_gray'] = 1
+                result['is_netsky_grey'] = 1
             else:
-                result['is_netsky_gray'] = 0
+                result['is_netsky_grey'] = 0
         except Exception as e:
             logging.error(e.message)
         return result

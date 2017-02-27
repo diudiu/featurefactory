@@ -34,7 +34,7 @@ class Handle(object):
 
         result = {'is_pingan_multi_loan': BooleanTypeDefault}
         try:
-            if self.data["result"] == 0:
+            if self.data.get("result", None) == 0:
                 record = self.data.get("data", {}).get("record", [])
                 for i in record:
                     if i.get("classification"):  # 且返回结果不为空,返commit 回命中

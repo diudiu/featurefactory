@@ -25,7 +25,7 @@ class Handle(object):
         输出：其他信贷机构数量（近6个月）
         """
 
-        result = {"pingan_overdue_corp_count": PositiveSignedTypeDefault}
+        result = {"pingan_other_loan_count": PositiveSignedTypeDefault}
 
         try:
             if self.data['result'] == 0:
@@ -36,7 +36,7 @@ class Handle(object):
                         orgNums_list.append(int(v['orgNums']))
                 pingan_ovredue_corp_count = sum(orgNums_list)
 
-                result['pingan_overdue_corp_count'] = pingan_ovredue_corp_count
+                result['pingan_other_loan_count'] = pingan_ovredue_corp_count
         except Exception as e:
             logging.error(e.message)
         return result

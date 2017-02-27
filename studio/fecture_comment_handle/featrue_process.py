@@ -23,21 +23,20 @@ class FeatureProcess(object):
             :attr feature_name  特征名称
             :attr data  从接口获取到的数据
             :attr feature_config_context  特征配置的上下文，配置上下文的数据结构如下：
-                {
-                    "feature_name": "特征名称",
-                    "feature_data_type": "特征的数据类型",
-                    "default_value": "缺省值",
-                    "json_path_list": [
+                "feature_name": 特征名称
+                "feature_data_type": 特征数据类型
+                "default_value": 特征缺省值
+                "json_path_list": [
                     (
-                        "path的key值",
-                        "path的路径，如$..content.age",
-                        "断言链，如f_assert_not_null->f_assert_must_int->f_assert_length_must(10)"
+                        "application_on",   特征名
+                        "$.apply_data.application_on",      jsonpath
+                        "f_assert_not_null->f_assert_must_basestring"     断言链
                     ),
-                    (...)
-                    ],
-                    "map_and_filter_chain": "map和filter的调用链，如m_to_int->m_none_to_zero->f_del_lte(100)->m_all_add(10)",
-                    "reduce_chain": "reduce的处理链，如r_add"
-                }
+                    (...)       数据二
+                ],
+                "f_map_and_filter_chain": "",   前置map
+                "reduce_chain": "",             reduce链
+                "l_map_and_filter_chain": ""    后置map
             :attr function_context  函数库上下文
             :attr json_path_parser  JSONPath的解析对象
         """

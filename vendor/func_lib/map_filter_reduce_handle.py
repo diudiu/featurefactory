@@ -36,7 +36,6 @@ def m_get_mon_sub(result):
 
 def m_dict_key_sort_in_list(result, args):
     """
-
     :param result: [{'20160708': 'gyf'}, {'20180505': 'zme'}, {'20170101': 'zkp'}]
     :param args: ['True'] or ['False']
     :return: [{'20180505': 'zme'}, {'20170101': 'zkp'}, {'20160708': 'gyf'}]

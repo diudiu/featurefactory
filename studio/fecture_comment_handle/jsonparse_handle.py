@@ -48,8 +48,10 @@ if __name__ == '__main__':
         },
     }
 
-    json_path_list = [("age", "$..content.age",
-                        "f_assert_not_null->f_assert_must_digit")]
+    json_path_list = [(
+        "age", "$..content.age",
+        "f_assert_not_null->f_assert_must_digit"
+    )]
 
     parse = JSONPathParser()
     parse.parsex(data, json_path_list)

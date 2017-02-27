@@ -64,7 +64,7 @@ class DataPrepare(object):
         if not origin_data:
             raise  # TODO get data error
         cleaner = DataClean(origin_data, ds_conf.data_origin_type)
-        clear_data = cleaner.worked()
+        clear_data = cleaner.test_worked()
         if not clear_data:
             # TODO 源数据 不符合规范
             raise
