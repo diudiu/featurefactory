@@ -44,7 +44,7 @@ def m_to_sum(result):
 
 def m_get_seq_index_value(result, args):
     """获取序列中指定索引的值"""
-    result = result[int(args[0])]
+    result = result[int(args)]
     return result
 
 
@@ -83,7 +83,7 @@ def m_seq_to_agv(result):
 
 def m_to_bool(result, args=None):
     if args:
-        if result == args[0]:
+        if result == args:
             result = 1
         else:
             result = 0
@@ -96,8 +96,7 @@ def m_to_bool(result, args=None):
 
 
 def m_check_x_in_y(result, args):
-    x = args[0]
-    if x in result:
+    if args in result:
         result = 1
     else:
         result = 0
@@ -130,10 +129,10 @@ def m_dict_key_sort_in_list(result, args):
     """
 
     :param result: [{'20160708': 'gyf'}, {'20180505': 'zme'}, {'20170101': 'zkp'}]
-    :param args: ['True'] or ['False']
+    :param args: True or False
     :return: [{'20180505': 'zme'}, {'20170101': 'zkp'}, {'20160708': 'gyf'}]
     """
-    if eval(args[0]):
+    if args:
         result = sorted(result, key=lambda x: x.keys()[0], reverse=True)
     else:
         result = sorted(result, key=lambda x: x.keys()[0])
@@ -143,10 +142,10 @@ def m_dict_key_sort_in_list(result, args):
 def m_seq_inx0_sort_in_list(result, args):
     """
     :param result: [['20160708', 'gyf'], ['20180505', 'zme'],['20170101', 'zkp']]
-    :param args: ['True'] or ['False']
+    :param args: True or False
     :return: [['20180505', 'zme'], ['20170101', 'zkp'],['20160708', 'gyf']]
     """
-    if eval(args[0]):
+    if args:
         result = sorted(result, key=lambda x: x[0], reverse=True)
     else:
         result = sorted(result, key=lambda x: x[0])
@@ -156,7 +155,7 @@ def m_seq_inx0_sort_in_list(result, args):
 def m_to_slice(result, args):
     """
     :param result: ['abcd','1234556']
-    :param args: ['0','3']
+    :param args: [0,3]
     :return: ['abc','123']
     """
     result = map(lambda x: x[int(args[0]):int(args[1])], result)
@@ -177,10 +176,10 @@ def m_get_dict_value(result, args):
 
     :param result: [{"work_end": "20170605","industry": "string","comp_name": c,},
                     {"comp_name": "腾讯","work_end": "20180809","industry": "string",}]
-    :param args: ['comp_name']
+    :param args: 'comp_name'
     :return: ['百度'， '腾讯']
     """
-    result = map(lambda x: x.get(args[0], None), result)
+    result = map(lambda x: x.get(args, None), result)
     return result
 
 

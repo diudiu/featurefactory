@@ -54,7 +54,7 @@ cur_company_config = {
     "json_path_list": [
         ("work_exp_form", "$..work_exp_form", "f_assert_must_list"),
     ],
-    "f_map_and_filter_chain": "m_get_new_list(work_end,comp_name)->m_seq_inx0_sort_in_list(True)"
+    "f_map_and_filter_chain": "m_get_new_list('work_end','comp_name')->m_seq_inx0_sort_in_list(True)"
                               "->m_get_seq_index_value(0)->m_get_seq_index_value(1)->f_assert_not_null",
     "reduce_chain": "",
     "l_map_and_filter_chain": ""
@@ -105,7 +105,7 @@ folk_config = {
     "json_path_list": [
         ("nation", "$..content.nation", "f_assert_not_null->f_assert_must_basestring"),
     ],
-    "f_map_and_filter_chain": "m_get_seq_index_value(0)->m_check_x_in_y(汉)",
+    "f_map_and_filter_chain": "m_get_seq_index_value(0)->m_check_x_in_y('汉')",
     "reduce_chain": "",
     "l_map_and_filter_chain": ""
 }
