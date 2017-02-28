@@ -17,6 +17,7 @@ class Handle(object):
     def __init__(self, data):
         self.data = data
 
+
     def handle(self):
         """
         接口名称:凭安反欺诈服务接口

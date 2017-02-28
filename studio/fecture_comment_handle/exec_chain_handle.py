@@ -19,6 +19,9 @@ def func_exec_chain(data, chains):
         except:
             raise FeatureProcessError("exec_chain Error: don't find function %s" % func)
         if args:
+            args = [i.replace("\'", '').replace("""\"""", '') if ("\'" or """\"""") in i else eval(i) for i in args]
+            if len(args) == 1:
+                args = args[0]
             data = func(data, args)
         else:
             data = func(data)

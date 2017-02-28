@@ -1,13 +1,15 @@
 # -*- coding:utf-8 -*-
 
 import jsonpath
+import logging
 
 from exec_chain_handle import func_exec_chain
 from vendor.errors.feature import FeatureProcessError
 
+logger = logging.getLogger('apps.common')
+
 
 class JSONPathParser(object):
-
     def parsex(self, data, json_path_list):
         """
         Args:
@@ -28,6 +30,7 @@ class JSONPathParser(object):
         json_path_value = []
         for key, path, assert_chain in json_path_list:
             value = jsonpath.jsonpath(data, path)
+            logging.info((key, path, assert_chain, value))
             if value:
                 value = func_exec_chain(value, assert_chain)
             else:
@@ -37,8 +40,8 @@ class JSONPathParser(object):
 
         return json_path_value
 
-if __name__ == '__main__':
 
+if __name__ == '__main__':
     data = {
         'content': {
             'constellation': '水瓶座',
@@ -47,7 +50,6 @@ if __name__ == '__main__':
             'sex': '男',
         },
     }
-
     json_path_list = [(
         "age", "$..content.age",
         "f_assert_not_null->f_assert_must_digit"
