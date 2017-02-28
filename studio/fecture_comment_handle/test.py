@@ -644,7 +644,7 @@ data = {
             "tp_deal_identifying": "",
             "scope": "矿产品(国家专控除外)、煤炭、钢材、木制品、建材、初级农产品、工程机械、机电设备、金属制品、摩托车、家用电器、文化用品、橡胶制品、化工产品（危险化学品及易制毒化学品除外）销售；普通货物进出口(法律禁止和国家专控除外限制的项目需取得许可证方可经营)。(依法须经批准的项目，经相关部门批准后方可开展经营活动)。",
             "term_start": "2009年09月08日",
-            "address": u'日照市黄海一路兴业国际商城001号楼01单元903号',
+            "address": '广州',
             "regist_capi": "1000 万人民币",
             "partners": [
                 {
@@ -763,7 +763,7 @@ data = {
         "result": "00",
         "result_message": "检测通过或查询有记录",
         "content": {
-            "mobile_area": "北京",
+            "mobile_area": "北京市",
         },
     },
     'register_city_level': {
@@ -816,5 +816,5 @@ def test():
 
 
 if __name__ == '__main__':
-    # data = {'mobile_activeness': data['mobile_activeness']}
+    data = {'max_flight_area': data['max_flight_area']}
     test()

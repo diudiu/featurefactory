@@ -93,7 +93,7 @@ company_addr_city_level_config = {
     "json_path_list": [
         ("address", "$..content.address", "f_assert_not_null->f_assert_must_basestring"),
     ],
-    "f_map_and_filter_chain": "m_get_seq_index_value(0)->m_get_company_addr_city_name->f_assert_not_null->m_city_name_to_code",
+    "f_map_and_filter_chain": "m_get_seq_index_value(0)->m_get_city_name->f_assert_not_null->m_city_name_to_code",
     "reduce_chain": "",
     "l_map_and_filter_chain": ""
 }
@@ -141,7 +141,7 @@ mobile_area_city_level_config = {
     "json_path_list": [
         ("mobile_area", "$..content.mobile_area", "f_assert_not_null->f_assert_must_basestring"),
     ],
-    "f_map_and_filter_chain": "m_get_seq_index_value(0)->m_city_name->f_assert_not_null->m_city_name_to_code",
+    "f_map_and_filter_chain": "m_get_seq_index_value(0)->m_get_city_name->f_assert_not_null->m_city_name_to_code",
     "reduce_chain": "",
     "l_map_and_filter_chain": ""
 }
@@ -153,7 +153,7 @@ register_city_level_config = {
     "json_path_list": [
         ("home_address", "$..content.home_address", "f_assert_not_null->f_assert_must_basestring"),
     ],
-    "f_map_and_filter_chain": "m_get_seq_index_value(0)->m_city_name->f_assert_not_null->m_city_name_to_code",
+    "f_map_and_filter_chain": "m_get_seq_index_value(0)->m_get_city_name->f_assert_not_null->m_city_name_to_code",
     "reduce_chain": "",
     "l_map_and_filter_chain": ""
 }
