@@ -18,7 +18,7 @@ apply_register_duration_config = {
         ("application_on", "$.apply_data.application_on", "f_assert_not_null->f_assert_must_basestring"),
         ("registration_on", "$.portrait_data.registration_on", "f_assert_not_null->f_assert_must_basestring")
     ],
-    "f_map_and_filter_chain": "m_to_slice(0,10)->f_assert_seq0_gte_seq1->m_get_mon_sub",
+    "f_map_and_filter_chain": "m_to_slice(0,10)->f_assert_seq0_gte_seq1->m_get_mon_sub(2)",
     "reduce_chain": "",
     "l_map_and_filter_chain": ''
 }
@@ -69,7 +69,7 @@ mobile_activeness_config = {
         ("tags", "$..tags", "f_assert_must_dict"),
         ("mobile", "$..apply_base.mobile", "f_assert_not_null"),
     ],
-    "f_map_and_filter_chain": "f_mobile_m1_m5_sum_max_seq->m_get_mobile_stability",
+    "f_map_and_filter_chain": "f_mobile_m1_m5_sum_max_seq(['callTimes','calledTimes'])->m_get_mobile_stability",
     "reduce_chain": "",
     "l_map_and_filter_chain": ""
 }

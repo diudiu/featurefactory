@@ -225,7 +225,7 @@ data = {
                                 "morning": 14
                             },
                             "callTimes": '',
-                            "calledTimes": 13,
+                            "calledTimes": '',
                             "smsNotifications": None,
                             "activeShortest": 1,
                             "activeLongest": 79236,
@@ -351,7 +351,7 @@ data = {
                                 "morning": 14
                             },
                             "callTimes": '',
-                            "calledTimes": 103,
+                            "calledTimes": '',
                             "smsNotifications": None,
                             "activeShortest": 1,
                             "activeLongest": 79236,
@@ -497,7 +497,7 @@ data = {
                                 "day": 12,
                                 "morning": 0
                             },
-                            "callTimes": 6,
+                            "callTimes": '',
                             "calledTimes": None,
                             "smsNotifications": None,
                             "activeShortest": 2,
@@ -816,5 +816,5 @@ def test():
 
 
 if __name__ == '__main__':
-    # data = {'apply_register_duration': data['apply_register_duration']}
+    # data = {'mobile_activeness': data['mobile_activeness']}
     test()
