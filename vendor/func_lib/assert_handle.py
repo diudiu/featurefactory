@@ -9,7 +9,7 @@ def f_assert_not_null(value_list):
         tmp = [tmp]
     for value in tmp:
         if value in (None, '', {}, [], ()):
-            raise FeatureProcessError("value:'%s' f_assert_not_null Error" % value_list)
+            raise FeatureProcessError("value: %s f_assert_not_null Error" % value_list)
     return value_list
 
 
@@ -67,6 +67,7 @@ def f_assert_seq0_gte_seq1(value_list):
     if not value_list[0] >= value_list[1]:
         raise FeatureProcessError('%s f_assert_seq0_gte_seq1 Error' % value_list)
     return value_list
+
 
 if __name__ == '__main__':
     print f_assert_must_digit_or_float([1, '1.0'])

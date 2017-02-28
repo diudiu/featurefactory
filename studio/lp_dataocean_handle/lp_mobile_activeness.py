@@ -16,6 +16,7 @@ class Handle(object):
 
     def __init__(self, data,tel_number):
         self.data = data
+        data
         self.tel_number = tel_number
 
 

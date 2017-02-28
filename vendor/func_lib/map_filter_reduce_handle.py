@@ -1,26 +1,44 @@
 # -*- coding:utf-8 -*-
 
-from vendor.errors.feature import FeatureProcessError
-from datetime import datetime
-import sys
 import os
-
-from django.core.wsgi import get_wsgi_application
+import sys
+import math
+from datetime import datetime
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 home_path = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 sys.path.append(home_path)
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "featurefactory.settings")
-get_wsgi_application()
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'featurefactory.settings')
+import django
+django.setup()
+
+from vendor.utils.defaults import PositiveSignedTypeDefault
+from apps.common.models import CityCodeField
+from vendor.errors.feature import FeatureProcessError
 
 
 def m_to_int(result):
     """转换[1, 2.1, '2.1', '2'] 类似序列为 int"""
-    result = map(lambda x: int(eval(str(x))), result)
+    if not isinstance(result, list):
+        result = int(eval(str(result)))
+    else:
+        result = map(lambda x: int(eval(str(x))), result)
+    return result
+
+
+def m_to_power(result):
+    result = map(lambda x: x ** 2, result)
     return result
 
 
 def m_to_len(result):
     result = len(result)
+    return result
+
+
+def m_to_sum(result):
+    result = sum(result)
     return result
 
 
@@ -54,6 +72,57 @@ def m_get_date_to_now_years(result):
 
     result = (datetime.now() - result).days / 365.0
     result = round(result, 2)
+    return result
+
+
+def m_seq_to_agv(result):
+    """返回列表的值得平均数"""
+    result = sum(result) / len(result)
+    return result
+
+
+def m_to_bool(result, args=None):
+    if args:
+        if result == args[0]:
+            result = 1
+        else:
+            result = 0
+    else:
+        if result:
+            result = 1
+        else:
+            result = 0
+    return result
+
+
+def m_check_x_in_y(result, args):
+    x = args[0]
+    if x in result:
+        result = 1
+    else:
+        result = 0
+    return result
+
+
+def m_digit_to_floor(result):
+    if isinstance(result, basestring):
+        result = eval(result)
+    result = math.floor(result)
+    return int(result)
+
+
+def m_marital_status_to_code(result):
+    if isinstance(result, basestring):
+        result = eval(result)
+    result = result/10*10
+    return result
+
+
+def m_sex_to_code(result):
+    if '男' in result:
+        result = 0
+    elif '女' in result:
+        result = 1
     return result
 
 
@@ -145,6 +214,98 @@ def m_get_new_list(result, args):
 
 def f_not_null(result):
     result = filter(lambda x: x not in (None, '', {}, [], ()), result)
+    return result
+
+
+def map_get_mobile_m1_m5_key_seq(mobilestr, tags, key_list):
+    """
+     获取 mobile字符串在 tags字典中 1月到5月存在的key值，返回一个值得列表
+    """
+    tmp = []
+    m_list = ['M1', 'M2', 'M3', 'M4', 'M5']
+    for i in m_list:
+        if i in tags[mobilestr]:
+            value_list = []
+            for key in key_list:
+                value = tags[mobilestr].get(i, {}).get(key, 0)
+                if not str(value).replace('.', '').isdigit():
+                    value = 0
+                value_list.append(value)
+            tmp.append(sum(value_list))
+    return tmp
+
+
+def f_mobile_m1_m5_sum_max_seq(result):
+    """获取 mobile字符串在 tags字典中 1月到5月 某个key值和最大的序列"""
+    tags = result[0]
+    mobile = result[1]
+    tel_str = '%s__' % mobile
+    if tel_str in tags:
+        m1_m5_max = map_get_mobile_m1_m5_key_seq(tel_str, tags, ['callTimes', 'calledTimes'])
+
+    # 其他情况，以前5月加和最大值取m1-m5
+    else:
+        m1_m5_max = []
+        for strs in tags:
+            m1_m5 = map_get_mobile_m1_m5_key_seq(strs, tags, ['callTimes', 'calledTimes'])
+            if sum(m1_m5) > sum(m1_m5_max):
+                m1_m5_max = m1_m5
+    return m1_m5_max
+
+
+def m_get_mobile_stability(result):
+    """获取手机号的稳定度"""
+    total_calltimes_ave = m_seq_to_agv(result)
+    mobile_stability = (sum([i ** 2 for i in result]) / len(result)) ** 0.5
+    mobile_stability = mobile_stability / total_calltimes_ave
+    return round(mobile_stability, 4)
+
+
+def m_get_company_addr_city_name(address):
+    city_name = ''
+    for tip in ['市', '盟', '州']:
+        if tip in address:
+            index = address.find(tip)
+            city_name = address[:index]
+            city_name = city_name.encode('utf-8')
+            if len(city_name) == 3:
+                city_name += '州'
+            break
+    return city_name
+
+
+def m_city_name(city):
+    if "-" in city:
+        city = city.split('-')[1]
+    if ('市' in city) or ('盟' in city) or ('州' in city and len(city) > 6):
+        city = city[:-3]
+    return city
+
+
+def m_city_name_to_code(city_name):
+    ccf = CityCodeField.objects.filter(
+        city_name_cn=city_name,
+        is_delete=False
+    )
+    if not ccf:
+        raise FeatureProcessError('not find %s code config in database table' % city_name)
+    company_addr_city_level = ccf[0].city_level
+    if not str(company_addr_city_level).isdigit():
+        raise FeatureProcessError('%s city_level config error in database table' % city_name)
+    result = int(company_addr_city_level)
+    return result
+
+
+def m_max_flight_area(result):
+    flight_times = result[0]
+    inland_count = result[1]
+    international_count = result[2]
+    if int(flight_times) == 0:
+        result = 3
+    elif int(inland_count) >= int(international_count):
+        result = 1
+    elif int(inland_count) < int(international_count):
+        result = 2
     return result
 
 

@@ -5,9 +5,10 @@ import unittest
 from studio.lp_dataocean_handle.lp_mobile_stability import Handle
 
 data = {
+"trustutn_loan_phone":{
     "result": 0,
     "message": None,
-    "data": {
+    "res_data": {
         "tags": {
             "18920019795__": {
                 "M0": {
@@ -388,10 +389,18 @@ data = {
                 }
             }
         }
+    },
+    "apply_base": {
+        "latitude": 145.23342,
+        "name": "章撒",
+        "mobile": "18989821092",
+        "callback": "http://127.0.0.1/syph-re/api/credit/result/",
+        "application_on": "2017-02-01 12:20:10",
+        "contacts": 30,
+        "card_id": "41140219890313739X",
+        "longitudu": 23.45678
     }
-}
-
-tel_number = [18920019795, 15538810633]
+}}
 
 
 class TestPlugin(unittest.TestCase):
@@ -401,7 +410,7 @@ class TestPlugin(unittest.TestCase):
 
     def test_test(self):
         data = self.data
-        for i in tel_number:
+        for i in data['apply_data']:
             h = Handle(data, i)
             res = h.handle()
             print res
