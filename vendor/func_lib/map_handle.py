@@ -17,6 +17,7 @@ django.setup()
 
 from apps.common.models import CityCodeField
 from vendor.errors.feature import FeatureProcessError
+from apps.common.models import FeatureCodeMapping
 
 
 def m_to_int(seq):
@@ -622,6 +623,28 @@ def m_max_flight_class(seq):
     elif temp_index == 2:
         result = 1
     return result
+
+
+def m_get_work_status_map(work_status, feature_name):
+    fcm = FeatureCodeMapping.objects.filter(
+        feature_name=feature_name
+    )
+    work_status_tags = work_status[0].encode('utf-8')[-12:]
+    status_map = {conf.mapped_value: conf.unitary_value for conf in fcm}
+    for key, value in status_map.iteritems():
+        if work_status_tags in value:
+            return int(key)
+
+
+def m_get_month_from_now(data):
+    if '999999' in data:
+        data.remove('999999')
+    today = datetime.today()
+    days_list = []
+    for str_date in data:
+        dates = datetime.strptime(str_date, '%Y%m')
+        days_list.append((today - dates).days)
+    return max(days_list) / 30
 
 if __name__ == '__main__':
     print m_str_to_int_float_in_list([1, 2.1, '2.1', '-2', []])

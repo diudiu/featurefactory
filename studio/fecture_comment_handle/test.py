@@ -601,7 +601,8 @@ data = {
                 "card_id": "41140219890313739X",
                 "longitudu": 23.45678
             }
-        }},
+        }
+    },
 
     'is_pingan_financial_shixin': {
         'data': {
@@ -739,7 +740,8 @@ data = {
             "photo": "",
             "education": "大学本科（简称'大学'）",
             "address": "河北省保定市徐水区高林村镇"
-        }},
+        }
+    },
 
     'marital_status': {
         "result": "00",
@@ -820,6 +822,7 @@ data = {
             "total_distance": 2810,
         }
     },
+
     'max_flight_class': {
         "result": "00",
         "result_message": "检测通过或查询有记录",
@@ -848,6 +851,7 @@ data = {
             "total_distance": 2810,
         },
     },
+
     'airfare_sum_12': {
         "result": "00",
         "result_message": "检测通过或查询有记录",
@@ -914,7 +918,8 @@ data = {
         }
     },
 
-    'contacts': {"apply_data": {
+    'contacts': {
+        "apply_data": {
         'product_code': '890wefjf320if0i302f0j3f0f',
         'apply_id': 'APPLY20161011111111890934',
         'callback': 'http://10.20.1.110/api/credit/result/',
@@ -925,7 +930,8 @@ data = {
         'latitude': 145.23342,
         'contacts': 30,
         'application_on': '2017-02-01 12:20:10'
-    }},
+    }
+    },
 
     'jiuyao_multi_loan_m2_count': {
         'multi_loan_91': {
@@ -982,11 +988,251 @@ data = {
                 'mobile_area': '唐山市',
             },
         }
-    }
+    },
+
+    'gps_city_code': {
+        'geo_location': {
+            "content": {
+                "status": 0,
+                "result": {
+                    "location": {
+                        "lng": 114.23075168099999,
+                        "lat": 29.57908754899005
+                    },
+                    "formatted_address": "湖北省咸宁市崇阳县G56(杭瑞高速)",
+                    "business": "",
+                    "addressComponent": {
+                        "country": "中国",
+                        "country_code": 0,
+                        "province": "湖北省",
+                        "city": "咸宁市",
+                        "district": "崇阳县",
+                        "adcode": "421223",
+                        "street": "G56(杭瑞高速)",
+                        "street_number": "",
+                        "direction": "",
+                        "distance": ""
+                    },
+                    "pois": [],
+                    "poiRegions": [],
+                    "sematic_description": "大屋沈家南210米",
+                    "cityCode": 362
+                }
+            },
+            "result_message": "检测通过或查询有记录",
+            "result": "00"
+        }
+    },
+
+    'cur_work_status': {
+        'portrait_data': {
+            "product_code": "string",
+            "name": "string",
+            "card_id": "string",
+            "mobile": "string",
+            "email": "string",
+            "registration_on": "2016-10-01 12:20:10",
+            "city_code": "string",
+            "city_name": "string",
+            "now_indust_code": "string",
+            "now_indust_name": "string",
+            "work_age": 0,
+            "complete_degree": 0,
+            "cur_work_status": u"在职,急寻新工作",
+            "upload_contact": 0,
+            "sns_friends_cnt": 0,
+            "sns_sd_friend_cnt": 0,
+            "sns_h_fans_cn": 0,
+            "sns_skill_tag_list": [
+                {
+                    "skill_tag": "string",
+                    "certified_num": 0
+                }
+            ],
+            "work_exp_form": [
+                {
+                    "title": "string",
+                    "has_certified": "string",
+                    "certified_num": 0,
+                    "comp_name": "string",
+                    "months": 0,
+                    "salary": 0,
+                    "work_start": "string",
+                    "work_end": "string",
+                    "industry": "string",
+                    "industry_name": "string",
+                    "dq": "string",
+                    "dq_name": "string"
+                },
+                {
+                    "title": "string",
+                    "has_certified": "string",
+                    "certified_num": 0,
+                    "comp_name": "string",
+                    "months": 0,
+                    "salary": 0,
+                    "work_start": "string",
+                    "work_end": "string",
+                    "industry": "string",
+                    "industry_name": "string",
+                    "dq": "string",
+                    "dq_name": "string"
+                }
+            ],
+            "edu_exp_form": [
+                {
+                    "school": "string",
+                    "start": "string",
+                    "end": "string",
+                    "degree": "string",
+                    "degree_name": "string",
+                    "tz": 0
+                }
+            ]
+        }
+    },
+
+    'now_workplace_code': {
+        'portrait_data': {
+            "product_code": "string",
+            "name": "string",
+            "card_id": "string",
+            "mobile": "string",
+            "email": "string",
+            "registration_on": "2016-10-01 12:20:10",
+            "city_code": "string",
+            "city_name": "string",
+            "now_indust_code": "string",
+            "now_indust_name": "string",
+            "work_age": 0,
+            "complete_degree": 0,
+            "cur_work_status": u"在职,急寻新工作",
+            "upload_contact": 0,
+            "sns_friends_cnt": 0,
+            "sns_sd_friend_cnt": 0,
+            "sns_h_fans_cn": 0,
+            "sns_skill_tag_list": [
+                {
+                    "skill_tag": "string",
+                    "certified_num": 0
+                }
+            ],
+            "work_exp_form": [
+                {
+                    "title": "string",
+                    "has_certified": "string",
+                    "certified_num": 0,
+                    "comp_name": "string",
+                    "months": 0,
+                    "salary": 0,
+                    "work_start": "string",
+                    "work_end": "999999",
+                    "industry": '30',
+                    "industry_name": "string",
+                    "dq": "string",
+                    "dq_name": "string"
+                },
+                {
+                    "title": "string",
+                    "has_certified": "string",
+                    "certified_num": 0,
+                    "comp_name": "string",
+                    "months": 0,
+                    "salary": 0,
+                    "work_start": "string",
+                    "work_end": "201508",
+                    "industry": '120',
+                    "industry_name": "string",
+                    "dq": "string",
+                    "dq_name": "string"
+                }
+            ],
+            "edu_exp_form": [
+                {
+                    "school": "string",
+                    "start": "string",
+                    "end": "string",
+                    "degree": "string",
+                    "degree_name": "string",
+                    "tz": 0
+                }
+            ]
+        }
+    },
+
+    'work_time': {
+        'portrait_data': {
+            "product_code": "string",
+            "name": "string",
+            "card_id": "string",
+            "mobile": "string",
+            "email": "string",
+            "registration_on": "2016-10-01 12:20:10",
+            "city_code": "string",
+            "city_name": "string",
+            "now_indust_code": "string",
+            "now_indust_name": "string",
+            "work_age": 0,
+            "complete_degree": 0,
+            "cur_work_status": u"在职,急寻新工作",
+            "upload_contact": 0,
+            "sns_friends_cnt": 0,
+            "sns_sd_friend_cnt": 0,
+            "sns_h_fans_cn": 0,
+            "sns_skill_tag_list": [
+                {
+                    "skill_tag": "string",
+                    "certified_num": 0
+                }
+            ],
+            "work_exp_form": [
+                {
+                    "title": "string",
+                    "has_certified": "string",
+                    "certified_num": 0,
+                    "comp_name": "string",
+                    "months": 0,
+                    "salary": 0,
+                    "work_start": "201605",
+                    "work_end": "999999",
+                    "industry": '30',
+                    "industry_name": "string",
+                    "dq": "string",
+                    "dq_name": "string"
+                },
+                {
+                    "title": "string",
+                    "has_certified": "string",
+                    "certified_num": 0,
+                    "comp_name": "string",
+                    "months": 0,
+                    "salary": 0,
+                    "work_start": "",
+                    "work_end": "201604",
+                    "industry": '120',
+                    "industry_name": "string",
+                    "dq": "string",
+                    "dq_name": "string"
+                }
+            ],
+            "edu_exp_form": [
+                {
+                    "school": "string",
+                    "start": "string",
+                    "end": "string",
+                    "degree": "string",
+                    "degree_name": "string",
+                    "tz": 0
+                }
+            ]
+        }
+    },
+
+
 }
 
 
-def test():
+def test(data):
     for feature_name, datas in data.items():
         fecture_obj = FeatureProcess(feature_name, datas)
         result = fecture_obj.run()
@@ -994,5 +1240,5 @@ def test():
 
 
 if __name__ == '__main__':
-    data = {'mobile_area_city_code': data['mobile_area_city_code']}
-
+    data = {'work_time': data['work_time']}
+    test(data)

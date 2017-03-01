@@ -70,3 +70,11 @@ def f_inside_stipulate_scope(result, args):
             res.append(i)
     return res
 
+
+def f_get_workplace_now(result):
+    length = len(result)
+    workplace_list = result[:length / 2]
+    date_list = result[length / 2:]
+    for i in range(length / 2):
+        if '999999' == date_list[i]:
+            return workplace_list[i]

@@ -46,5 +46,54 @@ mobile_area_city_code_config = {
     "f_map_and_filter_chain": "m_get_seq_index_value(0)->m_get_city_name->f_assert_not_null->m_city_name_to_code",
     "reduce_chain": "",
     "l_map_and_filter_chain": ""
+}
 
+gps_city_code_config = {
+    "feature_name": "mobile_area_city_code",
+    "feature_data_type": "int",
+    "default_value": "PositiveSignedTypeDefault",
+    "json_path_list": [
+        ("mobile_area", "$..addressComponent.city", "f_assert_not_null->f_assert_must_basestring"),
+    ],
+    "f_map_and_filter_chain": "m_get_seq_index_value(0)->m_get_city_name->f_assert_not_null->m_city_name_to_code",
+    "reduce_chain": "",
+    "l_map_and_filter_chain": ""
+}
+
+cur_work_status_config = {
+    "feature_name": "cur_work_status",
+    "feature_data_type": "int",
+    "default_value": "PositiveSignedTypeDefault",
+    "json_path_list": [
+        ("mobile_area", "$..cur_work_status", "f_assert_not_null->f_assert_must_basestring"),
+    ],
+    "f_map_and_filter_chain": "m_get_work_status_map('cur_work_status')",
+    "reduce_chain": "",
+    "l_map_and_filter_chain": ""
+}
+
+now_workplace_code_config = {
+    "feature_name": "now_workplace_code",
+    "feature_data_type": "int",
+    "default_value": "PositiveSignedTypeDefault",
+    "json_path_list": [
+        ("industry", "$..work_exp_form[*].industry", "f_assert_not_null->f_assert_must_basestring"),
+        ("work_end", "$..work_exp_form[*].work_end", "f_assert_not_null->f_assert_must_basestring"),
+    ],
+    "f_map_and_filter_chain": "f_get_workplace_now",
+    "reduce_chain": "",
+    "l_map_and_filter_chain": ""
+}
+
+work_time_config = {
+    "feature_name": "work_time",
+    "feature_data_type": "int",
+    "default_value": "PositiveSignedTypeDefault",
+    "json_path_list": [
+        ("industry", "$..work_exp_form[*].work_start", "f_not_null->f_assert_must_basestring"),
+        ("work_end", "$..work_exp_form[*].work_end", "f_not_null->f_assert_must_basestring"),
+    ],
+    "f_map_and_filter_chain": "",
+    "reduce_chain": "m_get_month_from_now",
+    "l_map_and_filter_chain": ""
 }
