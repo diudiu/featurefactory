@@ -88,6 +88,7 @@ class DataPrepare(object):
             })
 
     def do_request(self, url, data):
+        # time.sleep(2)
         # json_data = json.dumps(data, encoding="UTF-8", ensure_ascii=False)
         # response = requests.post(url, json_data)
         # content = response.content

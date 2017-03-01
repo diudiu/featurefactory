@@ -2,6 +2,7 @@
 
 import requests
 import json
+import time
 
 # from vendor.utils.encrypt import Cryption
 
@@ -16,7 +17,7 @@ no_disease_list = [
 
 def feature_post():
     url = 'http://127.0.0.1:9999/syph-ff/feature/extract/'
-    # url = 'http://192.168.1.196:8070/feature/extract/'
+    # url = 'http://192.168.1.199:9900/syph-ff/feature/extract/'
     data = {
         'client_code': 'lp_test',
         'content': {
@@ -99,15 +100,17 @@ def feature_post():
                 'college_type',
                 'income_expense_comparison',
                 'is_recruitment',
-                # 'is_unclear_loan',
-                # 'overload_count',
-                # 'overspeed_count',
+                'is_unclear_loan',
+                'overload_count',
+                'overspeed_count',
             ],
         },
     }
+    a = time.time()
     response = requests.post(url, headers=headers, data=json.dumps(data))
     content = json.loads(response.content)
     print content
+    print time.time() - a
 
 if __name__ == '__main__':
     feature_post()

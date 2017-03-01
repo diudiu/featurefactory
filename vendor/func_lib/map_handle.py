@@ -38,6 +38,27 @@ def m_to_int(seq):
     return seq
 
 
+def m_str_to_int_float_in_list(seq):
+    """
+    转换类表中的数字或浮点数 字符串为 int、float
+
+    :param seq: 可以为任意值组成的列表
+    :return:转换后的列表
+
+    example：
+            :seq： [1, 2.1, '2.1', '-2', []]
+            :return： [1, 2, 2, -2,[]]
+    """
+    tmp = []
+    for value in seq:
+        if str(value).count('.') <= 1 and str(value).replace('.', '').lstrip('-').isdigit():
+            tmp.append(eval(str(value)))
+        else:
+            tmp.append(value)
+
+    return tmp
+
+
 def m_to_power(seq):
     """
         转换为值的2次方
@@ -408,7 +429,6 @@ def m_get_new_list(seq, args):
 
 
 def m_get_mobile_m1_m5_key_seq(mobilestr, tags, key_list):
-
     """
         获取 mobile字符串在 tags字典中 1月到5月存在的key_list中key值的和的列表
 
@@ -442,48 +462,13 @@ def m_get_mobile_m1_m5_key_seq(mobilestr, tags, key_list):
 
     return tmp
 
-
-def m_get_mobile_m1_m5_key_seq1(mobilestr, tags, key_list):
-
-    """
-        获取 mobile字符串在 tags字典中 1月到5月存在的key_list中key值的和的列表
-
-        :param mobilestr: 查询的手机字符串
-        :param tags:      含多种手机信息的字典
-        :param key_list:   查询的字段
-        :return:        该手机号1月到5月 在key_list中值的和 形成的列表
-
-        example：
-                :mobilestr  18920019796_8a404758b8f8b87c70006b8e9f4614db_
-                :targs {
-                        '18920019796_8a404758b8f8b87c70006b8e9f4614db_': {
-                        'M5': {'callTimes': 3,'calledTimes': 2},
-                        'M4': {'callTimes': 8,'calledTimes': 20},
-                        'M3': {'month': '201610'}},}}
-
-                :args   ['callTimes', 'calledTimes']
-                :return  [28, 5]
-    """
-    tmp = []
-    m_list = ['M1', 'M2', 'M3', 'M4', 'M5']
-    for i in m_list:
-        if i in tags[mobilestr]:
-            value_list = []
-            for key in key_list:
-                value = tags[mobilestr].get(i, {}).get(key, '')
-                if str(value).replace('.', '').isdigit():
-                    value_list.append(value)
-            if value_list:
-                tmp.append(sum(value_list))
-
-    return tmp
 
 def m_get_mobile_stability(seq):
     """获取手机号的稳定度"""
     total_calltimes_ave = m_seq_to_agv(seq)
     mobile_stability = (sum([i ** 2 for i in seq]) / len(seq)) ** 0.5
-    mobile_stability = mobile_stability / total_calltimes_ave
-    return round(mobile_stability, 4)
+    mobile_stability_a = mobile_stability / total_calltimes_ave
+    return round(mobile_stability_a, 4)
 
 
 def m_get_city_name(address):
@@ -539,9 +524,9 @@ def m_get_city_name1(city):
     return city
 
 
-def m_city_name_to_code(city_name):
+def m_city_name_to_level(city_name):
     """
-       获取城市名所对应的Code
+       获取城市名所对应的level
 
         :param city_name: 城市
         :return:    code
@@ -560,6 +545,30 @@ def m_city_name_to_code(city_name):
     if not str(company_addr_city_level).isdigit():
         raise FeatureProcessError('%s city_level config error in database table' % city_name)
     seq = int(company_addr_city_level)
+    return seq
+
+
+def m_city_name_to_code(city_name):
+    """
+       获取城市名所对应的Code
+
+        :param city_name: 城市
+        :return:    code
+
+        example：
+                :address  '北京'
+                :return  1
+    """
+    ccf = CityCodeField.objects.filter(
+        city_name_cn=city_name,
+        is_delete=False
+    )
+    if not ccf:
+        raise FeatureProcessError('not find %s code config in database table' % city_name)
+    company_addr_city_code = ccf[0].city_code
+    if not str(company_addr_city_code).isdigit():
+        raise FeatureProcessError('%s city_level config error in database table' % city_name)
+    seq = int(company_addr_city_code)
     return seq
 
 
@@ -590,6 +599,29 @@ def m_max_flight_area(seq):
     return seq
 
 
-if __name__ == '__main__':
-    print m_dict_key_sort_in_list([{'20160708': 'gyf'}, {'20180505': 'zme'}, {'20170101': 'zkp'}],True)
+def m_max_flight_class(seq):
+    """
+       一年内飞机出行中最多出行区域的code
 
+        :param seq: [商务舱乘机次数、公务舱乘机次数、经济舱乘机次数]
+        :return:    code
+
+        example：
+                :seq  [2, 2, 3]
+                :return  1
+    """
+    """"""
+    temp_index = seq.index(max(seq))
+    result = ''
+    if sum(seq) == 0:
+        result = 4
+    elif temp_index == 0:
+        result = 3
+    elif temp_index == 1:
+        result = 2
+    elif temp_index == 2:
+        result = 1
+    return result
+
+if __name__ == '__main__':
+    print m_str_to_int_float_in_list([1, 2.1, '2.1', '-2', []])

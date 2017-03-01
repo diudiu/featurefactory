@@ -45,7 +45,7 @@ class Courier(object):
             # 分流逻辑
             self.useful_data = self.get_shunt_data()
 
-        elif self.collect_type == 'RelevanceCourier' and len(self.data_identity_list) == 1:
+        elif self.collect_type == 'RelevanceCourier':
             # 依赖逻辑
             self.useful_data = self.get_relevance_data(self.data_identity_list[0])
 
@@ -135,14 +135,14 @@ class Courier(object):
         useful_data = {}
         if next_data_identity:
             relevance_conf = FeatureRelevanceConf.objects.filter(
-                feature_name=self.feature_name,
+                data_identity=next_data_identity,
                 is_delete=False
-            )
+            )[0]
             if not relevance_conf:
                 raise
-            next_di = relevance_conf.data_identity
+            next_di = relevance_conf.depend_di
             if next_di:
-                self.get_relevance_data(next_di)
+                useful_data = self.get_relevance_data(next_di)
             else:
                 data = self.get_useful_data(next_data_identity)
                 useful_data.update({
