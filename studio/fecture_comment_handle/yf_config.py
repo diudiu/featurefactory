@@ -28,7 +28,7 @@ car_count_config = {
     "feature_data_type": "int",
     "default_value": "PositiveSignedTypeDefault",
     "json_path_list": [
-        ("application_on", "$.result", "f_assert_must_list"),
+        ("result", "$..result", "f_assert_must_list"),
     ],
     "f_map_and_filter_chain": "f_not_null->m_to_len",
     "reduce_chain": "",
@@ -62,6 +62,19 @@ cur_company_config = {
 
 mobile_activeness_config = {
     "feature_name": "mobile_activeness",
+    "feature_data_type": "float",
+    "default_value": "PositiveSignedTypeDefault",
+    "json_path_list": [
+        ("tags", "$..tags", "f_assert_must_dict"),
+        ("mobile", "$..apply_base.mobile", "f_assert_not_null"),
+    ],
+    "f_map_and_filter_chain": "f_mobile_m1_m5_sum_max_seq(['contactAmount'])->m_seq_to_agv(2)",
+    "reduce_chain": "",
+    "l_map_and_filter_chain": ""
+}
+
+mobile_stability_config = {
+    "feature_name": "mobile_stability",
     "feature_data_type": "float",
     "default_value": "PositiveSignedTypeDefault",
     "json_path_list": [
@@ -166,7 +179,7 @@ max_flight_area_config = {
         ("inland_count", "$..content.inland_count", "f_assert_not_null->f_assert_must_digit_or_float"),
         ("international_count", "$..content.international_count", "f_assert_not_null->f_assert_must_digit_or_float"),
     ],
-    "f_map_and_filter_chain": "m_max_flight_area()",
+    "f_map_and_filter_chain": "m_max_flight_area->f_assert_not_null",
     "reduce_chain": "",
     "l_map_and_filter_chain": ""
 }
@@ -197,4 +210,128 @@ airfare_sum_12_config = {
     "reduce_chain": "r_mul",
     "l_map_and_filter_chain": ""
 }
+
+contacts_config = {
+    "feature_name": "contacts",
+    "feature_data_type": "int",
+    "default_value": "PositiveSignedTypeDefault",
+    "json_path_list": [
+        ("contacts", "$..contacts", "f_assert_must_digit"),
+    ],
+    "f_map_and_filter_chain": "m_to_int->m_get_seq_index_value(0)",
+    "reduce_chain": "",
+    "l_map_and_filter_chain": ""
+}
+
+is_jiuyao_multi_loan_config = {
+    "feature_name": "is_jiuyao_multi_loan",
+    "feature_data_type": "bool",
+    "default_value": "BooleanTypeDefault",
+    "json_path_list": [
+        ("loanInfos", "$..loanInfos", "f_assert_must_list"),
+    ],
+    "f_map_and_filter_chain": "m_to_bool",
+    "reduce_chain": "",
+    "l_map_and_filter_chain": ""
+}
+
+loan_infos_config = {
+    "feature_name": "loan_infos",
+    "feature_data_type": "list",
+    "default_value": "ListTypeDefault",
+    "json_path_list": [
+        ("loanInfos", "$..loanInfos", "f_assert_not_null->f_assert_must_list"),
+    ],
+    "f_map_and_filter_chain": "",
+    "reduce_chain": "",
+    "l_map_and_filter_chain": ""
+}
+
+is_mobile_black_config = {
+    "feature_name": "is_mobile_black",
+    "feature_data_type": "bool",
+    "default_value": "BooleanTypeDefault",
+    "json_path_list": [
+        ("grayscale", "$..trustutn_loan_phone.data.grayscale", "f_assert_must_dict"),
+    ],
+    "f_map_and_filter_chain": "m_get_seq_index_value(0)->m_to_bool",
+    "reduce_chain": "",
+    "l_map_and_filter_chain": ""
+}
+
+pingan_multi_loan_infos_config = {
+    "feature_name": "pingan_multi_loan_infos",
+    "feature_data_type": "list",
+    "default_value": "ListTypeDefault",
+    "json_path_list": [
+        ("record", "$..record", "f_assert_not_null->f_assert_must_list"),
+    ],
+    "f_map_and_filter_chain": "m_to_bool",
+    "reduce_chain": "",
+    "l_map_and_filter_chain": ""
+}
+
+education_tz_config = {
+    "feature_name": "education_tz",
+    "feature_data_type": "int",
+    "default_value": "PositiveSignedTypeDefault",
+    "json_path_list": [
+        ("edu_exp_form", "$..edu_exp_form[*]", "f_assert_not_null->f_assert_must_dict"),
+    ],
+    "f_map_and_filter_chain": "m_get_new_list('degree','tz')->m_seq_inx_to_int()->m_seq_inx0_sort_in_list()->m_get_seq_index_value(0)->m_get_seq_index_value(1)",
+    "reduce_chain": "",
+    "l_map_and_filter_chain": ""
+}
+
+now_industry_code_config = {
+    "feature_name": "now_industry_code",
+    "feature_data_type": "string",
+    "default_value": "StringTypeDefault",
+    "json_path_list": [
+        ("work_exp_form", "$..work_exp_form[*]", "f_assert_not_null->f_assert_must_dict"),
+    ],
+    "f_map_and_filter_chain": "m_get_new_list('work_end','industry')->f_assert_not_null->m_seq_inx_to_999999()->m_get_seq_index_value(1)",
+    "reduce_chain": "",
+    "l_map_and_filter_chain": ""
+}
+
+last_industry_code_config = {
+    "feature_name": "last_industry_code",
+    "feature_data_type": "string",
+    "default_value": "StringTypeDefault",
+    "json_path_list": [
+        ("work_exp_form", "$..work_exp_form[*]", "f_assert_not_null->f_assert_must_dict"),
+
+    ],
+    "f_map_and_filter_chain": "m_get_new_list('work_end','industry')->f_assert_not_null->m_seq_inx_to_int()->m_seq_inx0_sort_in_list(True)->m_get_seq_index_value(0)->m_get_seq_index_value(1)",
+    "reduce_chain": "",
+    "l_map_and_filter_chain": ""
+}
+
+now_work_time_config = {
+    "feature_name": "now_work_time",
+    "feature_data_type": "string",
+    "default_value": "StringTypeDefault",
+    "json_path_list": [
+        ("work_exp_form", "$..work_exp_form[*]", "f_assert_not_null->f_assert_must_dict"),
+
+    ],
+    "f_map_and_filter_chain": "m_get_new_list('work_end','work_start')->f_assert_not_null->m_seq_inx0_sort_in_list(True)->m_get_seq_index_value(0)->m_r_to_now_work_time()",
+    "reduce_chain": "",
+    "l_map_and_filter_chain": ""
+}
+
+industry_change_count_config = {
+    "feature_name": "industry_change_count",
+    "feature_data_type": "string",
+    "default_value": "StringTypeDefault",
+    "json_path_list": [
+        ("industry", "$..work_exp_form[*].industry", "f_assert_not_null"),
+
+    ],
+    "f_map_and_filter_chain": "m_to_len(1)",
+    "reduce_chain": "",
+    "l_map_and_filter_chain": ""
+}
+
 

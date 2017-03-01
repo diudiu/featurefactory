@@ -615,12 +615,11 @@ data = {
 class TestPlugin(unittest.TestCase):
 
     def setUp(self):
-        self.data = data
-        self.tel_number = data['apply_dase']
+        self.data = data['trustutn_loan_phone']
+        self.tel_number = data['apply_base']['mobile']
 
     def test_mobile_activeness(self):
-        data = self.data.copy()
-        handler = Handle(data, self.tel_number)
+        handler = Handle(self.data, self.tel_number)
         res = handler.handle()
         print res
 
