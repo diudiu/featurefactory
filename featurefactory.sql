@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50628
 File Encoding         : 65001
 
-Date: 2017-02-22 19:12:25
+Date: 2017-03-01 18:47:54
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -63,7 +63,7 @@ CREATE TABLE `auth_permission` (
   UNIQUE KEY `content_type_id` (`content_type_id`,`codename`),
   KEY `auth_permission_417f1b1c` (`content_type_id`),
   CONSTRAINT `auth_permissi_content_type_id_51277a81_fk_django_content_type_id` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=76 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=79 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of auth_permission
@@ -143,6 +143,9 @@ INSERT INTO `auth_permission` VALUES ('72', 'Can delete 授信模型字段权重
 INSERT INTO `auth_permission` VALUES ('73', 'Can add 预处理字段表', '25', 'add_prefieldinfo');
 INSERT INTO `auth_permission` VALUES ('74', 'Can change 预处理字段表', '25', 'change_prefieldinfo');
 INSERT INTO `auth_permission` VALUES ('75', 'Can delete 预处理字段表', '25', 'delete_prefieldinfo');
+INSERT INTO `auth_permission` VALUES ('76', 'Can add 特征计算方式配置表', '26', 'add_featureprocess');
+INSERT INTO `auth_permission` VALUES ('77', 'Can change 特征计算方式配置表', '26', 'change_featureprocess');
+INSERT INTO `auth_permission` VALUES ('78', 'Can delete 特征计算方式配置表', '26', 'delete_featureprocess');
 
 -- ----------------------------
 -- Table structure for `auth_user`
@@ -284,7 +287,7 @@ CREATE TABLE `django_content_type` (
   `model` varchar(100) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `django_content_type_app_label_3ec8c61c_uniq` (`app_label`,`model`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of django_content_type
@@ -314,6 +317,7 @@ INSERT INTO `django_content_type` VALUES ('22', '依赖关系处理逻辑配置�
 INSERT INTO `django_content_type` VALUES ('23', '授信模型系数配置表', 'pregranting', 'modelcoefficientconf');
 INSERT INTO `django_content_type` VALUES ('24', '授信模型字段权重表', 'pregranting', 'modelfieldoptionweight');
 INSERT INTO `django_content_type` VALUES ('25', '预处理字段表', 'etl', 'prefieldinfo');
+INSERT INTO `django_content_type` VALUES ('26', '特征计算方式配置表', 'etl', 'featureprocess');
 
 -- ----------------------------
 -- Table structure for `django_migrations`
@@ -325,7 +329,7 @@ CREATE TABLE `django_migrations` (
   `name` varchar(255) NOT NULL,
   `applied` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of django_migrations
@@ -338,7 +342,11 @@ INSERT INTO `django_migrations` VALUES ('5', 'sessions', '0001_initial', '2017-0
 INSERT INTO `django_migrations` VALUES ('6', 'common', '0001_initial', '2017-02-22 17:34:46');
 INSERT INTO `django_migrations` VALUES ('7', 'datasource', '0001_initial', '2017-02-22 17:34:46');
 INSERT INTO `django_migrations` VALUES ('9', 'featureapi', '0001_initial', '2017-02-22 17:34:46');
-INSERT INTO `django_migrations` VALUES ('11', 'etl', '0001_initial', '2017-02-22 18:23:02');
+INSERT INTO `django_migrations` VALUES ('13', 'datasource', '0002_dsinterfaceinfo_data_origin_type', '2017-02-23 10:30:23');
+INSERT INTO `django_migrations` VALUES ('15', 'etl', '0001_initial', '2017-02-28 14:39:38');
+INSERT INTO `django_migrations` VALUES ('16', 'common', '0002_auto_20170301_1455', '2017-03-01 14:56:08');
+INSERT INTO `django_migrations` VALUES ('17', 'common', '0003_auto_20170301_1605', '2017-03-01 16:05:55');
+INSERT INTO `django_migrations` VALUES ('18', 'common', '0004_auto_20170301_1608', '2017-03-01 16:08:09');
 
 -- ----------------------------
 -- Table structure for `django_session`
@@ -2178,17 +2186,287 @@ CREATE TABLE `fic_feature_code_mapping` (
   `created_on` datetime DEFAULT NULL,
   `updated_on` datetime NOT NULL,
   `feature_name` varchar(128) NOT NULL,
-  `feature_desc` varchar(128) NOT NULL,
+  `feature_desc` varchar(128) DEFAULT NULL,
   `unitary_value` varchar(64) NOT NULL,
   `dual_value` varchar(64) DEFAULT NULL,
   `mapped_value` int(11) NOT NULL,
   `value_type` varchar(20) NOT NULL,
+  `arithmetic_type` varchar(16),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=338 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of fic_feature_code_mapping
 -- ----------------------------
+INSERT INTO `fic_feature_code_mapping` VALUES ('1', '0', '2017-03-01 16:08:25', '2017-03-01 16:08:25', 'airfare_sum_12', '一年内乘机总票价', '0.0', '5000.0', '0', 'float', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('2', '0', '2017-03-01 16:08:25', '2017-03-01 16:08:25', 'airfare_sum_12', '一年内乘机总票价', '5000.0', '10000.0', '1', 'float', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('3', '0', '2017-03-01 16:08:25', '2017-03-01 16:08:25', 'airfare_sum_12', '一年内乘机总票价', '10000.0', '20000.0', '2', 'float', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('4', '0', '2017-03-01 16:08:25', '2017-03-01 16:08:25', 'airfare_sum_12', '一年内乘机总票价', '20000.0', '50000.0', '3', 'float', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('5', '0', '2017-03-01 16:08:25', '2017-03-01 16:08:25', 'airfare_sum_12', '一年内乘机总票价', '50000.0', '100000.0', '4', 'float', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('6', '0', '2017-03-01 16:08:25', '2017-03-01 16:08:25', 'airfare_sum_12', '一年内乘机总票价', '100000.0', '1000000000.0', '5', 'float', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('7', '0', '2017-03-01 16:08:25', '2017-03-01 16:08:25', 'cur_corp_years', '经营年限', '-1.0', '1.0', '1', 'float', '(]');
+INSERT INTO `fic_feature_code_mapping` VALUES ('8', '0', '2017-03-01 16:08:25', '2017-03-01 16:08:25', 'cur_corp_years', '经营年限', '1.0', '2.0', '2', 'float', '(]');
+INSERT INTO `fic_feature_code_mapping` VALUES ('9', '0', '2017-03-01 16:08:25', '2017-03-01 16:08:25', 'cur_corp_years', '经营年限', '2.0', '3.0', '3', 'float', '(]');
+INSERT INTO `fic_feature_code_mapping` VALUES ('10', '0', '2017-03-01 16:08:25', '2017-03-01 16:08:25', 'cur_corp_years', '经营年限', '3.0', '4.0', '4', 'float', '(]');
+INSERT INTO `fic_feature_code_mapping` VALUES ('11', '0', '2017-03-01 16:08:25', '2017-03-01 16:08:25', 'cur_corp_years', '经营年限', '4.0', '5.0', '5', 'float', '(]');
+INSERT INTO `fic_feature_code_mapping` VALUES ('12', '0', '2017-03-01 16:08:25', '2017-03-01 16:08:25', 'cur_corp_years', '经营年限', '5.0', '8.0', '6', 'float', '(]');
+INSERT INTO `fic_feature_code_mapping` VALUES ('13', '0', '2017-03-01 16:08:25', '2017-03-01 16:08:25', 'cur_corp_years', '经营年限', '8.0', '10.0', '7', 'float', '(]');
+INSERT INTO `fic_feature_code_mapping` VALUES ('14', '0', '2017-03-01 16:08:26', '2017-03-01 16:08:26', 'cur_corp_years', '经营年限', '10.0', '10000.0', '8', 'float', '(]');
+INSERT INTO `fic_feature_code_mapping` VALUES ('15', '0', '2017-03-01 16:08:26', '2017-03-01 16:08:26', 'cur_employee_number', '现工作单位规模（人数）', '0.0', '20.0', '1', 'string', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('16', '0', '2017-03-01 16:08:26', '2017-03-01 16:08:26', 'cur_employee_number', '现工作单位规模（人数）', '20.0', '100.0', '2', 'string', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('17', '0', '2017-03-01 16:08:26', '2017-03-01 16:08:26', 'cur_employee_number', '现工作单位规模（人数）', '100.0', '500.0', '3', 'string', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('18', '0', '2017-03-01 16:08:26', '2017-03-01 16:08:26', 'cur_employee_number', '现工作单位规模（人数）', '500.0', '1000.0', '4', 'string', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('19', '0', '2017-03-01 16:08:26', '2017-03-01 16:08:26', 'cur_employee_number', '现工作单位规模（人数）', '1000.0', '10000.0', '5', 'string', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('20', '0', '2017-03-01 16:08:26', '2017-03-01 16:08:26', 'cur_employee_number', '现工作单位规模（人数）', '10000.0', '10000000.0', '6', 'string', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('21', '0', '2017-03-01 16:08:26', '2017-03-01 16:08:26', 'cur_work_status', '在职，看看新机会', '在职，看看新机会', '', '0', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('22', '0', '2017-03-01 16:08:26', '2017-03-01 16:08:26', 'cur_work_status', '离职，正在找工作', '离职，正在找工作', '', '1', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('23', '0', '2017-03-01 16:08:26', '2017-03-01 16:08:26', 'cur_work_status', '在职，急寻新工作', '在职，急寻新工作', '', '2', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('24', '0', '2017-03-01 16:08:26', '2017-03-01 16:08:26', 'cur_work_status', '在职，暂无跳槽打算', '在职，暂无跳槽打算', '', '3', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('25', '0', '2017-03-01 16:08:26', '2017-03-01 16:08:26', 'education_degree_check', '博士', '博士研究生', '', '1', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('26', '0', '2017-03-01 16:08:26', '2017-03-01 16:08:26', 'education_degree_check', '硕士', '硕士研究生', '', '2', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('27', '0', '2017-03-01 16:08:26', '2017-03-01 16:08:26', 'education_degree_check', '本科', '本科', '', '3', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('28', '0', '2017-03-01 16:08:26', '2017-03-01 16:08:26', 'education_degree_check', '专科', '专科', '', '4', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('30', '0', '2017-03-01 16:08:27', '2017-03-01 16:08:27', 'education_degree_check', '其他', 'N/A', '', '5', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('31', '0', '2017-03-01 16:08:27', '2017-03-01 16:08:27', 'education_degree_code', '博士', '5.0', '', '1', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('33', '0', '2017-03-01 16:08:27', '2017-03-01 16:08:27', 'education_degree_code', '硕士', '20.0', '', '2', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('35', '0', '2017-03-01 16:08:27', '2017-03-01 16:08:27', 'education_degree_code', '本科', '40.0', '', '3', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('36', '0', '2017-03-01 16:08:27', '2017-03-01 16:08:27', 'education_degree_code', '专科', '50.0', '', '4', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('37', '0', '2017-03-01 16:08:27', '2017-03-01 16:08:27', 'education_degree_code', '其他', '60.0', '', '5', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('42', '0', '2017-03-01 16:08:27', '2017-03-01 16:08:27', 'education_tz', '统招', '1.0', '', '1', 'int', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('43', '0', '2017-03-01 16:08:27', '2017-03-01 16:08:27', 'education_tz', '非统招', '0.0', '', '0', 'int', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('44', '0', '2017-03-01 16:08:27', '2017-03-01 16:08:27', 'income_level', '年入账', '0.0', '10000.0', '0', 'int', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('45', '0', '2017-03-01 16:08:27', '2017-03-01 16:08:27', 'income_level', '年入账', '10000.0', '50000.0', '1', 'int', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('46', '0', '2017-03-01 16:08:27', '2017-03-01 16:08:27', 'income_level', '年入账', '50000.0', '100000.0', '2', 'int', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('47', '0', '2017-03-01 16:08:27', '2017-03-01 16:08:27', 'income_level', '年入账', '100000.0', '500000.0', '3', 'int', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('48', '0', '2017-03-01 16:08:27', '2017-03-01 16:08:27', 'income_level', '年入账', '500000.0', '1000000.0', '4', 'int', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('49', '0', '2017-03-01 16:08:28', '2017-03-01 16:08:28', 'income_level', '年入账', '1000000.0', '1000000000.0', '5', 'int', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('50', '0', '2017-03-01 16:08:28', '2017-03-01 16:08:28', 'income_level', '年入账(联通)', '0.0', '', '500', 'int', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('51', '0', '2017-03-01 16:08:28', '2017-03-01 16:08:28', 'income_level', '年入账(联通)', '1.0', '', '1500', 'int', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('52', '0', '2017-03-01 16:08:28', '2017-03-01 16:08:28', 'income_level', '年入账(联通)', '2.0', '', '2500', 'int', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('53', '0', '2017-03-01 16:08:28', '2017-03-01 16:08:28', 'income_level', '年入账(联通)', '3.0', '', '3500', 'int', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('54', '0', '2017-03-01 16:08:28', '2017-03-01 16:08:28', 'income_level', '年入账(联通)', '4.0', '', '4500', 'int', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('55', '0', '2017-03-01 16:08:28', '2017-03-01 16:08:28', 'income_level', '年入账(联通)', '5.0', '', '5500', 'int', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('56', '0', '2017-03-01 16:08:28', '2017-03-01 16:08:28', 'income_level', '年入账(联通)', '6.0', '', '6500', 'int', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('57', '0', '2017-03-01 16:08:28', '2017-03-01 16:08:28', 'income_level', '年入账(联通)', '7.0', '', '7500', 'int', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('58', '0', '2017-03-01 16:08:28', '2017-03-01 16:08:28', 'income_level', '年入账(联通)', '8.0', '', '8500', 'int', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('59', '0', '2017-03-01 16:08:28', '2017-03-01 16:08:28', 'income_level', '年入账(联通)', '9.0', '', '9500', 'int', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('60', '0', '2017-03-01 16:08:28', '2017-03-01 16:08:28', 'income_level', '年入账(联通)', 'a', '', '15000', 'int', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('61', '0', '2017-03-01 16:08:28', '2017-03-01 16:08:28', 'income_level', '年入账(联通)', 'b', '', '25000', 'int', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('62', '0', '2017-03-01 16:08:28', '2017-03-01 16:08:28', 'income_level', '年入账(联通)', 'c', '', '35000', 'int', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('63', '0', '2017-03-01 16:08:28', '2017-03-01 16:08:28', 'income_level', '年入账(联通)', 'd', '', '45000', 'int', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('64', '0', '2017-03-01 16:08:28', '2017-03-01 16:08:28', 'income_level', '年入账(联通)', 'e', '', '55000', 'int', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('65', '0', '2017-03-01 16:08:29', '2017-03-01 16:08:29', 'income_level', '年入账(联通)', 'f', '', '65000', 'int', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('66', '0', '2017-03-01 16:08:29', '2017-03-01 16:08:29', 'income_level', '年入账(联通)', '10.0', '', '75000', 'int', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('67', '0', '2017-03-01 16:08:29', '2017-03-01 16:08:29', 'income_level', '年入账(联通)', '11.0', '', '85000', 'int', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('68', '0', '2017-03-01 16:08:29', '2017-03-01 16:08:29', 'income_level', '年入账(联通)', '12.0', '', '95000', 'int', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('69', '0', '2017-03-01 16:08:29', '2017-03-01 16:08:29', 'income_level', '年入账(联通)', '13.0', '', '150000', 'int', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('70', '0', '2017-03-01 16:08:29', '2017-03-01 16:08:29', 'income_level', '年入账(联通)', '14.0', '', '250000', 'int', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('71', '0', '2017-03-01 16:08:29', '2017-03-01 16:08:29', 'income_level', '年入账(联通)', '15.0', '', '350000', 'int', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('72', '0', '2017-03-01 16:08:29', '2017-03-01 16:08:29', 'income_level', '年入账(联通)', '16.0', '', '450000', 'int', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('73', '0', '2017-03-01 16:08:29', '2017-03-01 16:08:29', 'income_level', '年入账(联通)', '17.0', '', '550000', 'int', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('74', '0', '2017-03-01 16:08:29', '2017-03-01 16:08:29', 'income_level', '年入账(联通)', '18.0', '', '650000', 'int', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('75', '0', '2017-03-01 16:08:29', '2017-03-01 16:08:29', 'income_level', '年入账(联通)', '19.0', '', '750000', 'int', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('76', '0', '2017-03-01 16:08:29', '2017-03-01 16:08:29', 'income_level', '年入账(联通)', '1a', '', '850000', 'int', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('77', '0', '2017-03-01 16:08:29', '2017-03-01 16:08:29', 'income_level', '年入账(联通)', '1b', '', '950000', 'int', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('78', '0', '2017-03-01 16:08:30', '2017-03-01 16:08:30', 'income_level', '年入账(联通)', '1c', '', '1500000', 'int', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('79', '0', '2017-03-01 16:08:30', '2017-03-01 16:08:30', 'income_level', '年入账(联通)', '1d', '', '2500000', 'int', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('80', '0', '2017-03-01 16:08:30', '2017-03-01 16:08:30', 'income_level', '年入账(联通)', '1e', '', '3500000', 'int', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('81', '0', '2017-03-01 16:08:30', '2017-03-01 16:08:30', 'income_level', '年入账(联通)', '1f', '', '4500000', 'int', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('82', '0', '2017-03-01 16:08:30', '2017-03-01 16:08:30', 'income_level', '年入账(联通)', '20.0', '', '5500000', 'int', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('83', '0', '2017-03-01 16:08:30', '2017-03-01 16:08:30', 'income_level', '年入账(联通)', '21.0', '', '6500000', 'int', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('84', '0', '2017-03-01 16:08:30', '2017-03-01 16:08:30', 'income_level', '年入账(联通)', '22.0', '', '7500000', 'int', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('85', '0', '2017-03-01 16:08:30', '2017-03-01 16:08:30', 'income_level', '年入账(联通)', '23.0', '', '8500000', 'int', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('86', '0', '2017-03-01 16:08:30', '2017-03-01 16:08:30', 'income_level', '年入账(联通)', '24.0', '', '9500000', 'int', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('87', '0', '2017-03-01 16:08:30', '2017-03-01 16:08:30', 'income_level', '年入账(联通)', '25.0', '', '10000000', 'int', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('126', '0', '2017-03-01 16:08:31', '2017-03-01 16:08:31', 'is_cur_corp_shixin', '未命中', '11.0', '', '0', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('128', '0', '2017-03-01 16:08:31', '2017-03-01 16:08:31', 'is_cur_corp_shixin', '命中', '0.0', '', '1', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('129', '0', '2017-03-01 16:08:31', '2017-03-01 16:08:31', 'is_jiuyao_multi_loan', '命中91多头借贷名单', '', '', '1', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('130', '0', '2017-03-01 16:08:31', '2017-03-01 16:08:31', 'is_jiuyao_multi_loan', '未命中91多头借贷名单', '', '', '0', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('131', '0', '2017-03-01 16:08:31', '2017-03-01 16:08:31', 'is_mobile_black', '申请人手机号有染黑记录', '0.0', '', '1', 'int', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('132', '0', '2017-03-01 16:08:31', '2017-03-01 16:08:31', 'is_mobile_black', '申请人手机号无染黑记录', '2.0', '', '0', 'int', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('133', '0', '2017-03-01 16:08:31', '2017-03-01 16:08:31', 'is_pingan_other_loan', '未命中', '2.0', '', '0', 'int', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('134', '0', '2017-03-01 16:08:31', '2017-03-01 16:08:31', 'is_pingan_other_loan', '命中', '0.0', '', '1', 'int', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('135', '0', '2017-03-01 16:08:31', '2017-03-01 16:08:31', 'is_pingan_overdue_loan', '未命中', '2.0', '', '0', 'int', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('136', '0', '2017-03-01 16:08:31', '2017-03-01 16:08:31', 'is_pingan_overdue_loan', '命中', '0.0', '', '1', 'int', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('137', '0', '2017-03-01 16:08:31', '2017-03-01 16:08:31', 'is_recruitment', '非统招', '函授', '', '0', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('143', '0', '2017-03-01 16:08:31', '2017-03-01 16:08:31', 'is_recruitment', '统招', '全日制', '', '1', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('144', '0', '2017-03-01 16:08:31', '2017-03-01 16:08:31', 'is_unclear_loan', '没有未结清贷款', '0.0', '', '0', 'int', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('145', '0', '2017-03-01 16:08:32', '2017-03-01 16:08:32', 'is_unclear_loan', '有未结清贷款', '1.0', '', '1', 'int', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('146', '0', '2017-03-01 16:08:32', '2017-03-01 16:08:32', 'max_flight_area', '国内', '', '', '1', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('147', '0', '2017-03-01 16:08:32', '2017-03-01 16:08:32', 'max_flight_area', '国外', '', '', '2', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('148', '0', '2017-03-01 16:08:32', '2017-03-01 16:08:32', 'max_flight_area', '乘机次数为零', '', '', '3', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('149', '0', '2017-03-01 16:08:32', '2017-03-01 16:08:32', 'max_flight_area', '无记录', '', '', '4', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('150', '0', '2017-03-01 16:08:32', '2017-03-01 16:08:32', 'max_flight_class', '商务舱', '', '', '1', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('151', '0', '2017-03-01 16:08:32', '2017-03-01 16:08:32', 'max_flight_class', '公务舱', '', '', '2', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('152', '0', '2017-03-01 16:08:32', '2017-03-01 16:08:32', 'max_flight_class', '经济舱', '', '', '3', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('153', '0', '2017-03-01 16:08:32', '2017-03-01 16:08:32', 'max_flight_class', '乘机次数为零', '', '', '4', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('154', '0', '2017-03-01 16:08:32', '2017-03-01 16:08:32', 'mobile_identity', '身份验证一致', '00', '', '1', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('155', '0', '2017-03-01 16:08:32', '2017-03-01 16:08:32', 'mobile_identity', '其他', '11.0', '', '0', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('157', '0', '2017-03-01 16:08:32', '2017-03-01 16:08:32', 'now_industry_code', '全部行业', '', '', '0', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('158', '0', '2017-03-01 16:08:32', '2017-03-01 16:08:32', 'now_industry_code', '计算机软件', '', '', '10', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('159', '0', '2017-03-01 16:08:33', '2017-03-01 16:08:33', 'now_industry_code', '计算机硬件/网络设备', '', '', '20', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('160', '0', '2017-03-01 16:08:33', '2017-03-01 16:08:33', 'now_industry_code', 'IT服务/系统集成', '', '', '30', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('161', '0', '2017-03-01 16:08:33', '2017-03-01 16:08:33', 'now_industry_code', '互联网/移动互联网/电子商务', '', '', '40', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('162', '0', '2017-03-01 16:08:33', '2017-03-01 16:08:33', 'now_industry_code', '电子技术/半导体/集成电路', '', '', '50', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('163', '0', '2017-03-01 16:08:33', '2017-03-01 16:08:33', 'now_industry_code', '通信(设备/运营/增值)', '', '', '60', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('164', '0', '2017-03-01 16:08:33', '2017-03-01 16:08:33', 'now_industry_code', '广告/公关/市场推广/会展', '', '', '70', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('165', '0', '2017-03-01 16:08:33', '2017-03-01 16:08:33', 'now_industry_code', '房地产开发/建筑/建材/工程', '', '', '80', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('166', '0', '2017-03-01 16:08:33', '2017-03-01 16:08:33', 'now_industry_code', '房地产服务(物业管理/地产经纪)', '', '', '90', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('167', '0', '2017-03-01 16:08:33', '2017-03-01 16:08:33', 'now_industry_code', '规划/设计/装潢', '', '', '100', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('168', '0', '2017-03-01 16:08:33', '2017-03-01 16:08:33', 'now_industry_code', '中介服务', '', '', '110', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('169', '0', '2017-03-01 16:08:33', '2017-03-01 16:08:33', 'now_industry_code', '专业服务(咨询/财会/法律/翻译等)', '', '', '120', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('170', '0', '2017-03-01 16:08:33', '2017-03-01 16:08:33', 'now_industry_code', '银行', '', '', '130', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('171', '0', '2017-03-01 16:08:33', '2017-03-01 16:08:33', 'now_industry_code', '保险', '', '', '140', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('172', '0', '2017-03-01 16:08:33', '2017-03-01 16:08:33', 'now_industry_code', '基金/证券/期货/投资', '', '', '150', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('173', '0', '2017-03-01 16:08:33', '2017-03-01 16:08:33', 'now_industry_code', '贸易/进出口', '', '', '160', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('174', '0', '2017-03-01 16:08:34', '2017-03-01 16:08:34', 'now_industry_code', '影视/媒体/艺术/文化/出版', '', '', '170', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('175', '0', '2017-03-01 16:08:34', '2017-03-01 16:08:34', 'now_industry_code', '印刷/包装/造纸', '', '', '180', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('176', '0', '2017-03-01 16:08:34', '2017-03-01 16:08:34', 'now_industry_code', '食品/饮料/烟酒/日化', '', '', '190', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('177', '0', '2017-03-01 16:08:34', '2017-03-01 16:08:34', 'now_industry_code', '服装服饰/纺织/皮革', '', '', '200', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('178', '0', '2017-03-01 16:08:34', '2017-03-01 16:08:34', 'now_industry_code', '家具/家电', '', '', '210', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('179', '0', '2017-03-01 16:08:34', '2017-03-01 16:08:34', 'now_industry_code', '办公用品及设备', '', '', '220', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('180', '0', '2017-03-01 16:08:34', '2017-03-01 16:08:34', 'now_industry_code', '旅游/酒店/餐饮服务/生活服务', '', '', '230', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('181', '0', '2017-03-01 16:08:34', '2017-03-01 16:08:34', 'now_industry_code', '百货/批发/零售', '', '', '240', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('182', '0', '2017-03-01 16:08:34', '2017-03-01 16:08:34', 'now_industry_code', '交通/物流/运输', '', '', '250', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('183', '0', '2017-03-01 16:08:34', '2017-03-01 16:08:34', 'now_industry_code', '娱乐/休闲/体育', '', '', '260', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('184', '0', '2017-03-01 16:08:34', '2017-03-01 16:08:34', 'now_industry_code', '制药/生物工程', '', '', '270', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('185', '0', '2017-03-01 16:08:34', '2017-03-01 16:08:34', 'now_industry_code', '医疗/保健/美容/卫生服务', '', '', '280', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('186', '0', '2017-03-01 16:08:34', '2017-03-01 16:08:34', 'now_industry_code', '医疗设备/器械', '', '', '290', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('187', '0', '2017-03-01 16:08:35', '2017-03-01 16:08:35', 'now_industry_code', '环保', '', '', '300', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('188', '0', '2017-03-01 16:08:35', '2017-03-01 16:08:35', 'now_industry_code', '石油/石化/化工', '', '', '310', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('189', '0', '2017-03-01 16:08:35', '2017-03-01 16:08:35', 'now_industry_code', '采掘/冶炼/矿产', '', '', '320', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('190', '0', '2017-03-01 16:08:35', '2017-03-01 16:08:35', 'now_industry_code', '能源(电力/水利)', '', '', '330', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('191', '0', '2017-03-01 16:08:35', '2017-03-01 16:08:35', 'now_industry_code', '仪器/仪表/工业自动化/电气', '', '', '340', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('192', '0', '2017-03-01 16:08:35', '2017-03-01 16:08:35', 'now_industry_code', '汽车/摩托车', '', '', '350', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('193', '0', '2017-03-01 16:08:35', '2017-03-01 16:08:35', 'now_industry_code', '机械制造/机电/重工', '', '', '360', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('194', '0', '2017-03-01 16:08:35', '2017-03-01 16:08:35', 'now_industry_code', '原材料及加工', '', '', '370', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('195', '0', '2017-03-01 16:08:35', '2017-03-01 16:08:35', 'now_industry_code', '教育/培训/学术/科研/院校', '', '', '380', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('196', '0', '2017-03-01 16:08:35', '2017-03-01 16:08:35', 'now_industry_code', '政府/公共事业/非营利机构', '', '', '390', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('197', '0', '2017-03-01 16:08:35', '2017-03-01 16:08:35', 'now_industry_code', '其他', '', '', '400', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('198', '0', '2017-03-01 16:08:35', '2017-03-01 16:08:35', 'now_industry_code', '农/林/牧/渔', '', '', '410', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('199', '0', '2017-03-01 16:08:36', '2017-03-01 16:08:36', 'now_industry_code', '网络游戏', '', '', '420', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('200', '0', '2017-03-01 16:08:36', '2017-03-01 16:08:36', 'now_industry_code', '会计/审计', '', '', '430', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('201', '0', '2017-03-01 16:08:36', '2017-03-01 16:08:36', 'now_industry_code', '外包服务', '', '', '440', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('202', '0', '2017-03-01 16:08:36', '2017-03-01 16:08:36', 'now_industry_code', '检测/认证', '', '', '450', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('203', '0', '2017-03-01 16:08:36', '2017-03-01 16:08:36', 'now_industry_code', '奢侈品/收藏品', '', '', '460', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('204', '0', '2017-03-01 16:08:36', '2017-03-01 16:08:36', 'now_industry_code', '工艺品/珠宝/玩具', '', '', '470', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('205', '0', '2017-03-01 16:08:36', '2017-03-01 16:08:36', 'now_industry_code', '航空/航天', '', '', '480', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('206', '0', '2017-03-01 16:08:36', '2017-03-01 16:08:36', 'now_industry_code', '新能源', '', '', '490', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('207', '0', '2017-03-01 16:08:36', '2017-03-01 16:08:36', 'now_industry_code', '信托/担保/拍卖/典当', '', '', '500', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('208', '0', '2017-03-01 16:08:36', '2017-03-01 16:08:36', 'now_industry_code', '租赁服务', '', '', '510', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('209', '0', '2017-03-01 16:08:36', '2017-03-01 16:08:36', 'last_industry_code', '全部行业', '', '', '0', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('210', '0', '2017-03-01 16:08:36', '2017-03-01 16:08:36', 'last_industry_code', '计算机软件', '', '', '10', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('211', '0', '2017-03-01 16:08:37', '2017-03-01 16:08:37', 'last_industry_code', '计算机硬件/网络设备', '', '', '20', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('212', '0', '2017-03-01 16:08:37', '2017-03-01 16:08:37', 'last_industry_code', 'IT服务/系统集成', '', '', '30', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('213', '0', '2017-03-01 16:08:37', '2017-03-01 16:08:37', 'last_industry_code', '互联网/移动互联网/电子商务', '', '', '40', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('214', '0', '2017-03-01 16:08:37', '2017-03-01 16:08:37', 'last_industry_code', '电子技术/半导体/集成电路', '', '', '50', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('215', '0', '2017-03-01 16:08:37', '2017-03-01 16:08:37', 'last_industry_code', '通信(设备/运营/增值)', '', '', '60', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('216', '0', '2017-03-01 16:08:37', '2017-03-01 16:08:37', 'last_industry_code', '广告/公关/市场推广/会展', '', '', '70', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('217', '0', '2017-03-01 16:08:37', '2017-03-01 16:08:37', 'last_industry_code', '房地产开发/建筑/建材/工程', '', '', '80', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('218', '0', '2017-03-01 16:08:37', '2017-03-01 16:08:37', 'last_industry_code', '房地产服务(物业管理/地产经纪)', '', '', '90', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('219', '0', '2017-03-01 16:08:37', '2017-03-01 16:08:37', 'last_industry_code', '规划/设计/装潢', '', '', '100', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('220', '0', '2017-03-01 16:08:37', '2017-03-01 16:08:37', 'last_industry_code', '中介服务', '', '', '110', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('221', '0', '2017-03-01 16:08:37', '2017-03-01 16:08:37', 'last_industry_code', '专业服务(咨询/财会/法律/翻译等)', '', '', '120', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('222', '0', '2017-03-01 16:08:37', '2017-03-01 16:08:37', 'last_industry_code', '银行', '', '', '130', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('223', '0', '2017-03-01 16:08:37', '2017-03-01 16:08:37', 'last_industry_code', '保险', '', '', '140', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('224', '0', '2017-03-01 16:08:37', '2017-03-01 16:08:37', 'last_industry_code', '基金/证券/期货/投资', '', '', '150', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('225', '0', '2017-03-01 16:08:38', '2017-03-01 16:08:38', 'last_industry_code', '贸易/进出口', '', '', '160', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('226', '0', '2017-03-01 16:08:38', '2017-03-01 16:08:38', 'last_industry_code', '影视/媒体/艺术/文化/出版', '', '', '170', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('227', '0', '2017-03-01 16:08:38', '2017-03-01 16:08:38', 'last_industry_code', '印刷/包装/造纸', '', '', '180', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('228', '0', '2017-03-01 16:08:38', '2017-03-01 16:08:38', 'last_industry_code', '食品/饮料/烟酒/日化', '', '', '190', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('229', '0', '2017-03-01 16:08:38', '2017-03-01 16:08:38', 'last_industry_code', '服装服饰/纺织/皮革', '', '', '200', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('230', '0', '2017-03-01 16:08:38', '2017-03-01 16:08:38', 'last_industry_code', '家具/家电', '', '', '210', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('231', '0', '2017-03-01 16:08:38', '2017-03-01 16:08:38', 'last_industry_code', '办公用品及设备', '', '', '220', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('232', '0', '2017-03-01 16:08:38', '2017-03-01 16:08:38', 'last_industry_code', '旅游/酒店/餐饮服务/生活服务', '', '', '230', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('233', '0', '2017-03-01 16:08:38', '2017-03-01 16:08:38', 'last_industry_code', '百货/批发/零售', '', '', '240', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('234', '0', '2017-03-01 16:08:38', '2017-03-01 16:08:38', 'last_industry_code', '交通/物流/运输', '', '', '250', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('235', '0', '2017-03-01 16:08:38', '2017-03-01 16:08:38', 'last_industry_code', '娱乐/休闲/体育', '', '', '260', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('236', '0', '2017-03-01 16:08:38', '2017-03-01 16:08:38', 'last_industry_code', '制药/生物工程', '', '', '270', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('237', '0', '2017-03-01 16:08:38', '2017-03-01 16:08:38', 'last_industry_code', '医疗/保健/美容/卫生服务', '', '', '280', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('238', '0', '2017-03-01 16:08:38', '2017-03-01 16:08:38', 'last_industry_code', '医疗设备/器械', '', '', '290', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('239', '0', '2017-03-01 16:08:38', '2017-03-01 16:08:38', 'last_industry_code', '环保', '', '', '300', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('240', '0', '2017-03-01 16:08:39', '2017-03-01 16:08:39', 'last_industry_code', '石油/石化/化工', '', '', '310', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('241', '0', '2017-03-01 16:08:39', '2017-03-01 16:08:39', 'last_industry_code', '采掘/冶炼/矿产', '', '', '320', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('242', '0', '2017-03-01 16:08:39', '2017-03-01 16:08:39', 'last_industry_code', '能源(电力/水利)', '', '', '330', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('243', '0', '2017-03-01 16:08:39', '2017-03-01 16:08:39', 'last_industry_code', '仪器/仪表/工业自动化/电气', '', '', '340', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('244', '0', '2017-03-01 16:08:39', '2017-03-01 16:08:39', 'last_industry_code', '汽车/摩托车', '', '', '350', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('245', '0', '2017-03-01 16:08:39', '2017-03-01 16:08:39', 'last_industry_code', '机械制造/机电/重工', '', '', '360', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('246', '0', '2017-03-01 16:08:39', '2017-03-01 16:08:39', 'last_industry_code', '原材料及加工', '', '', '370', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('247', '0', '2017-03-01 16:08:39', '2017-03-01 16:08:39', 'last_industry_code', '教育/培训/学术/科研/院校', '', '', '380', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('248', '0', '2017-03-01 16:08:39', '2017-03-01 16:08:39', 'last_industry_code', '政府/公共事业/非营利机构', '', '', '390', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('249', '0', '2017-03-01 16:08:39', '2017-03-01 16:08:39', 'last_industry_code', '其他', '', '', '400', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('250', '0', '2017-03-01 16:08:39', '2017-03-01 16:08:39', 'last_industry_code', '农/林/牧/渔', '', '', '410', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('251', '0', '2017-03-01 16:08:39', '2017-03-01 16:08:39', 'last_industry_code', '网络游戏', '', '', '420', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('252', '0', '2017-03-01 16:08:39', '2017-03-01 16:08:39', 'last_industry_code', '会计/审计', '', '', '430', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('253', '0', '2017-03-01 16:08:39', '2017-03-01 16:08:39', 'last_industry_code', '外包服务', '', '', '440', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('254', '0', '2017-03-01 16:08:39', '2017-03-01 16:08:39', 'last_industry_code', '检测/认证', '', '', '450', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('255', '0', '2017-03-01 16:08:40', '2017-03-01 16:08:40', 'last_industry_code', '奢侈品/收藏品', '', '', '460', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('256', '0', '2017-03-01 16:08:40', '2017-03-01 16:08:40', 'last_industry_code', '工艺品/珠宝/玩具', '', '', '470', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('257', '0', '2017-03-01 16:08:40', '2017-03-01 16:08:40', 'last_industry_code', '航空/航天', '', '', '480', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('258', '0', '2017-03-01 16:08:40', '2017-03-01 16:08:40', 'last_industry_code', '新能源', '', '', '490', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('259', '0', '2017-03-01 16:08:40', '2017-03-01 16:08:40', 'last_industry_code', '信托/担保/拍卖/典当', '', '', '500', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('260', '0', '2017-03-01 16:08:40', '2017-03-01 16:08:40', 'last_industry_code', '租赁服务', '', '', '510', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('262', '0', '2017-03-01 16:08:40', '2017-03-01 16:08:40', 'income_expense_comparison', '入账远大于支出', '', '', '1', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('263', '0', '2017-03-01 16:08:40', '2017-03-01 16:08:40', 'income_expense_comparison', '入账大于支出', '', '', '2', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('264', '0', '2017-03-01 16:08:40', '2017-03-01 16:08:40', 'income_expense_comparison', '入账接进出账', '', '', '3', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('265', '0', '2017-03-01 16:08:40', '2017-03-01 16:08:40', 'income_expense_comparison', '入账小于出账', '', '', '4', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('266', '0', '2017-03-01 16:08:40', '2017-03-01 16:08:40', 'income_expense_comparison', '入账远小于支出', '', '', '5', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('267', '0', '2017-03-01 16:08:40', '2017-03-01 16:08:40', 'college_type', '专科', '专科', '', '1', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('269', '0', '2017-03-01 16:08:40', '2017-03-01 16:08:40', 'college_type', '普本', '本科', '', '2', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('272', '0', '2017-03-01 16:08:41', '2017-03-01 16:08:41', 'college_type', '211院校', '211工程院校', '', '3', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('273', '0', '2017-03-01 16:08:41', '2017-03-01 16:08:41', 'college_type', '985院校', '985、211工程院校', '', '4', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('274', '0', '2017-03-01 16:08:41', '2017-03-01 16:08:41', 'is_loan_agency', '命中', '00', '', '1', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('275', '0', '2017-03-01 16:08:41', '2017-03-01 16:08:41', 'is_loan_agency', '其他', '11', '', '0', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('277', '0', '2017-03-01 16:08:41', '2017-03-01 16:08:41', 'is_organization_g_black', '命中', '00', '', '1', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('278', '0', '2017-03-01 16:08:41', '2017-03-01 16:08:41', 'is_organization_g_black', '其他', '11.0', '', '0', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('280', '0', '2017-03-01 16:08:41', '2017-03-01 16:08:41', 'is_netsky_black', '命中', '00', '', '1', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('281', '0', '2017-03-01 16:08:41', '2017-03-01 16:08:41', 'is_netsky_black', '其他', '11', '', '0', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('283', '0', '2017-03-01 16:08:41', '2017-03-01 16:08:41', 'is_netsky_multi_loan', '命中', '00', '', '1', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('284', '0', '2017-03-01 16:08:41', '2017-03-01 16:08:41', 'is_netsky_multi_loan', '其他', '11', '', '0', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('286', '0', '2017-03-01 16:08:41', '2017-03-01 16:08:41', 'is_skyeye_black', '命中', '00', '', '1', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('287', '0', '2017-03-01 16:08:41', '2017-03-01 16:08:41', 'is_skyeye_black', '其他', '11', '', '0', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('289', '0', '2017-03-01 16:08:42', '2017-03-01 16:08:42', 'is_court_shixin', '命中', '00', '', '1', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('290', '0', '2017-03-01 16:08:42', '2017-03-01 16:08:42', 'is_court_shixin', '其他', '11', '', '0', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('292', '0', '2017-03-01 16:08:42', '2017-03-01 16:08:42', 'is_net_black', '命中', '00', '', '1', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('293', '0', '2017-03-01 16:08:42', '2017-03-01 16:08:42', 'is_net_black', '其他', '11', '', '0', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('295', '0', '2017-03-01 16:08:42', '2017-03-01 16:08:42', 'has_negative_info', '命中', '00', '', '1', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('296', '0', '2017-03-01 16:08:42', '2017-03-01 16:08:42', 'has_negative_info', '其他', '11', '', '0', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('298', '0', '2017-03-01 16:08:42', '2017-03-01 16:08:42', 'is_netsky_grey', '命中', '00', '', '1', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('299', '0', '2017-03-01 16:08:42', '2017-03-01 16:08:42', 'is_netsky_grey', '其他', '11', '', '0', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('301', '0', '2017-03-01 16:08:42', '2017-03-01 16:08:42', 'is_court_zhixing', '命中', '00', '', '1', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('302', '0', '2017-03-01 16:08:42', '2017-03-01 16:08:42', 'is_court_zhixing', '其他', '11', '', '0', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('304', '0', '2017-03-01 16:08:42', '2017-03-01 16:08:42', 'online_time', '(0,6)', '', '', '0', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('305', '0', '2017-03-01 16:08:42', '2017-03-01 16:08:42', 'online_time', '[6,12)', '', '', '11', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('306', '0', '2017-03-01 16:08:42', '2017-03-01 16:08:42', 'online_time', '[12,24)', '', '', '22', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('307', '0', '2017-03-01 16:08:43', '2017-03-01 16:08:43', 'online_time', '[24,+)', '', '', '33', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('308', '0', '2017-03-01 16:08:43', '2017-03-01 16:08:43', 'is_pingan_financial_shixin', '命中', '0.0', '', '1', 'int', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('309', '0', '2017-03-01 16:08:43', '2017-03-01 16:08:43', 'is_pingan_financial_shixin', '其他', '2.0', '', '0', 'int', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('310', '0', '2017-03-01 16:08:43', '2017-03-01 16:08:43', 'is_pingan_multi_loan', '命中', '0.0', '', '1', 'int', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('311', '0', '2017-03-01 16:08:43', '2017-03-01 16:08:43', 'is_pingan_multi_loan', '其他', '2.0', '', '0', 'int', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('312', '0', '2017-03-01 16:08:43', '2017-03-01 16:08:43', 'register_city_level', '一线', '地域表', '', '1', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('313', '0', '2017-03-01 16:08:43', '2017-03-01 16:08:43', 'register_city_level', '二线', '地域表', '', '2', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('314', '0', '2017-03-01 16:08:43', '2017-03-01 16:08:43', 'register_city_level', '三线', '地域表', '', '3', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('315', '0', '2017-03-01 16:08:43', '2017-03-01 16:08:43', 'register_city_level', '四线', '地域表', '', '4', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('316', '0', '2017-03-01 16:08:43', '2017-03-01 16:08:43', 'register_city_level', '其他', '地域表', '', '5', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('317', '0', '2017-03-01 16:08:43', '2017-03-01 16:08:43', 'mobile_area_city_level', '一线', '地域表', '', '1', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('318', '0', '2017-03-01 16:08:43', '2017-03-01 16:08:43', 'mobile_area_city_level', '二线', '地域表', '', '2', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('319', '0', '2017-03-01 16:08:43', '2017-03-01 16:08:43', 'mobile_area_city_level', '三线', '地域表', '', '3', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('320', '0', '2017-03-01 16:08:44', '2017-03-01 16:08:44', 'mobile_area_city_level', '四线', '地域表', '', '4', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('321', '0', '2017-03-01 16:08:44', '2017-03-01 16:08:44', 'mobile_area_city_level', '其他', '地域表', '', '5', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('322', '0', '2017-03-01 16:08:44', '2017-03-01 16:08:44', 'company_addr_city_level', '一线', '地域表', '', '1', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('323', '0', '2017-03-01 16:08:44', '2017-03-01 16:08:44', 'company_addr_city_level', '二线', '地域表', '', '2', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('324', '0', '2017-03-01 16:08:44', '2017-03-01 16:08:44', 'company_addr_city_level', '三线', '地域表', '', '3', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('325', '0', '2017-03-01 16:08:44', '2017-03-01 16:08:44', 'company_addr_city_level', '四线', '地域表', '', '4', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('326', '0', '2017-03-01 16:08:44', '2017-03-01 16:08:44', 'company_addr_city_level', '其他', '地域表', '', '5', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('327', '0', '2017-03-01 16:08:44', '2017-03-01 16:08:44', 'gender', '男', '男', '', '0', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('328', '0', '2017-03-01 16:08:44', '2017-03-01 16:08:44', 'gender', '女', '女', '', '1', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('331', '0', '2017-03-01 16:08:44', '2017-03-01 16:08:44', 'marital_status', '未婚', '未婚', '', '10', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('332', '0', '2017-03-01 16:08:44', '2017-03-01 16:08:44', 'marital_status', '已婚', '已婚', '', '20', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('333', '0', '2017-03-01 16:08:44', '2017-03-01 16:08:44', 'marital_status', '已婚', '初婚', '', '21', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('334', '0', '2017-03-01 16:08:44', '2017-03-01 16:08:44', 'marital_status', '已婚', '再婚', '', '22', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('335', '0', '2017-03-01 16:08:44', '2017-03-01 16:08:44', 'marital_status', '已婚', '复婚', '', '23', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('336', '0', '2017-03-01 16:08:45', '2017-03-01 16:08:45', 'marital_status', '丧偶', '丧偶', '', '30', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('337', '0', '2017-03-01 16:08:45', '2017-03-01 16:08:45', 'marital_status', '离异', '离异', '', '40', 'string', '');
 
 -- ----------------------------
 -- Table structure for `fic_feature_common_conf`
@@ -2258,7 +2536,7 @@ INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:04', '2017-
 INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:05', '2017-02-22 15:18:05', '46', 'is_pingan_overdue_loan', '是否命中凭安逾期名单', '[\'trustutn_loan_overdue\']', 'Courier', '{\'trustutn_loan_overdue\': [\'name\', \'card_id\', \'mobile\']}');
 INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:05', '2017-02-22 15:18:05', '47', 'is_recruitment', '是否统招', '[\'education_review_s\']', 'Courier', '{\'education_review_s\': [\'name\', \'card_id\']}');
 INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:05', '2017-02-22 15:18:05', '48', 'is_skyeye_black', '是否命中天眼黑名单', '[\'tianyan_black\']', 'Courier', '{\'tianyan_black\': [\'card_id\', \'email\', \'mobile\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:05', '2017-02-22 15:18:05', '49', 'is_unclear_loan', '是否在未结清贷款申请记录中', '[\'loan_history\']', 'Courier', '{\'loan_history\': [\'\']}');
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:05', '2017-02-22 15:18:05', '49', 'is_unclear_loan', '是否在未结清贷款申请记录中', '[\'loan_history\']', 'Courier', '{\'loan_history\': [\'card_id\']}');
 INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:05', '2017-02-22 15:18:05', '50', 'jiuyao_multi_loan_denied_count', '半年内拒贷次数', '[\'multi_loan_91\']', 'Courier', '{\'multi_loan_91\': [\'name\', \'card_id\']}');
 INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:05', '2017-02-22 15:18:05', '51', 'jiuyao_multi_loan_m2_count', 'M2及M2以上次数', '[\'multi_loan_91\']', 'Courier', '{\'multi_loan_91\': [\'name\', \'card_id\']}');
 INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:05', '2017-02-22 15:18:05', '52', 'last_industry_code', '上一份工作行业', '[\'portrait_data\']', 'Courier', '{\'portrait_data\': [\'proposer_id\']}');
@@ -2278,8 +2556,8 @@ INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:06', '2017-
 INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:06', '2017-02-22 15:18:06', '66', 'now_work_time', '本份工作工作时间', '[\'portrait_data\']', 'Courier', '{\'portrait_data\': [\'proposer_id\']}');
 INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:06', '2017-02-22 15:18:06', '67', 'now_workplace_code', '现在工作地点', '[\'portrait_data\']', 'Courier', '{\'portrait_data\': [\'proposer_id\']}');
 INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:06', '2017-02-22 15:18:06', '68', 'online_time', '在网时长', '[\'telecom_mobile_online_s\', \'unicome_mobile_online_time_s\', \'yd_mobile_online_time_s\']', 'ShuntCourier', '{\'telecom_mobile_online_time_s\': [\'mobile\'], \'unicome_mobile_online_time_s\': [\'mobile\'], \'yd_mobile_online_time_s\': [\'mobile\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:06', '2017-02-22 15:18:06', '69', 'overload_count', '超载次数', '[\'high_way_over_load\']', 'RelevanceCourier', '{\'high_way_over_load\': [\'license_plate\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:06', '2017-02-22 15:18:06', '70', 'overspeed_count', '超速次数', '[\'high_way_over_speed\']', 'RelevanceCourier', '{\'high_way_over_speed\': [\'license_plate\']}');
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:06', '2017-02-22 15:18:06', '69', 'overload_count', '超载次数', '[\'high_way_over_load\', \'cc_car_credit\']', 'RelevanceCourier', '{\'high_way_over_load\': [\'car_number\'], \'cc_car_credit\': [\'name\', \'card_id\']}');
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:06', '2017-02-22 15:18:06', '70', 'overspeed_count', '超速次数', '[\'high_way_over_speed\', \'cc_car_credit\']', 'RelevanceCourier', '{\'high_way_over_speed\': [\'car_number\'], \'cc_car_credit\': [\'name\', \'card_id\']}');
 INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:06', '2017-02-22 15:18:06', '71', 'pingan_max_overdue_days', '金融逾期名单最长逾期天数（近6个月）', '[\'trustutn_loan_overdue\']', 'Courier', '{\'trustutn_loan_overdue\': [\'name\', \'card_id\', \'mobile\']}');
 INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:06', '2017-02-22 15:18:06', '72', 'pingan_multi_loan_count', '多头借贷公司数量', '[\'trustutn_loan_loanmsg\']', 'Courier', '{\'trustutn_loan_loanmsg\': [\'name\', \'card_id\', \'mobile\']}');
 INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:06', '2017-02-22 15:18:06', '73', 'pingan_multi_loan_infos', '多头借贷信息', '[\'trustutn_loan_loanmsg\']', 'Courier', '{\'trustutn_loan_loanmsg\': [\'name\', \'card_id\', \'mobile\']}');
@@ -2290,6 +2568,28 @@ INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:07', '2017-
 INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:07', '2017-02-22 15:18:07', '78', 'pingan_overdue_loan_infos', '逾期信息', '[\'trustutn_loan_overdue\']', 'Courier', '{\'trustutn_loan_overdue\': [\'name\', \'card_id\', \'mobile\']}');
 INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:07', '2017-02-22 15:18:07', '79', 'register_city_level', '户籍城市等级', '[\'personal_info\']', 'Courier', '{\'personal_info\': [\'name\', \'card_id\']}');
 INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:07', '2017-02-22 15:18:07', '80', 'work_time', '申请人工作时间', '[\'portrait_data\']', 'Courier', '{\'portrait_data\': [\'proposer_id\']}');
+
+-- ----------------------------
+-- Table structure for `fic_feature_process_info`
+-- ----------------------------
+DROP TABLE IF EXISTS `fic_feature_process_info`;
+CREATE TABLE `fic_feature_process_info` (
+  `is_delete` tinyint(1) NOT NULL,
+  `created_on` datetime DEFAULT NULL,
+  `updated_on` datetime NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `feature_name` varchar(64) NOT NULL,
+  `feature_data_type` varchar(64) NOT NULL,
+  `default_value` varchar(64) NOT NULL,
+  `json_path_list` varchar(2048) NOT NULL,
+  `map_and_filter_chain` varchar(1024) DEFAULT NULL,
+  `reduce_chain` varchar(1024) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of fic_feature_process_info
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for `fic_feature_relevance_conf`
@@ -2303,14 +2603,16 @@ CREATE TABLE `fic_feature_relevance_conf` (
   `feature_name` varchar(64) NOT NULL,
   `depend_feature` varchar(64) DEFAULT NULL,
   `data_identity` varchar(64) NOT NULL,
+  `depend_di` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of fic_feature_relevance_conf
 -- ----------------------------
-INSERT INTO `fic_feature_relevance_conf` VALUES ('0', '2017-02-16 15:46:42', '2017-02-16 15:46:42', '1', 'overspeed_count', 'car_number', 'high_way_over_speed');
-INSERT INTO `fic_feature_relevance_conf` VALUES ('0', '2017-02-16 15:46:42', '2017-02-16 15:46:42', '2', 'overload_count', 'car_number', 'high_way_over_load');
+INSERT INTO `fic_feature_relevance_conf` VALUES ('0', '2017-02-28 14:39:58', '2017-02-28 14:40:10', '1', 'overload_count', 'car_number', 'high_way_over_load', 'cc_car_credit');
+INSERT INTO `fic_feature_relevance_conf` VALUES ('0', '2017-02-28 14:40:01', '2017-02-28 14:40:13', '2', 'overspeed_count', 'car_number', 'high_way_over_speed', 'cc_car_credit');
+INSERT INTO `fic_feature_relevance_conf` VALUES ('0', '2017-02-28 14:40:04', '2017-02-28 14:40:15', '3', 'car_number', null, 'cc_car_credit', null);
 
 -- ----------------------------
 -- Table structure for `fic_feature_shunt_conf`
@@ -2339,11 +2641,11 @@ INSERT INTO `fic_feature_shunt_conf` VALUES ('0', '2017-02-16 14:21:13', '2017-0
 INSERT INTO `fic_feature_shunt_conf` VALUES ('0', '2017-02-16 14:21:13', '2017-02-16 14:21:13', '5', 'mobile_identity', 'mobile', 'PhoneOperator', '(\'UMN\', )', 'unicom_mobile_identity_s');
 INSERT INTO `fic_feature_shunt_conf` VALUES ('0', '2017-02-16 14:21:14', '2017-02-16 14:21:14', '6', 'mobile_identity', 'mobile', 'PhoneOperator', '(\'YMN\', )', 'yd_mobile_identity_s');
 INSERT INTO `fic_feature_shunt_conf` VALUES ('0', '2017-02-16 14:21:14', '2017-02-16 14:21:14', '7', 'income_level', 'mobile', 'PhoneOperator', '(\'UMN\', )', 'unicom_finance_portrait_s');
-INSERT INTO `fic_feature_shunt_conf` VALUES ('0', '2017-02-16 14:21:14', '2017-02-16 14:21:14', '8', 'income_level', 'mobile', 'PhoneOperator', '(\'TMN\', \'UMN\', \'YMN\')', 'portrait_data');
-INSERT INTO `fic_feature_shunt_conf` VALUES ('0', '2017-02-16 14:21:14', '2017-02-16 14:21:14', '9', 'income_level', 'mobile', 'PhoneOperator', '(\'YMN\', )', 'cc_credit');
-INSERT INTO `fic_feature_shunt_conf` VALUES ('0', '2017-02-16 14:21:14', '2017-02-16 14:21:14', '12', 'income_outcome_comparison', 'mobile', 'PhoneOperator', '(\'UMN\', )', 'unicom_finance_portrait_s');
-INSERT INTO `fic_feature_shunt_conf` VALUES ('0', '2017-02-16 14:21:14', '2017-02-16 14:21:14', '13', 'income_outcome_comparison', 'mobile', 'PhoneOperator', '(\'TMN\', \'UMN\', \'TMN\')', 'portrait_data');
-INSERT INTO `fic_feature_shunt_conf` VALUES ('0', '2017-02-16 14:21:14', '2017-02-16 14:21:14', '14', 'income_outcome_comparison', 'mobile', 'PhoneOperator', '(\'YMN\', )', 'cc_credit');
+INSERT INTO `fic_feature_shunt_conf` VALUES ('0', '2017-02-16 14:21:14', '2017-02-16 14:21:14', '8', 'income_level', 'mobile', 'PhoneOperator', '(\'TMN\', \'UMN\', \'YMN\')', 'cc_credit');
+INSERT INTO `fic_feature_shunt_conf` VALUES ('0', '2017-02-16 14:21:14', '2017-02-16 14:21:14', '9', 'income_level', 'mobile', 'PhoneOperator', '(\'TMN\', \'UMN\', \'YMN\')', 'portrait_data');
+INSERT INTO `fic_feature_shunt_conf` VALUES ('0', '2017-02-16 14:21:14', '2017-02-16 14:21:14', '12', 'income_expense_comparison', 'mobile', 'PhoneOperator', '(\'UMN\', )', 'unicom_finance_portrait_s');
+INSERT INTO `fic_feature_shunt_conf` VALUES ('0', '2017-02-16 14:21:14', '2017-02-16 14:21:14', '13', 'income_expense_comparison', 'mobile', 'PhoneOperator', '(\'TMN\', \'UMN\', \'YMN\')', 'cc_credit');
+INSERT INTO `fic_feature_shunt_conf` VALUES ('0', '2017-02-16 14:21:14', '2017-02-16 14:21:14', '14', 'income_expense_comparison', 'mobile', 'PhoneOperator', '(\'TMN\', \'UMN\', \'TMN\')', 'portrait_data');
 
 -- ----------------------------
 -- Table structure for `fic_interface_info`
@@ -2366,50 +2668,52 @@ CREATE TABLE `fic_interface_info` (
   `is_async` tinyint(1) NOT NULL,
   `encrypt_type` varchar(32) DEFAULT NULL,
   `data_source_id` int(11) NOT NULL,
+  `data_origin_type` int(11),
   PRIMARY KEY (`id`),
   KEY `fic_interface_info_15a32e4a` (`data_source_id`),
   CONSTRAINT `fic_interface__data_source_id_28f7006_fk_fic_data_source_info_id` FOREIGN KEY (`data_source_id`) REFERENCES `fic_data_source_info` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of fic_interface_info
 -- ----------------------------
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:36', '2017-02-15 10:45:36', '1', '贷款中介查询', 'loan_agency', '', 'REMOTE', '', '', '{\'mobile\': \'%(mobile)s\'}', '0', '0', '0', '', '3');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:36', '2017-02-15 10:45:36', '2', '机构G黑名单查询', 'agentg_black', '', 'REMOTE', '', '', '{\'id_card_name\': \'%(name)s\', \'id_card_code\': \'%(card_id)s\', \'mobile\': \'%(mobile)s\'}', '0', '0', '0', '', '3');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:36', '2017-02-15 10:45:36', '3', '天网黑名单查询', 'tianwang_black', '', 'REMOTE', '', '', '{\'mobile\': \'%(mobile)s\'}', '0', '0', '0', '', '3');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:36', '2017-02-15 10:45:36', '4', '天网多头贷款查询', 'tianwang_multi_loan', '', 'REMOTE', '', '', '{\'mobile\': \'%(mobile)s\'}', '0', '0', '0', '', '3');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:36', '2017-02-15 10:45:36', '5', '天眼黑名单查询', 'tianyan_black', '', 'REMOTE', '', '', '{\'email\': \'%(email)s\', \'id_card_code\': \'%(card_id)s\', \'mobile\': \'%(mobile)s\'}', '0', '0', '0', '', '3');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:36', '2017-02-15 10:45:36', '6', '法院失信被执行人查询', 'court_shixin_a_s', '', 'REMOTE', '', '', '{\'entity_name\': \'%(name)s\', \'entity_id\': \'%(card_id)s\'}', '0', '0', '0', '', '3');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:36', '2017-02-15 10:45:36', '7', '网贷黑名单查询', 'net_black_a_s', '', 'REMOTE', '', '', '{\'id_card_name\': \'%(name)s\', \'id_card_code\': \'%(card_id)s\'}', '0', '0', '0', '', '3');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:36', '2017-02-15 10:45:36', '8', '个人不良信息查询', 'negative_info_s', '', 'REMOTE', '', '', '{\'id_card_name\': \'%(name)s\', \'id_card_code\': \'%(card_id)s\'}', '0', '0', '0', '', '3');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:36', '2017-02-15 10:45:36', '9', '天网灰名单查询', 'tianwang_gray', '', 'REMOTE', '', '', '{\'mobile\': \'%(mobile)s\'}', '0', '0', '0', '', '3');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:36', '2017-02-15 10:45:36', '10', '法院被执行人查询', 'court_zhixing_a_s', '', 'REMOTE', '', '', '{\'entity_name\': \'%(name)s\', \'entity_id\': \'%(card_id)s\'}', '0', '0', '0', '', '3');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:36', '2017-02-15 10:45:36', '11', '电信手机在网时长', 'telecom_mobile_online_time_s', '', 'REMOTE', 'TMN', '', '{\'mobile\': \'%(mobile)s\'}', '0', '0', '0', '', '3');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:36', '2017-02-15 10:45:36', '12', '联通手机在网时长', 'unicome_mobile_online_time_s', '', 'REMOTE', 'UMN', '', '{\'mobile\': \'%(mobile)s\'}', '0', '0', '0', '', '3');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:37', '2017-02-15 10:45:37', '13', '移动手机在网时长', 'yd_mobile_online_time_s', '', 'REMOTE', 'YMN', '', '{\'mobile\': \'%(mobile)s\'}', '0', '0', '0', '', '3');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:37', '2017-02-15 10:45:37', '14', '凭安贷款逾期信息', 'trustutn_loan_overdue', '', 'REMOTE', '', '', '{\'phone\': \'%(mobile)s\', \'id_card\': \'%(card_id)s\', \'name\': \'%(name)s\'}', '0', '0', '0', '', '3');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:37', '2017-02-15 10:45:37', '15', '凭安贷款黑名单信息', 'trustutn_loan_blacklist', '', 'REMOTE', '', '', '{\'phone\': \'%(mobile)s\', \'id_card\': \'%(card_id)s\', \'name\': \'%(name)s\'}', '0', '0', '0', '', '3');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:37', '2017-02-15 10:45:37', '16', '91征信查询', 'multi_loan_91', '', 'REMOTE', '', '', '{\'real_name\': \'%(name)s\', \'id_card\': \'%(card_id)s\'}', '0', '0', '0', '', '3');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:37', '2017-02-15 10:45:37', '17', '申请数据查询', 'apply_data', '', 'LOCALE', '', '', '{\'apply_id\': \'%(apply_id)s\'}', '0', '0', '0', '', '3');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:37', '2017-02-15 10:45:37', '18', '个人基本信息查询', 'personal_info', '', 'REMOTE', '', '', '{\'id_card_name\': \'%(name)s\', \'id_card_code\': \'%(card_id)s\'}', '0', '0', '0', '', '3');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:37', '2017-02-15 10:45:37', '19', '未结清贷款记录查询', 'loan_history', '', 'REMOTE', '', '', '', '0', '0', '0', '', '3');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:37', '2017-02-15 10:45:37', '20', '预授信信息查询', 'portrait_data', '', 'LOCALE', '', '', '{\'proposer_id\': \'%(proposer_id)s\'}', '0', '0', '0', '', '3');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:37', '2017-02-15 10:45:37', '21', 'GPS地址查询', 'geo_location', '', 'REMOTE', '', '', '{\'gps_longitude\': \'%(longitudu)s\', \'gps_latitude\': \'%(latitude)s\'}', '0', '0', '0', '', '3');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:37', '2017-02-15 10:45:37', '22', '手机号码归属地查询', 'mobile_locale', '', 'REMOTE', '', '', '{\'mobile\': \'%(mobile)s\'}', '0', '0', '0', '', '3');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:37', '2017-02-15 10:45:37', '23', '凭安多头贷款查询', 'trustutn_loan_loanmsg', '', 'REMOTE', '', '', '{\'phone\': \'%(mobile)s\', \'id_card\': \'%(card_id)s\', \'name\': \'%(name)s\'}', '0', '0', '0', '', '3');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:37', '2017-02-15 10:45:37', '24', '凭安电话号码查询', 'trustutn_loan_phone', '', 'REMOTE', '', '', '{\'phone\': \'%(mobile)s\', \'id_card\': \'%(card_id)s\', \'name\': \'%(name)s\'}', '0', '0', '0', '', '3');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:37', '2017-02-15 10:45:37', '25', '电信手机身份验证', 'telecom_mobile_identity_s', '', 'REMOTE', 'TMN', '', '{\'id_card_name\': \'%(name)s\', \'id_card_code\': \'%(card_id)s\', \'mobile\': \'%(mobile)s\'}', '0', '0', '0', '', '3');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:37', '2017-02-15 10:45:37', '26', '联通手机身份验证', 'unicom_mobile_identity_s', '', 'REMOTE', 'UMN', '', '{\'id_card_name\': \'%(name)s\', \'id_card_code\': \'%(card_id)s\', \'mobile\': \'%(mobile)s\'}', '0', '0', '0', '', '3');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:38', '2017-02-15 10:45:38', '27', '移动手机身份验证', 'yd_mobile_identity_s', '', 'REMOTE', 'YMN', '', '{\'id_card_name\': \'%(name)s\', \'id_card_code\': \'%(card_id)s\', \'mobile\': \'%(mobile)s\'}', '0', '0', '0', '', '3');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:38', '2017-02-15 10:45:38', '28', '人人信', 'cc_credit', '', 'REMOTE', '', '', '{\'mobile\': \'%(mobile)s\'}', '0', '0', '0', '', '3');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:38', '2017-02-15 10:45:38', '29', '人人信车辆信息查询', 'cc_car_credit', '', 'REMOTE', '', '', '{\'user_name\': \'%(name)s\', \'id_no\': \'%(card_id)s\'}', '0', '0', '0', '', '3');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:38', '2017-02-15 10:45:38', '30', '高速超速信息查询', 'high_way_over_speed', '', 'REMOTE', '', '', '{\'license_plate\': \'%(license_plate)s\'}', '0', '0', '0', '', '3');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:38', '2017-02-15 10:45:38', '31', '高速超载信息查询', 'high_way_over_load', '', 'REMOTE', '', '', '{\'license_plate\': \'%(license_plate)s\'}', '0', '0', '0', '', '3');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:38', '2017-02-15 10:45:38', '32', '凭安贷款其他机构查询', 'trustutn_loan_otheragent', '', 'REMOTE', '', '', '{\'phone\': \'%(mobile)s\', \'id_card\': \'%(crad_id)s\', \'name\': \'%(name)s\'}', '0', '0', '0', '', '3');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:38', '2017-02-15 10:45:38', '33', '乘机人信息查询', 'airline_passenger_info', '', 'REMOTE', '', '', '{\'id_card_name\': \'%(name)s\', \'id_card_code\': \'%(card_id)s\'}', '0', '0', '0', '', '3');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:38', '2017-02-15 10:45:38', '34', '联通金融画像查询', 'unicom_finance_portrait_s', '', 'REMOTE', 'UMN', '', '{\'mobile\': \'%(mobile)s\'}', '0', '0', '0', '', '3');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:38', '2017-02-15 10:45:38', '35', '多项身份信息查询', 'multi_id_card_info_s', '', 'REMOTE', '', '', '{\'id_card_name\': \'%(name)s\', \'id_card_code\': \'%(card_id)s\'}', '0', '0', '0', '', '3');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:38', '2017-02-15 10:45:38', '36', '企业工商信息查询', 'industrial_commercial_s', '', 'REMOTE', '', '', '{\'enterprise_name\': \'%(cur_company)s\'}', '0', '0', '0', '', '3');
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:36', '2017-02-15 10:45:36', '1', '贷款中介查询', 'loan_agency', '', 'REMOTE', '', '', '{\'mobile\': \'%(mobile)s\'}', '0', '0', '0', '', '3', '1');
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:36', '2017-02-15 10:45:36', '2', '机构G黑名单查询', 'agentg_black', '', 'REMOTE', '', '', '{\'id_card_name\': \'%(name)s\', \'id_card_code\': \'%(card_id)s\', \'mobile\': \'%(mobile)s\'}', '0', '0', '0', '', '3', '1');
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:36', '2017-02-15 10:45:36', '3', '天网黑名单查询', 'tianwang_black', '', 'REMOTE', '', '', '{\'mobile\': \'%(mobile)s\'}', '0', '0', '0', '', '3', '1');
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:36', '2017-02-15 10:45:36', '4', '天网多头贷款查询', 'tianwang_multi_loan', '', 'REMOTE', '', '', '{\'mobile\': \'%(mobile)s\'}', '0', '0', '0', '', '3', '1');
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:36', '2017-02-15 10:45:36', '5', '天眼黑名单查询', 'tianyan_black', '', 'REMOTE', '', '', '{\'email\': \'%(email)s\', \'id_card_code\': \'%(card_id)s\', \'mobile\': \'%(mobile)s\'}', '0', '0', '0', '', '3', '1');
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:36', '2017-02-15 10:45:36', '6', '法院失信被执行人查询', 'court_shixin_a_s', '', 'REMOTE', '', '', '{\'entity_name\': \'%(name)s\', \'entity_id\': \'%(card_id)s\'}', '0', '0', '0', '', '3', '1');
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:36', '2017-02-15 10:45:36', '7', '网贷黑名单查询', 'net_black_a_s', '', 'REMOTE', '', '', '{\'id_card_name\': \'%(name)s\', \'id_card_code\': \'%(card_id)s\'}', '0', '0', '0', '', '3', '1');
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:36', '2017-02-15 10:45:36', '8', '个人不良信息查询', 'negative_info_s', '', 'REMOTE', '', '', '{\'id_card_name\': \'%(name)s\', \'id_card_code\': \'%(card_id)s\'}', '0', '0', '0', '', '3', '1');
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:36', '2017-02-15 10:45:36', '9', '天网灰名单查询', 'tianwang_gray', '', 'REMOTE', '', '', '{\'mobile\': \'%(mobile)s\'}', '0', '0', '0', '', '3', '1');
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:36', '2017-02-15 10:45:36', '10', '法院被执行人查询', 'court_zhixing_a_s', '', 'REMOTE', '', '', '{\'entity_name\': \'%(name)s\', \'entity_id\': \'%(card_id)s\'}', '0', '0', '0', '', '3', '1');
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:36', '2017-02-15 10:45:36', '11', '电信手机在网时长', 'telecom_mobile_online_time_s', '', 'REMOTE', 'TMN', '', '{\'mobile\': \'%(mobile)s\'}', '0', '0', '0', '', '3', '1');
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:36', '2017-02-15 10:45:36', '12', '联通手机在网时长', 'unicome_mobile_online_time_s', '', 'REMOTE', 'UMN', '', '{\'mobile\': \'%(mobile)s\'}', '0', '0', '0', '', '3', '1');
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:37', '2017-02-15 10:45:37', '13', '移动手机在网时长', 'yd_mobile_online_time_s', '', 'REMOTE', 'YMN', '', '{\'mobile\': \'%(mobile)s\'}', '0', '0', '0', '', '3', '1');
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:37', '2017-02-15 10:45:37', '14', '凭安贷款逾期信息', 'trustutn_loan_overdue', '', 'REMOTE', '', '', '{\'phone\': \'%(mobile)s\', \'id_card\': \'%(card_id)s\', \'name\': \'%(name)s\'}', '0', '0', '0', '', '3', '4');
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:37', '2017-02-15 10:45:37', '15', '凭安贷款黑名单信息', 'trustutn_loan_blacklist', '', 'REMOTE', '', '', '{\'phone\': \'%(mobile)s\', \'id_card\': \'%(card_id)s\', \'name\': \'%(name)s\'}', '0', '0', '0', '', '3', '4');
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:37', '2017-02-15 10:45:37', '16', '91征信查询', 'multi_loan_91', '', 'REMOTE', '', '', '{\'real_name\': \'%(name)s\', \'id_card\': \'%(card_id)s\'}', '0', '0', '0', '', '3', '2');
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:37', '2017-02-15 10:45:37', '17', '申请数据查询', 'apply_data', '', 'LOCALE', '', '', '{\'apply_id\': \'%(apply_id)s\'}', '0', '0', '0', '', '3', '0');
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:37', '2017-02-15 10:45:37', '18', '个人基本信息查询', 'personal_info', '', 'REMOTE', '', '', '{\'id_card_name\': \'%(name)s\', \'id_card_code\': \'%(card_id)s\'}', '0', '0', '0', '', '3', '1');
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:37', '2017-02-15 10:45:37', '19', '未结清贷款记录查询', 'loan_history', '', 'REMOTE', '', '', '{\'card_id\': \'%(card_id)s\'}', '0', '0', '0', '', '3', '1');
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:37', '2017-02-15 10:45:37', '20', '预授信信息查询', 'portrait_data', '', 'LOCALE', '', '', '{\'proposer_id\': \'%(proposer_id)s\'}', '0', '0', '0', '', '3', '0');
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:37', '2017-02-15 10:45:37', '21', 'GPS地址查询', 'geo_location', '', 'REMOTE', '', '', '{\'gps_longitude\': \'%(longitudu)s\', \'gps_latitude\': \'%(latitude)s\'}', '0', '0', '0', '', '3', '1');
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:37', '2017-02-15 10:45:37', '22', '手机号码归属地查询', 'mobile_locale', '', 'REMOTE', '', '', '{\'mobile\': \'%(mobile)s\'}', '0', '0', '0', '', '3', '1');
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:37', '2017-02-15 10:45:37', '23', '凭安多头贷款查询', 'trustutn_loan_loanmsg', '', 'REMOTE', '', '', '{\'phone\': \'%(mobile)s\', \'id_card\': \'%(card_id)s\', \'name\': \'%(name)s\'}', '0', '0', '0', '', '3', '4');
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:37', '2017-02-15 10:45:37', '24', '凭安电话号码查询', 'trustutn_loan_phone', '', 'REMOTE', '', '', '{\'phone\': \'%(mobile)s\', \'id_card\': \'%(card_id)s\', \'name\': \'%(name)s\'}', '0', '0', '0', '', '3', '4');
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:37', '2017-02-15 10:45:37', '25', '电信手机身份验证', 'telecom_mobile_identity_s', '', 'REMOTE', 'TMN', '', '{\'id_card_name\': \'%(name)s\', \'id_card_code\': \'%(card_id)s\', \'mobile\': \'%(mobile)s\'}', '0', '0', '0', '', '3', '1');
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:37', '2017-02-15 10:45:37', '26', '联通手机身份验证', 'unicom_mobile_identity_s', '', 'REMOTE', 'UMN', '', '{\'id_card_name\': \'%(name)s\', \'id_card_code\': \'%(card_id)s\', \'mobile\': \'%(mobile)s\'}', '0', '0', '0', '', '3', '1');
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:38', '2017-02-15 10:45:38', '27', '移动手机身份验证', 'yd_mobile_identity_s', '', 'REMOTE', 'YMN', '', '{\'id_card_name\': \'%(name)s\', \'id_card_code\': \'%(card_id)s\', \'mobile\': \'%(mobile)s\'}', '0', '0', '0', '', '3', '1');
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:38', '2017-02-15 10:45:38', '28', '人人信', 'cc_credit', '', 'REMOTE', '', '', '{\'mobile\': \'%(mobile)s\'}', '0', '0', '0', '', '3', '8');
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:38', '2017-02-15 10:45:38', '29', '人人信车辆信息查询', 'cc_car_credit', '', 'REMOTE', '', '', '{\'user_name\': \'%(name)s\', \'id_no\': \'%(card_id)s\'}', '0', '0', '0', '', '3', '16');
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:38', '2017-02-15 10:45:38', '30', '高速超速信息查询', 'high_way_over_speed', '', 'REMOTE', '', '', '{\'license_plate\': \'%(license_plate)s\'}', '0', '0', '0', '', '3', '1');
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:38', '2017-02-15 10:45:38', '31', '高速超载信息查询', 'high_way_over_load', '', 'REMOTE', '', '', '{\'license_plate\': \'%(license_plate)s\'}', '0', '0', '0', '', '3', '1');
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:38', '2017-02-15 10:45:38', '32', '凭安贷款其他机构查询', 'trustutn_loan_otheragent', '', 'REMOTE', '', '', '{\'phone\': \'%(mobile)s\', \'id_card\': \'%(card_id)s\', \'name\': \'%(name)s\'}', '0', '0', '0', '', '3', '4');
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:38', '2017-02-15 10:45:38', '33', '乘机人信息查询', 'airline_passenger_info', '', 'REMOTE', '', '', '{\'id_card_name\': \'%(name)s\', \'id_card_code\': \'%(card_id)s\'}', '0', '0', '0', '', '3', '1');
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:38', '2017-02-15 10:45:38', '34', '联通金融画像查询', 'unicom_finance_portrait_s', '', 'REMOTE', 'UMN', '', '{\'mobile\': \'%(mobile)s\'}', '0', '0', '0', '', '3', '1');
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:38', '2017-02-15 10:45:38', '35', '多项身份信息查询', 'multi_id_card_info_s', '', 'REMOTE', '', '', '{\'id_card_name\': \'%(name)s\', \'id_card_code\': \'%(card_id)s\'}', '0', '0', '0', '', '3', '1');
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:38', '2017-02-15 10:45:38', '36', '企业工商信息查询', 'industrial_commercial_s', '', 'REMOTE', '', '', '{\'enterprise_name\': \'%(cur_company)s\'}', '0', '0', '0', '', '3', '1');
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-27 17:11:16', '2017-02-27 17:11:19', '37', '学历信息查询', 'education_review_s', '', 'REMOTE', null, null, '{\'id_card_name\': \'%(name)s\', \'id_card_code\': \'%(card_id)s\'}', '0', '0', '0', null, '3', '1');
 
 -- ----------------------------
 -- Table structure for `fic_pre_field_info`
@@ -2425,7 +2729,7 @@ CREATE TABLE `fic_pre_field_info` (
   `source` varchar(64) NOT NULL,
   `path` varchar(256) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of fic_pre_field_info
@@ -2437,6 +2741,7 @@ INSERT INTO `fic_pre_field_info` VALUES ('0', '2017-02-22 18:23:40', '2017-02-22
 INSERT INTO `fic_pre_field_info` VALUES ('0', '2017-02-22 18:23:40', '2017-02-22 18:23:40', '5', 'cur_company', '当前工作单位', 'portrait_data', '$.data.work_exp_form[*].comp_name');
 INSERT INTO `fic_pre_field_info` VALUES ('0', '2017-02-22 18:23:40', '2017-02-22 18:23:40', '6', 'latitude', '纬度', 'apply_data', '$.data.latitude');
 INSERT INTO `fic_pre_field_info` VALUES ('0', '2017-02-22 18:23:41', '2017-02-22 18:23:41', '7', 'longitudu', '经度', 'apply_data', '$.data.longitudu');
+INSERT INTO `fic_pre_field_info` VALUES ('0', '2017-02-23 10:52:05', '2017-02-23 10:52:09', '8', 'proposer_id', '申请人id', 'portrait_data', '$.proposer_id');
 
 -- ----------------------------
 -- Table structure for `pgc_model_coefficient_conf`
