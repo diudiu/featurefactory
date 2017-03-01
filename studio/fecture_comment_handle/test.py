@@ -872,5 +872,5 @@ def test():
 
 
 if __name__ == '__main__':
-    data = {'airfare_sum_12': data['airfare_sum_12']}
+    # data = {'airfare_sum_12': data['airfare_sum_12']}
     test()
