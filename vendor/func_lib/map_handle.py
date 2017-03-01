@@ -504,9 +504,9 @@ def m_get_city_name1(city):
     return city
 
 
-def m_city_name_to_code(city_name):
+def m_city_name_to_level(city_name):
     """
-       获取城市名所对应的Code
+       获取城市名所对应的level
 
         :param city_name: 城市
         :return:    code
@@ -525,6 +525,30 @@ def m_city_name_to_code(city_name):
     if not str(company_addr_city_level).isdigit():
         raise FeatureProcessError('%s city_level config error in database table' % city_name)
     seq = int(company_addr_city_level)
+    return seq
+
+
+def m_city_name_to_code(city_name):
+    """
+       获取城市名所对应的Code
+
+        :param city_name: 城市
+        :return:    code
+
+        example：
+                :address  '北京'
+                :return  1
+    """
+    ccf = CityCodeField.objects.filter(
+        city_name_cn=city_name,
+        is_delete=False
+    )
+    if not ccf:
+        raise FeatureProcessError('not find %s code config in database table' % city_name)
+    company_addr_city_code = ccf[0].city_code
+    if not str(company_addr_city_code).isdigit():
+        raise FeatureProcessError('%s city_level config error in database table' % city_name)
+    seq = int(company_addr_city_code)
     return seq
 
 
@@ -556,5 +580,5 @@ def m_max_flight_area(seq):
 
 
 if __name__ == '__main__':
-    print m_dict_key_sort_in_list([{'20160708': 'gyf'}, {'20180505': 'zme'}, {'20170101': 'zkp'}],True)
+    print m_dict_key_sort_in_list([{'20160708': 'gyf'}, {'20180505': 'zme'}, {'20170101': 'zkp'}], True)
 

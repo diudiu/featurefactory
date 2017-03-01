@@ -141,7 +141,7 @@ mobile_area_city_level_config = {
     "json_path_list": [
         ("mobile_area", "$..content.mobile_area", "f_assert_not_null->f_assert_must_basestring"),
     ],
-    "f_map_and_filter_chain": "m_get_seq_index_value(0)->m_get_city_name->f_assert_not_null->m_city_name_to_code",
+    "f_map_and_filter_chain": "m_get_seq_index_value(0)->m_get_city_name->f_assert_not_null->m_city_name_to_level",
     "reduce_chain": "",
     "l_map_and_filter_chain": ""
 }
@@ -167,7 +167,7 @@ max_flight_area_config = {
         ("inland_count", "$..content.inland_count", "f_assert_not_null->f_assert_must_digit_or_float"),
         ("international_count", "$..content.international_count", "f_assert_not_null->f_assert_must_digit_or_float"),
     ],
-    "f_map_and_filter_chain": "m_max_flight_area",
+    "f_map_and_filter_chain": "m_max_flight_area()",
     "reduce_chain": "",
     "l_map_and_filter_chain": ""
 }

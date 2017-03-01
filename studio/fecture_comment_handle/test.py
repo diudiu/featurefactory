@@ -828,7 +828,7 @@ data = {
                     'borrowType': 1,
                     'borrowState': 2,
                     'borrowAmount': 3,
-                    'contractDate': 1343779200000,
+                    'contractDate': 1488079200000,
                     'loanPeriod': 24,
                     'repayState': 7,
                     'arrearsAmount': 0,
@@ -838,7 +838,7 @@ data = {
                     'borrowType': 1,
                     'borrowState': 1,
                     'borrowAmount': 3,
-                    'contractDate': 1343779200000,
+                    'contractDate': 1487779200000,
                     'loanPeriod': 24,
                     'repayState': 7,
                     'arrearsAmount': 0,
@@ -856,6 +856,63 @@ data = {
                 }
             ]
         }
+    },
+
+    'jiuyao_multi_loan_m2_count': {
+        'multi_loan_91': {
+            'loanInfos': [
+                {
+                    'borrowType': 1,
+                    'borrowState': 2,
+                    'borrowAmount': 3,
+                    'contractDate': 1343779200000,
+                    'loanPeriod': 24,
+                    'repayState': 8,
+                    'arrearsAmount': 0,
+                    'companyCode': 'P2P4HJK0000100010'
+                },
+                {
+                    'borrowType': 1,
+                    'borrowState': 1,
+                    'borrowAmount': 3,
+                    'contractDate': 1343779200000,
+                    'loanPeriod': 24,
+                    'repayState': 6,
+                    'arrearsAmount': 0,
+                    'companyCode': 'P2P4HJK0000100011'
+                },
+                {
+                    'borrowType': 1,
+                    'borrowState': 1,
+                    'borrowAmount': 3,
+                    'contractDate': 1343779200000,
+                    'loanPeriod': 24,
+                    'repayState': 5,
+                    'arrearsAmount': 0,
+                    'companyCode': 'P2P4HJK0000100011'
+                }
+            ]
+        }
+    },
+
+    'is_unclear_loan': {
+        'loan_history': {
+            "status": 1,
+            "message": "操作成功",
+            "res_data": {
+                "is_unclear_loan": 2,
+            },
+        }
+    },
+
+    'mobile_area_city_code': {
+        'mobile_local': {
+            'result': '00',
+            'result_message': '检测通过或查询有记录',
+            'content': {
+                'mobile_area': '唐山市',
+            },
+        }
     }
 }
 
@@ -868,5 +925,5 @@ def test():
 
 
 if __name__ == '__main__':
-    data = {'jiuyao_multi_loan_denied_count': data['jiuyao_multi_loan_denied_count']}
+    data = {'mobile_area_city_code': data['mobile_area_city_code']}
     test()
