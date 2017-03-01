@@ -373,6 +373,31 @@ def m_string_to_datetime(seq):
     return seq
 
 
+def m_datetime_only_hour_minute(seq):
+    """
+        时间字符串只保留时分
+
+        :param seq: 日期字符串 或 日期字符串组成的列表
+        :return:    日期字符串只保留时分
+
+        example：
+                :seq  ['2017-01-01 12:20:00', '2017-02-28 09:10:30']
+                :return  ['12:20', '09:10']
+
+    """
+    if not isinstance(seq, list):
+        try:
+            seq = seq[11:16]
+        except:
+            raise FeatureProcessError('%s time format error ' % seq)
+    else:
+        try:
+            seq = map(lambda x: x[11:16], seq)
+        except:
+            raise FeatureProcessError('%s time format error ' % seq)
+    return seq
+
+
 def m_get_dict_value_in_list(seq, args):
     """
         获取列表中字典某个元素的值 返回值得列表
@@ -622,6 +647,10 @@ def m_max_flight_class(seq):
     elif temp_index == 2:
         result = 1
     return result
+
+
+# def m_check_code(data, feature_name):
+#     fcm = FeatureCodeMapping.objects.
 
 if __name__ == '__main__':
     print m_str_to_int_float_in_list([1, 2.1, '2.1', '-2', []])

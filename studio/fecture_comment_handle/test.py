@@ -994,5 +994,6 @@ def test():
 
 
 if __name__ == '__main__':
-    data = {'mobile_area_city_code': data['mobile_area_city_code']}
+    data = {'age': data['age']}
+    test()
 
