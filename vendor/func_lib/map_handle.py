@@ -467,8 +467,8 @@ def m_get_mobile_stability(seq):
     """获取手机号的稳定度"""
     total_calltimes_ave = m_seq_to_agv(seq)
     mobile_stability = (sum([i ** 2 for i in seq]) / len(seq)) ** 0.5
-    mobile_stability = mobile_stability / total_calltimes_ave
-    return round(mobile_stability, 4)
+    mobile_stability_a = mobile_stability / total_calltimes_ave
+    return round(mobile_stability_a, 4)
 
 
 def m_get_city_name(address):
@@ -524,9 +524,9 @@ def m_get_city_name1(city):
     return city
 
 
-def m_city_name_to_code(city_name):
+def m_city_name_to_level(city_name):
     """
-       获取城市名所对应的Code
+       获取城市名所对应的level
 
         :param city_name: 城市
         :return:    code
@@ -545,6 +545,30 @@ def m_city_name_to_code(city_name):
     if not str(company_addr_city_level).isdigit():
         raise FeatureProcessError('%s city_level config error in database table' % city_name)
     seq = int(company_addr_city_level)
+    return seq
+
+
+def m_city_name_to_code(city_name):
+    """
+       获取城市名所对应的Code
+
+        :param city_name: 城市
+        :return:    code
+
+        example：
+                :address  '北京'
+                :return  1
+    """
+    ccf = CityCodeField.objects.filter(
+        city_name_cn=city_name,
+        is_delete=False
+    )
+    if not ccf:
+        raise FeatureProcessError('not find %s code config in database table' % city_name)
+    company_addr_city_code = ccf[0].city_code
+    if not str(company_addr_city_code).isdigit():
+        raise FeatureProcessError('%s city_level config error in database table' % city_name)
+    seq = int(company_addr_city_code)
     return seq
 
 
@@ -598,7 +622,6 @@ def m_max_flight_class(seq):
     elif temp_index == 2:
         result = 1
     return result
-
 
 if __name__ == '__main__':
     print m_str_to_int_float_in_list([1, 2.1, '2.1', '-2', []])

@@ -3,16 +3,19 @@
 from featrue_process import FeatureProcess
 
 data = {
-    'age': {'personal_info': {
-        'status': u'00',
-        'message': '',
-        'content': {
-            'constellation': '水瓶座',
-            'age': 10,
-            'home_address': '江西 - 九江',
-            'sex': '男',
-        },
-    }},
+    'age': {
+        'personal_info': {
+            'status': u'00',
+            'message': '',
+            'content': {
+                'constellation': '水瓶座',
+                'age': 10,
+                'home_address': '江西 - 九江',
+                'sex': '男',
+            },
+        }
+    },
+
     'apply_register_duration': {
         "apply_data": {
             "product_code": "890wefjf320if0i302f0j3f0f",
@@ -77,20 +80,23 @@ data = {
                 }
             ]
         }
+    },
 
-    },
     'car_count': {
-        "status": "OK",
-        "result": [
-            {
-                "license_no": "豫SFD**",
-                "run_miles": "20000.00",
-                "ton_count": "0.0000", "use_years": "5",
-                "assets_relation": "1",
-                "use_nature_code": "家庭⾃⽤",
-            },
-        ]
+        'cc_car_credit': {
+            "status": "OK",
+            "result": [
+                {
+                    "license_no": "豫SFD**",
+                    "run_miles": "20000.00",
+                    "ton_count": "0.0000", "use_years": "5",
+                    "assets_relation": "1",
+                    "use_nature_code": "家庭⾃⽤",
+                },
+            ]
+        }
     },
+
     'car_number': {
         "status": "OK",
         "result": [
@@ -119,6 +125,7 @@ data = {
 
         ]
     },
+
     'cur_company': {
         "product_code": "string",
         "name": "string",
@@ -197,6 +204,7 @@ data = {
             }
         ]
     },
+
     'mobile_activeness': {
         "trustutn_loan_phone": {
             "result": 0,
@@ -594,6 +602,7 @@ data = {
                 "longitudu": 23.45678
             }
         }},
+
     'is_pingan_financial_shixin': {
         'data': {
             'name': '姓名 ',
@@ -627,6 +636,7 @@ data = {
             ]
         }
     },
+
     'company_addr_city_level': {
         "result": "00",
         "result_message": "检测通过或查询有记录",
@@ -710,6 +720,7 @@ data = {
             "abnormal_items": []
         },
     },
+
     'folk': {
         "result": "00",
         "result_message": "检测通过或查询有记录",
@@ -729,6 +740,7 @@ data = {
             "education": "大学本科（简称'大学'）",
             "address": "河北省保定市徐水区高林村镇"
         }},
+
     'marital_status': {
         "result": "00",
         "result_message": "检测通过或查询有记录",
@@ -749,6 +761,7 @@ data = {
             'address': '河北省保定市徐水区高林村镇'
         }
     },
+
     'gender': {
         "result": "00",
         "result_message": "检测通过或查询有记录",
@@ -759,6 +772,7 @@ data = {
             "sex": "女"
         },
     },
+
     'mobile_area_city_level': {
         "result": "00",
         "result_message": "检测通过或查询有记录",
@@ -766,6 +780,7 @@ data = {
             "mobile_area": "北京市",
         },
     },
+
     'register_city_level': {
         "result": "00",
         "result_message": "检测通过或查询有记录",
@@ -776,6 +791,7 @@ data = {
             "sex": "男"
         },
     },
+
     'max_flight_area': {
         "result": "00",
         "result_message": "检测通过或查询有记录",
@@ -860,6 +876,44 @@ data = {
             "total_distance": 2810,
         },
     },
+
+    'jiuyao_multi_loan_denied_count': {
+        'multi_loan_91': {
+            'loanInfos': [
+                {
+                    'borrowType': 1,
+                    'borrowState': 2,
+                    'borrowAmount': 3,
+                    'contractDate': 1488079200000,
+                    'loanPeriod': 24,
+                    'repayState': 7,
+                    'arrearsAmount': 0,
+                    'companyCode': 'P2P4HJK0000100010'
+                },
+                {
+                    'borrowType': 1,
+                    'borrowState': 1,
+                    'borrowAmount': 3,
+                    'contractDate': 1487779200000,
+                    'loanPeriod': 24,
+                    'repayState': 7,
+                    'arrearsAmount': 0,
+                    'companyCode': 'P2P4HJK0000100011'
+                },
+                {
+                    'borrowType': 1,
+                    'borrowState': 1,
+                    'borrowAmount': 3,
+                    'contractDate': 1343779200000,
+                    'loanPeriod': 24,
+                    'repayState': 7,
+                    'arrearsAmount': 0,
+                    'companyCode': 'P2P4HJK0000100011'
+                }
+            ]
+        }
+    },
+
     'contacts': {"apply_data": {
         'product_code': '890wefjf320if0i302f0j3f0f',
         'apply_id': 'APPLY20161011111111890934',
@@ -873,10 +927,66 @@ data = {
         'application_on': '2017-02-01 12:20:10'
     }},
 
+    'jiuyao_multi_loan_m2_count': {
+        'multi_loan_91': {
+            'loanInfos': [
+                {
+                    'borrowType': 1,
+                    'borrowState': 2,
+                    'borrowAmount': 3,
+                    'contractDate': 1343779200000,
+                    'loanPeriod': 24,
+                    'repayState': 8,
+                    'arrearsAmount': 0,
+                    'companyCode': 'P2P4HJK0000100010'
+                },
+                {
+                    'borrowType': 1,
+                    'borrowState': 1,
+                    'borrowAmount': 3,
+                    'contractDate': 1343779200000,
+                    'loanPeriod': 24,
+                    'repayState': 6,
+                    'arrearsAmount': 0,
+                    'companyCode': 'P2P4HJK0000100011'
+                },
+                {
+                    'borrowType': 1,
+                    'borrowState': 1,
+                    'borrowAmount': 3,
+                    'contractDate': 1343779200000,
+                    'loanPeriod': 24,
+                    'repayState': 5,
+                    'arrearsAmount': 0,
+                    'companyCode': 'P2P4HJK0000100011'
+                }
+            ]
+        }
+    },
+
+    'is_unclear_loan': {
+        'loan_history': {
+            "status": 1,
+            "message": "操作成功",
+            "res_data": {
+                "is_unclear_loan": 2,
+            },
+        }
+    },
+
+    'mobile_area_city_code': {
+        'mobile_local': {
+            'result': '00',
+            'result_message': '检测通过或查询有记录',
+            'content': {
+                'mobile_area': '唐山市',
+            },
+        }
+    },
 }
 
 
-def test():
+def test(data):
     for feature_name, datas in data.items():
         fecture_obj = FeatureProcess(feature_name, datas)
         result = fecture_obj.run()
@@ -884,5 +994,6 @@ def test():
 
 
 if __name__ == '__main__':
-    # data = {'contacts': data['contacts']}
-    test()
+    data = {'mobile_area_city_code': data['mobile_area_city_code']}
+    test(data)
+

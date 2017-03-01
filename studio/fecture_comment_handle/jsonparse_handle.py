@@ -30,7 +30,7 @@ class JSONPathParser(object):
         json_path_value = []
         for key, path, assert_chain in json_path_list:
             value = jsonpath.jsonpath(data, path)
-            logging.info((key, path, assert_chain, value))
+            logger.info((key, path, assert_chain, value))
             if value:
                 value = func_exec_chain(value, assert_chain)
             else:

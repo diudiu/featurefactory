@@ -25,7 +25,6 @@ import logging
 
 from braces.views import CsrfExemptMixin
 from django.http.response import HttpResponse
-from django.http.request import HttpRequest
 from django.views.generic import View
 
 from apps.async.tasks import audit_task, mission_control
@@ -69,7 +68,6 @@ class FeatureExtract(CsrfExemptMixin, View):
                     'apply_id': base_data.get('apply_id', None),
                     'ret_msg': ret_data
                 })
-        # TODO except Exceptions and do somethings
         except ServerError as e:
             data = {
                 cons.RESPONSE_REQUEST_STATUS: e.status,
@@ -82,5 +80,4 @@ class FeatureExtract(CsrfExemptMixin, View):
                 cons.RESPONSE_REQUEST_MESSAGE: e.message,
             }
         logger.info('Mission completed request data :\n %s' % data)
-        # TODO return JSONResponse
         return JSONResponse(data)
