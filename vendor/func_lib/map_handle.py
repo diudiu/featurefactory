@@ -74,18 +74,19 @@ def m_to_power(seq):
     return seq
 
 
-def m_to_len(seq):
+def m_to_len(seq, args=0):
     """
         求序列的长度
 
         :param seq: 可以为字符串、列表
+        :param args: 可以为字符串、列表
         :return:    字符串、列表的长度
 
         example：
                 :seq： [1, -2]
                 :return： 2
     """
-    seq = len(seq)
+    seq = len(seq) - args
     return seq
 
 
@@ -183,7 +184,7 @@ def m_seq_to_agv(seq, args=None):
                 :args   2
                 :return  1.4
     """
-    seq = sum(seq) / len(seq)
+    seq = float(sum(seq)) / len(seq)
     if args:
         seq = round(seq, args)
     return seq
@@ -459,7 +460,7 @@ def m_get_mobile_m1_m5_key_seq(mobilestr, tags, key_list):
                     value_list.append(value)
             if value_list:
                 tmp.append(sum(value_list))
-
+    print tmp
     return tmp
 
 
@@ -623,5 +624,128 @@ def m_max_flight_class(seq):
         result = 1
     return result
 
+
+def m_seq_inx_to_int(seq, args=0):
+    """
+        将列表中单个列表中元素转成int，返回新的列表
+
+        :param seq: 列表形成的列表
+        :param args: 列表的次序
+        :return:    转换后的列表
+
+        example：
+                :seq  [['30', 0], ['5', 1]]
+                :args   0
+                :return  [[30, 0], [5, 1]]
+    """
+    for i in seq:
+        i[args] = int(i[args])
+    return seq
+
+
+def m_seq_inx_to_999999(seq, args=0):
+    """
+        将列表中为‘999999’得提取出来
+        :param seq: 列表形成的列表
+        :param args: 列表的次序
+        :return:    转换后的列表
+
+        example：
+                :seq  [['30', 0], ['5', 1]]
+                :args   0
+                :return  [[30, 0], [5, 1]]
+    """
+    for i in seq:
+        if i[args] == '999999':
+            seq = i
+        else:
+            seq = [i[args], '']
+    return seq
+
+
+def m_r_to_now_work_time(seq, args=0):
+    now_time = datetime.now()
+    end_work_time = datetime.strptime(seq[0], '%Y%m')
+    start_work_time = datetime.strptime(seq[1], '%Y%m')
+    if seq[args] == '999999':
+        seq[args] = now_time
+        now_work_time = (now_time - start_work_time).days/30
+    else:
+        now_work_time = (end_work_time - start_work_time).days/30
+    return now_work_time
+
+
+def del_dict_invalid_value(dict):
+    pass
+
+
+def m_del_invalid_value(seq):
+    for data in seq:
+        # if isinstance(data, dict):
+        pass
+
+
+
 if __name__ == '__main__':
+    data = [{
+        "matchType": "idCard",
+        "matchValue": "340825198609101051",
+        "matchId": "92a297643fdcd96644cf30942b8a2e5f",
+        "classification": [
+            {
+                "M3": {
+                    "bankCredit": None,
+                    "otherLoan": {
+                        "orgNums": 12,
+                        "recordNums": 1,
+                        "maxAmount": "(1000, 2000]",
+                        "longestDays": "6"
+                    },
+                    "otherCredit": None,
+                    "bankLoan": None
+                }
+            },
+            {
+                "M6": {
+                    "bankCredit": None,
+                    "otherLoan": {
+                        "orgNums": 1,
+                        "recordNums": 1,
+                        "maxAmount": "(1000, 2000]",
+                        "longestDays": "1"
+                    },
+                    "otherCredit": None,
+                    "bankLoan": None
+                }
+            },
+            {
+                "M9": {
+                    "bankCredit": None,
+                    "otherLoan": {
+                        "orgNums": 1,
+                        "recordNums": 2,
+                        "maxAmount": "(1000, 2000]",
+                        "longestDays": "1"
+                    },
+                    "otherCredit": None,
+                    "bankLoan": None
+                }
+            },
+            {
+                "M24": {
+                    "bankCredit": None,
+                    "otherLoan": {
+                        "orgNums": 1,
+                        "recordNums": 1,
+                        "maxAmount": "(1000, 2000]",
+                        "longestDays": "1"
+                    },
+                    "otherCredit": None,
+                    "bankLoan": None
+                }
+            }
+        ]
+    }
+    ]
+
     print m_str_to_int_float_in_list([1, 2.1, '2.1', '-2', []])
