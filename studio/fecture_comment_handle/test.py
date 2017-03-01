@@ -455,7 +455,7 @@ data = {
                             "month": "halfyear"
                         }
                     },
-                    "18920019796_8a404758b8f8b87c70006b8e9f4614db_": {
+                    "18920019798_8a404758b8f8b87c70006b8e9f4614db_": {
                         "M0": {
                             "distributionOfContacts": {
                                 "1": "16",
@@ -586,7 +586,7 @@ data = {
             "apply_base": {
                 "latitude": 145.23342,
                 "name": "章撒",
-                "mobile": "18989821092",
+                "mobile": "18920019795",
                 "callback": "http://127.0.0.1/syph-re/api/credit/result/",
                 "application_on": "2017-02-01 12:20:10",
                 "contacts": 30,
@@ -802,8 +802,64 @@ data = {
             "last_from_city": "广元",
             "last_destination_city": "北京",
             "total_distance": 2810,
+        }
+    },
+    'max_flight_class': {
+        "result": "00",
+        "result_message": "检测通过或查询有记录",
+        "content": {
+            "id_card_name": "吴*",
+            "id_card_code": "513722198908***43X",
+            "flight_times": 2,
+            "flight_month": "201502",
+            "flight_max": 2,
+            "average_discount": 100,
+            "business_class_count": 0,
+            "executive_class_count": 0,
+            "tourist_class_count": 2,
+            "from_city": "广元1次,北京1次,",
+            "destination_city ": "北京1次,广元1次,",
+            "inland_count": 2,
+            "international_count": 0,
+            "free_count": 0,
+            "average_price": 1340.00,
+            "delay_time": 40,
+            "average_delay_time": 20,
+            "average_ticket_day": 68,
+            "last_date": "20150228",
+            "last_from_city": "广元",
+            "last_destination_city": "北京",
+            "total_distance": 2810,
         },
-    }
+    },
+    'airfare_sum_12': {
+        "result": "00",
+        "result_message": "检测通过或查询有记录",
+        "content": {
+            "id_card_name": "吴*",
+            "id_card_code": "513722198908***43X",
+            "flight_times": 2,
+            "flight_month": "201502",
+            "flight_max": 2,
+            "average_discount": 100,
+            "business_class_count": 0,
+            "executive_class_count": 0,
+            "tourist_class_count": 2,
+            "from_city": "广元1次,北京1次,",
+            "destination_city ": "北京1次,广元1次,",
+            "inland_count": 2,
+            "international_count": 0,
+            "free_count": 0,
+            "average_price": 1340.00,
+            "delay_time": 40,
+            "average_delay_time": 20,
+            "average_ticket_day": 68,
+            "last_date": "20150228",
+            "last_from_city": "广元",
+            "last_destination_city": "北京",
+            "total_distance": 2810,
+        },
+    },
 
 }
 
@@ -816,5 +872,5 @@ def test():
 
 
 if __name__ == '__main__':
-    data = {'max_flight_area': data['max_flight_area']}
+    data = {'airfare_sum_12': data['airfare_sum_12']}
     test()

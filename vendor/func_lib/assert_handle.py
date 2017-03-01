@@ -57,7 +57,7 @@ def f_assert_must_basestring(value_list):
 def f_assert_must_digit_or_float(value_list):
     """检测列表中的元素是否为数字或float"""
     for value in value_list:
-        if not (str(value).count('.') <= 1 and str(value).replace('.', '').isdigit()):
+        if not (str(value).count('.') <= 1 and str(value).replace('.', '').lstrip('-').isdigit()):
             raise FeatureProcessError('%s f_assert_must_digit_or_float Error' % value_list)
     return value_list
 
