@@ -64,7 +64,7 @@ class DataPrepare(object):
         if not origin_data:
             raise  # TODO get data error
         cleaner = DataClean(origin_data, ds_conf.data_origin_type)
-        clear_data = cleaner.worked()
+        clear_data = cleaner.test_worked()
         if not clear_data:
             # TODO 源数据 不符合规范
             raise
@@ -88,6 +88,7 @@ class DataPrepare(object):
             })
 
     def do_request(self, url, data):
+        # time.sleep(2)
         # json_data = json.dumps(data, encoding="UTF-8", ensure_ascii=False)
         # response = requests.post(url, json_data)
         # content = response.content

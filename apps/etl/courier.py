@@ -45,7 +45,7 @@ class Courier(object):
             # 分流逻辑
             self.useful_data = self.get_shunt_data()
 
-        elif self.collect_type == 'RelevanceCourier' and len(self.data_identity_list) == 1:
+        elif self.collect_type == 'RelevanceCourier':
             # 依赖逻辑
             self.useful_data = self.get_relevance_data(self.data_identity_list[0])
 
@@ -95,20 +95,18 @@ class Courier(object):
 
     def get_shunt_data(self):
         useful_data = {}
-        data_identity = self.get_shunt_di()
-        if not data_identity:
+        data = self.get_shunt_rel_data()
+        if not data:
             raise
-        data = self.get_useful_data(data_identity)
         useful_data.update(data)
         return useful_data
 
-    def get_shunt_di(self):
+    def get_shunt_rel_data(self):
         # 获取分流逻辑数据useful_data_identity = []
-        useful_data_identity = ''
         feature_conf_list = FeatureShuntConf.objects.filter(
             feature_name=self.feature_name,
             is_delete=False
-        )
+        ).order_by('id')
         if not feature_conf_list:
             raise
         apply_base = ApplyContext(self.apply_id)
@@ -125,21 +123,26 @@ class Courier(object):
                 shunt = po.distinguish()
                 if shunt in eval(feature_conf.shunt_value):
                     useful_data_identity = data_identity
-        return useful_data_identity
+                    if not useful_data_identity:
+                        raise
+                    data = self.get_useful_data(data_identity)
+                    if not data:
+                        continue
+                    return data
 
     def get_relevance_data(self, next_data_identity=None):
         # TODO 获取依赖逻辑数据
         useful_data = {}
         if next_data_identity:
             relevance_conf = FeatureRelevanceConf.objects.filter(
-                feature_name=self.feature_name,
+                data_identity=next_data_identity,
                 is_delete=False
-            )
+            )[0]
             if not relevance_conf:
                 raise
-            next_di = relevance_conf.data_identity
+            next_di = relevance_conf.depend_di
             if next_di:
-                self.get_relevance_data(next_di)
+                useful_data = self.get_relevance_data(next_di)
             else:
                 data = self.get_useful_data(next_data_identity)
                 useful_data.update({

@@ -72,3 +72,28 @@ class DataClean(object):
                 (cons.SOURCE_TYPE_MESSAGE[self.clean_style], self.origin_data)
             )
         return temp_data
+
+    def test_worked(self):
+        if self.clean_style & cons.LP_DATAOCEAN:
+            return {
+                'staaaaaaaaaaaatus': u'00',
+                'messssssssssssage': '',
+                'content': {
+                    'consttttttion': '水瓶座',
+                    'aggggggggggge': 10,
+                    'home_addresss': '江西 - 九江',
+                    'sexxxxxxxxxxx': '男',
+                },
+            }
+
+        if self.clean_style & cons.LP_91_CREDIT:
+            return {"data": "test_data"}
+
+        if self.clean_style & cons.LP_PINGAN_CREDIT:
+            return {"data": "test_data"}
+
+        if self.clean_style & (cons.LP_CC_CREDIT | cons.LP_CC_CAR_CREDIT):
+            return {"data": "test_data"}
+
+        if not self.clean_style:
+            return self.origin_data

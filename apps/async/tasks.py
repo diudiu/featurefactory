@@ -59,6 +59,7 @@ def audit_task(base_data):
 
 
 def mission_control(base_data):
+    logger.info('Feature prepared have been done\nCollecting feature now')
     collecter = CollectFeature(base_data)
     collecter.get_feature_value()
     if collecter.error_list:

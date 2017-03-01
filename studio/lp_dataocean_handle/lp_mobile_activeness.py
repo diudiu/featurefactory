@@ -14,9 +14,8 @@ logger = logging.getLogger('apps.common')
 
 class Handle(object):
 
-    def __init__(self, data,tel_number):
+    def __init__(self, data):
         self.data = data
-        self.tel_number = tel_number
 
 
     def handle(self):
@@ -36,7 +35,7 @@ class Handle(object):
                 tags_key = tags.keys()
                 if not isinstance(tags, dict):
                     return mobile_activeness_dic
-                tel_num = self.tel_number['mobile']
+                tel_num = '66666'
                 tel_str = '%s__' % tel_num
                 # 假如存在'138xxxxxxxx__'的格式，以此为准取m1-m5
 
