@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 
+import re
 import datetime as dt
 
 from map_handle import *
@@ -79,3 +80,19 @@ def f_get_workplace_now(result):
     for i in range(length / 2):
         if '999999' == date_list[i]:
             return workplace_list[i]
+
+
+def f_plate_number(seq):
+    m = r'[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领]{3}[A-Z]{1}[A-Z0-9]{4}[A-Z0-9挂学警港澳]{1}$'
+    tmp = []
+    for plate in seq:
+        if len(plate) != 9:
+            plate = plate.encode("utf8")
+        if re.match(m, plate):
+            tmp.append(plate)
+    return tmp
+
+
+if __name__ == '__main__':
+    print f_plate_number(['冀BF876R', u'京BF688R', 'gyf123456'])
+

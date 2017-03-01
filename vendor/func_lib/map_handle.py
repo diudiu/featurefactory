@@ -770,3 +770,6 @@ if __name__ == '__main__':
     ]
 
     print m_str_to_int_float_in_list([1, 2.1, '2.1', '-2', []])
+
+
+
