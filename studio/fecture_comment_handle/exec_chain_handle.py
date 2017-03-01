@@ -2,7 +2,9 @@
 
 import re
 from vendor.func_lib.assert_handle import *
-from vendor.func_lib.map_filter_reduce_handle import *
+from vendor.func_lib.map_handle import *
+from vendor.func_lib.reduce_handle import *
+from vendor.func_lib.filter_handle import *
 from vendor.errors.feature import FeatureProcessError
 
 
@@ -14,14 +16,29 @@ def func_exec_chain(data, chains):
             f = re.search("(.*)\\((.*)\\)", func)
             if f:
                 func = f.group(1)
-                args = f.group(2).split(',')
+                args = f.group(2)
+
             func = eval(func)
         except:
             raise FeatureProcessError("exec_chain Error: don't find function %s" % func)
         if args:
-            args = [i.replace("\'", '').replace("""\"""", '') if ("\'" or """\"""") in i else eval(i) for i in args]
-            if len(args) == 1:
-                args = args[0]
+            if (args.startswith("[") or args.startswith("{")):
+                args = eval(args)
+            else:
+                args = args.split(',')
+                args_tmp = []
+                for i in args:
+                    if i.startswith("\'"):
+                        arg = i.strip("\'")
+                    elif i.startswith("""\""""):
+                        arg = i.strip("\"")
+                    else:
+                        arg = eval(i)
+                    args_tmp.append(arg)
+                args = args_tmp
+                if len(args) == 1:
+                    args = args[0]
+            # print args
             data = func(data, args)
         else:
             data = func(data)
@@ -40,8 +57,9 @@ def func_exec_operator_chain(value, chains):
         try:
             value = eval(operator)
         except:
-            raise FeatureProcessError('exec_operator_chain Error value: %s operator: %s'% (value, operator))
+            raise FeatureProcessError('exec_operator_chain Error value: %s operator: %s' % (value, operator))
     return value
+
 
 if __name__ == '__main__':
     data = [1, 5]
@@ -49,7 +67,14 @@ if __name__ == '__main__':
     print func_exec_chain(data, chains)
 
     data = ['gyfgyfgyf']
-    chains = 'map_to_slice(1,3)'
+    chains = 'm_to_slice(1,3)'
     print func_exec_chain(data, chains)
 
+    # chains ="f_mobile_m1_m5_sum_max_seq(['callTimes', 'calledTimes'])"
+    # func_exec_chain(data, chains)
 
+    # chains = "f_mobile_m1_m5_sum_max_seq({'gyf':3,'hh':4})"
+    # func_exec_chain(data, chains)
+
+    # chains = "f_mobile_m1_m5_sum_max_seq('')"
+    # func_exec_chain(data, chains)

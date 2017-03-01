@@ -98,5 +98,5 @@ class FeatureProcess(object):
         try:
             self.feature_conf = eval(self.conf_str)
         except (NameError, TypeError) as e:
-            # TODO logger
+            logging.error(e.message)
             raise FeatureProcessError
