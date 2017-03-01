@@ -39,7 +39,7 @@ def f_assert_must_dict(value_list):
 
 
 def f_assert_must_digit(value_list):
-    """检测列表中的元素是否为数字,包括正数和负数"""
+    """检测列表中的元素是否为正数和负数的数字"""
     for value in value_list:
         if not str(value).lstrip('-').isdigit():
             raise FeatureProcessError('%s f_assert_must_digit Error' % value_list)
@@ -55,7 +55,7 @@ def f_assert_must_basestring(value_list):
 
 
 def f_assert_must_digit_or_float(value_list):
-    """检测列表中的元素是否为数字或float,包括正数和负数"""
+    """检测列表中的元素是否为 正数和负数 的数字或float"""
     for value in value_list:
         if not (str(value).count('.') <= 1 and str(value).replace('.', '').lstrip('-').isdigit()):
             raise FeatureProcessError('%s f_assert_must_digit_or_float Error' % value_list)
