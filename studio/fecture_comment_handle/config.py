@@ -199,3 +199,14 @@ airfare_sum_12_config = {
     "l_map_and_filter_chain": ""
 }
 
+contacts_config = {
+    "feature_name": "contacts",
+    "feature_data_type": "int",
+    "default_value": "PositiveSignedTypeDefault",
+    "json_path_list": [
+        ("contacts", "$..contacts", "f_assert_must_digit"),
+    ],
+    "f_map_and_filter_chain": "m_to_int->m_get_seq_index_value(0)",
+    "reduce_chain": "",
+    "l_map_and_filter_chain": ""
+}

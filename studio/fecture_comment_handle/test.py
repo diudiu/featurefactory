@@ -884,5 +884,5 @@ def test():
 
 
 if __name__ == '__main__':
-    data = {'contacts': data['contacts']}
+    # data = {'contacts': data['contacts']}
     test()
