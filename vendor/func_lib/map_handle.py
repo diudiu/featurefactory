@@ -443,6 +443,41 @@ def m_get_mobile_m1_m5_key_seq(mobilestr, tags, key_list):
     return tmp
 
 
+def m_get_mobile_m1_m5_key_seq1(mobilestr, tags, key_list):
+
+    """
+        获取 mobile字符串在 tags字典中 1月到5月存在的key_list中key值的和的列表
+
+        :param mobilestr: 查询的手机字符串
+        :param tags:      含多种手机信息的字典
+        :param key_list:   查询的字段
+        :return:        该手机号1月到5月 在key_list中值的和 形成的列表
+
+        example：
+                :mobilestr  18920019796_8a404758b8f8b87c70006b8e9f4614db_
+                :targs {
+                        '18920019796_8a404758b8f8b87c70006b8e9f4614db_': {
+                        'M5': {'callTimes': 3,'calledTimes': 2},
+                        'M4': {'callTimes': 8,'calledTimes': 20},
+                        'M3': {'month': '201610'}},}}
+
+                :args   ['callTimes', 'calledTimes']
+                :return  [28, 5]
+    """
+    tmp = []
+    m_list = ['M1', 'M2', 'M3', 'M4', 'M5']
+    for i in m_list:
+        if i in tags[mobilestr]:
+            value_list = []
+            for key in key_list:
+                value = tags[mobilestr].get(i, {}).get(key, '')
+                if str(value).replace('.', '').isdigit():
+                    value_list.append(value)
+            if value_list:
+                tmp.append(sum(value_list))
+
+    return tmp
+
 def m_get_mobile_stability(seq):
     """获取手机号的稳定度"""
     total_calltimes_ave = m_seq_to_agv(seq)
@@ -551,7 +586,7 @@ def m_max_flight_area(seq):
     elif int(inland_count) < int(international_count):
         seq = 2
     else:
-        raise FeatureProcessError("'don't know  max_flight_area code")
+        raise FeatureProcessError("don't know  max_flight_area code")
     return seq
 
 
