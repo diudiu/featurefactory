@@ -60,7 +60,6 @@ cur_company_config = {
     "l_map_and_filter_chain": ""
 }
 
-
 mobile_activeness_config = {
     "feature_name": "mobile_activeness",
     "feature_data_type": "float",
@@ -93,7 +92,7 @@ company_addr_city_level_config = {
     "json_path_list": [
         ("address", "$..content.address", "f_assert_not_null->f_assert_must_basestring"),
     ],
-    "f_map_and_filter_chain": "m_get_seq_index_value(0)->m_get_city_name->f_assert_not_null->m_city_name_to_code",
+    "f_map_and_filter_chain": "m_get_seq_index_value(0)->m_get_city_name->f_assert_not_null->m_city_name_to_level",
     "reduce_chain": "",
     "l_map_and_filter_chain": ""
 }
@@ -153,7 +152,7 @@ register_city_level_config = {
     "json_path_list": [
         ("home_address", "$..content.home_address", "f_assert_not_null->f_assert_must_basestring"),
     ],
-    "f_map_and_filter_chain": "m_get_seq_index_value(0)->m_get_city_name->f_assert_not_null->m_city_name_to_code",
+    "f_map_and_filter_chain": "m_get_seq_index_value(0)->m_get_city_name->f_assert_not_null->m_city_name_to_level",
     "reduce_chain": "",
     "l_map_and_filter_chain": ""
 }
@@ -169,6 +168,33 @@ max_flight_area_config = {
     ],
     "f_map_and_filter_chain": "m_max_flight_area()",
     "reduce_chain": "",
+    "l_map_and_filter_chain": ""
+}
+
+max_flight_class_config = {
+    "feature_name": "max_flight_class",
+    "feature_data_type": "int",
+    "default_value": "PositiveSignedTypeDefault",
+    "json_path_list": [
+        ("business_class_count", "$..content.business_class_count", "f_assert_must_digit"),
+        ("executive_class_count", "$..content.executive_class_count", "f_assert_must_digit"),
+        ("tourist_class_count", "$..content.tourist_class_count", "f_assert_must_digit"),
+    ],
+    "f_map_and_filter_chain": "m_to_int->m_max_flight_class",
+    "reduce_chain": "",
+    "l_map_and_filter_chain": ""
+}
+
+airfare_sum_12_config = {
+    "feature_name": "airfare_sum_12",
+    "feature_data_type": "float",
+    "default_value": "PositiveSignedFloatTypeDefault",
+    "json_path_list": [
+        ("average_price", "$..content.average_price", "f_assert_must_digit_or_float"),
+        ("flight_times", "$..content.flight_times", "f_assert_must_digit"),
+    ],
+    "f_map_and_filter_chain": "m_str_to_int_float_in_list",
+    "reduce_chain": "r_mul",
     "l_map_and_filter_chain": ""
 }
 
