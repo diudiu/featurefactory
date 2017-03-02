@@ -2459,5 +2459,5 @@ def test(data):
 
 
 if __name__ == '__main__':
-    data = {'mobile_identity': data['mobile_identity']}
+    # data = {'mobile_identity': data['mobile_identity']}
     test(data)
