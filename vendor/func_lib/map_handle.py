@@ -692,84 +692,113 @@ def m_r_to_now_work_time(seq, args=0):
     start_work_time = datetime.strptime(seq[1], '%Y%m')
     if seq[args] == '999999':
         seq[args] = now_time
-        now_work_time = (now_time - start_work_time).days/30
+        now_work_time = (now_time - start_work_time).days / 30
     else:
-        now_work_time = (end_work_time - start_work_time).days/30
+        now_work_time = (end_work_time - start_work_time).days / 30
     return now_work_time
 
 
-def del_dict_invalid_value(dict):
-    pass
+def del_dict_invalid_value(dicts, args=1):
+    """
+
+    :param dicts: 原始字典
+    :param args: 深度即循环的次数
+    :return: 转换后的字典
+
+    example：
+                :seq  data = {
+                                "matchType": "",
+                                "matchValue": "",
+                                "matchId": "",
+                                "classification": [
+                                    {
+                                        "M3": {
+                                            "bankCredit": 0,
+                                            "otherLoan": {
+                                                "longestDays": ''
+                                            },
+                                            "otherCredit": None,
+                                            "bankLoan": None
+                                        }
+                                    },
+                                    {}
+                                ]
+                            }
+                :args   5
+                :return  {}
+    """
+    for i in xrange(args):
+        tmp = dicts.copy()
+        for key, value in tmp.items():
+            if not value:
+                del dicts[key]
+            elif isinstance(value, dict):
+                del_dict_invalid_value(value, 1)
+            elif isinstance(value, list):
+                m_del_invalid_value(value, 1)
+    return dicts
 
 
-def m_del_invalid_value(seq):
-    for data in seq:
-        # if isinstance(data, dict):
-        pass
+def m_del_invalid_value(seq, args):
+    """
+        删除列表中的无效值 None '' {} [] 0 False
+
+        :param seq: 原始序列 list 或 str
+        :param args: 深度即循环的次数
+        :return:    转换后的列表
+
+        example：
+                :seq  data = [{
+                                "matchType": "",
+                                "matchValue": "",
+                                "matchId": "",
+                                "classification": [
+                                    {
+                                        "M3": {
+                                            "bankCredit": 0,
+                                            "otherLoan": {
+                                                "longestDays": ''
+                                            },
+                                            "otherCredit": None,
+                                            "bankLoan": None
+                                        }
+                                    },
+                                    {}
+                                ]
+                            }]
+                :args   6
+                :return  []
+    """
+    for i in xrange(args):
+        for data in seq:
+            if not data:
+                seq.remove(data)
+            if isinstance(data, dict):
+                del_dict_invalid_value(data, 1)
+            elif isinstance(data, list):
+                m_del_invalid_value(data, 1)
+    return seq
+
 
 if __name__ == '__main__':
     data = [{
-        "matchType": "idCard",
-        "matchValue": "340825198609101051",
-        "matchId": "92a297643fdcd96644cf30942b8a2e5f",
+        "matchType": "",
+        "matchValue": "",
+        "matchId": "",
         "classification": [
             {
                 "M3": {
-                    "bankCredit": None,
+                    "bankCredit": 0,
                     "otherLoan": {
-                        "orgNums": 12,
-                        "recordNums": 1,
-                        "maxAmount": "(1000, 2000]",
-                        "longestDays": "6"
+                        "longestDays": ''
                     },
                     "otherCredit": None,
                     "bankLoan": None
                 }
             },
-            {
-                "M6": {
-                    "bankCredit": None,
-                    "otherLoan": {
-                        "orgNums": 1,
-                        "recordNums": 1,
-                        "maxAmount": "(1000, 2000]",
-                        "longestDays": "1"
-                    },
-                    "otherCredit": None,
-                    "bankLoan": None
-                }
-            },
-            {
-                "M9": {
-                    "bankCredit": None,
-                    "otherLoan": {
-                        "orgNums": 1,
-                        "recordNums": 2,
-                        "maxAmount": "(1000, 2000]",
-                        "longestDays": "1"
-                    },
-                    "otherCredit": None,
-                    "bankLoan": None
-                }
-            },
-            {
-                "M24": {
-                    "bankCredit": None,
-                    "otherLoan": {
-                        "orgNums": 1,
-                        "recordNums": 1,
-                        "maxAmount": "(1000, 2000]",
-                        "longestDays": "1"
-                    },
-                    "otherCredit": None,
-                    "bankLoan": None
-                }
-            }
+            {}
         ]
-    }
-    ]
+    }]
 
-    print m_str_to_int_float_in_list([1, 2.1, '2.1', '-2', []])
-
-
-
+    data = m_del_invalid_value(data, 6)
+    print data

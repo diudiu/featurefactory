@@ -83,7 +83,18 @@ def f_get_workplace_now(result):
 
 
 def f_plate_number(seq):
-    m = r'[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领]{3}[A-Z]{1}[A-Z0-9]{4}[A-Z0-9挂学警港澳]{1}$'
+    """
+        过滤列表中合法的车牌号
+
+        :param seq: 车牌号列表
+        :return:    合法的车牌号列表
+
+        example：
+                :seq  ['冀BF876R', u'京BF688R', '京123456']
+
+                :return  ['冀BF876R', '京BF688R']
+    """
+    m = r'^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领]{3}[A-Z]{1}[A-Z0-9]{4}[A-Z0-9挂学警港澳]{1}$'
     tmp = []
     for plate in seq:
         if len(plate) != 9:
@@ -94,5 +105,4 @@ def f_plate_number(seq):
 
 
 if __name__ == '__main__':
-    print f_plate_number(['冀BF876R', u'京BF688R', 'gyf123456'])
-
+    print f_plate_number(['冀BF876R', u'京BF688R', '京123456'])
