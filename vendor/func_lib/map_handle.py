@@ -15,7 +15,7 @@ import django
 
 django.setup()
 
-from apps.common.models import CityCodeField
+from apps.common.models import *
 from vendor.errors.feature import FeatureProcessError
 
 
@@ -387,14 +387,16 @@ def m_datetime_only_hour_minute(seq):
     """
     if not isinstance(seq, list):
         try:
-            seq = seq[11:16]
+            seq = datetime.strptime(seq, "%Y-%m-%d %H:%M:%S")
         except:
             raise FeatureProcessError('%s time format error ' % seq)
     else:
         try:
-            seq = map(lambda x: x[11:16], seq)
+            seq = map(lambda x: datetime.strptime(x, "%Y-%m-%d %H:%M:%S"), seq)
         except:
             raise FeatureProcessError('%s time format error ' % seq)
+
+    seq = float(str(seq.hour) + '.' + str(seq.minute))
     return seq
 
 
@@ -649,8 +651,27 @@ def m_max_flight_class(seq):
     return result
 
 
-# def m_check_code(data, feature_name):
-#     fcm = FeatureCodeMapping.objects.
+def m_single_check_code(data, feature_name):
+    """
+       获取单值匹配(不是区间)所对应的Code
+
+        :param feature_name: 特征名称
+        :param data: 特征对应的返回值
+        :return:    code
+
+        example：
+                :feature_name education_degree_code
+                :data: 20
+                :return  2
+    """
+    feature_code = FeatureCodeMapping.objects.filter(
+        feature_name=feature_name,
+    )
+    num_map = {int(conf.mapped_value): conf.unitary_value for conf in feature_code}
+    for key, value in num_map.iteritems():
+        if data == value:
+            return key
+
 
 if __name__ == '__main__':
-    print m_str_to_int_float_in_list([1, 2.1, '2.1', '-2', []])
+    print m_single_check_code(20, 'education_degree_code')

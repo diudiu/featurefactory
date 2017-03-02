@@ -16,7 +16,7 @@ application_on_plus_config = {
     "feature_data_type": "string",
     "default_value": "StringTypeDefault",
     "json_path_list": [("application_on", "$.application_on", "f_assert_not_null->f_assert_must_basestring")],
-    "f_map_and_filter_chain": "m_datetime_only_hour_minute",
+    "f_map_and_filter_chain": "m_get_seq_index_value(0)->m_datetime_only_hour_minute",
     "reduce_chain": "",
     "l_map_and_filter_chain": "",
 }

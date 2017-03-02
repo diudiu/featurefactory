@@ -1,10 +1,7 @@
 # -*- coding:utf-8 -*-
 
 import re
-from vendor.func_lib.assert_handle import *
-from vendor.func_lib.map_handle import *
-from vendor.func_lib.reduce_handle import *
-from vendor.func_lib.filter_handle import *
+
 from vendor.errors.feature import FeatureProcessError
 
 
