@@ -319,9 +319,9 @@ def m_seq_inx0_sort_in_list(seq, args=False):
         :return:    排序后的列表
 
         example：
-                :seq  [['20160708', 'gyf'], ['20180505', 'zme'],['20170101', 'zkp']]
+                :seq  [['20160708', 'gyf'], ['20180505', 'zme'], ['20170101', 'zkp']]
                 :args   True
-                :return  [['20180505', 'zme'], ['20170101', 'zkp'],['20160708', 'gyf']]
+                :return  [['20180505', 'zme'], ['20170101', 'zkp'], ['20160708', 'gyf']]
     """
 
     seq = sorted(seq, key=lambda x: x[0], reverse=args)
@@ -706,6 +706,13 @@ def m_del_invalid_value(seq):
     for data in seq:
         # if isinstance(data, dict):
         pass
+
+
+def m_mobile_id_judge(seq):
+    if seq and seq[0] == '00':
+        return [1]
+    else:
+        return [0]
 
 if __name__ == '__main__':
     data = [{

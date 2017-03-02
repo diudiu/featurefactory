@@ -2439,6 +2439,15 @@ data = {
             }
         ]
     },
+
+
+    "mobile_identity": {
+        'telecom_mobile_identity_s': {
+            "result": "11",
+            "result_message": "检测通过或查询有记录",
+            "content": {}
+        }
+    }
 }
 
 
@@ -2450,5 +2459,5 @@ def test(data):
 
 
 if __name__ == '__main__':
-    data = {'work_time': data['work_time']}
+    data = {'mobile_identity': data['mobile_identity']}
     test(data)

@@ -97,3 +97,18 @@ work_time_config = {
     "reduce_chain": "m_get_month_from_now",
     "l_map_and_filter_chain": ""
 }
+
+
+mobile_identity_config = {
+    "feature_name": "mobile_identity",
+    "feature_data_type": "int",
+    "default_value": "BooleanTypeDefault",
+    "json_path_list": [
+        ("mobile_identity", "$.unicom_mobile_identity_s.result", "m_mobile_id_judge"),
+        ("mobile_identity", "$.yd_mobile_identity_s.result", "m_mobile_id_judge"),
+        ("mobile_identity", "$.telecom_mobile_identity_s.result", "m_mobile_id_judge"),
+    ],
+    "f_map_and_filter_chain": "m_to_sum",
+    "reduce_chain": "",
+    "l_map_and_filter_chain": ""
+}
