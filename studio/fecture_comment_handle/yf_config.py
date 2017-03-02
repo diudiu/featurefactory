@@ -141,7 +141,7 @@ gender_config = {
     "json_path_list": [
         ("sex", "$..content.sex", "f_assert_not_null->f_assert_must_basestring"),
     ],
-    "f_map_and_filter_chain": "m_get_seq_index_value(0)->m_sex_to_code",
+    "f_map_and_filter_chain": "m_get_seq_index_value(0)->m_sex_to_code->m_check_code('gender','eq')",
     "reduce_chain": "",
     "l_map_and_filter_chain": ""
 }

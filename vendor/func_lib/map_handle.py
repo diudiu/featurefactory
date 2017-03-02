@@ -80,11 +80,12 @@ def m_to_len(seq, args=0):
         求序列的长度
 
         :param seq: 可以为字符串、列表
-        :param args: 可以为字符串、列表
+        :param args: 减数
         :return:    字符串、列表的长度
 
         example：
                 :seq： [1, -2]
+                :args  0
                 :return： 2
     """
     seq = len(seq) - args
@@ -283,9 +284,10 @@ def m_sex_to_code(seq):
                 :return  0
     """
     if '男' in seq:
-        seq = 0
+
+        seq = '男'
     elif '女' in seq:
-        seq = 1
+        seq = '女'
     else:
         raise FeatureProcessError("'don't know  sex")
 
@@ -461,7 +463,6 @@ def m_get_mobile_m1_m5_key_seq(mobilestr, tags, key_list):
                     value_list.append(value)
             if value_list:
                 tmp.append(sum(value_list))
-    print tmp
     return tmp
 
 
@@ -603,7 +604,7 @@ def m_max_flight_area(seq):
 
 def m_max_flight_class(seq):
     """
-       一年内飞机出行中最多出行区域的code
+       一年内飞机出行中最多机舱类型的code
 
         :param seq: [商务舱乘机次数、公务舱乘机次数、经济舱乘机次数]
         :return:    code
@@ -692,20 +693,137 @@ def m_r_to_now_work_time(seq, args=0):
     start_work_time = datetime.strptime(seq[1], '%Y%m')
     if seq[args] == '999999':
         seq[args] = now_time
-        now_work_time = (now_time - start_work_time).days/30
+        now_work_time = (now_time - start_work_time).days / 30
     else:
-        now_work_time = (end_work_time - start_work_time).days/30
+        now_work_time = (end_work_time - start_work_time).days / 30
     return now_work_time
 
 
-def del_dict_invalid_value(dict):
-    pass
+def del_dict_invalid_value(dicts, args=1):
+    """
+    删除列表中的无效值 None '' {} [] 0 False
+
+    :param dicts: 原始字典
+    :param args: 字典深度即循环的次数
+    :return: 转换后的字典
+
+    example：
+                :seq  data = {
+                                "matchType": "",
+                                "matchValue": "",
+                                "matchId": "",
+                                "classification": [
+                                    {
+                                        "M3": {
+                                            "bankCredit": 0,
+                                            "otherLoan": {
+                                                "longestDays": ''
+                                            },
+                                            "otherCredit": None,
+                                            "bankLoan": None
+                                        }
+                                    },
+                                    {}
+                                ]
+                            }
+                :args   5
+                :return  {}
+    """
+    for i in xrange(args):
+        tmp = dicts.copy()
+        for key, value in tmp.items():
+            if not value:
+                del dicts[key]
+            elif isinstance(value, dict):
+                del_dict_invalid_value(value, 1)
+            elif isinstance(value, list):
+                m_del_invalid_value(value, 1)
+    return dicts
 
 
-def m_del_invalid_value(seq):
-    for data in seq:
-        # if isinstance(data, dict):
-        pass
+def m_del_invalid_value(seq, args=1):
+    """
+        删除列表中的无效值 None '' {} [] 0 False
+
+        :param seq: 原始序列 list 或 str
+        :param args: seq深度即循环的次数
+        :return:    转换后的列表
+
+        example：
+                :seq  data = [{
+                                "matchType": "",
+                                "matchValue": "",
+                                "matchId": "",
+                                "classification": [
+                                    {
+                                        "M3": {
+                                            "bankCredit": 0,
+                                            "otherLoan": {
+                                                "longestDays": ''
+                                            },
+                                            "otherCredit": None,
+                                            "bankLoan": None
+                                        }
+                                    },
+                                    {}
+                                ]
+                            },
+                            {}]
+                :args   6
+                :return  []
+    """
+    for i in xrange(args):
+        for data in seq:
+            if not data:
+                seq.remove(data)
+            if isinstance(data, dict):
+                del_dict_invalid_value(data, 1)
+            elif isinstance(data, list):
+                m_del_invalid_value(data, 1)
+    return seq
+
+
+def m_check_code(data, args=None):
+    """
+    将数值转化成对应的code
+    :param data:  上一步得到的数据
+    :param args:  [feature_name,操作符]
+    :return:  对应code
+
+    example：
+                :data:         20
+                :args         ['education_degree_code','gte_lt']
+                :return         2
+    """
+    feature_name = args[0]
+    op = args[1]
+    fcm = FeatureCodeMapping.objects.filter(
+        feature_name=feature_name,
+    )
+    res = ''
+    num_map = {int(conf.mapped_value): [conf.unitary_value, conf.dual_value] for conf in fcm}
+    for key, value in num_map.iteritems():
+
+        if op == 'gte_lt':
+            if float(value[0]) <= float(data) < float(value[1]):
+                res = key
+                break
+        elif op == 'gt_lte':
+            if float(value[0]) < float(data) <= float(value[1]):
+                res = key
+                break
+        elif op == 'in':
+            if data in value[0]:
+                res = key
+                break
+        elif op == 'eq':
+            if data == value[0]:
+                res = key
+                break
+    if not res:
+        raise FeatureProcessError("don't find %s=% code value" % (feature_name, data))
+    return res
+
 
 
 def m_mobile_id_judge(seq):
@@ -716,67 +834,24 @@ def m_mobile_id_judge(seq):
 
 if __name__ == '__main__':
     data = [{
-        "matchType": "idCard",
-        "matchValue": "340825198609101051",
-        "matchId": "92a297643fdcd96644cf30942b8a2e5f",
+        "matchType": "",
+        "matchValue": "",
+        "matchId": "",
         "classification": [
             {
                 "M3": {
-                    "bankCredit": None,
+                    "bankCredit": 0,
                     "otherLoan": {
-                        "orgNums": 12,
-                        "recordNums": 1,
-                        "maxAmount": "(1000, 2000]",
-                        "longestDays": "6"
+                        "longestDays": ''
                     },
                     "otherCredit": None,
                     "bankLoan": None
                 }
             },
-            {
-                "M6": {
-                    "bankCredit": None,
-                    "otherLoan": {
-                        "orgNums": 1,
-                        "recordNums": 1,
-                        "maxAmount": "(1000, 2000]",
-                        "longestDays": "1"
-                    },
-                    "otherCredit": None,
-                    "bankLoan": None
-                }
-            },
-            {
-                "M9": {
-                    "bankCredit": None,
-                    "otherLoan": {
-                        "orgNums": 1,
-                        "recordNums": 2,
-                        "maxAmount": "(1000, 2000]",
-                        "longestDays": "1"
-                    },
-                    "otherCredit": None,
-                    "bankLoan": None
-                }
-            },
-            {
-                "M24": {
-                    "bankCredit": None,
-                    "otherLoan": {
-                        "orgNums": 1,
-                        "recordNums": 1,
-                        "maxAmount": "(1000, 2000]",
-                        "longestDays": "1"
-                    },
-                    "otherCredit": None,
-                    "bankLoan": None
-                }
-            }
+            {}
         ]
-    }
-    ]
+    }, {}]
 
-    print m_str_to_int_float_in_list([1, 2.1, '2.1', '-2', []])
-
-
-
+    data = m_del_invalid_value(data, 6)
+    print data
+    print m_check_code(50, ['cur_employee_number', 'gte_lt'])
