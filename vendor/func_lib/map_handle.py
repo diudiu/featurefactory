@@ -260,7 +260,7 @@ def m_marital_status_to_code(seq):
         结婚状态的code值
 
         :param seq: 整数
-        :return:    小于seq的最大整数
+        :return:    小于seq的最大10的倍数
 
         example：
                 :seq  '23'
@@ -281,7 +281,7 @@ def m_sex_to_code(seq):
 
         example：
                 :seq  '男生'
-                :return  0
+                :return  '男'
     """
     if '男' in seq:
 
@@ -823,7 +823,6 @@ def m_check_code(data, args=None):
     if not res:
         raise FeatureProcessError("don't find %s=% code value" % (feature_name, data))
     return res
-
 
 
 def m_mobile_id_judge(seq):
