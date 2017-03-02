@@ -21,8 +21,10 @@ def feature_post():
     data = {
         u'content': {
             u'callback': u'',
-            u'apply_id': u'APPLY20170302155420253417655',
-            u'res_keys': [u'age']
+            u'apply_id': u'APPLY20170302182824215585900',
+            u'res_keys': [
+                u'is_unclearLoan'
+            ]
         },
         u'client_code': u'lp_test'
     }

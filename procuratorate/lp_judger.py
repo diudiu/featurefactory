@@ -13,6 +13,7 @@ from jsonpath_rw_ext import parse
 from apps.etl.models import FeatureConf, PreFieldInfo
 from apps.etl.context import ApplyContext, ArgsContext, PortraitContext
 from vendor.errors.api_errors import *
+from vendor.errors.contact_error import *
 
 logger = logging.getLogger('apps.featureapi')
 
@@ -70,7 +71,7 @@ class Judger(object):
             is_delete=False
         )
         if full_conf.count() != len(self.feature_list):
-            raise  # TODO 配置有误 数量对不上
+            raise FeatureNameUnfound
 
         for single_conf in full_conf.iterator():
             try:
