@@ -22,7 +22,7 @@ def func_exec_chain(data, chains):
         except:
             raise FeatureProcessError("exec_chain Error: don't find function %s" % func)
         if args:
-            if (args.startswith("[") or args.startswith("{")):
+            if args.startswith("[") or args.startswith("{"):
                 args = eval(args)
             else:
                 args = args.split(',')
