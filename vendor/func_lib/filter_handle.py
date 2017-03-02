@@ -43,16 +43,16 @@ def f_mobile_m1_m5_sum_max_seq(seq, args):
     return m1_m5_max
 
 
-def f_days_greater_than_args(result, args):
+def f_days_greater_than_args(seq, args):
     """
     过滤掉时间距离现在大于指定天数的元素
-    :param result: 时间戳列表
+    :param seq: 时间戳列表
     :param args: 指定天数
     :return: 时间戳列表
     """
     now = dt.datetime.today()
     res = []
-    for stamp in result:
+    for stamp in seq:
         length = len(str(stamp))
         if length > 10:
             stamps = stamp / (10 ** (length - 10))
@@ -65,24 +65,24 @@ def f_days_greater_than_args(result, args):
     return res
 
 
-def f_inside_stipulate_scope(result, args):
+def f_inside_stipulate_scope(seq, args):
     """
     过滤不在指定范围内的列表元素
-    :param result: 原始列表
+    :param seq: 原始列表
     :param args: 指定元素范围值  (列表)
     :return: 过滤后列表
     """
     res = []
-    for i in result:
+    for i in seq:
         if i in args:
             res.append(i)
     return res
 
 
-def f_get_workplace_now(result):
-    length = len(result)
-    workplace_list = result[:length / 2]
-    date_list = result[length / 2:]
+def f_get_workplace_now(seq):
+    length = len(seq)
+    workplace_list = seq[:length / 2]
+    date_list = seq[length / 2:]
     for i in range(length / 2):
         if '999999' == date_list[i]:
             return workplace_list[i]

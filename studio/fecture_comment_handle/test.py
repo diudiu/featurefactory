@@ -602,6 +602,7 @@ data = {
                 "longitudu": 23.45678
             }
         }},
+
     'mobile_activeness': {
         "trustutn_loan_phone": {
             "result": 0,
@@ -2439,7 +2440,6 @@ data = {
             }
         ]
     },
-
 
     "mobile_identity": {
         'telecom_mobile_identity_s': {

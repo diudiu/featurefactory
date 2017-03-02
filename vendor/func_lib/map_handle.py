@@ -638,12 +638,12 @@ def m_get_work_status_map(work_status, feature_name):
             return int(key)
 
 
-def m_get_month_from_now(data):
-    if '999999' in data:
+def m_get_month_from_now(seq):
+    if '999999' in seq:
         data.remove('999999')
     today = datetime.today()
     days_list = []
-    for str_date in data:
+    for str_date in seq:
         dates = datetime.strptime(str_date, '%Y%m')
         days_list.append((today - dates).days)
     return max(days_list) / 30
@@ -699,7 +699,7 @@ def m_r_to_now_work_time(seq, args=0):
     return now_work_time
 
 
-def del_dict_invalid_value(dicts, args=1):
+def del_dict_invalid_value(seq, args=1):
     """
     删除列表中的无效值 None '' {} [] 0 False
 
@@ -730,15 +730,15 @@ def del_dict_invalid_value(dicts, args=1):
                 :return  {}
     """
     for i in xrange(args):
-        tmp = dicts.copy()
+        tmp = seq.copy()
         for key, value in tmp.items():
             if not value:
-                del dicts[key]
+                del seq[key]
             elif isinstance(value, dict):
                 del_dict_invalid_value(value, 1)
             elif isinstance(value, list):
                 m_del_invalid_value(value, 1)
-    return dicts
+    return seq
 
 
 def m_del_invalid_value(seq, args=1):
@@ -783,10 +783,10 @@ def m_del_invalid_value(seq, args=1):
     return seq
 
 
-def m_check_code(data, args=None):
+def m_check_code(seq, args=None):
     """
     将数值转化成对应的code
-    :param data:  上一步得到的数据
+    :param seq:  上一步得到的数据
     :param args:  [feature_name,操作符]
     :return:  对应code
 
@@ -805,25 +805,24 @@ def m_check_code(data, args=None):
     for key, value in num_map.iteritems():
 
         if op == 'gte_lt':
-            if float(value[0]) <= float(data) < float(value[1]):
+            if float(value[0]) <= float(seq) < float(value[1]):
                 res = key
                 break
         elif op == 'gt_lte':
-            if float(value[0]) < float(data) <= float(value[1]):
+            if float(value[0]) < float(seq) <= float(value[1]):
                 res = key
                 break
         elif op == 'in':
-            if data in value[0]:
+            if seq in value[0]:
                 res = key
                 break
         elif op == 'eq':
-            if data == value[0]:
+            if seq == value[0]:
                 res = key
                 break
     if not res:
-        raise FeatureProcessError("don't find %s=% code value" % (feature_name, data))
+        raise FeatureProcessError("don't find %s=% code value" % (feature_name, seq))
     return res
-
 
 
 def m_mobile_id_judge(seq):
