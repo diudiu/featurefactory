@@ -5,6 +5,13 @@ import datetime as dt
 
 from map_handle import *
 
+"""
+    此目录下所有功能函数均为:
+        按一定条件过滤传入数据内容
+        函数返回过滤后的数据内容
+        此类函数将对数据做改变, 不会引发一场, 但可能会返回None
+"""
+
 
 def f_digit_or_float(seq):
     """过滤出数字或float的值"""
@@ -104,4 +111,4 @@ def f_plate_number(seq):
 
 
 if __name__ == '__main__':
-    print f_plate_number(['冀BF876R', u'京BF688R', '京123456'])
+    print f_plate_number(['冀BF876R', u'京BF688R', 'gyf123456'])

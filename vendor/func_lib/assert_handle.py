@@ -2,6 +2,13 @@
 
 from vendor.errors.feature import FeatureProcessError
 
+"""
+    此目录下所有功能函数均为:
+
+        按一定条件检查传入参数合法性
+        **若不合法, 将抛出异常**
+"""
+
 
 def f_assert_not_null(value_list):
     """检测值是否非空或值得列表是否存在非空元素"""
