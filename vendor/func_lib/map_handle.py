@@ -469,7 +469,7 @@ def m_get_mobile_m1_m5_key_seq(mobilestr, tags, key_list):
 def m_get_mobile_stability(seq):
     """获取手机号的稳定度"""
     total_calltimes_ave = m_seq_to_agv(seq)
-    mobile_stability = (sum([i ** 2 for i in seq]) / len(seq)) ** 0.5
+    mobile_stability = (sum([(i-total_calltimes_ave) ** 2 for i in seq]) / len(seq)) ** 0.5
     mobile_stability_a = mobile_stability / total_calltimes_ave
     return round(mobile_stability_a, 4)
 
