@@ -90,10 +90,10 @@ class Judger(object):
             apply_data = ApplyContext(self.apply_id).load()
             self.proposer_id = apply_data.get('proposer_id', None)
             if not self.proposer_id:
-                raise
+                raise ProposerIdMissing
             portrait_data = PortraitContext(self.proposer_id).load()
             if not portrait_data:
-                raise
+                raise NoPortraitData
             pre_conf = PreFieldInfo.objects.filter(
                 is_delete=False
             )

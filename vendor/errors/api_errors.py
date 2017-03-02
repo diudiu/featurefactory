@@ -64,3 +64,8 @@ class ClientCodeMissing(ServerError):
 class ServerBusy(ServerError):
     status = ResponseCode.SERVER_BUSY
     message = ResponseCode.message(status)
+
+
+class NoPortraitData(ServerError):
+    status = ResponseCode.NO_PORTRAIT_DATA
+    message = ResponseCode.message(status)

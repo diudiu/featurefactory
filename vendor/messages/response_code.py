@@ -22,6 +22,7 @@ class ResponseCode(object):
     MISSING_CLIENT_CODE = 30015
 
     DATABASE_ERROR = 40101
+    NO_PORTRAIT_DATA = 40201
 
     UNAVAILABLE_CLIENT_CODE = 50001
     MISSING_JUDGE_TYPE = 50002
@@ -56,6 +57,7 @@ class ResponseCode(object):
         MISSING_CLIENT_CODE:            u"传入数据内容缺失 client_code",
 
         DATABASE_ERROR:                 u"数据库服务错误",
+        NO_PORTRAIT_DATA:               u"portrait_base中无此用户预授信数据",
 
         UNAVAILABLE_CLIENT_CODE:        u"client_code 无效 不存在的客户",
         FEATURE_SUCCESS:                u"特征处理成功",
