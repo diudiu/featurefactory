@@ -3,7 +3,7 @@
 from jsonparse_handle import JSONPathParser
 from exec_chain_handle import func_exec_chain, func_exec_operator_chain
 from vendor.errors.feature import FeatureProcessError
-from studio.fecture_comment_handle.mk_config import *
+from studio.fecture_comment_handle.sg_config import *
 from vendor.utils.defaults import *
 
 import logging
