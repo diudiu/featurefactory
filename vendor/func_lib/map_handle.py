@@ -80,11 +80,12 @@ def m_to_len(seq, args=0):
         求序列的长度
 
         :param seq: 可以为字符串、列表
-        :param args: 可以为字符串、列表
+        :param args: 减数
         :return:    字符串、列表的长度
 
         example：
                 :seq： [1, -2]
+                :args  0
                 :return： 2
     """
     seq = len(seq) - args
@@ -283,9 +284,10 @@ def m_sex_to_code(seq):
                 :return  0
     """
     if '男' in seq:
-        seq = 0
+
+        seq = '男'
     elif '女' in seq:
-        seq = 1
+        seq = '女'
     else:
         raise FeatureProcessError("'don't know  sex")
 
@@ -602,7 +604,7 @@ def m_max_flight_area(seq):
 
 def m_max_flight_class(seq):
     """
-       一年内飞机出行中最多出行区域的code
+       一年内飞机出行中最多机舱类型的code
 
         :param seq: [商务舱乘机次数、公务舱乘机次数、经济舱乘机次数]
         :return:    code
@@ -781,20 +783,20 @@ def m_del_invalid_value(seq, args=1):
     return seq
 
 
-def m_check_code(data, feature_name, args='gte_lt'):
+def m_check_code(data, args=None):
     """
-    将数值转化成对应的code 弃用
+    将数值转化成对应的code
     :param data:  上一步得到的数据
-    :param feature_name:  特征名称
-    :param args:  操作符
+    :param args:  [feature_name,操作符]
     :return:  对应code
 
     example：
                 :data:         20
-                :feature_name 'education_degree_code'
-                :param         'between'
+                :args         ['education_degree_code','gte_lt']
                 :return         2
     """
+    feature_name = args[0]
+    op = args[1]
     fcm = FeatureCodeMapping.objects.filter(
         feature_name=feature_name,
     )
@@ -802,19 +804,19 @@ def m_check_code(data, feature_name, args='gte_lt'):
     num_map = {int(conf.mapped_value): [conf.unitary_value, conf.dual_value] for conf in fcm}
     for key, value in num_map.iteritems():
 
-        if args == 'gte_lt':
+        if op == 'gte_lt':
             if float(value[0]) <= float(data) < float(value[1]):
                 res = key
                 break
-        elif args == 'gt_lte':
+        elif op == 'gt_lte':
             if float(value[0]) < float(data) <= float(value[1]):
                 res = key
                 break
-        elif args == 'in':
+        elif op == 'in':
             if data in value[0]:
                 res = key
                 break
-        elif args == 'eq':
+        elif op == 'eq':
             if data == value[0]:
                 res = key
                 break
@@ -845,4 +847,4 @@ if __name__ == '__main__':
 
     data = m_del_invalid_value(data, 6)
     print data
-    print m_check_code(50, 'cur_employee_number', 'gte_lt')
+    print m_check_code(50, ['cur_employee_number', 'gte_lt'])
