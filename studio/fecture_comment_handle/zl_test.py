@@ -315,7 +315,8 @@ data = {
             ],
             "phone": "18627180708",
             "imei": "",
-            "imsi": ""}},
+            "imsi": ""}
+    },
 
     'mobile_mark': {
         "tags": {
@@ -367,6 +368,149 @@ data = {
             }
         ]
     },
+    'online_time': {
+        'telecom_online_time': {
+            "result": "00",
+            "result_message": "检测通过或查询有记录",
+            "content": {
+                "online_time": "[0-6]"
+            },
+        },
+    },
+    'income_level': {
+        # "portrait_data": {
+        #     "product_code": "string",
+        #     "registration_on": "2016-01-18",
+        #     "name": "string",
+        #     "card_id": "372922199312341111",
+        #     "mobile": "string",
+        #     "email": "string",
+        #     "city_code": "string",
+        #     "city_name": "string",
+        #     "now_indust_code": "string",
+        #     "now_indust_name": "string",
+        #     "work_age": 0,
+        #     "complete_degree": 65,
+        #     "cur_status": "string",
+        #     "upload_contact": 0,
+        #     "sns_friends_cnt": 0,
+        #     "sns_sd_friend_cnt": 0,
+        #     "sns_h_fans_cn": 0,
+        #     "sns_skill_tag_list": [
+        #         {
+        #             "skill_tag": "string",
+        #             "certified_num": 0
+        #         }
+        #     ],
+        #     "work_exp_form": [
+        #         {
+        #             "title": "string",
+        #             "has_certified": "string",
+        #             "certified_num": 0,
+        #             "comp_name": "string",
+        #             "months": 6,
+        #             "salary": 6000,
+        #             "work_start": "string",
+        #             "work_end": "201006",
+        #             "industry": "string",
+        #             "industry_name": "string",
+        #             "dq": "string",
+        #             "dq_name": "string"
+        #         },
+        #         {
+        #             "title": "string",
+        #             "has_certified": "string",
+        #             "certified_num": 0,
+        #             "comp_name": "string",
+        #             "months": 12,
+        #             "salary": 120,
+        #             "work_start": "string",
+        #             "work_end": "200806",
+        #             "industry": "string",
+        #             "industry_name": "string",
+        #             "dq": "string",
+        #             "dq_name": "string"
+        #         },
+        #         {
+        #             "title": "string",
+        #             "has_certified": "string",
+        #             "certified_num": 0,
+        #             "comp_name": "string",
+        #             "months": 20,
+        #             "salary": 5000,
+        #             "work_start": "string",
+        #             "work_end": "999999",
+        #             "industry": "string",
+        #             "industry_name": "string",
+        #             "dq": "string",
+        #             "dq_name": "string"
+        #         }
+        #     ],
+        #     "edu_exp_form": [
+        #         {
+        #             "school": "string",
+        #             "start": "string",
+        #             "end": "string",
+        #             "degree": "string",
+        #             "degree_name": "string",
+        #             "tz": 0
+        #         }
+        #     ]
+        # }
+        # 'cc_credit': {
+        #     "status": "OK",
+        #     "result": {
+        #         "rrx_once_all": {
+        #             "banks_num": "开卡银行个数",
+        #             "debit_cards_num": "借记卡张数",
+        #             "credit_cards_num": "1",
+        #             "debit_card_account_age": "2",
+        #             "credit_card_account_age": "3"
+        #         },
+        #         "rrx_inc_3m": {
+        #             "debit_card_3m_chargeoff_amount": "借记卡近 3 个月出账累计总金额",
+        #             "debit_card_3m_chargeoff_num": "借记卡近 3 个月出账累计总笔数",
+        #             "debit_card_3m_passentry_amount": "借记卡近 3 个月入账累计总金额",
+        #             "debit_card_3m_passentry_num": "借记卡近 3 个月入账累计总笔数",
+        #             "credit_card_3m_pay_amount": "信用卡近 3 个月信用卡消费总金额",
+        #             "credit_card_3m_repay_num": "信用卡近 3 个月还款总笔数"
+        #         },
+        #         "rrx_inc_12m": {
+        #             "debit_card_12m_chargeoff_amount": "借记卡近12个月出账累计总金额",
+        #             "debit_card_12m_chargeoff_num": "借记卡近12个月出账累计总笔数",
+        #             "debit_card_12m_pay_amount": "借记卡近12个月消费累计总金额",
+        #             "debit_card_12m_passentry_amount": "29",
+        #             "debit_card_12m_passentry_num": "借记卡近12个月入账累计总笔数",
+        #             "credit_card_12m_pay_amount": "信用卡近12个月信用卡消费总金额",
+        #             "credit_card_12m_pay_num": "信用卡近12个月信用卡消费总笔数",
+        #             "credit_card_12m_repay_amount": "信用卡近12个月信用卡还款总金额",
+        #             "credit_card_12m_repay_num": "信用卡近12个月还款总笔数",
+        #             "credit_card_12m_payables_amount": "信用卡近12个月累计应还总金额",
+        #             "credit_card_12m_online_pay_amount": "信用卡近12个月信用卡线上消费总金额"
+        #         }
+        #     }
+        # }
+        "unicom_finance_portrait_s": {
+            "result": "00",
+            "result_message": "检测通过或查询有记录",
+            "content": {
+                "last12": {
+                    "credit": {
+                        "charge_off_range": "b",
+                        "charge_off_times": 25,
+                        "income_times": 35,
+                        "income_range": "c"
+                    },
+                    "debit": {
+                        "charge_off_range": "13",
+                        "charge_off_times": 138,
+                        "income_times": 16,
+                        "income_range": "13",
+                    }
+                }
+            }
+        }
+    },
 }
 
 
@@ -378,7 +522,7 @@ def test():
 
 
 if __name__ == '__main__':
-    data = {'application_on_plus': data['application_on_plus']}
+    data = {'income_level': data['income_level']}
     # application_on
     # application_on_plus
     # cc_bill_age

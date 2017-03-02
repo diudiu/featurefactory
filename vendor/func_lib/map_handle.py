@@ -3,6 +3,7 @@
 import os
 import sys
 import math
+import numpy as np
 from datetime import datetime
 
 reload(sys)
@@ -673,5 +674,54 @@ def m_single_check_code(data, feature_name):
             return key
 
 
+def m_yd_online_time(seq):
+    if seq[0] in ["(0,3)", "[3,6)"]:
+        seq = [1]
+    elif seq[0] in ["[6,12)"]:
+        seq = [2]
+    elif seq[0] in ["[12,18)", "[18,24]"]:
+        seq = [3]
+    elif seq[0] in ["(24,+)"]:
+        seq = [4]
+    return seq
+
+
+def m_unicom_online_time(seq):
+    if seq[0] in ["[0-1]", "(1-2]", "[3-6]"]:
+        seq = [1]
+    elif seq[0] in ["[7-12]"]:
+        seq = [2]
+    elif seq[0] in ["[13-24)"]:
+        seq = [3]
+    elif seq[0] in ["[25-36)", "[37,+)"]:
+        seq = [4]
+    return seq
+
+
+def m_telecom_online_time(seq):
+    if seq[0] in ["[0-6]"]:
+        seq = [1]
+    elif seq[0] in ["[6-12]"]:
+        seq = [2]
+    elif seq[0] in ["[12-24]"]:
+        seq = [3]
+    elif seq[0] in ["[24-36]", "[36,+]"]:
+        seq = [4]
+    return seq
+
+
+def m_lp_income(seq, discount):
+    work_end_map = {int(i['work_end']): [i['salary'], i['months']] for i in seq[0]}
+    last_work = work_end_map.keys()
+    last_work = max(last_work)
+
+    income = round((work_end_map[last_work][0] * work_end_map[last_work][1] * discount), 2)
+    return [income]
+
+
+def m_cc_income(seq):
+    pass
+
+
 if __name__ == '__main__':
-    print m_single_check_code(20, 'education_degree_code')
+    print m_telecom_online_time('[6-12)')

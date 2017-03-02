@@ -77,17 +77,6 @@ education_degree_code_config = {
 }
 
 
-income_level_config = {
-    "feature_name": "income_level",
-    "feature_data_type": "",
-    "default_value": "",
-    "json_path_list": [],
-    "f_map_and_filter_chain": "",
-    "reduce_chain": "",
-    "l_map_and_filter_chain": "",
-}
-
-
 is_loan_agency_config = {
     "feature_name": "is_loan_agency",
     "feature_data_type": "int",
@@ -103,7 +92,8 @@ is_netsky_black_config = {
     "feature_name": "is_netsky_black",
     "feature_data_type": "int",
     "default_value": "PositiveSignedTypeDefault",
-    "json_path_list": [("is_netsky_black", "$.result", "f_assert_not_null->f_assert_must_basestring")],
+    "json_path_list": [
+        ("is_netsky_black", "$.result", "f_assert_not_null->f_assert_must_basestring")],
     "f_map_and_filter_chain": "m_to_bool(['00'])",
     "reduce_chain": "",
     "l_map_and_filter_chain": "",
@@ -145,10 +135,32 @@ mobile_mark_config = {
 
 online_time_config = {
     "feature_name": "online_time",
+    "feature_data_type": "int",
+    "default_value": "PositiveSignedTypeDefault",
+    "json_path_list": [
+        ("online_time", "$.yd_online_time.content.online_time", "m_null_to_list->m_yd_online_time"),
+        ("online_time", "$.unicom_online_time.content.online_time", "m_null_to_list->m_unicom_online_time"),
+        ("online_time", "$.telecom_online_time.content.online_time", "m_null_to_list->m_telecom_online_time"),
+        # ("online_time", "$.yd_online_time.content.online_time", "m_null_to_list->m_yd_online_time"),
+        # ("online_time", "$.unicom_online_time.content.online_time", "m_null_to_list->m_unicom_online_time"),
+        # ("online_time", "$.telecom_online_time.content.online_time", "m_null_to_list->m_telecom_online_time"),
+    ],
+    "f_map_and_filter_chain": "m_to_sum",
+    "reduce_chain": "",
+    "l_map_and_filter_chain": "",
+}
+
+
+income_level_config = {
+    "feature_name": "income_level",
     "feature_data_type": "",
     "default_value": "",
-    "json_path_list": [],
-    "f_map_and_filter_chain": "",
+    "json_path_list": [
+        ("portrait_data", "$.portrait_data.work_exp_form", "m_lp_income(0.56)->m_lp_income_code"),
+        ("cc_credit", "$..debit_card_12m_passentry_amount", "m_single_check_code"),
+        ("unicom_finance_portrait_s", "$..last12.debit.income_range", "m_single_check_code"),
+    ],
+    "f_map_and_filter_chain": "m_to_sum",
     "reduce_chain": "",
     "l_map_and_filter_chain": "",
 }
@@ -185,5 +197,3 @@ overload_count_config = {
     "reduce_chain": "",
     "l_map_and_filter_chain": "",
 }
-
-
