@@ -436,7 +436,6 @@ work_time_config = {
     "l_map_and_filter_chain": ""
 }
 
-
 mobile_identity_config = {
     "feature_name": "mobile_identity",
     "feature_data_type": "int",
