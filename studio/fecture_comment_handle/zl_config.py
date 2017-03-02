@@ -71,7 +71,7 @@ education_degree_code_config = {
     "feature_data_type": "int",
     "default_value": "PositiveSignedTypeDefault",
     "json_path_list": [("education_degree_code", "$..degree", "f_assert_not_null->f_assert_must_digit")],
-    "f_map_and_filter_chain": "",
+    "f_map_and_filter_chain": "m_to_int->m_single_check_code(education_degree_code)",
     "reduce_chain": "",
     "l_map_and_filter_chain": "",
 }
