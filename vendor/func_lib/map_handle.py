@@ -675,6 +675,16 @@ def m_single_check_code(data, feature_name):
 
 
 def m_yd_online_time(seq):
+    """
+       获取移动手机在网时长所对应的code
+
+        :param seq: 移动在网时长区间
+        :return:    code
+
+        example：
+                :seq: (0,3)
+                :return  1
+    """
     if seq[0] in ["(0,3)", "[3,6)"]:
         seq = [1]
     elif seq[0] in ["[6,12)"]:
@@ -687,6 +697,16 @@ def m_yd_online_time(seq):
 
 
 def m_unicom_online_time(seq):
+    """
+       获取联通手机在网时长所对应的code
+
+        :param seq: 联通在网时长区间
+        :return:    code
+
+        example：
+                :seq: [0-1]
+                :return  1
+    """
     if seq[0] in ["[0-1]", "(1-2]", "[3-6]"]:
         seq = [1]
     elif seq[0] in ["[7-12]"]:
@@ -699,6 +719,16 @@ def m_unicom_online_time(seq):
 
 
 def m_telecom_online_time(seq):
+    """
+       获取电信手机在网时长所对应的code
+
+        :param seq: 电信在网时长区间
+        :return:    code
+
+        example：
+                :seq: [0-6]
+                :return  1
+    """
     if seq[0] in ["[0-6]"]:
         seq = [1]
     elif seq[0] in ["[6-12]"]:
@@ -711,16 +741,39 @@ def m_telecom_online_time(seq):
 
 
 def m_lp_income(seq, discount):
+    """
+       获取猎聘返回的用户年收入,即最近一份工作的月薪个数与月薪的乘积,乘以折扣比率,保留两位小数
+
+        :param seq: 职业信息列表
+        :param discount: 年薪的折扣比率
+
+        :return:  年收入
+
+        example：
+                :seq: ["work_exp_form": [{
+                        "months": 13,
+                        "salary": 6000,
+                        "work_end": "201006",
+                    },
+                    {
+                        "months": 12,
+                        "salary": 12000,
+                        "work_end": "200806",
+                    },
+                    {
+                        "months": 12,
+                        "salary": 5000,
+                        "work_end": "999999",}]]
+
+                :discount: 0.56
+                :return  33600
+    """
     work_end_map = {int(i['work_end']): [i['salary'], i['months']] for i in seq[0]}
     last_work = work_end_map.keys()
     last_work = max(last_work)
 
     income = round((work_end_map[last_work][0] * work_end_map[last_work][1] * discount), 2)
     return [income]
-
-
-def m_cc_income(seq):
-    pass
 
 
 if __name__ == '__main__':

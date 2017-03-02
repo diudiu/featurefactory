@@ -1,5 +1,28 @@
 # -*- coding: utf-8 -*-
 
+age_config = {
+    "feature_name": "age",
+    "feature_data_type": "int",
+    "default_value": "PositiveSignedTypeDefault",
+    "json_path_list": [("age", "$..content.age", "f_assert_not_null->f_assert_must_digit_or_float")],
+    "f_map_and_filter_chain": "m_get_seq_index_value(0)",
+    "reduce_chain": "",
+    "l_map_and_filter_chain": ''
+}
+
+apply_register_duration_config = {
+    "feature_name": "apply_register_duration",
+    "feature_data_type": "float",
+    "default_value": "PositiveSignedFloatTypeDefault",
+    "json_path_list": [
+        ("application_on", "$.apply_data.application_on", "f_assert_not_null->f_assert_must_basestring"),
+        ("registration_on", "$.portrait_data.registration_on", "f_assert_not_null->f_assert_must_basestring")
+    ],
+    "f_map_and_filter_chain": "m_to_slice(0,10)->f_assert_seq0_gte_seq1->m_get_mon_sub(2)",
+    "reduce_chain": "",
+    "l_map_and_filter_chain": ''
+}
+
 application_on_config = {
     "feature_name": "application_on",
     "feature_data_type": "string",
@@ -21,6 +44,17 @@ application_on_plus_config = {
     "l_map_and_filter_chain": "",
 }
 
+car_count_config = {
+    "feature_name": "car_count",
+    "feature_data_type": "int",
+    "default_value": "PositiveSignedTypeDefault",
+    "json_path_list": [
+        ("result", "$..result", "f_assert_must_list"),
+    ],
+    "f_map_and_filter_chain": "f_not_null->m_to_len",
+    "reduce_chain": "",
+    "l_map_and_filter_chain": ""
+}
 
 cc_bill_age_config = {
     "feature_name": "cc_bill_age",
@@ -126,7 +160,8 @@ mobile_mark_config = {
     "feature_name": "mobile_mark",
     "feature_data_type": "string",
     "default_value": "StringTypeDefault",
-    "json_path_list": [("mobile_mark", "$.tags.contactMain_IMSI1_IMEI1.label", "f_assert_not_null->f_assert_must_basestring")],
+    "json_path_list": [("mobile_mark", "$.tags.contactMain_IMSI1_IMEI1.label",
+                        "f_assert_not_null->f_assert_must_basestring")],
     "f_map_and_filter_chain": "m_get_seq_index_value(0)",
     "reduce_chain": "",
     "l_map_and_filter_chain": "",
@@ -141,9 +176,6 @@ online_time_config = {
         ("online_time", "$.yd_online_time.content.online_time", "m_null_to_list->m_yd_online_time"),
         ("online_time", "$.unicom_online_time.content.online_time", "m_null_to_list->m_unicom_online_time"),
         ("online_time", "$.telecom_online_time.content.online_time", "m_null_to_list->m_telecom_online_time"),
-        # ("online_time", "$.yd_online_time.content.online_time", "m_null_to_list->m_yd_online_time"),
-        # ("online_time", "$.unicom_online_time.content.online_time", "m_null_to_list->m_unicom_online_time"),
-        # ("online_time", "$.telecom_online_time.content.online_time", "m_null_to_list->m_telecom_online_time"),
     ],
     "f_map_and_filter_chain": "m_to_sum",
     "reduce_chain": "",

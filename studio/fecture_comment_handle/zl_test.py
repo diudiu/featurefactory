@@ -3,6 +3,30 @@
 from featrue_process import FeatureProcess
 
 data = {
+    'age': {
+        'content': {
+            'constellation': '水瓶座',
+            'age': 24,
+            'home_address': '江西 - 九江',
+            'sex': '男',
+        },
+    },
+
+    'apply_register_duration': {
+        "apply_data": {
+            "longitudu": 23.45678,
+            "latitude": 145.23342,
+            "contacts": 30,
+            "application_on": "2017-02-01 12:20:10",
+        },
+        "portrait_data": {
+            "product_code": "string",
+            "registration_on": "2016-01-18",
+            "name": "string",
+
+        }
+    },
+
     'application_on': {
         "product_code": "890wefjf320if0i302f0j3f0f",
         "apply_id": "APPLY20161011111111890934",
@@ -15,6 +39,7 @@ data = {
         "contacts": 30,
         "application_on": "2017-02-01 12:20:10",
     },
+
     'application_on_plus': {
         "product_code": "890wefjf320if0i302f0j3f0f",
         "apply_id": "APPLY20161011111111890934",
@@ -408,7 +433,7 @@ data = {
         #             "has_certified": "string",
         #             "certified_num": 0,
         #             "comp_name": "string",
-        #             "months": 6,
+        #             "months": 13,
         #             "salary": 6000,
         #             "work_start": "string",
         #             "work_end": "201006",
@@ -423,7 +448,7 @@ data = {
         #             "certified_num": 0,
         #             "comp_name": "string",
         #             "months": 12,
-        #             "salary": 120,
+        #             "salary": 12000,
         #             "work_start": "string",
         #             "work_end": "200806",
         #             "industry": "string",
@@ -436,7 +461,7 @@ data = {
         #             "has_certified": "string",
         #             "certified_num": 0,
         #             "comp_name": "string",
-        #             "months": 20,
+        #             "months": 12,
         #             "salary": 5000,
         #             "work_start": "string",
         #             "work_end": "999999",
@@ -522,7 +547,9 @@ def test():
 
 
 if __name__ == '__main__':
-    data = {'income_level': data['income_level']}
+    data = {'apply_register_duration': data['apply_register_duration']}
+    # age
+    # apply_register_duration
     # application_on
     # application_on_plus
     # cc_bill_age
