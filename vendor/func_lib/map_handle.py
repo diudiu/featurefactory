@@ -461,7 +461,6 @@ def m_get_mobile_m1_m5_key_seq(mobilestr, tags, key_list):
                     value_list.append(value)
             if value_list:
                 tmp.append(sum(value_list))
-    print tmp
     return tmp
 
 
@@ -700,9 +699,10 @@ def m_r_to_now_work_time(seq, args=0):
 
 def del_dict_invalid_value(dicts, args=1):
     """
+    删除列表中的无效值 None '' {} [] 0 False
 
     :param dicts: 原始字典
-    :param args: 深度即循环的次数
+    :param args: 字典深度即循环的次数
     :return: 转换后的字典
 
     example：
@@ -739,12 +739,12 @@ def del_dict_invalid_value(dicts, args=1):
     return dicts
 
 
-def m_del_invalid_value(seq, args):
+def m_del_invalid_value(seq, args=1):
     """
         删除列表中的无效值 None '' {} [] 0 False
 
         :param seq: 原始序列 list 或 str
-        :param args: 深度即循环的次数
+        :param args: seq深度即循环的次数
         :return:    转换后的列表
 
         example：
@@ -765,7 +765,8 @@ def m_del_invalid_value(seq, args):
                                     },
                                     {}
                                 ]
-                            }]
+                            },
+                            {}]
                 :args   6
                 :return  []
     """
@@ -778,6 +779,48 @@ def m_del_invalid_value(seq, args):
             elif isinstance(data, list):
                 m_del_invalid_value(data, 1)
     return seq
+
+
+def m_check_code(data, feature_name, args='gte_lt'):
+    """
+    将数值转化成对应的code 弃用
+    :param data:  上一步得到的数据
+    :param feature_name:  特征名称
+    :param args:  操作符
+    :return:  对应code
+
+    example：
+                :data:         20
+                :feature_name 'education_degree_code'
+                :param         'between'
+                :return         2
+    """
+    fcm = FeatureCodeMapping.objects.filter(
+        feature_name=feature_name,
+    )
+    res = ''
+    num_map = {int(conf.mapped_value): [conf.unitary_value, conf.dual_value] for conf in fcm}
+    for key, value in num_map.iteritems():
+
+        if args == 'gte_lt':
+            if float(value[0]) <= float(data) < float(value[1]):
+                res = key
+                break
+        elif args == 'gt_lte':
+            if float(value[0]) < float(data) <= float(value[1]):
+                res = key
+                break
+        elif args == 'in':
+            if data in value[0]:
+                res = key
+                break
+        elif args == 'eq':
+            if data == value[0]:
+                res = key
+                break
+    if not res:
+        raise FeatureProcessError("don't find %s=% code value" % (feature_name, data))
+    return res
 
 
 if __name__ == '__main__':
@@ -798,7 +841,8 @@ if __name__ == '__main__':
             },
             {}
         ]
-    }]
+    }, {}]
 
     data = m_del_invalid_value(data, 6)
     print data
+    print m_check_code(50, 'cur_employee_number', 'gte_lt')

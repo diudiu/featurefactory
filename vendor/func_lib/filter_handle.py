@@ -33,7 +33,6 @@ def f_mobile_m1_m5_sum_max_seq(seq, args):
             m1_m5 = m_get_mobile_m1_m5_key_seq(strs, tags, args)
             if sum(m1_m5) > sum(m1_m5_max):
                 m1_m5_max = m1_m5
-    print m1_m5_max
     return m1_m5_max
 
 
