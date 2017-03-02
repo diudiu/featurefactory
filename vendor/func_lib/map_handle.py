@@ -41,14 +41,14 @@ def m_to_int(seq):
 
 def m_str_to_int_float_in_list(seq):
     """
-    转换类表中的数字或浮点数 字符串为 int、float
+    转换类表中的数字或浮点数 字符串为 int、float,别的元素不变
 
     :param seq: 可以为任意值组成的列表
     :return:转换后的列表
 
     example：
-            :seq： [1, 2.1, '2.1', '-2', []]
-            :return： [1, 2, 2, -2,[]]
+            :seq： [1, 2.1, '2.1', '-2', '-8.8' [] ,'gyf']
+            :return： [1, 2.1, 2.1, -2,-8.8, [], 'gyf']
     """
     tmp = []
     for value in seq:
