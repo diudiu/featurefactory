@@ -627,11 +627,17 @@ def m_max_flight_class(seq):
     return result
 
 
-def m_get_work_status_map(work_status, feature_name):
+def m_get_work_status_map(seq, feature_name):
+    """
+    对seq数据针对工作状态匹配相应code码
+    :param seq: 工作状态(汉子字符串)
+    :param feature_name: 特征名称分
+    :return: 工作状态code码
+    """
     fcm = FeatureCodeMapping.objects.filter(
         feature_name=feature_name
     )
-    work_status_tags = work_status[0].encode('utf-8')[-12:]
+    work_status_tags = seq[0].encode('utf-8')[-12:]
     status_map = {conf.mapped_value: conf.unitary_value for conf in fcm}
     for key, value in status_map.iteritems():
         if work_status_tags in value:
@@ -639,6 +645,14 @@ def m_get_work_status_map(work_status, feature_name):
 
 
 def m_get_month_from_now(seq):
+    """
+    计算时间字符串列表中时间距离今天的最长月数
+    计算逻辑为天数除以30
+    时间字符串'999999'代表当前  做去除处理
+    :param seq: 时间戳列表
+    :return: 传入列表中距离当前时间最长的月数
+    """
+
     if '999999' in seq:
         data.remove('999999')
     today = datetime.today()
@@ -688,6 +702,14 @@ def m_seq_inx_to_999999(seq, args=0):
 
 
 def m_r_to_now_work_time(seq, args=0):
+    """
+    计算传入参数两个时间点距离当前时间的月数
+    计算逻辑:
+        距离今天的天数除以30得到月数, 时间'999999' 也代表今天
+    :param seq: 时间列表
+    :param args: 列表元素标记 标记比较接近当前时间的元素下标
+    :return:
+    """
     now_time = datetime.now()
     end_work_time = datetime.strptime(seq[0], '%Y%m')
     start_work_time = datetime.strptime(seq[1], '%Y%m')
@@ -826,6 +848,12 @@ def m_check_code(seq, args=None):
 
 
 def m_mobile_id_judge(seq):
+    """
+    对手机号码三元素认证进行结果输出
+    分流逻辑特殊处理
+    :param seq: 传入数据
+    :return: 判断结果 列表
+    """
     if seq and seq[0] == '00':
         return [1]
     else:

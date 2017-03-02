@@ -80,6 +80,7 @@ def f_inside_stipulate_scope(seq, args):
 
 
 def f_get_workplace_now(seq):
+    """取当前工作地点"""
     length = len(seq)
     workplace_list = seq[:length / 2]
     date_list = seq[length / 2:]
