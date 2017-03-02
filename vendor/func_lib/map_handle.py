@@ -543,7 +543,7 @@ def m_city_name_to_level(city_name):
         is_delete=False
     )
     if not ccf:
-        raise FeatureProcessError('not find %s code config in database table' % city_name)
+        raise FeatureProcessError('not find %s level config in database table' % city_name)
     company_addr_city_level = ccf[0].city_level
     if not str(company_addr_city_level).isdigit():
         raise FeatureProcessError('%s city_level config error in database table' % city_name)
@@ -570,7 +570,7 @@ def m_city_name_to_code(city_name):
         raise FeatureProcessError('not find %s code config in database table' % city_name)
     company_addr_city_code = ccf[0].city_code
     if not str(company_addr_city_code).isdigit():
-        raise FeatureProcessError('%s city_level config error in database table' % city_name)
+        raise FeatureProcessError('%s city_code config error in database table' % city_name)
     seq = int(company_addr_city_code)
     return seq
 
