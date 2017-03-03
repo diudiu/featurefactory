@@ -469,7 +469,7 @@ def m_get_mobile_m1_m5_key_seq(mobilestr, tags, key_list):
 def m_get_mobile_stability(seq):
     """获取手机号的稳定度"""
     total_calltimes_ave = m_seq_to_agv(seq)
-    mobile_stability = (sum([(i-total_calltimes_ave) ** 2 for i in seq]) / len(seq)) ** 0.5
+    mobile_stability = (sum([(i - total_calltimes_ave) ** 2 for i in seq]) / len(seq)) ** 0.5
     mobile_stability_a = mobile_stability / total_calltimes_ave
     return round(mobile_stability_a, 4)
 
@@ -699,7 +699,7 @@ def m_r_to_now_work_time(seq, args=0):
     return now_work_time
 
 
-def del_dict_invalid_value(dicts, args=1):
+def m_del_dict_invalid_value(dicts, args=1):
     """
     删除列表中的无效值 None '' {} [] 0 False
 
@@ -735,7 +735,7 @@ def del_dict_invalid_value(dicts, args=1):
             if not value:
                 del dicts[key]
             elif isinstance(value, dict):
-                del_dict_invalid_value(value, 1)
+                m_del_dict_invalid_value(value, 1)
             elif isinstance(value, list):
                 m_del_invalid_value(value, 1)
     return dicts
@@ -745,7 +745,7 @@ def m_del_invalid_value(seq, args=1):
     """
         删除列表中的无效值 None '' {} [] 0 False
 
-        :param seq: 原始序列 list 或 str
+        :param seq: 原始序列 list
         :param args: seq深度即循环的次数
         :return:    转换后的列表
 
@@ -772,12 +772,12 @@ def m_del_invalid_value(seq, args=1):
                 :args   6
                 :return  []
     """
-    for i in xrange(args):
+    for i in xrange(args + len(seq)):
         for data in seq:
             if not data:
                 seq.remove(data)
             if isinstance(data, dict):
-                del_dict_invalid_value(data, 1)
+                m_del_dict_invalid_value(data, 1)
             elif isinstance(data, list):
                 m_del_invalid_value(data, 1)
     return seq
@@ -831,25 +831,45 @@ def m_mobile_id_judge(seq):
     else:
         return [0]
 
+
 if __name__ == '__main__':
-    data = [{
-        "matchType": "",
-        "matchValue": "",
-        "matchId": "",
-        "classification": [
-            {
-                "M3": {
-                    "bankCredit": 0,
-                    "otherLoan": {
-                        "longestDays": ''
-                    },
-                    "otherCredit": None,
-                    "bankLoan": None
-                }
-            },
-            {}
-        ]
-    }, {}]
+    data = [
+        {"matchType": "phone",
+         "matchValue": "18627180708",
+         "matchId": "AA28960E040AE2BB960CD4736012A791",
+         "classification": [
+             {"M3": {"other": {"loanAmount": None}}},
+
+             {
+
+                 "M6": {
+                     "other": {
+                         "orgNums": 1, "loanAmount": None, "totalAmount": "(200, 500]", "repayAmount": None
+                     },
+                     "bank": None,
+                 }},
+             {
+                 "M9": {
+                     "other": {"orgNums": 1, "loanAmount": None, "totalAmount": "(0, 200]",
+                               "repayAmount": None},
+                     "bank": None,
+                 }},
+             {
+                 "M12": {
+                     "other": {"orgNums": 2, "loanAmount": None, "totalAmount": "(500, 1000]",
+                               "repayAmount": None},
+                     "bank": {},
+                 }},
+             {
+                 "M24": {
+                     "other": {"orgNums": 2, "loanAmount": None, "totalAmount": "(1000, 2000]",
+                               "repayAmount": None},
+                     "bank": None,
+                 }}
+
+         ]
+         },
+    ]
 
     data = m_del_invalid_value(data, 6)
     print data

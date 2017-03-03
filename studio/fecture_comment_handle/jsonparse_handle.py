@@ -31,13 +31,15 @@ class JSONPathParser(object):
         for key, path, assert_chain in json_path_list:
             value = jsonpath.jsonpath(data, path)
             logger.info((key, path, assert_chain, value))
-            if value:
-                value = func_exec_chain(value, assert_chain)
-            else:
-                if key == 'mobile_identity':
-                    value = []
-                else:
-                    raise FeatureProcessError('(%s, %s) jsonpath value is null ' % (key, path))
+            if not value:
+                logger.error('(%s, %s) jsonpath value is null ' % (key, path))
+                value = []
+            value = func_exec_chain(value, assert_chain)
+            # else:
+            #     if key == 'mobile_identity':
+            #         value = []
+            #     else:
+            #         raise FeatureProcessError('(%s, %s) jsonpath value is null ' % (key, path))
 
             json_path_value.append((key, path, assert_chain, value))
 

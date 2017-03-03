@@ -10,15 +10,15 @@ from vendor.errors.feature import FeatureProcessError
 """
 
 
-def f_assert_not_null(value_list):
+def f_assert_not_null(seq):
     """检测值是否非空或值得列表是否存在非空元素"""
-    tmp = value_list
-    if not isinstance(tmp, list):
-        tmp = [tmp]
-    for value in tmp:
-        if value in (None, '', {}, [], ()):
-            raise FeatureProcessError("value: %s f_assert_not_null Error" % value_list)
-    return value_list
+    if seq in (None, '', [], {}, ()):
+        raise FeatureProcessError("value: %s f_assert_not_null Error" % seq)
+    if isinstance(seq, list):
+        for value in seq:
+            if value in (None, '', {}, [], ()):
+                raise FeatureProcessError("value: %s f_assert_not_null Error" % seq)
+    return seq
 
 
 def f_assert_must_int(value_list):
@@ -143,4 +143,4 @@ def f_assert_seq0_gte_seq1(value_list):
 
 
 if __name__ == '__main__':
-    print f_assert_must_digit_or_float([-2.0, '-2', 3], True)
+    print f_assert_must_digit([])

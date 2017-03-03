@@ -91,7 +91,7 @@ is_pingan_financial_shixin_config = {
     "feature_data_type": "bool",
     "default_value": "BooleanTypeDefault",
     "json_path_list": [
-        ("others", "$..others", "f_assert_must_list"),
+        ("others", "$..others", "f_assert_not_null->f_assert_must_list"),
     ],
     "f_map_and_filter_chain": "m_to_bool",
     "reduce_chain": "",
@@ -189,9 +189,9 @@ max_flight_class_config = {
     "feature_data_type": "int",
     "default_value": "PositiveSignedTypeDefault",
     "json_path_list": [
-        ("business_class_count", "$..content.business_class_count", "f_assert_must_digit"),
-        ("executive_class_count", "$..content.executive_class_count", "f_assert_must_digit"),
-        ("tourist_class_count", "$..content.tourist_class_count", "f_assert_must_digit"),
+        ("business_class_count", "$..content.business_class_count", "f_assert_not_null->f_assert_must_digit"),
+        ("executive_class_count", "$..content.executive_class_count", "f_assert_not_null->f_assert_must_digit"),
+        ("tourist_class_count", "$..content.tourist_class_count", "f_assert_not_null->f_assert_must_digit"),
     ],
     "f_map_and_filter_chain": "m_to_int->m_max_flight_class",
     "reduce_chain": "",
@@ -203,8 +203,8 @@ airfare_sum_12_config = {
     "feature_data_type": "float",
     "default_value": "PositiveSignedFloatTypeDefault",
     "json_path_list": [
-        ("average_price", "$..content.average_price", "f_assert_must_digit_or_float"),
-        ("flight_times", "$..content.flight_times", "f_assert_must_digit"),
+        ("average_price", "$..content.average_price", "f_assert_not_null->f_assert_must_digit_or_float"),
+        ("flight_times", "$..content.flight_times", "f_assert_not_null->f_assert_must_digit"),
     ],
     "f_map_and_filter_chain": "m_str_to_int_float_in_list",
     "reduce_chain": "r_mul",
@@ -216,7 +216,7 @@ contacts_config = {
     "feature_data_type": "int",
     "default_value": "PositiveSignedTypeDefault",
     "json_path_list": [
-        ("contacts", "$..contacts", "f_assert_must_digit"),
+        ("contacts", "$..contacts", "f_assert_not_null->f_assert_must_digit"),
     ],
     "f_map_and_filter_chain": "m_to_int->m_get_seq_index_value(0)",
     "reduce_chain": "",
@@ -228,7 +228,7 @@ is_jiuyao_multi_loan_config = {
     "feature_data_type": "bool",
     "default_value": "BooleanTypeDefault",
     "json_path_list": [
-        ("loanInfos", "$..loanInfos", "f_assert_must_list"),
+        ("loanInfos", "$..loanInfos", "f_assert_not_null->f_assert_must_list"),
     ],
     "f_map_and_filter_chain": "m_to_bool",
     "reduce_chain": "",
@@ -252,7 +252,7 @@ is_mobile_black_config = {
     "feature_data_type": "bool",
     "default_value": "BooleanTypeDefault",
     "json_path_list": [
-        ("grayscale", "$..trustutn_loan_phone.data.grayscale", "f_assert_must_dict"),
+        ("grayscale", "$..trustutn_loan_phone.data.grayscale", "f_assert_not_null->f_assert_must_dict"),
     ],
     "f_map_and_filter_chain": "m_get_seq_index_value(0)->m_to_bool",
     "reduce_chain": "",
