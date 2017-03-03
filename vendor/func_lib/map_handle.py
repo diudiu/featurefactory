@@ -11,6 +11,7 @@ home_path = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 sys.path.append(home_path)
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'featurefactory.settings')
 import django
+
 django.setup()
 
 from vendor.errors.feature import FeatureProcessError
@@ -436,7 +437,6 @@ def m_get_mobile_m1_m5_key_seq(seq, tags, key_list):
 
 
 def m_get_mobile_m1_m5_key_seq1(mobilestr, tags, key_list):
-
     """
         获取 mobile字符串在 tags字典中 1月到5月存在的key_list中key值的和的列表
 
@@ -831,7 +831,7 @@ def m_del_invalid_value(seq, args=1):
                 :args   6
                 :return  []
     """
-    for i in xrange(args):
+    for i in xrange(args + len(seq)):
         for data in seq:
             if not data:
                 seq.remove(data)
@@ -1022,42 +1022,42 @@ def m_lp_income(seq, discount):
 
 
 if __name__ == '__main__':
-    data = [
-        {"matchType": "phone",
-         "matchValue": "18627180708",
-         "matchId": "AA28960E040AE2BB960CD4736012A791",
-         "classification": [
-             {"M3": {"other": {"loanAmount": None}}},
-
-             {
-
-                 "M6": {
-                     "other": {
-                         "orgNums": 1, "loanAmount": None, "totalAmount": "(200, 500]", "repayAmount": None
-                     },
-                     "bank": None,
-                 }},
-             {
-                 "M9": {
-                     "other": {"orgNums": 1, "loanAmount": None, "totalAmount": "(0, 200]",
-                               "repayAmount": None},
-                     "bank": None,
-                 }},
-             {
-                 "M12": {
-                     "other": {"orgNums": 2, "loanAmount": None, "totalAmount": "(500, 1000]",
-                               "repayAmount": None},
-                     "bank": {},
-                 }},
-             {
-                 "M24": {
-                     "other": {"orgNums": 2, "loanAmount": None, "totalAmount": "(1000, 2000]",
-                               "repayAmount": None},
-                     "bank": None,
-                 }}
-
-         ]
-         },
+    data = [{
+        "matchType": "",
+        "matchValue": "",
+        "matchId": "",
+        "classification": [
+            {
+                "M3": {
+                    "bankCredit": 0,
+                    "otherLoan": {
+                        "longestDays": ''
+                    },
+                    "otherCredit": None,
+                    "bankLoan": None
+                }
+            },
+            {}
+        ]
+    },
+        {
+            "matchType": "",
+            "matchValue": "",
+            "matchId": "",
+            "classification": [
+                {
+                    "M3": {
+                        "bankCredit": 0,
+                        "otherLoan": {
+                            "longestDays": ''
+                        },
+                        "otherCredit": None,
+                        "bankLoan": None
+                    }
+                },
+                {}
+            ]
+        }
     ]
     data = m_del_invalid_value(data, 6)
     print data
