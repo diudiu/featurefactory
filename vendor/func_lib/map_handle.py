@@ -740,12 +740,12 @@ def m_college_type(seq):
             return tmp
 
 
-def m_education_degree_check(data, education_degree_check):
+def m_education_degree_check(seq, feature_name):
     """
        获取单值匹配(不是区间)所对应的Code
 
         :param feature_name: 特征名称
-        :param data: 特征对应的返回值
+        :param seq: 特征对应的返回值
         :return:    code
 
         example：
@@ -754,18 +754,18 @@ def m_education_degree_check(data, education_degree_check):
                 :return  2
     """
     feature_code = FeatureCodeMapping.objects.filter(
-            feature_name=education_degree_check,
+            feature_name=feature_name,
     )
     num_map = {int(conf.mapped_value): conf.unitary_value for conf in feature_code}
     for key, value in num_map.iteritems():
-        if data == value:
+        if seq == value:
             return key
 
 
 def m_del_dict_invalid_value(seq, args=1):
     """
     删除列表中的无效值 None '' {} [] 0 False
-    :param dicts: 原始字典
+    :param seq: 原始字典
     :param args: 字典深度即循环的次数
     :return: 转换后的字典
     example：

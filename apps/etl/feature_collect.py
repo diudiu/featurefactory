@@ -18,6 +18,7 @@ logger = logging.getLogger("apps.etl")
 class CollectFeature(object):
 
     def __init__(self, base_data):
+        logger.info('')
         self.feature_config = base_data['feature_conf']
         self.feature_list = self.feature_config.keys()
         self.feature_ret = {}
