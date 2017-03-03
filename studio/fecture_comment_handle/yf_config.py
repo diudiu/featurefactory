@@ -428,11 +428,10 @@ work_time_config = {
     "feature_data_type": "int",
     "default_value": "PositiveSignedTypeDefault",
     "json_path_list": [
-        ("industry", "$..work_exp_form[*].work_start", "f_assert_not_null->f_not_null->f_assert_must_basestring"),
-        ("work_end", "$..work_exp_form[*].work_end", "f_assert_not_null->f_not_null->f_assert_must_basestring"),
+        ("work_start", "$..work_exp_form[*].work_start", "f_assert_not_null->f_assert_must_basestring"),
     ],
-    "f_map_and_filter_chain": "",
-    "reduce_chain": "m_get_month_from_now",
+    "f_map_and_filter_chain": "f_not_null->m_get_month_from_now",
+    "reduce_chain": "",
     "l_map_and_filter_chain": ""
 }
 
