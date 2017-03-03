@@ -398,7 +398,7 @@ data = {
             "result": "00",
             "result_message": "检测通过或查询有记录",
             "content": {
-                "online_time": "[0-6]"
+                "online_time": "[0-6)"
             },
         },
     },

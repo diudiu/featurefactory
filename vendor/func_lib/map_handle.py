@@ -956,9 +956,9 @@ def m_unicom_online_time(seq):
         seq = [1]
     elif seq[0] in ["[7-12]"]:
         seq = [2]
-    elif seq[0] in ["[13-24)"]:
+    elif seq[0] in ["[13-24]"]:
         seq = [3]
-    elif seq[0] in ["[25-36)", "[37,+)"]:
+    elif seq[0] in ["[25-36]", "[37,+)"]:
         seq = [4]
     return seq
 
@@ -971,16 +971,16 @@ def m_telecom_online_time(seq):
         :return:    code
 
         example：
-                :seq: [0-6]
+                :seq: [0-6)
                 :return  1
     """
-    if seq[0] in ["[0-6]"]:
+    if seq[0] in ["[0-6)"]:
         seq = [1]
-    elif seq[0] in ["[6-12]"]:
+    elif seq[0] in ["[6-12)"]:
         seq = [2]
-    elif seq[0] in ["[12-24]"]:
+    elif seq[0] in ["[12-24)"]:
         seq = [3]
-    elif seq[0] in ["[24-36]", "[36,+]"]:
+    elif seq[0] in ["[24-36)", "[36,+]"]:
         seq = [4]
     return seq
 
@@ -1061,8 +1061,3 @@ if __name__ == '__main__':
     ]
     data = m_del_invalid_value(data, 6)
     print data
-
-
-
-if __name__ == '__main__':
-    print m_str_to_int_float_in_list([1, 2.1, '2.1', '-2', []])
