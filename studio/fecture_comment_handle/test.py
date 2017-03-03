@@ -2081,7 +2081,7 @@ data = {
 
     'is_pingan_other_loan': {
         'trustutn_loan_otheragent': {
-            "result": 0,
+            "result": 1,
             "message": None,
             "data": {
                 "201603": {
@@ -2959,5 +2959,5 @@ def test(data):
 
 
 if __name__ == '__main__':
-    data = {'is_pingan_overdue_loan': data['is_pingan_overdue_loan']}
+    data = {'is_pingan_other_loan': data['is_pingan_other_loan']}
     test(data)

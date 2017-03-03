@@ -54,7 +54,7 @@ is_pingan_other_loan_config = {
     "feature_name": "is_pingan_other_loan",
     "feature_data_type": "int",
     "default_value": "BooleanTypeDefault",
-    "json_path_list": [("result", "$..result", "f_assert_not_null->f_digit_or_float")],
+    "json_path_list": [("result", "$..result", "f_assert_not_null->f_assert_must_digit")],
     "f_map_and_filter_chain": "m_get_seq_index_value(0)->m_to_bool(0)",
     "reduce_chain": "",
     "l_map_and_filter_chain": "",
