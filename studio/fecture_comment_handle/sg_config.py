@@ -137,7 +137,7 @@ card_id_config = {
     "feature_data_type": "string",
     "default_value": "StringTypeDefault",
     "json_path_list": [("card_id", "$..card_id", "f_assert_not_null")],
-    "f_map_and_filter_chain": "",
+    "f_map_and_filter_chain": "m_get_seq_index_value(0)",
     "reduce_chain": "",
     "l_map_and_filter_chain": "",
 }
@@ -147,7 +147,7 @@ mobile_config = {
     "feature_data_type": "string",
     "default_value": "StringTypeDefault",
     "json_path_list": [("mobile", "$..mobile", "f_assert_not_null")],
-    "f_map_and_filter_chain": "",
+    "f_map_and_filter_chain": "m_get_seq_index_value(0)",
     "reduce_chain": "",
     "l_map_and_filter_chain": "",
 }

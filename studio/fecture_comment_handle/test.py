@@ -2997,5 +2997,5 @@ def test(data):
 
 
 if __name__ == '__main__':
-    data = {'name': data['name']}
+    # data = {'name': data['name']}
     test(data)

@@ -343,7 +343,7 @@ cur_work_status_config = {
     "feature_data_type": "int",
     "default_value": "PositiveSignedTypeDefault",
     "json_path_list": [
-        ("mobile_area", "$..cur_work_status", "f_assert_not_null->f_assert_must_basestring"),
+        ("cur_work_status", "$..cur_work_status", "f_assert_not_null->f_assert_must_basestring"),
     ],
     "f_map_and_filter_chain": "m_get_work_status_map('cur_work_status')",
     "reduce_chain": "",
