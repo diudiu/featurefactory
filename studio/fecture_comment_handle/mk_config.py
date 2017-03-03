@@ -50,4 +50,3 @@ mobile_area_city_code_config = {
     "reduce_chain": "",
     "l_map_and_filter_chain": ""
 }
-
