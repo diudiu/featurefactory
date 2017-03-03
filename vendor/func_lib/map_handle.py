@@ -1050,27 +1050,33 @@ def m_to_str(seq):
     :param seq:
     :return:
     """
+    res = []
+    if isinstance(seq, list):
+        for i in seq:
+            res.append(str(i))
+        return res
     return str(seq)
 
 if __name__ == '__main__':
-    data = [{
-        "matchType": "",
-        "matchValue": "",
-        "matchId": "",
-        "classification": [
-            {
-                "M3": {
-                    "bankCredit": 0,
-                    "otherLoan": {
-                        "longestDays": ''
-                    },
-                    "otherCredit": None,
-                    "bankLoan": None
-                }
-            },
-            {}
-        ]
-    },
+    data = [
+        {
+            "matchType": "",
+            "matchValue": "",
+            "matchId": "",
+            "classification": [
+                {
+                    "M3": {
+                        "bankCredit": 0,
+                        "otherLoan": {
+                            "longestDays": ''
+                        },
+                        "otherCredit": None,
+                        "bankLoan": None
+                    }
+                },
+                {}
+            ]
+        },
         {
             "matchType": "",
             "matchValue": "",
