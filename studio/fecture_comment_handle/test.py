@@ -99,7 +99,7 @@ data = {
                                 "bankCredit": None,
                                 "otherLoan": {
                                     "orgNums": 12,
-                                    "recordNums": 1,
+                                    "recordNums": 3,
                                     "maxAmount": "(1000, 2000]",
                                     "longestDays": "1"
                                 },
@@ -151,13 +151,13 @@ data = {
                                     "orgNums": 12,
                                     "recordNums": 1,
                                     "maxAmount": "(1000, 2000]",
-                                    "longestDays": "1"
+                                    # "longestDays": None
                                 },
                                 "otherCredit": {
                                     "orgNums": 12,
                                     "recordNums": None,
                                     "maxAmount": "(1000, 2000]",
-                                    "longestDays": "1"
+                                    # "longestDays": None
                                 },
                                 "bankLoan": None
                             }
@@ -200,7 +200,7 @@ data = {
                                     "orgNums": 12,
                                     "recordNums": 1,
                                     "maxAmount": "(1000, 2000]",
-                                    "longestDays": "1"
+                                    "longestDays": '20'
                                 },
                                 "otherCredit": {
                                     "orgNums": 12,
@@ -212,17 +212,17 @@ data = {
                             }
                         },
                         {
-                            "M6": {
-                                "bankCredit": None,
-                                "otherLoan": {
-                                    "orgNums": 1,
-                                    "recordNums": 2,
-                                    "maxAmount": "(1000, 2000]",
-                                    "longestDays": "1"
-                                },
-                                "otherCredit": None,
-                                "bankLoan": None
-                            }
+                            # "M6": {
+                            #     "bankCredit": None,
+                            #     "otherLoan": {
+                            #         "orgNums": 1,
+                            #         "recordNums": 2,
+                            #         "maxAmount": "(1000, 2000]",
+                            #         "longestDays": None
+                            #     },
+                            #     "otherCredit": None,
+                            #     "bankLoan": None
+                            # }
                         }
                     ]
                 }],
@@ -2081,7 +2081,7 @@ data = {
 
     'is_pingan_other_loan': {
         'trustutn_loan_otheragent': {
-            "result": 0,
+            "result": 1,
             "message": None,
             "data": {
                 "201603": {
@@ -2900,6 +2900,53 @@ data = {
             "imsi": "",
         }
     },
+    'is_pingan_overdue_loan': {
+        "result": 1,
+        "message": None,
+        "data": {
+                "record": [{
+                    "matchType": "idCard",
+                    "matchValue": "340825198609101051",
+                    "matchId": "92a297643fdcd96644cf30942b8a2e5f",
+                    "classification": [
+                        {
+                            "M3": {
+                                "bankCredit": None,
+                                "otherLoan": {
+                                    "orgNums": 12,
+                                    "recordNums": 3,
+                                    "maxAmount": "(1000, 2000]",
+                                    "longestDays": "1"
+                                },
+                                "otherCredit": {
+                                    "orgNums": 12,
+                                    "recordNums": None,
+                                    "maxAmount": "(1000, 2000]",
+                                    "longestDays": "1"
+                                },
+                                "bankLoan": None
+                            }
+                        },
+                        {
+                            "M6": {
+                                "bankCredit": None,
+                                "otherLoan": {
+                                    "orgNums": 1,
+                                    "recordNums": 2,
+                                    "maxAmount": "(1000, 2000]",
+                                    "longestDays": "1"
+                                },
+                                "otherCredit": None,
+                                "bankLoan": None
+                            }
+                        }
+                    ]
+                }],
+                "phone": "15821732543",
+                "imei": "",
+                "imsi": ""
+            }
+    }
 
 }
 
@@ -2912,5 +2959,5 @@ def test(data):
 
 
 if __name__ == '__main__':
-    data = {'cur_corp_years': data['cur_corp_years']}
+    data = {'is_pingan_other_loan': data['is_pingan_other_loan']}
     test(data)

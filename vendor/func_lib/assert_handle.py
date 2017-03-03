@@ -14,6 +14,7 @@ def f_assert_not_null(seq):
     """检测值是否非空或值得列表是否存在非空元素"""
     if seq in (None, '', [], {}, ()):
         raise FeatureProcessError("value: %s f_assert_not_null Error" % seq)
+
     if isinstance(seq, list):
         for value in seq:
             if value in (None, '', {}, [], ()):

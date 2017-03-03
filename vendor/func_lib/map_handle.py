@@ -110,11 +110,11 @@ def m_get_seq_index_value(seq, args):
     return seq
 
 
-def m_get_mon_sub(seq, args):
+def m_get_mon_sub(seq, args=None):
     """
         比较传进来的由两个日期字符串组成的seq之间相差的月数 args保留小数点位数
         :param seq: 日期字符串
-        :param args: 保留小数点位数 正整数
+        :param args: 保留小数点位数
         :return:    相差的月数
         example：
                 :seq  ['2017-01-01', '2016-01-01']
@@ -126,7 +126,8 @@ def m_get_mon_sub(seq, args):
     except:
         seq = map(lambda x: datetime.strptime(x, "%Y-%m-%d %H:%M:%S"), seq)
     seq = (seq[0] - seq[1]).days / 30.0
-    seq = round(seq, args)
+    if args is not None:
+        seq = round(seq, args)
     return seq
 
 
@@ -134,7 +135,7 @@ def m_get_date_to_now_years(seq, args=None):
     """
         返回传进来的时间字符串距离现在的年数 args保留小数点位数
         :param seq: 日期字符串
-        :param args: 保留小数点位数 正整数
+        :param args: 保留小数点位数
         :return:    距离现在的年数
         example：
                 :seq  '2016-01-01'
@@ -146,7 +147,7 @@ def m_get_date_to_now_years(seq, args=None):
     except:
         seq = datetime.strptime(seq, "%Y-%m-%d %H:%M:%S")
     seq = (datetime.now() - seq).days / 365.0
-    if args:
+    if args is not None:
         seq = round(seq, args)
     return seq
 
@@ -155,7 +156,7 @@ def m_seq_to_agv(seq, args=None):
     """
         返回列表中值的平均值 args保留小数点位数
         :param seq: 整数、浮点数组成的列表
-        :param args: 保留小数点位数 正整数
+        :param args: 保留小数点位数
         :return:    平均值
         example：
                 :seq  [1,2,1.2]
@@ -163,7 +164,7 @@ def m_seq_to_agv(seq, args=None):
                 :return  1.4
     """
     seq = float(sum(seq)) / len(seq)
-    if args:
+    if args is not None:
         seq = round(seq, args)
     return seq
 
@@ -179,7 +180,7 @@ def m_to_bool(seq, args=None):
                 :args   '00'
                 :return  0
     """
-    if args:
+    if args is not None:
         if seq == args:
             seq = 1
         else:
