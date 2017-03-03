@@ -33,7 +33,6 @@ application_on_config = {
     "l_map_and_filter_chain": "",
 }
 
-
 application_on_plus_config = {
     "feature_name": "application_on_plus",
     "feature_data_type": "string",
@@ -49,7 +48,7 @@ car_count_config = {
     "feature_data_type": "int",
     "default_value": "PositiveSignedTypeDefault",
     "json_path_list": [
-        ("result", "$..result", "f_assert_must_list"),
+        ("result", "$..result", "f_assert_not_null->f_assert_must_list"),
     ],
     "f_map_and_filter_chain": "f_not_null->m_to_len",
     "reduce_chain": "",
@@ -66,7 +65,6 @@ cc_bill_age_config = {
     "l_map_and_filter_chain": "",
 }
 
-
 complete_degree_config = {
     "feature_name": "complete_degree",
     "feature_data_type": "int",
@@ -76,7 +74,6 @@ complete_degree_config = {
     "reduce_chain": "",
     "l_map_and_filter_chain": "",
 }
-
 
 creditcard_count_config = {
     "feature_name": "creditcard_count",
@@ -88,7 +85,6 @@ creditcard_count_config = {
     "l_map_and_filter_chain": "",
 }
 
-
 dc_bill_age_config = {
     "feature_name": "dc_bill_age",
     "feature_data_type": "int",
@@ -98,7 +94,6 @@ dc_bill_age_config = {
     "reduce_chain": "",
     "l_map_and_filter_chain": "",
 }
-
 
 education_degree_code_config = {
     "feature_name": "education_degree_code",
@@ -110,7 +105,6 @@ education_degree_code_config = {
     "l_map_and_filter_chain": "",
 }
 
-
 is_loan_agency_config = {
     "feature_name": "is_loan_agency",
     "feature_data_type": "int",
@@ -120,7 +114,6 @@ is_loan_agency_config = {
     "reduce_chain": "",
     "l_map_and_filter_chain": "",
 }
-
 
 is_netsky_black_config = {
     "feature_name": "is_netsky_black",
@@ -133,7 +126,6 @@ is_netsky_black_config = {
     "l_map_and_filter_chain": "",
 }
 
-
 is_organization_g_black_config = {
     "feature_name": "is_organization_g_black",
     "feature_data_type": "int",
@@ -144,7 +136,6 @@ is_organization_g_black_config = {
     "l_map_and_filter_chain": "",
 }
 
-
 is_pingan_multi_loan_config = {
     "feature_name": "is_pingan_multi_loan",
     "feature_data_type": "int",
@@ -154,7 +145,6 @@ is_pingan_multi_loan_config = {
     "reduce_chain": "",
     "l_map_and_filter_chain": "",
 }
-
 
 mobile_mark_config = {
     "feature_name": "mobile_mark",
@@ -167,64 +157,59 @@ mobile_mark_config = {
     "l_map_and_filter_chain": "",
 }
 
-
 online_time_config = {
     "feature_name": "online_time",
     "feature_data_type": "int",
     "default_value": "PositiveSignedTypeDefault",
     "json_path_list": [
-        ("online_time", "$.yd_online_time.content.online_time", "m_null_to_list->m_yd_online_time"),
-        ("online_time", "$.unicom_online_time.content.online_time", "m_null_to_list->m_unicom_online_time"),
-        ("online_time", "$.telecom_online_time.content.online_time", "m_null_to_list->m_telecom_online_time"),
+        ("online_time", "$.yd_online_time.content.online_time", "m_yd_online_time"),
+        ("online_time", "$.unicom_online_time.content.online_time", "m_unicom_online_time"),
+        ("online_time", "$.telecom_online_time.content.online_time", "m_telecom_online_time"),
     ],
     "f_map_and_filter_chain": "m_to_sum",
     "reduce_chain": "",
     "l_map_and_filter_chain": "",
 }
-
 
 income_level_config = {
     "feature_name": "income_level",
     "feature_data_type": "",
     "default_value": "",
     "json_path_list": [
-        ("portrait_data", "$.portrait_data.work_exp_form", "m_lp_income(0.56)->m_lp_income_code"),
-        ("cc_credit", "$..debit_card_12m_passentry_amount", "m_single_check_code"),
-        ("unicom_finance_portrait_s", "$..last12.debit.income_range", "m_single_check_code"),
+        ("portrait_data", "$.portrait_data.work_exp_form", "f_assert_not_null->m_lp_income(0.56)->m_lp_income_code"),
+        ("cc_credit", "$..debit_card_12m_passentry_amount", "f_assert_not_null->m_single_check_code"),
+        ("unicom_finance_portrait_s", "$..last12.debit.income_range", "f_assert_not_null->m_single_check_code"),
     ],
     "f_map_and_filter_chain": "m_to_sum",
     "reduce_chain": "",
     "l_map_and_filter_chain": "",
 }
 
-
 pingan_multi_loan_count_config = {
     "feature_name": "pingan_multi_loan_count",
     "feature_data_type": "int",
     "default_value": "PositiveSignedTypeDefault",
-    "json_path_list": [("pingan_multi_loan_count", "$..orgNums", "f_not_null->f_assert_must_digit")],
+    "json_path_list": [("pingan_multi_loan_count", "$..orgNums", "f_assert_not_null->f_not_null->f_assert_must_digit")],
     "f_map_and_filter_chain": "m_to_int->m_to_sum",
     "reduce_chain": "",
     "l_map_and_filter_chain": "",
 }
-
 
 overspeed_count_config = {
     "feature_name": "overspeed_count",
     "feature_data_type": "int",
     "default_value": "PositiveSignedTypeDefault",
-    "json_path_list": [("overspeed_count", "$..month_times", "f_not_null->f_assert_must_digit")],
+    "json_path_list": [("overspeed_count", "$..month_times", "f_assert_not_null->f_not_null->f_assert_must_digit")],
     "f_map_and_filter_chain": "m_to_int->m_to_sum",
     "reduce_chain": "",
     "l_map_and_filter_chain": "",
 }
 
-
 overload_count_config = {
     "feature_name": "overload_count",
     "feature_data_type": "int",
     "default_value": "PositiveSignedTypeDefault",
-    "json_path_list": [("overload_count", "$..month_times", "f_not_null->f_assert_must_digit")],
+    "json_path_list": [("overload_count", "$..month_times", "f_assert_not_null->f_not_null->f_assert_must_digit")],
     "f_map_and_filter_chain": "m_to_int->m_to_sum",
     "reduce_chain": "",
     "l_map_and_filter_chain": "",
