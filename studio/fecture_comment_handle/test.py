@@ -2146,8 +2146,8 @@ data = {
             "message": None,
             "data": {
                 "201603": {
-                    "orgNums": "23",
-                    "queryNums": "123"
+                    # "orgNums": "23",
+                    # "queryNums": "123"
                 },
                 "201602": None,
                 "201601": {
@@ -2187,7 +2187,7 @@ data = {
                                     "orgNums": 12,
                                     "recordNums": 1,
                                     "maxAmount": "(1000, 2000]",
-                                    "longestDays": "1"
+                                    "longestDays": 0
                                 },
                                 "otherCredit": {
                                     "orgNums": 12,
@@ -2211,7 +2211,45 @@ data = {
                                 "bankLoan": None
                             }
                         }]
-                }],
+                },
+                           {
+                    "matchType": "idCard",
+                    "matchValue": "340825198609101051",
+                    "matchId": "92a297643fdcd96644cf30942b8a2e5f",
+                    "classification": [
+                        {
+                            "M3": {
+                                "bankCredit": None,
+                                "otherLoan": {
+                                    "orgNums": 12,
+                                    "recordNums": 1,
+                                    "maxAmount": "(1000, 2000]",
+                                    "longestDays": 0
+                                },
+                                "otherCredit": {
+                                    "orgNums": 12,
+                                    "recordNums": None,
+                                    "maxAmount": "(1000, 2000]",
+                                    "longestDays": "1"
+                                },
+                                "bankLoan": None
+                            }
+                        },
+                        {
+                            "M6": {
+                                "bankCredit": None,
+                                "otherLoan": {
+                                    "orgNums": 1,
+                                    "recordNums": 2,
+                                    "maxAmount": "(1000, 2000]",
+                                    "longestDays": "1"
+                                },
+                                "otherCredit": None,
+                                "bankLoan": None
+                            }
+                        }]
+                }
+                ],
                 "phone": "15821732543",
                 "imei": "",
                 "imsi": ""
@@ -2301,7 +2339,7 @@ data = {
 
     'is_cur_corp_shixin': {
         'court_shixin_a_s': {
-            "result": "00",
+            "result": "11",
             "result_message": "检测通过或查询有记录",
             "content": {
                 "shixin_list": [
@@ -2959,5 +2997,5 @@ def test(data):
 
 
 if __name__ == '__main__':
-    data = {'is_pingan_other_loan': data['is_pingan_other_loan']}
+    data = {'name': data['name']}
     test(data)

@@ -64,8 +64,8 @@ pingan_overdue_loan_infos_config = {
     "feature_name": "pingan_overdue_loan_infos",
     "feature_data_type": "list",
     "default_value": "ListTypeDefault",
-    "json_path_list": [("trustutn_loan_overdue", "$.trustutn_loan_overdue", "f_assert_not_null->f_not_null")],
-    "f_map_and_filter_chain": "m_del_invalid_value(1)",
+    "json_path_list": [("record", "$..record", "f_assert_not_null")],
+    "f_map_and_filter_chain": "m_del_invalid_value(6)",
     "reduce_chain": "",
     "l_map_and_filter_chain": "",
 }
@@ -74,8 +74,8 @@ pingan_other_loan_infos_config = {
     "feature_name": "pingan_other_loan_infos",
     "feature_data_type": "list",
     "default_value": "ListTypeDefault",
-    "json_path_list": [("trustutn_loan_otheragent", "$.trustutn_loan_otheragent", "f_assert_not_null->f_not_null")],
-    "f_map_and_filter_chain": "m_del_invalid_value(1)",
+    "json_path_list": [("data", "$..data", "f_assert_not_null")],
+    "f_map_and_filter_chain": "m_del_invalid_value(2)",
     "reduce_chain": "",
     "l_map_and_filter_chain": "",
 }
@@ -96,7 +96,8 @@ cur_corp_years_config = {
     "feature_data_type": "int",
     "default_value": "PositiveSignedTypeDefault",
     "json_path_list": [("start_business_date", "$..start_business_date", "f_assert_not_null")],
-    "f_map_and_filter_chain": "m_get_seq_index_value(0)->m_get_date_to_now_years(2)->m_check_code('cur_corp_years','gt_lte')",
+    "f_map_and_filter_chain": "m_get_seq_index_value(0)->m_get_date_to_now_years(2)"
+                              "->m_check_code('cur_corp_years','gt_lte')",
     "reduce_chain": "",
     "l_map_and_filter_chain": "",
 }
@@ -106,7 +107,7 @@ cur_employee_number_config = {
     "feature_data_type": "int",
     "default_value": "PositiveSignedTypeDefault",
     "json_path_list": [("staff_count", "$..staff_count", "f_assert_not_null")],
-    "f_map_and_filter_chain": "m_get_seq_index_value(0)->m_to_int->m_check_code()",
+    "f_map_and_filter_chain": "m_get_seq_index_value(0)->m_to_int->m_check_code('cur_employee_number','gte_lt')",
     "reduce_chain": "",
     "l_map_and_filter_chain": "",
 }
@@ -116,7 +117,7 @@ is_cur_corp_shixin_config = {
     "feature_data_type": "int",
     "default_value": "BooleanTypeDefault",
     "json_path_list": [("result", "$..result", "f_assert_not_null")],
-    "f_map_and_filter_chain": "m_to_bool('00')",
+    "f_map_and_filter_chain": "m_get_seq_index_value(0)->m_to_bool('00')",
     "reduce_chain": "",
     "l_map_and_filter_chain": "",
 }
@@ -125,8 +126,8 @@ name_config = {
     "feature_name": "name",
     "feature_data_type": "string",
     "default_value": "StringTypeDefault",
-    "json_path_list": [("name", "$..apply_data.name", "f_assert_not_null")],
-    "f_map_and_filter_chain": "",
+    "json_path_list": [("name", "$..apply_data.name", "f_assert_not_null->f_assert_must_basestring")],
+    "f_map_and_filter_chain": "m_get_seq_index_value(0)",
     "reduce_chain": "",
     "l_map_and_filter_chain": "",
 }
