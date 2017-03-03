@@ -96,7 +96,7 @@ car_number_config = {
     "feature_name": "car_number",
     "feature_data_type": "list",
     "default_value": "ListTypeDefault",
-    "json_path_list": [("license_no", "$..license_no", "f_assert_not_null")],
+    "json_path_list": [("license_no", "$..license_no", "f_not_null->f_assert_not_null")],
     "f_map_and_filter_chain": "f_plate_number",
     "reduce_chain": "",
     "l_map_and_filter_chain": ""
@@ -137,7 +137,7 @@ pingan_multi_loan_infos_config = {
     "feature_name": "pingan_multi_loan_infos",
     "feature_data_type": "str",
     "default_value": "StringTypeDefault",
-    "json_path_list": [("classification", "$..classification", "f_assert_not_null")],
+    "json_path_list": [("record", "$..record", "f_assert_not_null")],
     "f_map_and_filter_chain": "m_del_invalid_value(6)",
     "reduce_chain": "",
     "l_map_and_filter_chain": ''
