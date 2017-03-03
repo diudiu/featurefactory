@@ -30,3 +30,14 @@ def r_mul(seq):
 
     seq = reduce(lambda x, y: x * y, seq)
     return seq
+
+
+def r_min(seq):
+    """
+
+    :param seq:
+    :return:
+    """
+    if isinstance(seq, list) and seq:
+        seq = min(seq)
+        return seq

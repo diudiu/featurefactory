@@ -854,6 +854,8 @@ def m_check_code(seq, args=None):
                 :args         ['education_degree_code','gte_lt']
                 :return         2
     """
+    if not seq:
+        return []
     feature_name = args[0]
     op = args[1]
     fcm = FeatureCodeMapping.objects.filter(
@@ -910,12 +912,14 @@ def m_single_check_code(seq, feature_name):
                 :seq: 20
                 :return  2
     """
+    if not seq:
+        return []
     feature_code = FeatureCodeMapping.objects.filter(
         feature_name=feature_name,
     )
     num_map = {int(conf.mapped_value): conf.unitary_value for conf in feature_code}
     for key, value in num_map.iteritems():
-        if seq == value:
+        if seq[0] == value:
             return key
 
 
@@ -930,6 +934,8 @@ def m_yd_online_time(seq):
                 :seq: (0,3)
                 :return  1
     """
+    if not seq:
+        return []
     if seq[0] in ["(0,3)", "[3,6)"]:
         seq = [1]
     elif seq[0] in ["[6,12)"]:
@@ -952,6 +958,8 @@ def m_unicom_online_time(seq):
                 :seq: [0-1]
                 :return  1
     """
+    if not seq:
+        return []
     if seq[0] in ["[0-1]", "(1-2]", "[3-6]"]:
         seq = [1]
     elif seq[0] in ["[7-12]"]:
@@ -974,6 +982,8 @@ def m_telecom_online_time(seq):
                 :seq: [0-6)
                 :return  1
     """
+    if not seq:
+        return []
     if seq[0] in ["[0-6)"]:
         seq = [1]
     elif seq[0] in ["[6-12)"]:
@@ -1013,6 +1023,8 @@ def m_lp_income(seq, discount):
                 :discount: 0.56
                 :return  33600
     """
+    if not seq:
+        return []
     work_end_map = {int(i['work_end']): [i['salary'], i['months']] for i in seq[0]}
     last_work = work_end_map.keys()
     last_work = max(last_work)
@@ -1020,6 +1032,25 @@ def m_lp_income(seq, discount):
     income = round((work_end_map[last_work][0] * work_end_map[last_work][1] * discount), 2)
     return [income]
 
+
+def m_single_to_list(seq):
+    """
+
+    :param seq:
+    :return:
+    """
+    if isinstance(seq, list):
+        return seq
+    return [seq]
+
+
+def m_to_str(seq):
+    """
+
+    :param seq:
+    :return:
+    """
+    return str(seq)
 
 if __name__ == '__main__':
     data = [{

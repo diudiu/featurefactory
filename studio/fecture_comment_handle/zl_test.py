@@ -547,25 +547,6 @@ def test():
 
 
 if __name__ == '__main__':
-    data = {'apply_register_duration': data['apply_register_duration']}
-    # age
-    # apply_register_duration
-    # application_on
-    # application_on_plus
-    # cc_bill_age
-    # complete_degree
-    # creditcard_count
-    # dc_bill_age
-    # # education_degree_code
-    # # income_level
-    # is_loan_agency
-    # is_netsky_black
-    # is_organization_g_black
-    # is_pingan_multi_loan
-    # mobile_mark
-    # # online_time
-    # pingan_multi_loan_count
-    # overspeed_count
-    # overload_count
+    # data = {'education_degree_code': data['education_degree_code']}
     test()
 
