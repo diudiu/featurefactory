@@ -15,8 +15,6 @@ def f_assert_not_null(seq):
     if seq in (None, '', [], {}, ()):
         raise FeatureProcessError("value: %s f_assert_not_null Error" % seq)
 
-
-def f_assert_value_not_null_list(seq):
     if isinstance(seq, list):
         for value in seq:
             if value in (None, '', {}, [], ()):
