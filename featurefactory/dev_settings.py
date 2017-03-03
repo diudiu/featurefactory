@@ -88,7 +88,7 @@ LOGGING = {
             'backupCount': 200,
         },
         'error': {
-            'level': 'INFO',
+            'level': 'ERROR',
             'class': 'logging.handlers.RotatingFileHandler',
             'formatter': 'verbose',
             'filename': os.path.join(log_path, 'apps.error.out'),
@@ -141,7 +141,7 @@ LOGGING = {
         },
         'error': {
             'handlers': ['error', 'console'],
-            'level': 'INFO',
+            'level': 'ERROR',
             'propagate': False,
         },
         'apps.featureapi': {
