@@ -30,7 +30,7 @@ class JSONPathParser(object):
         json_path_value = []
         for key, path, assert_chain in json_path_list:
             value = jsonpath.jsonpath(data, path)
-            logger.info((key, path, assert_chain, value))
+            # logger.info((key, path, assert_chain, value))
             if not value:
                 logger.error('(%s, %s) jsonpath value is null ' % (key, path))
                 value = []
