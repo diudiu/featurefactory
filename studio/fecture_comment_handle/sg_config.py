@@ -5,7 +5,7 @@ pingan_overdue_count_config = {
     "feature_data_type": "int",
     "default_value": "PositiveSignedTypeDefault",
     "json_path_list": [("recordNums", "$..recordNums", "")],
-    "f_map_and_filter_chain": "f_not_null->m_to_int->m_to_sum",
+    "f_map_and_filter_chain": "f_digit_or_float->m_to_int->m_to_sum",
     "reduce_chain": "",
     "l_map_and_filter_chain": "",
 }
@@ -15,7 +15,7 @@ pingan_max_overdue_days_config = {
     "feature_data_type": "int",
     "default_value": "PositiveSignedTypeDefault",
     "json_path_list": [("longestDays", "$..longestDays", "")],
-    "f_map_and_filter_chain": "f_not_null->m_to_int->m_to_sum",
+    "f_map_and_filter_chain": "f_digit_or_float->m_to_int->m_to_sum",
     "reduce_chain": "",
     "l_map_and_filter_chain": "",
 }
@@ -25,7 +25,7 @@ pingan_overdue_corp_count_config = {
     "feature_data_type": "int",
     "default_value": "PositiveSignedTypeDefault",
     "json_path_list": [("orgNums", "$..orgNums", "")],
-    "f_map_and_filter_chain": "f_not_null->m_to_int->m_to_sum",
+    "f_map_and_filter_chain": "f_digit_or_float->m_to_int->m_to_sum",
     "reduce_chain": "",
     "l_map_and_filter_chain": "",
 }
@@ -34,8 +34,8 @@ pingan_other_loan_count_config = {
     "feature_name": "pingan_other_loan_count",
     "feature_data_type": "int",
     "default_value": "PositiveSignedTypeDefault",
-    "json_path_list": [("orgNums", "$..orgNums", "f_assert_not_null->f_not_null")],
-    "f_map_and_filter_chain": "m_to_int->m_to_sum",
+    "json_path_list": [("orgNums", "$..orgNums", "")],
+    "f_map_and_filter_chain": "f_digit_or_float->m_to_int->m_to_sum",
     "reduce_chain": "",
     "l_map_and_filter_chain": "",
 }
@@ -44,8 +44,8 @@ is_pingan_overdue_loan_config = {
     "feature_name": "is_pingan_overdue_loan",
     "feature_data_type": "int",
     "default_value": "BooleanTypeDefault",
-    "json_path_list": [("result", "$..result", "f_assert_not_null->f_digit_or_float")],
-    "f_map_and_filter_chain": "m_to_bool(0)",
+    "json_path_list": [("result", "$..result", "f_assert_not_null->f_assert_must_digit")],
+    "f_map_and_filter_chain": "m_get_seq_index_value(0)->m_to_bool(0)",
     "reduce_chain": "",
     "l_map_and_filter_chain": "",
 }
@@ -55,7 +55,7 @@ is_pingan_other_loan_config = {
     "feature_data_type": "int",
     "default_value": "BooleanTypeDefault",
     "json_path_list": [("result", "$..result", "f_assert_not_null->f_digit_or_float")],
-    "f_map_and_filter_chain": "m_to_bool(0)",
+    "f_map_and_filter_chain": "m_get_seq_index_value(0)->m_to_bool(0)",
     "reduce_chain": "",
     "l_map_and_filter_chain": "",
 }
