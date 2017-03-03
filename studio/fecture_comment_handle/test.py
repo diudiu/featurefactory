@@ -99,7 +99,7 @@ data = {
                                 "bankCredit": None,
                                 "otherLoan": {
                                     "orgNums": 12,
-                                    "recordNums": 1,
+                                    "recordNums": 3,
                                     "maxAmount": "(1000, 2000]",
                                     "longestDays": "1"
                                 },
@@ -218,7 +218,7 @@ data = {
                                     "orgNums": 1,
                                     "recordNums": 2,
                                     "maxAmount": "(1000, 2000]",
-                                    "longestDays": "1"
+                                    "longestDays": None
                                 },
                                 "otherCredit": None,
                                 "bankLoan": None
@@ -2912,5 +2912,5 @@ def test(data):
 
 
 if __name__ == '__main__':
-    data = {'cur_corp_years': data['cur_corp_years']}
+    data = {'pingan_overdue_corp_count': data['pingan_overdue_corp_count']}
     test(data)
