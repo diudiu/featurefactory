@@ -591,17 +591,18 @@ data = {
                     }
                 }
             },
-            "apply_base": {
-                "latitude": 145.23342,
-                "name": "章撒",
-                "mobile": "18920019799",
-                "callback": "http://127.0.0.1/syph-re/api/credit/result/",
-                "application_on": "2017-02-01 12:20:10",
-                "contacts": 30,
-                "card_id": "41140219890313739X",
-                "longitudu": 23.45678
-            }
-        }},
+        },
+        "apply_base": {
+            "latitude": 145.23342,
+            "name": "章撒",
+            "mobile": "18920019799",
+            "callback": "http://127.0.0.1/syph-re/api/credit/result/",
+            "application_on": "2017-02-01 12:20:10",
+            "contacts": 30,
+            "card_id": "41140219890313739X",
+            "longitudu": 23.45678
+        }
+    },
 
     'mobile_activeness': {
         "trustutn_loan_phone": {
@@ -1318,17 +1319,17 @@ data = {
 
     'contacts': {
         "apply_data": {
-        'product_code': '890wefjf320if0i302f0j3f0f',
-        'apply_id': 'APPLY20161011111111890934',
-        'callback': 'http://10.20.1.110/api/credit/result/',
-        'name': '张三',
-        'card_id': '411402198002039872',
-        'mobile': '18989821092',
-        'longitudu': 23.45678,
-        'latitude': 145.23342,
-        'contacts': 30,
-        'application_on': '2017-02-01 12:20:10'
-    }
+            'product_code': '890wefjf320if0i302f0j3f0f',
+            'apply_id': 'APPLY20161011111111890934',
+            'callback': 'http://10.20.1.110/api/credit/result/',
+            'name': '张三',
+            'card_id': '411402198002039872',
+            'mobile': '18989821092',
+            'longitudu': 23.45678,
+            'latitude': 145.23342,
+            'contacts': 30,
+            'application_on': '2017-02-01 12:20:10'
+        }
     },
 
     'jiuyao_multi_loan_m2_count': {
@@ -1626,71 +1627,75 @@ data = {
         }
     },
 
-    'is_jiuyao_multi_loan': {'loanInfos': [
-        {
-            'borrowType': 1,
-            'borrowState': 2,
-            'borrowAmount': 3,
-            'contractDate': 1487224222000,
-            'loanPeriod': 24,
-            'repayState': 7,
-            'arrearsAmount': 0,
-            'companyCode': 'P2P4HJK0000100010'
-        },
-        {
-            'borrowType': 1,
-            'borrowState': 1,
-            'borrowAmount': 3,
-            'contractDate': 1487224222000,
-            'loanPeriod': 24,
-            'repayState': 7,
-            'arrearsAmount': 0,
-            'companyCode': 'P2P4HJK0000100011'
-        },
-        {
-            'borrowType': 1,
-            'borrowState': 1,
-            'borrowAmount': 3,
-            'contractDate': '',
-            'loanPeriod': 24,
-            'repayState': 7,
-            'arrearsAmount': 0,
-            'companyCode': 'P2P4HJK0000100011'
-        }
-    ]},
+    'is_jiuyao_multi_loan': {
+        'loanInfos': [
+            {
+                'borrowType': 1,
+                'borrowState': 2,
+                'borrowAmount': 3,
+                'contractDate': 1487224222000,
+                'loanPeriod': 24,
+                'repayState': 7,
+                'arrearsAmount': 0,
+                'companyCode': 'P2P4HJK0000100010'
+            },
+            {
+                'borrowType': 1,
+                'borrowState': 1,
+                'borrowAmount': 3,
+                'contractDate': 1487224222000,
+                'loanPeriod': 24,
+                'repayState': 7,
+                'arrearsAmount': 0,
+                'companyCode': 'P2P4HJK0000100011'
+            },
+            {
+                'borrowType': 1,
+                'borrowState': 1,
+                'borrowAmount': 3,
+                'contractDate': '',
+                'loanPeriod': 24,
+                'repayState': 7,
+                'arrearsAmount': 0,
+                'companyCode': 'P2P4HJK0000100011'
+            }
+        ]
+    },
 
-    'loan_infos': {'loanInfos': [
-        {
-            'borrowType': 1,
-            'borrowState': 2,
-            'borrowAmount': 3,
-            'contractDate': 1487224222000,
-            'loanPeriod': 24,
-            'repayState': 7,
-            'arrearsAmount': 0,
-            'companyCode': 'P2P4HJK0000100010'
-        },
-        {
-            'borrowType': 1,
-            'borrowState': 1,
-            'borrowAmount': 3,
-            'contractDate': 1487224222000,
-            'loanPeriod': 24,
-            'repayState': 7,
-            'arrearsAmount': 0,
-            'companyCode': 'P2P4HJK0000100011'
-        },
-        {
-            'borrowType': 1,
-            'borrowState': 1,
-            'borrowAmount': 3,
-            'contractDate': '',
-            'loanPeriod': 24,
-            'repayState': 7,
-            'arrearsAmount': 0,
-            'companyCode': 'P2P4HJK0000100011'
-        }
-    ]},
+    'loan_infos': {
+        'loanInfos': [
+            {
+                'borrowType': 1,
+                'borrowState': 2,
+                'borrowAmount': 3,
+                'contractDate': 1487224222000,
+                'loanPeriod': 24,
+                'repayState': 7,
+                'arrearsAmount': 0,
+                'companyCode': 'P2P4HJK0000100010'
+            },
+            {
+                'borrowType': 1,
+                'borrowState': 1,
+                'borrowAmount': 3,
+                'contractDate': 1487224222000,
+                'loanPeriod': 24,
+                'repayState': 7,
+                'arrearsAmount': 0,
+                'companyCode': 'P2P4HJK0000100011'
+            },
+            {
+                'borrowType': 1,
+                'borrowState': 1,
+                'borrowAmount': 3,
+                'contractDate': '',
+                'loanPeriod': 24,
+                'repayState': 7,
+                'arrearsAmount': 0,
+                'companyCode': 'P2P4HJK0000100011'
+            }
+        ]
+    },
 
     'is_mobile_black': {
         "apply_data": {
@@ -2459,5 +2464,7 @@ def test(data):
 
 
 if __name__ == '__main__':
+
     data = {'mobile_identity': data['mobile_identity']}
     test(data)
+

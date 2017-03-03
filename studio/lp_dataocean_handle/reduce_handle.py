@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 
-from map_handle import *
+from vendor.func_lib.map_handle import *
 
 
 def r_sub(seq):

@@ -15,7 +15,7 @@ import django
 
 django.setup()
 
-from apps.common.models import CityCodeField
+from apps.common.models import *
 from vendor.errors.feature import FeatureProcessError
 from apps.common.models import FeatureCodeMapping
 
@@ -377,6 +377,33 @@ def m_string_to_datetime(seq):
     return seq
 
 
+def m_datetime_only_hour_minute(seq):
+    """
+        时间字符串只保留时分
+
+        :param seq: 日期字符串 或 日期字符串组成的列表
+        :return:    日期字符串只保留时分
+
+        example：
+                :seq  ['2017-01-01 12:20:00', '2017-02-28 09:10:30']
+                :return  ['12:20', '09:10']
+
+    """
+    if not isinstance(seq, list):
+        try:
+            seq = datetime.strptime(seq, "%Y-%m-%d %H:%M:%S")
+        except:
+            raise FeatureProcessError('%s time format error ' % seq)
+    else:
+        try:
+            seq = map(lambda x: datetime.strptime(x, "%Y-%m-%d %H:%M:%S"), seq)
+        except:
+            raise FeatureProcessError('%s time format error ' % seq)
+
+    seq = float(str(seq.hour) + '.' + str(seq.minute))
+    return seq
+
+
 def m_get_dict_value_in_list(seq, args):
     """
         获取列表中字典某个元素的值 返回值得列表
@@ -432,11 +459,11 @@ def m_get_new_list(seq, args):
     return seq
 
 
-def m_get_mobile_m1_m5_key_seq(mobilestr, tags, key_list):
+def m_get_mobile_m1_m5_key_seq(seq, tags, key_list):
     """
         获取 mobile字符串在 tags字典中 1月到5月存在的key_list中key值的和的列表
 
-        :param mobilestr: 查询的手机字符串
+        :param seq: 查询的手机字符串
         :param tags:      含多种手机信息的字典
         :param key_list:   查询的字段
         :return:        该手机号1月到5月 在key_list中值的和 形成的列表
@@ -455,10 +482,10 @@ def m_get_mobile_m1_m5_key_seq(mobilestr, tags, key_list):
     tmp = []
     m_list = ['M1', 'M2', 'M3', 'M4', 'M5']
     for i in m_list:
-        if i in tags[mobilestr]:
+        if i in tags[seq]:
             value_list = []
             for key in key_list:
-                value = tags[mobilestr].get(i, {}).get(key, '')
+                value = tags[seq].get(i, {}).get(key, '')
                 if str(value).replace('.', '').isdigit():
                     value_list.append(value)
             if value_list:
@@ -509,7 +536,7 @@ def m_get_city_name1(city):
            m_get_city_name 包含 m_get_city_name1 这个弃用
             提取公司所在地址的城市名称
 
-            :param address: 地址
+            :param city: 地址
             :return:    城市
 
             example：
@@ -654,7 +681,7 @@ def m_get_month_from_now(seq):
     """
 
     if '999999' in seq:
-        data.remove('999999')
+        seq.remove('999999')
     today = datetime.today()
     days_list = []
     for str_date in seq:
@@ -725,7 +752,7 @@ def del_dict_invalid_value(seq, args=1):
     """
     删除列表中的无效值 None '' {} [] 0 False
 
-    :param dicts: 原始字典
+    :param seq: 原始字典
     :param args: 字典深度即循环的次数
     :return: 转换后的字典
 
@@ -859,26 +886,130 @@ def m_mobile_id_judge(seq):
     else:
         return [0]
 
-if __name__ == '__main__':
-    data = [{
-        "matchType": "",
-        "matchValue": "",
-        "matchId": "",
-        "classification": [
-            {
-                "M3": {
-                    "bankCredit": 0,
-                    "otherLoan": {
-                        "longestDays": ''
-                    },
-                    "otherCredit": None,
-                    "bankLoan": None
-                }
-            },
-            {}
-        ]
-    }, {}]
 
-    data = m_del_invalid_value(data, 6)
-    print data
-    print m_check_code(50, ['cur_employee_number', 'gte_lt'])
+def m_single_check_code(data, feature_name):
+    """
+       获取单值匹配(不是区间)所对应的Code
+
+        :param feature_name: 特征名称
+        :param data: 特征对应的返回值
+        :return:    code
+
+        example：
+                :feature_name education_degree_code
+                :data: 20
+                :return  2
+    """
+    feature_code = FeatureCodeMapping.objects.filter(
+        feature_name=feature_name,
+    )
+    num_map = {int(conf.mapped_value): conf.unitary_value for conf in feature_code}
+    for key, value in num_map.iteritems():
+        if data == value:
+            return key
+
+
+def m_yd_online_time(seq):
+    """
+       获取移动手机在网时长所对应的code
+
+        :param seq: 移动在网时长区间
+        :return:    code
+
+        example：
+                :seq: (0,3)
+                :return  1
+    """
+    if seq[0] in ["(0,3)", "[3,6)"]:
+        seq = [1]
+    elif seq[0] in ["[6,12)"]:
+        seq = [2]
+    elif seq[0] in ["[12,18)", "[18,24]"]:
+        seq = [3]
+    elif seq[0] in ["(24,+)"]:
+        seq = [4]
+    return seq
+
+
+def m_unicom_online_time(seq):
+    """
+       获取联通手机在网时长所对应的code
+
+        :param seq: 联通在网时长区间
+        :return:    code
+
+        example：
+                :seq: [0-1]
+                :return  1
+    """
+    if seq[0] in ["[0-1]", "(1-2]", "[3-6]"]:
+        seq = [1]
+    elif seq[0] in ["[7-12]"]:
+        seq = [2]
+    elif seq[0] in ["[13-24)"]:
+        seq = [3]
+    elif seq[0] in ["[25-36)", "[37,+)"]:
+        seq = [4]
+    return seq
+
+
+def m_telecom_online_time(seq):
+    """
+       获取电信手机在网时长所对应的code
+
+        :param seq: 电信在网时长区间
+        :return:    code
+
+        example：
+                :seq: [0-6]
+                :return  1
+    """
+    if seq[0] in ["[0-6]"]:
+        seq = [1]
+    elif seq[0] in ["[6-12]"]:
+        seq = [2]
+    elif seq[0] in ["[12-24]"]:
+        seq = [3]
+    elif seq[0] in ["[24-36]", "[36,+]"]:
+        seq = [4]
+    return seq
+
+
+def m_lp_income(seq, discount):
+    """
+       获取猎聘返回的用户年收入,即最近一份工作的月薪个数与月薪的乘积,乘以折扣比率,保留两位小数
+
+        :param seq: 职业信息列表
+        :param discount: 年薪的折扣比率
+
+        :return:  年收入
+
+        example：
+                :seq: ["work_exp_form": [{
+                        "months": 13,
+                        "salary": 6000,
+                        "work_end": "201006",
+                    },
+                    {
+                        "months": 12,
+                        "salary": 12000,
+                        "work_end": "200806",
+                    },
+                    {
+                        "months": 12,
+                        "salary": 5000,
+                        "work_end": "999999",}]]
+
+                :discount: 0.56
+                :return  33600
+    """
+    work_end_map = {int(i['work_end']): [i['salary'], i['months']] for i in seq[0]}
+    last_work = work_end_map.keys()
+    last_work = max(last_work)
+
+    income = round((work_end_map[last_work][0] * work_end_map[last_work][1] * discount), 2)
+    return [income]
+
+
+if __name__ == '__main__':
+    print m_telecom_online_time('[6-12)')
