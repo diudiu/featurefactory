@@ -3,6 +3,7 @@ import os
 import sys
 import math
 from datetime import datetime
+
 reload(sys)
 sys.setdefaultencoding('utf-8')
 home_path = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
@@ -11,7 +12,6 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'featurefactory.settings')
 import django
 django.setup()
 
-from apps.common.models import *
 from vendor.errors.feature import FeatureProcessError
 from apps.common.models import FeatureCodeMapping
 from apps.common.models import CityCodeField
