@@ -755,7 +755,7 @@ def m_education_degree_check(seq, feature_name):
                 :return  2
     """
     feature_code = FeatureCodeMapping.objects.filter(
-            feature_name=feature_name,
+        feature_name=feature_name,
     )
     num_map = {int(conf.mapped_value): conf.unitary_value for conf in feature_code}
     for key, value in num_map.iteritems():
@@ -1058,6 +1058,7 @@ def m_to_str(seq):
         return res
     return str(seq)
 
+
 if __name__ == '__main__':
     data = [
         {
@@ -1099,3 +1100,4 @@ if __name__ == '__main__':
     ]
     data = m_del_invalid_value(data, 6)
     print data
+
