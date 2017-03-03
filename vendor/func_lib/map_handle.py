@@ -882,7 +882,7 @@ def m_check_code(seq, args=None):
             if seq == value[0]:
                 res = key
                 break
-    if not res:
+    if res == '':
         raise FeatureProcessError("don't find %s=% code value" % (feature_name, seq))
     return res
 
@@ -915,13 +915,18 @@ def m_single_check_code(seq, feature_name):
     """
     if not seq:
         return []
+    res = ''
     feature_code = FeatureCodeMapping.objects.filter(
         feature_name=feature_name,
     )
     num_map = {int(conf.mapped_value): conf.unitary_value for conf in feature_code}
     for key, value in num_map.iteritems():
         if seq[0] == value:
-            return key
+            res = key
+            break
+    if res == '':
+        raise FeatureProcessError("don't find %s=% code value" % (feature_name, seq))
+    return res
 
 
 def m_yd_online_time(seq):
