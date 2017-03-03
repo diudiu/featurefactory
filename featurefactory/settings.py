@@ -75,7 +75,11 @@ WSGI_APPLICATION = 'featurefactory.wsgi.application'
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
 
+<<<<<<< HEAD
 LANGUAGE_CODE = 'zh-Hans'
+=======
+LANGUAGE_CODE = 'zh-hans'
+>>>>>>> 0bc6d8fc0754abdeb1e073b7b7bbec7e8e6a01d4
 
 TIME_ZONE = 'Asia/Shanghai'
 

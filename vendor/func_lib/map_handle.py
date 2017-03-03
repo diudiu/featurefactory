@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 import os
 import sys
+import re
 import math
 from datetime import datetime
 
@@ -15,6 +16,8 @@ django.setup()
 from vendor.errors.feature import FeatureProcessError
 from apps.common.models import FeatureCodeMapping
 from apps.common.models import CityCodeField
+from apps.common.models import *
+
 
 def m_to_int(seq):
     """
@@ -432,6 +435,42 @@ def m_get_mobile_m1_m5_key_seq(seq, tags, key_list):
     return tmp
 
 
+def m_get_mobile_m1_m5_key_seq1(mobilestr, tags, key_list):
+
+    """
+        获取 mobile字符串在 tags字典中 1月到5月存在的key_list中key值的和的列表
+
+        :param mobilestr: 查询的手机字符串
+        :param tags:      含多种手机信息的字典
+        :param key_list:   查询的字段
+        :return:        该手机号1月到5月 在key_list中值的和 形成的列表
+
+        example：
+                :mobilestr  18920019796_8a404758b8f8b87c70006b8e9f4614db_
+                :targs {
+                        '18920019796_8a404758b8f8b87c70006b8e9f4614db_': {
+                        'M5': {'callTimes': 3,'calledTimes': 2},
+                        'M4': {'callTimes': 8,'calledTimes': 20},
+                        'M3': {'month': '201610'}},}}
+
+                :args   ['callTimes', 'calledTimes']
+                :return  [28, 5]
+    """
+    tmp = []
+    m_list = ['M1', 'M2', 'M3', 'M4', 'M5']
+    for i in m_list:
+        if i in tags[mobilestr]:
+            value_list = []
+            for key in key_list:
+                value = tags[mobilestr].get(i, {}).get(key, '')
+                if str(value).replace('.', '').isdigit():
+                    value_list.append(value)
+            if value_list:
+                tmp.append(sum(value_list))
+
+    return tmp
+
+
 def m_get_mobile_stability(seq):
     """获取手机号的稳定度"""
     total_calltimes_ave = m_seq_to_agv(seq)
@@ -666,11 +705,67 @@ def m_r_to_now_work_time(seq, args=0):
     return now_work_time
 
 
+def m_college_type(seq):
+    """
+    获取学校的类型信息
+    当学校的类型是985,211工程院校时：
+        :param seq:【“985,211工程院校”，“本科”】
+        :return:【“985工程院校”】
+    当学校的类型是211工程院校时：
+        :param seq:【“211工程院校”，“硕士”】
+        :return:【“211工程院校”】
+    当学校的类型是普通本科或者专科时：
+       如果获取的某人的学历信息是博士、硕士和本科时
+       输出的学校类型为普通本科
+       :param seq:【“****”，“硕士”】
+       :return:【“普通本科”】
+       如果获取的某个人的学历信息时专科时：
+       输出的学校类型为专科
+       :param seq:【“****”，“专科”】
+       :return:【“专科”】
+
+    """
+    if "985" in seq[0]:
+        tmp = ["985工程院校"]
+        return tmp
+    elif "211" in seq[0] and "985" not in seq[0]:
+        tmp = ["211工程院校"]
+        return tmp
+    else:
+        if seq[1] in ["博士", "硕士", "本科"]:
+            tmp = ["普通本科"]
+            return tmp
+        else:
+            tmp = ["专科"]
+            return tmp
+
+
+def m_education_degree_check(data, education_degree_check):
+    """
+       获取单值匹配(不是区间)所对应的Code
+
+        :param feature_name: 特征名称
+        :param data: 特征对应的返回值
+        :return:    code
+
+        example：
+                :feature_name education_degree_check
+                :data: 30
+                :return  2
+    """
+    feature_code = FeatureCodeMapping.objects.filter(
+            feature_name=education_degree_check,
+    )
+    num_map = {int(conf.mapped_value): conf.unitary_value for conf in feature_code}
+    for key, value in num_map.iteritems():
+        if data == value:
+            return key
+
+
 def m_del_dict_invalid_value(seq, args=1):
     """
     删除列表中的无效值 None '' {} [] 0 False
-
-    :param seq: 原始字典
+    :param dicts: 原始字典
     :param args: 字典深度即循环的次数
     :return: 转换后的字典
     example：
@@ -711,7 +806,6 @@ def m_del_dict_invalid_value(seq, args=1):
 def m_del_invalid_value(seq, args=1):
     """
         删除列表中的无效值 None '' {} [] 0 False
-
         :param seq: 原始序列 list
         :param args: seq深度即循环的次数
         :return:    转换后的列表
@@ -737,7 +831,7 @@ def m_del_invalid_value(seq, args=1):
                 :args   6
                 :return  []
     """
-    for i in xrange(args + len(seq)):
+    for i in xrange(args):
         for data in seq:
             if not data:
                 seq.remove(data)
@@ -967,3 +1061,8 @@ if __name__ == '__main__':
     ]
     data = m_del_invalid_value(data, 6)
     print data
+
+
+
+if __name__ == '__main__':
+    print m_str_to_int_float_in_list([1, 2.1, '2.1', '-2', []])

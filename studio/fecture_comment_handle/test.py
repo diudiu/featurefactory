@@ -2384,4 +2384,3 @@ def test(data):
 if __name__ == '__main__':
     data = {'pingan_other_loan_infos': data['pingan_other_loan_infos']}
     test(data)
-
