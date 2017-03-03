@@ -10,15 +10,15 @@ from vendor.errors.feature import FeatureProcessError
 """
 
 
-def f_assert_not_null(value_list):
+def f_assert_not_null(seq):
     """检测值是否非空或值得列表是否存在非空元素"""
-    tmp = value_list
-    if not isinstance(tmp, list):
-        tmp = [tmp]
-    for value in tmp:
-        if value in (None, '', {}, [], ()):
-            raise FeatureProcessError("value: %s f_assert_not_null Error" % value_list)
-    return value_list
+    if seq in (None, '', [], {}, ()):
+        raise FeatureProcessError("value: %s f_assert_not_null Error" % seq)
+    if isinstance(seq, list):
+        for value in seq:
+            if value in (None, '', {}, [], ()):
+                raise FeatureProcessError("value: %s f_assert_not_null Error" % seq)
+    return seq
 
 
 def f_assert_must_int(value_list):
@@ -45,11 +45,31 @@ def f_assert_must_dict(value_list):
     return value_list
 
 
-def f_assert_must_digit(value_list):
-    """检测列表中的元素是否为数字"""
+def f_assert_must_digit(value_list, args=False):
+    """
+        检测列表中的元素是否为数字
+        :param value_list: 待检测列表
+        :param args:        负数是否通过 false 不通过报异常 True 负数通过
+        :return:            异常或原值
+
+        example：
+                    :value_list  [-2,'-2', 3]
+                    :args  false
+                    ：return 异常
+
+                    :value_list  [-2,'-2', 3]
+                    :args  True
+                    ：return [-2,'-2', 3]
+
+    """
+
     for value in value_list:
-        if not str(value).isdigit():
-            raise FeatureProcessError('%s f_assert_must_digit Error' % value_list)
+        if args:
+            if not str(value).lstrip('-').isdigit():
+                raise FeatureProcessError('%s negative number=%s f_assert_must_digit Error' % (value_list, args))
+        else:
+            if not str(value).isdigit():
+                raise FeatureProcessError('%s negative number=%s f_assert_must_digit Error' % (value_list, args))
     return value_list
 
 
@@ -61,17 +81,39 @@ def f_assert_must_basestring(value_list):
     return value_list
 
 
-def f_assert_must_digit_or_float(value_list):
-    """检测列表中的元素是否为数字或float"""
+def f_assert_must_digit_or_float(value_list, args=False):
+    """
+        检测列表中的元素是否为数字或float, args=false 负数报异常 True 负数通过
+
+        :param value_list: 待检测列表
+        :param args:        负数是否通过 false 不通过报异常 True 负数通过
+        :return:            异常或原值
+
+        example：
+                    :value_list  [-2.0,'-2', 3]
+                    :args  false
+                    ：return 异常
+
+                    :value_list  [-2.0,'-2', 3]
+                    :args  True
+                    ：return [-2.0,'-2', 3]
+    """
+
     for value in value_list:
-        if not (str(value).count('.') <= 1 and str(value).replace('.', '').isdigit()):
-            raise FeatureProcessError('%s f_assert_must_digit_or_float Error' % value_list)
+        if args:
+            if not (str(value).count('.') <= 1 and str(value).replace('.', '').lstrip('-').isdigit()):
+                raise FeatureProcessError(
+                    '%s  negative number=%s f_assert_must_digit_or_float Error' % (value_list, args))
+        else:
+            if not (str(value).count('.') <= 1 and str(value).replace('.', '').isdigit()):
+                raise FeatureProcessError(
+                    '%s negative number=%s f_assert_must_digit_or_float Error' % (value_list, args))
     return value_list
 
 
 def f_assert_must_between(value_list, args):
     """
-    检测列表中的元素是否为数字且在args的范围内
+    检测列表中的元素是否为数字或浮点数且在args的范围内
 
     :param value_list: 待检测列表
     :param args:        范围列表
@@ -80,11 +122,15 @@ def f_assert_must_between(value_list, args):
     example：
                 :value_list  [2, 2, 3]
                 :args  [1,3]
+
+                :value_list  ['-2', '-3', 3]
+                :args  ['-5',3]
     """
 
     assert len(args) == 2
     for value in value_list:
-        if not (str(value).isdigit() and int(args[0]) <= int(value) <= int(args[1])):
+        if not (str(value).count('.') <= 1 and str(value).replace('.', '').lstrip('-').isdigit()
+                and float(args[0]) <= float(value) <= float(args[1])):
             raise FeatureProcessError('%s f_assert_must_between %s Error' % (value_list, args))
     return value_list
 
@@ -97,4 +143,4 @@ def f_assert_seq0_gte_seq1(value_list):
 
 
 if __name__ == '__main__':
-    print f_assert_must_digit_or_float([1, '1.0'])
+    print f_assert_must_digit([])

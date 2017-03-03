@@ -16,7 +16,6 @@ from vendor.errors.feature import FeatureProcessError
 from apps.common.models import FeatureCodeMapping
 from apps.common.models import CityCodeField
 
-
 def m_to_int(seq):
     """
     转换数字或序列为int类型
@@ -35,12 +34,12 @@ def m_to_int(seq):
 
 def m_str_to_int_float_in_list(seq):
     """
-    转换类表中的数字或浮点数 字符串为 int、float
+    转换类表中的数字或浮点数 字符串为 int、float,别的元素不变
     :param seq: 可以为任意值组成的列表
     :return:转换后的列表
     example：
-            :seq： [1, 2.1, '2.1', '-2', []]
-            :return： [1, 2, 2, -2,[]]
+            :seq： [1, 2.1, '2.1', '-2', '-8.8' [] ,'gyf']
+            :return： [1, 2.1, 2.1, -2,-8.8, [], 'gyf']
     """
     tmp = []
     for value in seq:
@@ -226,7 +225,7 @@ def m_marital_status_to_code(seq):
     """
         结婚状态的code值
         :param seq: 整数
-        :return:    小于seq的最大整数
+        :return:    小于seq的最大10的倍数
         example：
                 :seq  '23'
                 :return  20
@@ -244,7 +243,7 @@ def m_sex_to_code(seq):
         :return:    code
         example：
                 :seq  '男生'
-                :return  0
+                :return  '男'
     """
     if '男' in seq:
 
@@ -436,7 +435,7 @@ def m_get_mobile_m1_m5_key_seq(seq, tags, key_list):
 def m_get_mobile_stability(seq):
     """获取手机号的稳定度"""
     total_calltimes_ave = m_seq_to_agv(seq)
-    mobile_stability = (sum([i ** 2 for i in seq]) / len(seq)) ** 0.5
+    mobile_stability = (sum([(i - total_calltimes_ave) ** 2 for i in seq]) / len(seq)) ** 0.5
     mobile_stability_a = mobile_stability / total_calltimes_ave
     return round(mobile_stability_a, 4)
 
@@ -500,7 +499,7 @@ def m_city_name_to_level(city_name):
         is_delete=False
     )
     if not ccf:
-        raise FeatureProcessError('not find %s code config in database table' % city_name)
+        raise FeatureProcessError('not find %s level config in database table' % city_name)
     company_addr_city_level = ccf[0].city_level
     if not str(company_addr_city_level).isdigit():
         raise FeatureProcessError('%s city_level config error in database table' % city_name)
@@ -525,7 +524,7 @@ def m_city_name_to_code(city_name):
         raise FeatureProcessError('not find %s code config in database table' % city_name)
     company_addr_city_code = ccf[0].city_code
     if not str(company_addr_city_code).isdigit():
-        raise FeatureProcessError('%s city_level config error in database table' % city_name)
+        raise FeatureProcessError('%s city_code config error in database table' % city_name)
     seq = int(company_addr_city_code)
     return seq
 
@@ -667,7 +666,7 @@ def m_r_to_now_work_time(seq, args=0):
     return now_work_time
 
 
-def del_dict_invalid_value(seq, args=1):
+def m_del_dict_invalid_value(seq, args=1):
     """
     删除列表中的无效值 None '' {} [] 0 False
 
@@ -703,7 +702,7 @@ def del_dict_invalid_value(seq, args=1):
                 del seq[key]
 
             elif isinstance(value, dict):
-                del_dict_invalid_value(value, 1)
+                m_del_dict_invalid_value(value, 1)
             elif isinstance(value, list):
                 m_del_invalid_value(value, 1)
     return seq
@@ -713,7 +712,7 @@ def m_del_invalid_value(seq, args=1):
     """
         删除列表中的无效值 None '' {} [] 0 False
 
-        :param seq: 原始序列 list 或 str
+        :param seq: 原始序列 list
         :param args: seq深度即循环的次数
         :return:    转换后的列表
         example：
@@ -738,12 +737,12 @@ def m_del_invalid_value(seq, args=1):
                 :args   6
                 :return  []
     """
-    for i in xrange(args):
+    for i in xrange(args + len(seq)):
         for data in seq:
             if not data:
                 seq.remove(data)
             if isinstance(data, dict):
-                del_dict_invalid_value(data, 1)
+                m_del_dict_invalid_value(data, 1)
             elif isinstance(data, list):
                 m_del_invalid_value(data, 1)
     return seq
@@ -929,23 +928,42 @@ def m_lp_income(seq, discount):
 
 
 if __name__ == '__main__':
-    data = [{
-        "matchType": "",
-        "matchValue": "",
-        "matchId": "",
-        "classification": [
-            {
-                "M3": {
-                    "bankCredit": 0,
-                    "otherLoan": {
-                        "longestDays": ''
-                    },
-                    "otherCredit": None,
-                    "bankLoan": None
-                }
-            },
-            {}
-        ]
-    }]
+    data = [
+        {"matchType": "phone",
+         "matchValue": "18627180708",
+         "matchId": "AA28960E040AE2BB960CD4736012A791",
+         "classification": [
+             {"M3": {"other": {"loanAmount": None}}},
+
+             {
+
+                 "M6": {
+                     "other": {
+                         "orgNums": 1, "loanAmount": None, "totalAmount": "(200, 500]", "repayAmount": None
+                     },
+                     "bank": None,
+                 }},
+             {
+                 "M9": {
+                     "other": {"orgNums": 1, "loanAmount": None, "totalAmount": "(0, 200]",
+                               "repayAmount": None},
+                     "bank": None,
+                 }},
+             {
+                 "M12": {
+                     "other": {"orgNums": 2, "loanAmount": None, "totalAmount": "(500, 1000]",
+                               "repayAmount": None},
+                     "bank": {},
+                 }},
+             {
+                 "M24": {
+                     "other": {"orgNums": 2, "loanAmount": None, "totalAmount": "(1000, 2000]",
+                               "repayAmount": None},
+                     "bank": None,
+                 }}
+
+         ]
+         },
+    ]
     data = m_del_invalid_value(data, 6)
     print data
