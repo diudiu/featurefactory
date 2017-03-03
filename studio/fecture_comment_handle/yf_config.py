@@ -345,7 +345,7 @@ cur_work_status_config = {
     "json_path_list": [
         ("mobile_area", "$..cur_work_status", "f_assert_not_null->f_assert_must_basestring"),
     ],
-    "f_map_and_filter_chain": "m_get_work_status_map('cur_work_status')",
+    "f_map_and_filter_chain": "m_get_work_status_map('cur_work_status')->f_assert_not_null",
     "reduce_chain": "",
     "l_map_and_filter_chain": ""
 }

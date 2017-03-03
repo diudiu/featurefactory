@@ -2989,7 +2989,7 @@ data = {
 }
 
 
-def test(data):
+def test():
     for feature_name, datas in data.items():
         fecture_obj = FeatureProcess(feature_name, datas)
         result = fecture_obj.run()
@@ -2997,5 +2997,5 @@ def test(data):
 
 
 if __name__ == '__main__':
-    data = {'name': data['name']}
-    test(data)
+    data = {'cur_work_status': data['cur_work_status']}
+    test()
