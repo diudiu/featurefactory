@@ -206,7 +206,7 @@ pingan_multi_loan_infos_config = {
     "json_path_list": [
         ("record", "$..record", "f_assert_not_null->f_assert_must_list"),
     ],
-    "f_map_and_filter_chain": "m_to_bool",
+    "f_map_and_filter_chain": "",
     "reduce_chain": "",
     "l_map_and_filter_chain": ""
 }
