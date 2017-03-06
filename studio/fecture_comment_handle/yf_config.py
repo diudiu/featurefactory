@@ -199,18 +199,6 @@ is_mobile_black_config = {
     "l_map_and_filter_chain": ""
 }
 
-pingan_multi_loan_infos_config = {
-    "feature_name": "pingan_multi_loan_infos",
-    "feature_data_type": "list",
-    "default_value": "ListTypeDefault",
-    "json_path_list": [
-        ("record", "$..record", "f_assert_not_null->f_assert_must_list"),
-    ],
-    "f_map_and_filter_chain": "",
-    "reduce_chain": "",
-    "l_map_and_filter_chain": ""
-}
-
 education_tz_config = {
     "feature_name": "education_tz",
     "feature_data_type": "int",
