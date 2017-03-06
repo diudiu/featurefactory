@@ -544,5 +544,5 @@ def test():
 
 
 if __name__ == '__main__':
-    data = {'pingan_multi_loan_infos': data['pingan_multi_loan_infos']}
+    # data = {'pingan_multi_loan_infos': data['pingan_multi_loan_infos']}
     test()
