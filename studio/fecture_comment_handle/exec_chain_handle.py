@@ -1,11 +1,12 @@
 # -*- coding:utf-8 -*-
 
 import re
-from vendor.func_lib.assert_handle import *
-from vendor.func_lib.map_handle import *
-from vendor.func_lib.reduce_handle import *
-from vendor.func_lib.filter_handle import *
+
 from vendor.errors.feature import FeatureProcessError
+from vendor.func_lib.map_handle import *
+from vendor.func_lib.assert_handle import *
+from vendor.func_lib.filter_handle import *
+from vendor.func_lib.reduce_handle import *
 
 
 def func_exec_chain(data, chains):
@@ -22,7 +23,7 @@ def func_exec_chain(data, chains):
         except:
             raise FeatureProcessError("exec_chain Error: don't find function %s" % func)
         if args:
-            if (args.startswith("[") or args.startswith("{")):
+            if args.startswith("[") or args.startswith("{"):
                 args = eval(args)
             else:
                 args = args.split(',')
@@ -66,15 +67,3 @@ if __name__ == '__main__':
     chains = "f_assert_not_null->f_assert_must_digit->f_assert_must_between(0,100)"
     print func_exec_chain(data, chains)
 
-    data = ['gyfgyfgyf']
-    chains = 'm_to_slice(1,3)'
-    print func_exec_chain(data, chains)
-
-    # chains ="f_mobile_m1_m5_sum_max_seq(['callTimes', 'calledTimes'])"
-    # func_exec_chain(data, chains)
-
-    # chains = "f_mobile_m1_m5_sum_max_seq({'gyf':3,'hh':4})"
-    # func_exec_chain(data, chains)
-
-    # chains = "f_mobile_m1_m5_sum_max_seq('')"
-    # func_exec_chain(data, chains)

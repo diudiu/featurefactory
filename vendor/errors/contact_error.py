@@ -57,3 +57,13 @@ class HandleInitializeFailed(ServerError):
 class HandleWorkError(ServerError):
     status = ResponseCode.HANDLE_WORK_ERROR
     message = ResponseCode.message(status)
+
+
+class FeatureProcessError(ServerError):
+    status = ResponseCode.FEATURE_PROCESS_ERROR
+    message = ResponseCode.message(status)
+
+
+class FeatureConfigError(ServerError):
+    status = ResponseCode.WRONG_FEATURE_CONFIG
+    message = ResponseCode.message(status)

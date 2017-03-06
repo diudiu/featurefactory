@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 
-from map_handle import *
+from vendor.func_lib.map_handle import *
 
 
 def r_sub(seq):
@@ -30,14 +30,3 @@ def r_mul(seq):
 
     seq = reduce(lambda x, y: x * y, seq)
     return seq
-
-
-def r_min(seq):
-    """
-
-    :param seq:
-    :return:
-    """
-    if isinstance(seq, list) and seq:
-        seq = min(seq)
-        return seq

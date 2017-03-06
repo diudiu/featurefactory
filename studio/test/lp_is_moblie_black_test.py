@@ -8,10 +8,10 @@ data = {
     "result": 0,
     "data": {
         "grayscale": {
-            # "M0": {},
-            # "bank": {
-            #     "contactTimes": "3"
-            # }
+            "M0": {},
+            "bank": {
+                "contactTimes": "3"
+            }
         }
     }
 }

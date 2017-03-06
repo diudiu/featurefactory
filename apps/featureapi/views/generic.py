@@ -17,7 +17,7 @@
   XXXXXX/^^^^^\XXXXXXXXXXXXXXXXXXXXX/^^^^^\XXXXXX
    |XXX|       \XXX/^^\XXXXX/^^\XXX/       |XXX|
      \XX\       \X/    \XXX/    \X/       /XX/
-        "\       "      \X/      "      /"
+        "\       "      \X/      "       /"
 """
 
 import json

@@ -22,6 +22,7 @@ class ResponseCode(object):
     MISSING_CLIENT_CODE = 30015
 
     DATABASE_ERROR = 40101
+    NO_PORTRAIT_DATA = 40201
 
     UNAVAILABLE_CLIENT_CODE = 50001
     MISSING_JUDGE_TYPE = 50002
@@ -36,8 +37,11 @@ class ResponseCode(object):
 
     HANDLE_INIT_ERROR = 50020
     HANDLE_WORK_ERROR = 50021
+    WRONG_FEATURE_CONFIG = 50022
 
     FEATURE_PROCESS_ERROR = 50014
+
+    ORIGIN_DATA_GET_ERROR = 60001
 
     RESPONSE_MESSAGE = {
         FAILED:                         u"操作失败",
@@ -56,6 +60,7 @@ class ResponseCode(object):
         MISSING_CLIENT_CODE:            u"传入数据内容缺失 client_code",
 
         DATABASE_ERROR:                 u"数据库服务错误",
+        NO_PORTRAIT_DATA:               u"portrait_base中无此用户预授信数据",
 
         UNAVAILABLE_CLIENT_CODE:        u"client_code 无效 不存在的客户",
         FEATURE_SUCCESS:                u"特征处理成功",
@@ -71,8 +76,11 @@ class ResponseCode(object):
 
         HANDLE_INIT_ERROR:              u"特征处理方法内部错误: 无法初始化",
         HANDLE_WORK_ERROR:              u"特征数理方法执行错误: 空的执行结果",
+        WRONG_FEATURE_CONFIG:           u"特征处理方法配置错误, 特征名称与期待不同",
 
         FEATURE_PROCESS_ERROR:          u"特征加工计算出现错误",
+
+        ORIGIN_DATA_GET_ERROR:          u"原始数据获取失败",
     }
 
     @classmethod

@@ -18,6 +18,7 @@ logger = logging.getLogger("apps.etl")
 class CollectFeature(object):
 
     def __init__(self, base_data):
+        logger.info('Init CollectFeature')
         self.feature_config = base_data['feature_conf']
         self.feature_list = self.feature_config.keys()
         self.feature_ret = {}
@@ -25,7 +26,8 @@ class CollectFeature(object):
         self.apply_id = base_data.get('apply_id', None)
 
     def get_feature_value(self):
-        logger.info('feature list :\n%s' % self.feature_list)
+        logger.info('Stream in feature_collect function name : get_feature_value\nFeature list :\n%s' %
+                    self.feature_list)
         for feature_name in self.feature_list:
             logger.info('Get feature value, named %s' % feature_name)
             courier = Courier(feature_name, self.feature_config[feature_name], self.apply_id)

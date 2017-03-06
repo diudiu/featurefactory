@@ -1,8 +1,16 @@
 # -*- coding:utf-8 -*-
 
+import re
 import datetime as dt
 
 from map_handle import *
+
+"""
+    此目录下所有功能函数均为:
+        按一定条件过滤传入数据内容
+        函数返回过滤后的数据内容
+        此类函数将对数据做改变, 不会引发一场, 但可能会返回None
+"""
 
 
 def f_digit_or_float(seq):
@@ -35,16 +43,16 @@ def f_mobile_m1_m5_sum_max_seq(seq, args):
     return m1_m5_max
 
 
-def f_days_greater_than_args(result, args):
+def f_days_greater_than_args(seq, args):
     """
     过滤掉时间距离现在大于指定天数的元素
-    :param result: 时间戳列表
+    :param seq: 时间戳列表
     :param args: 指定天数
     :return: 时间戳列表
     """
     now = dt.datetime.today()
     res = []
-    for stamp in result:
+    for stamp in seq:
         length = len(str(stamp))
         if length > 10:
             stamps = stamp / (10 ** (length - 10))
@@ -57,16 +65,51 @@ def f_days_greater_than_args(result, args):
     return res
 
 
-def f_inside_stipulate_scope(result, args):
+def f_inside_stipulate_scope(seq, args):
     """
     过滤不在指定范围内的列表元素
-    :param result: 原始列表
+    :param seq: 原始列表
     :param args: 指定元素范围值  (列表)
     :return: 过滤后列表
     """
     res = []
-    for i in result:
+    for i in seq:
         if i in args:
             res.append(i)
     return res
 
+
+def f_get_workplace_now(seq):
+    """取当前工作地点"""
+    length = len(seq)
+    workplace_list = seq[:length / 2]
+    date_list = seq[length / 2:]
+    for i in range(length / 2):
+        if '999999' == date_list[i]:
+            return workplace_list[i]
+
+
+def f_plate_number(seq):
+    """
+        过滤列表中合法的车牌号
+
+        :param seq: 车牌号列表
+        :return:    合法的车牌号列表
+
+        example：
+                :seq  ['冀BF876R', u'京BF688R', '京123456']
+
+                :return  ['冀BF876R', '京BF688R']
+    """
+    m = r'^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领]{3}[A-Z]{1}[A-Z0-9]{4}[A-Z0-9挂学警港澳]{1}$'
+    tmp = []
+    for plate in seq:
+        if len(plate) != 9:
+            plate = plate.encode("utf8")
+        if re.match(m, plate):
+            tmp.append(plate)
+    return tmp
+
+
+if __name__ == '__main__':
+    print f_plate_number(['冀BF876R', u'京BF688R', 'gyf123456'])

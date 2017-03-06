@@ -3,7 +3,7 @@ import os
 import xlrd
 
 excle_path = os.path.join(os.path.dirname(__file__), 'tp.xlsx')
-file_path = os.path.join(os.path.dirname(__file__), 'feature_conf.py')
+file_path = os.path.join(os.path.dirname(__file__), 'config zl.py')
 txt_path = os.path.join(os.path.dirname(__file__), 'templete.txt')
 
 

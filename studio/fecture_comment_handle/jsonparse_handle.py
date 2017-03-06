@@ -30,11 +30,11 @@ class JSONPathParser(object):
         json_path_value = []
         for key, path, assert_chain in json_path_list:
             value = jsonpath.jsonpath(data, path)
-            logger.info((key, path, assert_chain, value))
-            if value:
-                value = func_exec_chain(value, assert_chain)
-            else:
-                raise FeatureProcessError('(%s, %s) jsonpath value is null ' % (key, path))
+            # logger.info((key, path, assert_chain, value))
+            if not value:
+                logger.error('(%s, %s) jsonpath value is null ' % (key, path))
+                value = []
+            value = func_exec_chain(value, assert_chain)
 
             json_path_value.append((key, path, assert_chain, value))
 

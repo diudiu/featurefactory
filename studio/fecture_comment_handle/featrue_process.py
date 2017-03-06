@@ -1,9 +1,14 @@
 # -*- coding:utf-8 -*-
 
 from jsonparse_handle import JSONPathParser
-from exec_chain_handle import func_exec_chain, func_exec_operator_chain
+from exec_chain_handle import func_exec_chain
 from vendor.errors.feature import FeatureProcessError
-from studio.fecture_comment_handle.mk_config import *
+
+from studio.fecture_comment_handle.yf_config import *
+from studio.fecture_comment_handle.zl_config import *
+from studio.fecture_comment_handle.sg_config import *
+from studio.fecture_comment_handle.yx_config import *
+
 from vendor.utils.defaults import *
 
 import logging
@@ -82,10 +87,11 @@ class FeatureProcess(object):
                 result = func_exec_chain(result, self.l_map_and_filter_chain)
 
         except NameError as e:
-            logging.error(e.message)
+            logger.error(e.message)
             return None
         except Exception as e:
-            logging.error(e.message)
+            print '**********************' + self.feature_name + '**********************'+e.message
+            logger.error(e.message)
             return {self.feature_name: eval(self.default_value)}
         return {self.feature_name: result}
 
@@ -98,5 +104,5 @@ class FeatureProcess(object):
         try:
             self.feature_conf = eval(self.conf_str)
         except (NameError, TypeError) as e:
-            logging.error(e.message)
+            logger.error(e.message)
             raise FeatureProcessError

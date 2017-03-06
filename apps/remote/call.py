@@ -13,6 +13,7 @@ import time
 from apps.etl.dataclean import DataClean
 from apps.etl.context import CacheContext, ArgsContext, ApplyContext, PortraitContext
 from apps.datasource.models import DsInterfaceInfo
+from vendor.errors.remote_error import *
 
 logger = logging.getLogger('apps.remote')
 
@@ -20,6 +21,7 @@ logger = logging.getLogger('apps.remote')
 class DataPrepare(object):
 
     def __init__(self, data_identity, apply_id, args_list):
+        logger.info('Init DatePrepare')
         self.data_identity = data_identity
         self.apply_id = apply_id
         self.cache_base = CacheContext(self.apply_id)
@@ -32,7 +34,9 @@ class DataPrepare(object):
         if not ret_data:
             ret_data = self.get_data_from_interface()
         if not ret_data:
-            raise
+            logger.error('Stream in call class name DataPrepare\nGet origin data error, data_identity is : ' %
+                         self.data_identity)
+            raise OriginDataGetError
         return ret_data
 
     def get_data_from_db(self):

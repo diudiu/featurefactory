@@ -46,13 +46,14 @@ class FeatureCodeMapping(BaseModel):
         ("int", "int"),
         ("float", "float"),
     ]
-
+    id = models.AutoField(u'主键', primary_key=True)
     feature_name = models.CharField(u'特征名称', max_length=128)
-    feature_desc = models.CharField(u'特征中文解释', max_length=128)
+    feature_desc = models.CharField(u'特征中文解释', max_length=128, null=True)
     unitary_value = models.CharField(u'取值基准值', max_length=64)
     dual_value = models.CharField(u'取值的最大值', max_length=64, null=True)
     mapped_value = models.IntegerField(u'映射之后的值')
     value_type = models.CharField(u'特征原来值的类型', max_length=20, choices=VALUE_TYPE_OPTIONS)
+    arithmetic_type = models.CharField(u'', max_length=16, null=True)
 
     class Meta:
         db_table = 'fic_feature_code_mapping'
