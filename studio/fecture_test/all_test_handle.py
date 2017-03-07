@@ -4,7 +4,9 @@ import logging
 import os
 import importlib
 
-from featrue_process import FeatureProcess
+from django.utils.module_loading import import_string
+
+from studio.fecture_comment_handle.featrue_process import FeatureProcess
 
 logger = logging.getLogger('apps.fecturetest')
 
@@ -37,9 +39,7 @@ if __name__ == '__main__':
         tests = {}
         for file in file_list:
             if file.endswith('_test.py'):
-                test = importlib.import_module('studio.fecture_test.' + file[:-3])
-
-                test = test.data
+                test = import_string('studio.fecture_test.%s.data' % file[:-3])
                 tests.update(test)
         return tests
 
