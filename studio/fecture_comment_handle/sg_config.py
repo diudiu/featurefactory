@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 config = dict(
-
     pingan_overdue_count_config={
         "feature_name": "pingan_overdue_count",
         "feature_data_type": "int",

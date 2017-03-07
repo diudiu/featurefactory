@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 
 import os
-import importlib
+from django.utils.module_loading import import_string
 from jsonparse_handle import JSONPathParser
 from exec_chain_handle import func_exec_chain
 from vendor.errors.feature import FeatureProcessError
@@ -19,9 +19,8 @@ def load_feature_config():
     config = {}
     for file in file_list:
         if file.endswith('_config.py'):
-            configs = importlib.import_module(file[:-3])
-
-            configs = configs.config
+            title = 'studio.fecture_comment_handle.%s.config' % file[:-3]
+            configs = import_string(title)
             config.update(configs)
     return config
 
