@@ -27,14 +27,22 @@ from braces.views import CsrfExemptMixin
 from django.http.response import HttpResponse
 from django.views.generic import View
 
+from apps.interface.decorator import data_check, data_send, json_load
+
 
 class FeatureConfig(CsrfExemptMixin, View):
 
     @staticmethod
+    @data_check
+    @json_load
+    @data_send
     def get(request):
         return HttpResponse('Feature Factory FeatureConfiguration!!!')
 
     @staticmethod
+    @data_check
+    @json_load
+    @data_send
     def post(request):
         return HttpResponse('Feature Factory FeatureConfiguration Post !!!')
 
@@ -42,9 +50,15 @@ class FeatureConfig(CsrfExemptMixin, View):
 class RemoteConfig(CsrfExemptMixin, View):
 
     @staticmethod
+    @data_check
+    @json_load
+    @data_send
     def get(request):
         return HttpResponse('Feature Factory RemoteConfiguration!!!')
 
     @staticmethod
+    @data_check
+    @json_load
+    @data_send
     def post(request):
         return HttpResponse('Feature Factory RemoteConfiguration Post !!!')
