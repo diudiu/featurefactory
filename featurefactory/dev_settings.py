@@ -132,6 +132,14 @@ LOGGING = {
             'maxBytes': 1024 * 1024 * 20,
             'backupCount': 200,
         },
+        'fecturetest': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'formatter': 'verbose',
+            'filename': os.path.join(log_path, 'apps.fecturetest.out'),
+            'maxBytes': 1024 * 1024 * 20,
+            'backupCount': 200,
+        },
     },
     'loggers': {
         'django': {
@@ -166,6 +174,11 @@ LOGGING = {
         },
         'apps.etl': {
             'handlers': ['etl', 'console'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'apps.fecturetest': {
+            'handlers': ['fecturetest', 'console'],
             'level': 'INFO',
             'propagate': False,
         },

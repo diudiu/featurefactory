@@ -105,7 +105,7 @@ class FeatureProcess(object):
             logger.error(e.message)
             return None
         except Exception as e:
-            print '**********************' + self.feature_name + '**********************' + e.message
+            # print '**********************' + self.feature_name + '**********************' + e.message
             logger.error(e.message)
             return {self.feature_name: eval(self.default_value)}
         return {self.feature_name: result}
