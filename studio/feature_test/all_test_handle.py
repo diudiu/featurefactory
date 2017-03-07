@@ -2,11 +2,12 @@
 
 import logging
 import os
-import importlib
 
-from featrue_process import FeatureProcess
+from django.utils.module_loading import import_string
 
-logger = logging.getLogger('apps.fecturetest')
+from studio.feature_comment_handle.featrue_process import FeatureProcess
+
+logger = logging.getLogger('apps.featuretest')
 
 
 def test(data):
@@ -32,18 +33,16 @@ def test(data):
 
 if __name__ == '__main__':
     def load_feature_test():
-        path = os.path.dirname(os.path.dirname(__file__)) + '/fecture_test'
+        path = os.path.dirname(os.path.dirname(__file__)) + '/feature_test'
         file_list = os.listdir(path)
         tests = {}
         for file in file_list:
             if file.endswith('_test.py'):
-                test = importlib.import_module('studio.fecture_test.' + file[:-3])
-
-                test = test.data
+                test = import_string('studio.feature_test.%s.data' % file[:-3])
                 tests.update(test)
         return tests
 
 
     test_datas = load_feature_test()
-    data = {'mobile': test_datas['mobile']}
-    test(data)
+    test_datas = {'mobile': test_datas['mobile']}
+    test(test_datas)
