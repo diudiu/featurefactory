@@ -882,7 +882,7 @@ def m_check_code(seq, args=None):
             if seq == value[0]:
                 res = key
                 break
-    if res:
+    if res in ('', None):
         raise FeatureProcessError("don't find %s=% code value" % (feature_name, seq))
     return res
 
@@ -924,7 +924,7 @@ def m_single_check_code(seq, feature_name):
         if seq[0] == value:
             res = key
             break
-    if res:
+    if res in ('', None):
         raise FeatureProcessError("don't find %s=% code value" % (feature_name, seq))
     return res
 

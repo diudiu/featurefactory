@@ -8,16 +8,7 @@ import random
 from importlib import import_module
 from datetime import datetime
 from pymongo import MongoClient
-
-# MONGO_HOST = '192.168.1.198'
-# MONGO_NAME = 'dataocean'
-# MONGO_USERNAME = 'dataocean'
-# MONGO_PASSWORD = 'Syph@0918'
-MONGO_HOST = '120.27.124.31'
-MONGO_NAME = 'dataocean_debug'
-MONGO_USERNAME = 'dataocean_debug'
-MONGO_PASSWORD = 'Syph@dataocean_debug'
-MONGO_PORT = 27017
+from setting import *
 
 
 def hash_str(s):

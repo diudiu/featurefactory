@@ -1,19 +1,31 @@
 # -*- coding:utf-8 -*-
 
+import os
+import importlib
 from jsonparse_handle import JSONPathParser
 from exec_chain_handle import func_exec_chain
 from vendor.errors.feature import FeatureProcessError
-
-from studio.fecture_comment_handle.yf_config import *
-from studio.fecture_comment_handle.zl_config import *
-from studio.fecture_comment_handle.sg_config import *
-from studio.fecture_comment_handle.yx_config import *
-
 from vendor.utils.defaults import *
 
 import logging
 
 logger = logging.getLogger('apps.common')
+
+
+def load_feature_config():
+    path = os.path.dirname(__file__)
+    file_list = os.listdir(path)
+    config = {}
+    for file in file_list:
+        if file.endswith('_config.py'):
+            configs = importlib.import_module(file[:-3])
+
+            configs = configs.config
+            config.update(configs)
+    return config
+
+
+config = load_feature_config()
 
 
 class FeatureProcess(object):
@@ -56,11 +68,15 @@ class FeatureProcess(object):
         self.l_map_and_filter_chain = None
 
     def _load(self):
-        self.default_value = self.feature_conf['default_value']
-        self.json_path_list = self.feature_conf['json_path_list']
-        self.f_map_and_filter_chain = self.feature_conf['f_map_and_filter_chain']
-        self.reduce_chain = self.feature_conf['reduce_chain']
-        self.l_map_and_filter_chain = self.feature_conf['l_map_and_filter_chain']
+        try:
+            self.feature_conf = config[self.conf_str]
+            self.default_value = self.feature_conf['default_value']
+            self.json_path_list = self.feature_conf['json_path_list']
+            self.f_map_and_filter_chain = self.feature_conf['f_map_and_filter_chain']
+            self.reduce_chain = self.feature_conf['reduce_chain']
+            self.l_map_and_filter_chain = self.feature_conf['l_map_and_filter_chain']
+        except:
+            raise NameError("%s config not find or config error!!! " % self.feature_name)
 
     def run(self):
         """ 实际执行的方法，获取特征加工的结果
@@ -69,7 +85,6 @@ class FeatureProcess(object):
              FeatureProcessError  自定义的特征处理异常，在程序的外层可捕获该异常
         """
         try:
-            self.feature_conf = eval(self.conf_str)
             self._load()
             json_path_parser = JSONPathParser()
             value_list = json_path_parser.parsex(self.data, self.json_path_list)
@@ -90,19 +105,7 @@ class FeatureProcess(object):
             logger.error(e.message)
             return None
         except Exception as e:
-            print '**********************' + self.feature_name + '**********************'+e.message
+            print '**********************' + self.feature_name + '**********************' + e.message
             logger.error(e.message)
             return {self.feature_name: eval(self.default_value)}
         return {self.feature_name: result}
-
-    def load_feature_config(self):
-        """从特征配置的文件中加载特征的配置，放入特征处理的上下文中
-
-        Raises:
-            FeatureConfigLoadError  自定义的特征配置加载异常，继承自FeatureProcessError
-        """
-        try:
-            self.feature_conf = eval(self.conf_str)
-        except (NameError, TypeError) as e:
-            logger.error(e.message)
-            raise FeatureProcessError
