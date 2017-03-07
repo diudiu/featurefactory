@@ -2,7 +2,6 @@
 
 import logging
 import os
-import importlib
 
 from django.utils.module_loading import import_string
 
@@ -45,5 +44,5 @@ if __name__ == '__main__':
 
 
     test_datas = load_feature_test()
-    data = {'mobile': test_datas['mobile']}
-    test(data)
+    test_datas = {'mobile': test_datas['mobile']}
+    test(test_datas)
