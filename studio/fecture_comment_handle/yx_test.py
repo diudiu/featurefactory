@@ -20,76 +20,81 @@ data = {
                     "search_type": "",
                     "search_word": ""
                 }
-            }]
+            }
+        ]
     },
 
     "is_skyeye_black": {
         "result": "00",
         "result_message": "检测通过或查询有记录",
-        "content": [{
-            "date": "0000-00-00",
-            "orginalRet": {
-                "illegal_type": "",
-                "id_card_name": "楚亮",
-                "home_address": "湖南省湘潭市雨湖区人民路２４号",
-                "user_type": "",
-                "sex": 0,
-                "source_email": None,
-                "black_level": "1",
-                "execute_status": "",
-                "id": 15851,
-                "borrow_amount": "4000.00",
-                "court": "",
-                "source_mobile": "13873275214",
-                "case_detail": "",
-                "company_name": "",
-                "performed_part": "",
-                "publish_source": "拍拍贷",
-                "source_card": None,
-                "qq": None,
-                "publish_time": "0000-00-00",
-                "id_card_code": "430321198402069014",
-                "over_due_days": 0,
-                "mobile_equipment_number": "",
-                "crawl_time": "2015-06-09",
-                "case_code": "",
-                "arrears_limit": "0.00",
-                "fixed_telephone": "0731-57894381",
-                "over_due_nums": 0,
-                "mobile": "13873275214",
-                "email": "419650792@qq.com",
-                "publish_date": "",
-                "unperform_part": "",
-                "company_address": "",
-                "source_equipment_number": None
-            },
-            "type": "拍拍贷",
-            "desc": "楚亮"
-        }],
+        "content": [
+            {
+                "date": "0000-00-00",
+                "orginalRet": {
+                    "illegal_type": "",
+                    "id_card_name": "楚亮",
+                    "home_address": "湖南省湘潭市雨湖区人民路２４号",
+                    "user_type": "",
+                    "sex": 0,
+                    "source_email": None,
+                    "black_level": "1",
+                    "execute_status": "",
+                    "id": 15851,
+                    "borrow_amount": "4000.00",
+                    "court": "",
+                    "source_mobile": "13873275214",
+                    "case_detail": "",
+                    "company_name": "",
+                    "performed_part": "",
+                    "publish_source": "拍拍贷",
+                    "source_card": None,
+                    "qq": None,
+                    "publish_time": "0000-00-00",
+                    "id_card_code": "430321198402069014",
+                    "over_due_days": 0,
+                    "mobile_equipment_number": "",
+                    "crawl_time": "2015-06-09",
+                    "case_code": "",
+                    "arrears_limit": "0.00",
+                    "fixed_telephone": "0731-57894381",
+                    "over_due_nums": 0,
+                    "mobile": "13873275214",
+                    "email": "419650792@qq.com",
+                    "publish_date": "",
+                    "unperform_part": "",
+                    "company_address": "",
+                    "source_equipment_number": None
+                },
+                "type": "拍拍贷",
+                "desc": "楚亮"
+            }
+        ],
     },
 
     "is_court_shixin": {
         "result_message": "检测通过或查询有记录",
         "result": "00",
         "content": {
-            "shixin_list": [{
-                "province": "浙江",
-                "entity_id": "676150594",
-                "publish_time": "2014-09-16",
-                "entity_name": "上虞市巨**设备有限公司",
-                "shixin_type": "其他有履行能力而拒不履行生效法律文书确定义务",
-                "sex": "",
-                "case_create_time": "2013-12-31",
-                "file_id": "(2013)绍虞商初字第00766号",
-                "execute_status": "全部未履行",
-                "case_code": "(2014)绍虞执民字第00243号",
-                "obligation": "支付款项427408元",
-                "court": "上虞市人民法院",
-                "legal_person_name": "徐玉蓉",
-                "age": "",
-                "case_type": "法人或其他组织",
-                "executor_unit": "绍兴上虞法院"
-            }, ]
+            "shixin_list": [
+                {
+                    "province": "浙江",
+                    "entity_id": "676150594",
+                    "publish_time": "2014-09-16",
+                    "entity_name": "上虞市巨**设备有限公司",
+                    "shixin_type": "其他有履行能力而拒不履行生效法律文书确定义务",
+                    "sex": "",
+                    "case_create_time": "2013-12-31",
+                    "file_id": "(2013)绍虞商初字第00766号",
+                    "execute_status": "全部未履行",
+                    "case_code": "(2014)绍虞执民字第00243号",
+                    "obligation": "支付款项427408元",
+                    "court": "上虞市人民法院",
+                    "legal_person_name": "徐玉蓉",
+                    "age": "",
+                    "case_type": "法人或其他组织",
+                    "executor_unit": "绍兴上虞法院"
+                },
+            ]
         }
     },
 
@@ -220,6 +225,7 @@ data = {
             ]
         }
     },
+
     "is_recruitment": {
         "content": {
             "person_base": {
@@ -270,6 +276,7 @@ data = {
         "result_message": "检测通过或查询有记录",
         "result": "00"
     },
+
     "graduate_college": {
         "product_code": "string",
         "name": "string",
@@ -346,6 +353,7 @@ data = {
 
         ]
     },
+
     "college_type": {
         "content": {
             "person_base": {
