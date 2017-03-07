@@ -19,7 +19,7 @@ def load_feature_config():
     config = {}
     for file in file_list:
         if file.endswith('_config.py'):
-            title = 'studio.fecture_comment_handle.%s.config' % file[:-3]
+            title = 'studio.feature_comment_handle.%s.config' % file[:-3]
             configs = import_string(title)
             config.update(configs)
     return config

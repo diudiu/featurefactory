@@ -132,11 +132,11 @@ LOGGING = {
             'maxBytes': 1024 * 1024 * 20,
             'backupCount': 200,
         },
-        'fecturetest': {
+        'featuretest': {
             'level': 'INFO',
             'class': 'logging.handlers.RotatingFileHandler',
             'formatter': 'verbose',
-            'filename': os.path.join(log_path, 'apps.fecturetest.out'),
+            'filename': os.path.join(log_path, 'apps.featuretest.out'),
             'maxBytes': 1024 * 1024 * 20,
             'backupCount': 200,
         },
@@ -177,8 +177,8 @@ LOGGING = {
             'level': 'INFO',
             'propagate': False,
         },
-        'apps.fecturetest': {
-            'handlers': ['fecturetest', 'console'],
+        'apps.featuretest': {
+            'handlers': ['featuretest', 'console'],
             'level': 'INFO',
             'propagate': False,
         },

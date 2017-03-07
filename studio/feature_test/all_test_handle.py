@@ -5,9 +5,9 @@ import os
 
 from django.utils.module_loading import import_string
 
-from studio.fecture_comment_handle.featrue_process import FeatureProcess
+from studio.feature_comment_handle.featrue_process import FeatureProcess
 
-logger = logging.getLogger('apps.fecturetest')
+logger = logging.getLogger('apps.featuretest')
 
 
 def test(data):
@@ -33,12 +33,12 @@ def test(data):
 
 if __name__ == '__main__':
     def load_feature_test():
-        path = os.path.dirname(os.path.dirname(__file__)) + '/fecture_test'
+        path = os.path.dirname(os.path.dirname(__file__)) + '/feature_test'
         file_list = os.listdir(path)
         tests = {}
         for file in file_list:
             if file.endswith('_test.py'):
-                test = import_string('studio.fecture_test.%s.data' % file[:-3])
+                test = import_string('studio.feature_test.%s.data' % file[:-3])
                 tests.update(test)
         return tests
 
