@@ -28,12 +28,12 @@ from django.http.response import HttpResponse
 from django.views.generic import View
 
 
-class Authentication(CsrfExemptMixin, View):
+class Configuration(CsrfExemptMixin, View):
 
     @staticmethod
     def get(request):
-        return HttpResponse('Feature Factory Authentication!!!')
+        return HttpResponse('Feature Factory Configuration!!!')
 
     @staticmethod
     def post(request):
-        return HttpResponse('Feature Factory Authentication Post !!!')
+        return HttpResponse('Feature Factory Configuration Post !!!')
