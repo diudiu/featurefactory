@@ -6,13 +6,15 @@
 from django.conf.urls import patterns, url
 
 from apps.interface.views.authentication import Authentication
-from apps.interface.views.configuration import Configuration
+from apps.interface.views.configuration import FeatureConfig, RemoteConfig
 
 
 urlpatterns = patterns(
     '',
     url(r'^auth/login/$', Authentication.as_view(), name='authentication'),
     url(r'^auth/logout/$', Authentication.as_view(), name='authentication'),
-    url(r'^conf/show/$', Configuration.as_view(), name='configuration'),
-    url(r'^conf/update/$', Configuration.as_view(), name='configuration'),
+    url(r'^feature_conf/show/(?P<page>\w+)/$', FeatureConfig.as_view(), name='feature_config'),
+    url(r'^feature_conf/update/$', FeatureConfig.as_view(), name='feature_config'),
+    url(r'^remote_conf/show/(?P<page>\w+)/$', RemoteConfig.as_view(), name='remote_config'),
+    url(r'^remote_conf/update/$', RemoteConfig.as_view(), name='remote_config'),
 )

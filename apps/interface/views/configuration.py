@@ -28,12 +28,23 @@ from django.http.response import HttpResponse
 from django.views.generic import View
 
 
-class Configuration(CsrfExemptMixin, View):
+class FeatureConfig(CsrfExemptMixin, View):
 
     @staticmethod
     def get(request):
-        return HttpResponse('Feature Factory Configuration!!!')
+        return HttpResponse('Feature Factory FeatureConfiguration!!!')
 
     @staticmethod
     def post(request):
-        return HttpResponse('Feature Factory Configuration Post !!!')
+        return HttpResponse('Feature Factory FeatureConfiguration Post !!!')
+
+
+class RemoteConfig(CsrfExemptMixin, View):
+
+    @staticmethod
+    def get(request):
+        return HttpResponse('Feature Factory RemoteConfiguration!!!')
+
+    @staticmethod
+    def post(request):
+        return HttpResponse('Feature Factory RemoteConfiguration Post !!!')
