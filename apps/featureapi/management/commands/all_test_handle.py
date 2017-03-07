@@ -29,7 +29,6 @@ def test(data):
                         '\n************%s************\n data=%s\n output:%s expect: %s 测试失败\n******************'
                         % (feature_name, datas, result, res))
                 else:
-                    print 'gyf'
                     logger.info('\n************%s************\n data=%s\n output:%s expect: %s 测试通过\n******************'
                                 % (feature_name, datas, result, res))
             else:
