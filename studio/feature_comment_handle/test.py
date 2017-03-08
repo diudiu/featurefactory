@@ -1235,7 +1235,7 @@ data = {
                     "comp_name": "string",
                     "months": 0,
                     "salary": 0,
-                    "work_start": "",
+                    "work_start": "201504",
                     "work_end": "201604",
                     "industry": '120',
                     "industry_name": "string",
@@ -2276,7 +2276,7 @@ data = {
                 "start_business_date": "2009-09-08",
                 "annual_inspection_year": "",
                 "operation_scope_form": "矿产品(国家专控除外)、煤炭、钢材、木制品、建材、初级农产品、工程机械、机电设备、金属制品、摩托车、家用电器、文化用品、橡胶制品、化工产品（危险化学品及易制毒化学品除外）销售；普通货物进出口(法律禁止和国家专控除外限制的项目需取得许可证方可经营)。(依法须经批准的项目，经相关部门批准后方可开展经营活动)。",
-                "staff_count": "",
+                "staff_count": "30",
                 "revoke_date": "",
                 "registration_authority": "日照市工商行政管理局东港分局",
                 "tp_deal_identifying": "",
@@ -2316,7 +2316,7 @@ data = {
                 "start_business_date": "2009-09-08",
                 "annual_inspection_year": "",
                 "operation_scope_form": "矿产品(国家专控除外)、煤炭、钢材、木制品、建材、初级农产品、工程机械、机电设备、金属制品、摩托车、家用电器、文化用品、橡胶制品、化工产品（危险化学品及易制毒化学品除外）销售；普通货物进出口(法律禁止和国家专控除外限制的项目需取得许可证方可经营)。(依法须经批准的项目，经相关部门批准后方可开展经营活动)。",
-                "staff_count": "",
+                "staff_count": "30",
                 "revoke_date": "",
                 "registration_authority": "日照市工商行政管理局东港分局",
                 "tp_deal_identifying": "",
@@ -2997,5 +2997,5 @@ def test(data):
 
 
 if __name__ == '__main__':
-    # data = {'name': data['name']}
+    # data = {'is_pingan_financial_shixin': data['is_pingan_financial_shixin']}
     test(data)

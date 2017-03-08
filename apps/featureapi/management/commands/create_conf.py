@@ -30,5 +30,5 @@ def load_feature_conf():
         tz_default = '"' + book_sheet.cell(i, 2).value + '"'
         tz_data_type = '"' + book_sheet.cell(i, 1).value + '"'
         create(tz_data, tz_name, tz_default, tz_data_type)
-# if __name__ == '__main__':
-    # load_feature_conf()
+if __name__ == '__main__':
+    load_feature_conf()

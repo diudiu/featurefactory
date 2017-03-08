@@ -13,7 +13,7 @@ from django.utils.module_loading import import_string
 from apps.etl.context import CacheContext, ApplyContext
 from apps.etl.models import FeatureShuntConf, FeatureRelevanceConf
 from apps.remote.call import DataPrepare
-from studio.fecture_comment_handle.featrue_process import FeatureProcess
+from studio.feature_comment_handle.featrue_process import FeatureProcess
 
 from vendor.utils.phone_operator_judge import PhoneOperator
 from vendor.errors.contact_error import *
