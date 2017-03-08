@@ -565,7 +565,7 @@ def m_city_name_to_code(city_name):
     company_addr_city_code = ccf[0].city_code
     if not str(company_addr_city_code).isdigit():
         raise FeatureProcessError('%s city_code config error in database table' % city_name)
-    seq = int(company_addr_city_code)
+    seq = company_addr_city_code
     return seq
 
 
@@ -686,7 +686,13 @@ def m_seq_inx_to_999999(seq, args=0):
     return seq
 
 
-def m_r_to_now_work_time(seq, args=0):
+def m_seq_del_999999(seq):
+    if '999999' in seq:
+        seq.remove('999999')
+        return seq
+
+
+def m_r_to_now_work_time(seq,):
     """
     计算传入参数两个时间点距离当前时间的月数
     计算逻辑:
@@ -695,15 +701,16 @@ def m_r_to_now_work_time(seq, args=0):
     :param args: 列表元素标记 标记比较接近当前时间的元素下标
     :return:
     """
+
     now_time = datetime.now()
-    end_work_time = datetime.strptime(seq[0], '%Y%m')
-    start_work_time = datetime.strptime(seq[1], '%Y%m')
-    if seq[args] == '999999':
-        seq[args] = now_time
-        now_work_time = (now_time - start_work_time).days / 30
+    print now_time
+    if '999999' in seq:
+        now_work_time = (now_time - datetime.strptime(seq[1], '%Y%m')).days / 30
+        return now_work_time
     else:
-        now_work_time = (end_work_time - start_work_time).days / 30
-    return now_work_time
+        now_work_time = (datetime.strptime(seq[0], '%Y%m') - datetime.strptime(seq[1], '%Y%m')).days / 30
+        return now_work_time
+
 
 
 def m_college_type(seq):
@@ -1066,43 +1073,68 @@ def m_to_str(seq):
 
 if __name__ == '__main__':
     data = [
-        {
-            "matchType": "",
-            "matchValue": "",
-            "matchId": "",
-            "classification": [
-                {
-                    "M3": {
-                        "bankCredit": 0,
-                        "otherLoan": {
-                            "longestDays": ''
-                        },
-                        "otherCredit": None,
-                        "bankLoan": None
+            {
+                "res": 9,
+                "product_code": "string",
+                "name": "string",
+                "card_id": "string",
+                "mobile": "string",
+                "email": "string",
+                "registration_on": "2016-10-01 12:20:10",
+                "city_code": "string",
+                "city_name": "string",
+                "now_indust_code": "string",
+                "now_indust_name": "string",
+                "work_age": 0,
+                "complete_degree": 0,
+                "cur_work_status": "string",
+                "upload_contact": 0,
+                "sns_friends_cnt": 0,
+                "sns_sd_friend_cnt": 0,
+                "sns_h_fans_cn": 0,
+                "sns_skill_tag_list": [
+                    {
+                        "skill_tag": "string",
+                        "certified_num": 0
                     }
-                },
-                {}
-            ]
-        },
-        {
-            "matchType": "",
-            "matchValue": "",
-            "matchId": "",
-            "classification": [
-                {
-                    "M3": {
-                        "bankCredit": 0,
-                        "otherLoan": {
-                            "longestDays": ''
-                        },
-                        "otherCredit": None,
-                        "bankLoan": None
+                ],
+                "work_exp_form": [
+                    {
+                        "title": "string",
+                        "has_certified": "string",
+                        "certified_num": 0,
+                        "comp_name": "string",
+                        "months": 0,
+                        "salary": 0,
+                        "work_start": "201605",
+                        "work_end": '999999',
+                        "industry": "数云普惠",
+                        "industry_name": "string",
+                        "dq": "string",
+                        "dq_name": "string"
+                    },
+
+                ],
+                "edu_exp_form": [
+                    {
+                        "school": "string",
+                        "start": "string",
+                        "end": "string",
+                        "degree": "5",
+                        "degree_name": "string",
+                        "tz": 0
+                    },
+                    {
+                        "school": "string",
+                        "start": "string",
+                        "end": "string",
+                        "degree": "30",
+                        "degree_name": "string",
+                        "tz": 1
                     }
-                },
-                {}
-            ]
-        }
+                ]
+            },
     ]
-    data = m_del_invalid_value(data, 6)
+    data = m_r_to_now_work_time()
     print data
 
