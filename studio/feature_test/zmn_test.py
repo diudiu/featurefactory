@@ -238,7 +238,7 @@ data = {
                 }
         },
         {
-            "res": BooleanTypeDefault,
+            "res": 0,
             'yd_mobile_identity_s':
                 {
 
@@ -993,7 +993,7 @@ data = {
                                 "country": "中国",
                                 "country_code": 0,
                                 "province": "湖北省",
-                                "city": "咸宁市",
+                                "city": "",
                                 "district": "崇阳县",
                                 "adcode": "421223",
                                 "street": "G56(杭瑞高速)",
@@ -1257,7 +1257,7 @@ data = {
             }
         },
         {
-            'res': 0,
+            'res': PositiveSignedTypeDefault,
             'multi_loan_91': {
                 'loanInfos': [
                     {

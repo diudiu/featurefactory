@@ -298,7 +298,7 @@ config = dict(
         "json_path_list": [
             ("is_unclear_loan", "$..res_data.is_unclear_loan", "f_assert_not_null->f_assert_must_digit"),
         ],
-        "f_map_and_filter_chain": "m_to_int->m_to_sum",
+        "f_map_and_filter_chain": "m_to_int->m_get_seq_index_value(0)->m_to_bool",
         "reduce_chain": "",
         "l_map_and_filter_chain": "m_to_bool(1)"
     },
@@ -373,7 +373,7 @@ config = dict(
             ("mobile_identity", "$.yd_mobile_identity_s.result", "m_mobile_id_judge"),
             ("mobile_identity", "$.telecom_mobile_identity_s.result", "m_mobile_id_judge"),
         ],
-        "f_map_and_filter_chain": "m_to_sum",
+        "f_map_and_filter_chain": "m_to_sum->m_to_bool",
         "reduce_chain": "",
         "l_map_and_filter_chain": ""
     },
