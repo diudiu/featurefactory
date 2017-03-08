@@ -60,6 +60,7 @@ class FeatureExtract(CsrfExemptMixin, View):
             if base_data['is_async']:
                 # ASYNC
                 audit_task.apply_async((base_data, ), retry=True, queue='re_task_audit', routing_key='re_task_audit')
+                logger.info('')
             else:
                 # SYNC
                 ret_data = mission_control(base_data)

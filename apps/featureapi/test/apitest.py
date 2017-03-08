@@ -20,10 +20,17 @@ def feature_post():
     # url = 'http://192.168.1.199:9900/syph-ff/feature/extract/'
     data = {
         u'content': {
-            u'callback': u'',
-            u'apply_id': u'APPLY20170302182824215585900',
+            u'callback': u'http://192.168.1.199:8085/syph-re/api/credit/result/features/',
+            u'apply_id': u'APPLY20170308154505179519058',
             u'res_keys': [
-                u'is_unclearLoan'
+                u'cur_work_status',
+                u'now_workplace_code',
+                u'gps_city_code', u'mobile_area_code',
+                u'mobile_activeness',
+                u'pingan_multi_loan_count', u'pingan_other_loan_count', u'pingan_overdue_corp_count',
+                u'jiuyao_multi_loan_denied_count', u'mobile_mark', u'work_time', u'education_degree_check',
+                u'education_degree_code', u'contacts', u'mobile_stability'    , u'last_industry_code',
+                u'now_industry_code', u'industry_change_count', u'education_tz'
             ]
         },
         u'client_code': u'lp_test'
