@@ -236,8 +236,7 @@ config = dict(
 
         ],
         "f_map_and_filter_chain": "m_get_new_list('work_end','industry')->f_assert_not_null->m_seq_inx_to_int()"
-                                  "->m_seq_inx0_sort_in_list(True)->m_seq_del_999999()->f_assert_not_null"
-                                  "->m_get_seq_index_value(0)->m_get_seq_index_value(1)",
+                                  "->m_seq_inx0_sort_in_list(True)->m_get_seq_index_value(0)->m_get_seq_index_value(1)",
         "reduce_chain": "",
         "l_map_and_filter_chain": ""
     },
