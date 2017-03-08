@@ -45,5 +45,5 @@ if __name__ == '__main__':
 
 
     test_datas = load_feature_test()
-    # test_datas = {'mobile': test_datas['mobile']}
+    test_datas = {'mobile_stability': test_datas['mobile_stability']}
     test(test_datas)

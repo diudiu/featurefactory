@@ -2991,11 +2991,11 @@ data = {
 
 def test(data):
     for feature_name, datas in data.items():
-        fecture_obj = FeatureProcess(feature_name, datas)
-        result = fecture_obj.run()
+        feature_obj = FeatureProcess(feature_name, datas)
+        result = feature_obj.run()
         print result
 
 
 if __name__ == '__main__':
-    # data = {'is_pingan_financial_shixin': data['is_pingan_financial_shixin']}
+    data = {'mobile_stability': data['mobile_stability']}
     test(data)
