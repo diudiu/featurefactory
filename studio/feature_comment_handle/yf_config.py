@@ -304,8 +304,8 @@ config = dict(
 
     mobile_area_city_code_config={
         "feature_name": "mobile_area_city_code",
-        "feature_data_type": "int",
-        "default_value": "PositiveSignedTypeDefault",
+        "feature_data_type": "string",
+        "default_value": "StringTypeDefault",
         "json_path_list": [
             ("mobile_area", "$..content.mobile_area", "f_assert_not_null->f_assert_must_basestring"),
         ],
@@ -316,8 +316,8 @@ config = dict(
 
     gps_city_code_config={
         "feature_name": "mobile_area_city_code",
-        "feature_data_type": "int",
-        "default_value": "PositiveSignedTypeDefault",
+        "feature_data_type": "string",
+        "default_value": "StringTypeDefault",
         "json_path_list": [
             ("mobile_area", "$..addressComponent.city", "f_assert_not_null->f_assert_must_basestring"),
         ],
