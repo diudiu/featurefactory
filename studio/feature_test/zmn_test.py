@@ -1576,7 +1576,7 @@ data = {
             ]
         },
         {
-            "res": StringTypeDefault,
+            "res": '60',
             "product_code": "string",
             "name": "string",
             "card_id": "string",
