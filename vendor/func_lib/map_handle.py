@@ -711,7 +711,6 @@ def m_r_to_now_work_time(seq,):
         return now_work_time
 
 
-
 def m_college_type(seq):
     """
     获取学校的类型信息
