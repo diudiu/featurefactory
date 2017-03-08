@@ -491,7 +491,7 @@ def m_get_city_name(address):
                 :address  '广州'
                 :return  '广州'
     """
-    city_name = ''
+    city_name = address
     if "-" in address:
         city_name = address.split('-')[1]
     else:
