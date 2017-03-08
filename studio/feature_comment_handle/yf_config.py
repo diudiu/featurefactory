@@ -236,14 +236,15 @@ config = dict(
 
         ],
         "f_map_and_filter_chain": "m_get_new_list('work_end','industry')->f_assert_not_null->m_seq_inx_to_int()"
-                                  "->m_seq_inx0_sort_in_list(True)->m_get_seq_index_value(0)->m_get_seq_index_value(1)",
+                                  "->m_seq_inx0_sort_in_list(True)->m_seq_del_999999()->f_assert_not_null"
+                                  "->m_get_seq_index_value(0)->m_get_seq_index_value(1)",
         "reduce_chain": "",
         "l_map_and_filter_chain": ""
     },
     now_work_time_config={
         "feature_name": "now_work_time",
-        "feature_data_type": "string",
-        "default_value": "StringTypeDefault",
+        "feature_data_type": "int",
+        "default_value": "PositiveSignedTypeDefault",
         "json_path_list": [
             ("work_exp_form", "$..work_exp_form[*]", "f_assert_not_null->f_assert_must_dict"),
 
@@ -256,8 +257,8 @@ config = dict(
 
     industry_change_count_config={
         "feature_name": "industry_change_count",
-        "feature_data_type": "string",
-        "default_value": "StringTypeDefault",
+        "feature_data_type": "int",
+        "default_value": "PositiveSignedTypeDefault",
         "json_path_list": [
             ("industry", "$..work_exp_form[*].industry", "f_assert_not_null"),
 
@@ -305,8 +306,8 @@ config = dict(
 
     mobile_area_city_code_config={
         "feature_name": "mobile_area_city_code",
-        "feature_data_type": "int",
-        "default_value": "PositiveSignedTypeDefault",
+        "feature_data_type": "string",
+        "default_value": "StringTypeDefault",
         "json_path_list": [
             ("mobile_area", "$..content.mobile_area", "f_assert_not_null->f_assert_must_basestring"),
         ],
@@ -317,8 +318,8 @@ config = dict(
 
     gps_city_code_config={
         "feature_name": "mobile_area_city_code",
-        "feature_data_type": "int",
-        "default_value": "PositiveSignedTypeDefault",
+        "feature_data_type": "string",
+        "default_value": "StringTypeDefault",
         "json_path_list": [
             ("mobile_area", "$..addressComponent.city", "f_assert_not_null->f_assert_must_basestring"),
         ],
