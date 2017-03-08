@@ -139,8 +139,8 @@ config = dict(
         "l_map_and_filter_chain": ""
     },
 
-    airfare_sum_12_config={
-        "feature_name": "airfare_sum_12",
+    airfare_sum12_config={
+        "feature_name": "airfare_sum12",
         "feature_data_type": "float",
         "default_value": "PositiveSignedFloatTypeDefault",
         "json_path_list": [

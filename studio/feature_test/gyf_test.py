@@ -2298,7 +2298,7 @@ data = {
          }
          },
     ],
-    'airfare_sum_12': [
+    'airfare_sum12': [
         {
             'res': 2681.0,
             "result": "00",

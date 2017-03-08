@@ -880,7 +880,7 @@ data = {
         },
     },
 
-    'airfare_sum_12': {
+    'airfare_sum12': {
         "result": "00",
         "result_message": "检测通过或查询有记录",
         "content": {
