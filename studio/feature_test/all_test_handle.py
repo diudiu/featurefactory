@@ -45,5 +45,5 @@ if __name__ == '__main__':
 
 
     test_datas = load_feature_test()
-    # test_datas = {'education_tz': test_datas['education_tz']}
+    test_datas = {'last_industry_code': test_datas['last_industry_code']}
     test(test_datas)
