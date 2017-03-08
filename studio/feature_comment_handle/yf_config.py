@@ -31,7 +31,7 @@ config = dict(
         "feature_data_type": "bool",
         "default_value": "BooleanTypeDefault",
         "json_path_list": [
-            ("others", "$..others", "f_assert_not_null->f_assert_must_list"),
+            ("others", "$..others", "f_assert_jsonpath_true->f_assert_must_list"),
         ],
         "f_map_and_filter_chain": "m_to_bool",
         "reduce_chain": "",
@@ -139,8 +139,8 @@ config = dict(
         "l_map_and_filter_chain": ""
     },
 
-    airfare_sum_12_config={
-        "feature_name": "airfare_sum_12",
+    airfare_sum12_config={
+        "feature_name": "airfare_sum12",
         "feature_data_type": "float",
         "default_value": "PositiveSignedFloatTypeDefault",
         "json_path_list": [
@@ -169,7 +169,7 @@ config = dict(
         "feature_data_type": "bool",
         "default_value": "BooleanTypeDefault",
         "json_path_list": [
-            ("loanInfos", "$..loanInfos", "f_assert_not_null->f_assert_must_list"),
+            ("loanInfos", "$..loanInfos", "f_assert_jsonpath_true->f_assert_must_list"),
         ],
         "f_map_and_filter_chain": "m_to_bool",
         "reduce_chain": "",
@@ -193,7 +193,7 @@ config = dict(
         "feature_data_type": "bool",
         "default_value": "BooleanTypeDefault",
         "json_path_list": [
-            ("grayscale", "$..trustutn_loan_phone.data.grayscale", "f_assert_not_null->f_assert_must_dict"),
+            ("grayscale", "$..trustutn_loan_phone.data.grayscale", "f_assert_jsonpath_true->f_assert_must_dict"),
         ],
         "f_map_and_filter_chain": "m_get_seq_index_value(0)->m_to_bool",
         "reduce_chain": "",
@@ -207,8 +207,9 @@ config = dict(
         "json_path_list": [
             ("edu_exp_form", "$..edu_exp_form[*]", "f_assert_not_null->f_assert_must_dict"),
         ],
-        "f_map_and_filter_chain": "m_get_new_list('degree','tz')->m_seq_inx_to_int()"
-                                  "->m_seq_inx0_sort_in_list()->m_get_seq_index_value(0)->m_get_seq_index_value(1)",
+        "f_map_and_filter_chain": "m_get_new_list('degree','tz')->m_seq_inx_to_int"
+                                  "->m_seq_inx0_sort_in_list->m_get_seq_index_value(0)"
+                                  "->m_get_seq_index_value(1)->f_assert_not_null",
         "reduce_chain": "",
         "l_map_and_filter_chain": ""
     },
@@ -221,7 +222,7 @@ config = dict(
             ("work_exp_form", "$..work_exp_form[*]", "f_assert_not_null->f_assert_must_dict"),
         ],
         "f_map_and_filter_chain": "m_get_new_list('work_end','industry')->f_assert_not_null"
-                                  "->m_seq_inx_to_999999()->m_get_seq_index_value(1)",
+                                  "->m_seq_inx_to_999999->m_get_seq_index_value(1)",
         "reduce_chain": "",
         "l_map_and_filter_chain": ""
     },
@@ -271,9 +272,9 @@ config = dict(
         "feature_data_type": "int",
         "default_value": "PositiveSignedTypeDefault",
         "json_path_list": [
-            ("contract_date", "$..loanInfos[*].contractDate", "f_assert_not_null"),
+            ("contract_date", "$..loanInfos[*].contractDate", ""),
         ],
-        "f_map_and_filter_chain": "f_digit_or_float->f_days_greater_than_args(180)",
+        "f_map_and_filter_chain": "f_digit_or_float->f_days_greater_than_args(180)->f_assert_not_null",
         "reduce_chain": "m_to_len",
         "l_map_and_filter_chain": ""
     },

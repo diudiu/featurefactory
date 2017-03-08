@@ -22,6 +22,13 @@ def f_assert_not_null(seq):
     return seq
 
 
+def f_assert_jsonpath_true(seq):
+    """假设jsonpath查询到的为true seq为[]空列表时代表没查到字段"""
+    if seq in ([],):
+        raise FeatureProcessError("jsonpath not find field")
+    return seq
+
+
 def f_assert_must_int(value_list):
     """检测列表中的元素是否为int类型"""
     for value in value_list:
@@ -144,4 +151,4 @@ def f_assert_seq0_gte_seq1(value_list):
 
 
 if __name__ == '__main__':
-    print f_assert_must_digit([])
+    print f_assert_jsonpath_true([])

@@ -16,7 +16,7 @@ def test(data):
             res = datas.pop('res')
             feature_obj = FeatureProcess(feature_name, datas)
             result = feature_obj.run()
-            print result
+            # print result
             if result:
                 result = result[feature_name]
                 if result != res:
@@ -45,5 +45,5 @@ if __name__ == '__main__':
 
 
     test_datas = load_feature_test()
-    # test_datas = {'mobile': test_datas['mobile']}
+    # test_datas = {'education_tz': test_datas['education_tz']}
     test(test_datas)

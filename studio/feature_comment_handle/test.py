@@ -880,7 +880,7 @@ data = {
         },
     },
 
-    'airfare_sum_12': {
+    'airfare_sum12': {
         "result": "00",
         "result_message": "检测通过或查询有记录",
         "content": {
@@ -3051,8 +3051,8 @@ data = {
 
 def test():
     for feature_name, datas in data.items():
-        fecture_obj = FeatureProcess(feature_name, datas)
-        result = fecture_obj.run()
+        feature_obj = FeatureProcess(feature_name, datas)
+        result = feature_obj.run()
         print result
 
 

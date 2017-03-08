@@ -703,14 +703,12 @@ def m_r_to_now_work_time(seq,):
     """
 
     now_time = datetime.now()
-    print now_time
     if '999999' in seq:
         now_work_time = (now_time - datetime.strptime(seq[1], '%Y%m')).days / 30
         return now_work_time
     else:
         now_work_time = (datetime.strptime(seq[0], '%Y%m') - datetime.strptime(seq[1], '%Y%m')).days / 30
         return now_work_time
-
 
 
 def m_college_type(seq):

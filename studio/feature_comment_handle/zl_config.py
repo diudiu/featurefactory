@@ -48,7 +48,7 @@ config = dict(
         "feature_data_type": "int",
         "default_value": "PositiveSignedTypeDefault",
         "json_path_list": [
-            ("result", "$..result", "f_assert_must_list"),
+            ("result", "$..result", "f_assert_jsonpath_true->f_assert_must_list"),
         ],
         "f_map_and_filter_chain": "f_not_null->m_to_len",
         "reduce_chain": "",
