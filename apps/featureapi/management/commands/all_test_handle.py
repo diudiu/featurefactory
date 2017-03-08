@@ -20,8 +20,8 @@ def test(data):
     for feature_name, datas_list in data.items():
         for datas in datas_list:
             res = datas.pop('res')
-            fecture_obj = FeatureProcess(feature_name, datas)
-            result = fecture_obj.run()
+            feature_obj = FeatureProcess(feature_name, datas)
+            result = feature_obj.run()
             if result:
                 result = result[feature_name]
                 if result != res:
