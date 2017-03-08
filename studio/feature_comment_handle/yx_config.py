@@ -94,8 +94,8 @@ config = dict(
         "feature_name": "car_number",
         "feature_data_type": "list",
         "default_value": "ListTypeDefault",
-        "json_path_list": [("license_no", "$..license_no", "f_not_null->f_assert_not_null")],
-        "f_map_and_filter_chain": "f_plate_number",
+        "json_path_list": [("license_no", "$..license_no", "")],
+        "f_map_and_filter_chain": "f_not_null->f_plate_number->f_assert_not_null",
         "reduce_chain": "",
         "l_map_and_filter_chain": ""
     },
