@@ -547,6 +547,6 @@ def test():
 
 
 if __name__ == '__main__':
-    # data = {'education_degree_code': data['education_degree_code']}
+    data = {'car_count': data['car_count']}
     test()
 
