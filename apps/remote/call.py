@@ -30,6 +30,7 @@ class DataPrepare(object):
         self.argument_base = ArgsContext(self.apply_id)
         self.parm_keys = args_list
         self.parm_dict = {}
+        self.url = ''
 
     def get_original_data(self):
         ret_data = self.get_data_from_db()
@@ -60,13 +61,13 @@ class DataPrepare(object):
         else:
             ds_conf = ds_conf[0]
         self.prepare_parms()
-        url = ds_conf.data_source.backend_url + ds_conf.route
+        self.url = ds_conf.data_source.backend_url + ds_conf.route + self.data_identity + '/'
         data_prams = eval(ds_conf.must_data % self.parm_dict)
         origin_data = None
         if ds_conf.method == 'LOCALE':
             origin_data = self.do_local_request(ds_conf, data_prams)
         elif ds_conf.method == 'REMOTE':
-            origin_data = self.do_request(url, data_prams)
+            origin_data = self.do_request(data_prams)
         if not origin_data:
             raise  # TODO get data error
         cleaner = DataClean(origin_data, ds_conf.data_origin_type)
@@ -93,9 +94,8 @@ class DataPrepare(object):
                 key: value
             })
 
-    def do_request(self, url, data):
-        post_url = url + '/rule/gateway/' + self.data_identity + '/'
-        response = requests.post(post_url, json.dumps(data))
+    def do_request(self, data):
+        response = requests.post(self.url, json.dumps(data))
         content = response.content
         content = json.loads(content)
         return content
