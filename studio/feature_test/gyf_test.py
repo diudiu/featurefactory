@@ -1000,7 +1000,8 @@ data = {
                 "card_id": "41140219890313739X",
                 "longitudu": 23.45678
             }
-        }],
+        }
+    ],
     'mobile_stability': [
         {
             'res': 0.8789,
@@ -1799,7 +1800,8 @@ data = {
                 "card_id": "41140219890313739X",
                 "longitudu": 23.45678
             }
-        }],
+        }
+    ],
     'is_pingan_financial_shixin': [
         {
             'res': 1,
@@ -1859,7 +1861,8 @@ data = {
             }
         }
     ],
-    'folk': [{
+    'folk': [
+        {
         'res': 1,
         "result": "00",
         "result_message": "检测通过或查询有记录",

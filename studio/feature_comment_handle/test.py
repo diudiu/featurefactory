@@ -2410,6 +2410,7 @@ data = {
             "application_on": "2017-02-01 12:20:10",
         }
     },
+
     "is_netsky_multi_loan": {
         "result": "00",
         "result_message": "检测通过或查询有记录",
@@ -2627,6 +2628,7 @@ data = {
             ]
         }
     },
+
     "is_recruitment": {
         "content": {
             "person_base": {
@@ -2677,6 +2679,7 @@ data = {
         "result_message": "检测通过或查询有记录",
         "result": "00"
     },
+
     "graduate_college": {
         "product_code": "string",
         "name": "string",
@@ -2753,6 +2756,7 @@ data = {
 
         ]
     },
+
     "college_type": {
         "content": {
             "person_base": {
@@ -2938,6 +2942,7 @@ data = {
             "imsi": "",
         }
     },
+
     'is_pingan_overdue_loan': {
         "result": 1,
         "message": None,
@@ -2985,6 +2990,7 @@ data = {
                 "imsi": ""
             }
     },
+
     'now_work_time': {
                 "product_code": "string",
                 "name": "string",
@@ -3045,7 +3051,6 @@ data = {
                     }
                 ]
             },
-
 }
 
 
