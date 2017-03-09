@@ -16,17 +16,11 @@ no_disease_list = [
 
 
 def feature_post():
-    url = 'http://127.0.0.1:9999/syph-ff/feature/extract/'
+    url = 'http://127.0.0.1:9999/rule/gateway/personal_info/'
     # url = 'http://192.168.1.199:9900/syph-ff/feature/extract/'
     data = {
-        u'content': {
-            u'callback': u'',
-            u'apply_id': u'APPLY20170308154505179519058',
-            u'res_keys': [
-                u'age'
-            ]
-        },
-        u'client_code': u'lp_test'
+        'id_card_name': '孙俊鹏',
+        'id_card_code': '130202199108101414',
     }
     a = time.time()
     response = requests.post(url, headers=headers, data=json.dumps(data))

@@ -46,6 +46,7 @@ INSTALLED_APPS = (
     'apps.async',
     'apps.pregranting',
     'apps.interface',
+    'apps.integration',
 )
 
 MIDDLEWARE_CLASSES = (
