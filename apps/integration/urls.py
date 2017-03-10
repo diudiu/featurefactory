@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 """
-    feature factory api route
+    feature integration api route
 """
 
 from django.conf.urls import patterns, url

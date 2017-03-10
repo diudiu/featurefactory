@@ -173,34 +173,36 @@ data = {
         }
     ],
     'mobile': [
-        {'res': '18989821092',
-         'apply_data': {
-             "product_code": "890wefjf320if0i302f0j3f0f",
-             "apply_id": "APPLY20161011111111890934",
-             "callback": "http://10.20.1.110/api/credit/result/",
-             "name": "张三",
-             "card_id": "411402198002039872",
-             "mobile": "18989821092",
-             "longitudu": 23.45678,
-             "latitude": 145.23342,
-             "contacts": 30,
-             "application_on": "2017-02-01 12:20:10",
-         }
-         },
-        {'res': StringTypeDefault,
-         'apply_data': {
-             "product_code": "890wefjf320if0i302f0j3f0f",
-             "apply_id": "APPLY20161011111111890934",
-             "callback": "http://10.20.1.110/api/credit/result/",
-             "name": "张三",
-             "card_id": "411402198002039872",
-             "mobile": "",
-             "longitudu": 23.45678,
-             "latitude": 145.23342,
-             "contacts": 30,
-             "application_on": "2017-02-01 12:20:10",
-         }
-         },
+        {
+            'res': '18989821092',
+            'apply_data': {
+                "product_code": "890wefjf320if0i302f0j3f0f",
+                "apply_id": "APPLY20161011111111890934",
+                "callback": "http://10.20.1.110/api/credit/result/",
+                "name": "张三",
+                "card_id": "411402198002039872",
+                "mobile": "18989821092",
+                "longitudu": 23.45678,
+                "latitude": 145.23342,
+                "contacts": 30,
+                "application_on": "2017-02-01 12:20:10",
+            }
+        },
+        {
+            'res': StringTypeDefault,
+            'apply_data': {
+                "product_code": "890wefjf320if0i302f0j3f0f",
+                "apply_id": "APPLY20161011111111890934",
+                "callback": "http://10.20.1.110/api/credit/result/",
+                "name": "张三",
+                "card_id": "411402198002039872",
+                "mobile": "",
+                "longitudu": 23.45678,
+                "latitude": 145.23342,
+                "contacts": 30,
+                "application_on": "2017-02-01 12:20:10",
+            }
+        },
     ],
     'mobile_activeness': [
         {
@@ -1863,26 +1865,26 @@ data = {
     ],
     'folk': [
         {
-        'res': 1,
-        "result": "00",
-        "result_message": "检测通过或查询有记录",
-        "content": {
-            "id_card_name": "李..",
-            "marital_status": "10",
-            "id_card_code": "1306251....",
-            "verify": "一致",
-            "company": "暂无",
-            "nation": "汉族",
-            "former_name": "",
-            "native_place": "河北省保定市徐水县",
-            "birthday": "1988-09-10",
-            "birth_place": "河北省保定市徐水县",
-            "sex_id": "2",
-            "photo": "",
-            "education": "大学本科（简称'大学'）",
-            "address": "河北省保定市徐水区高林村镇"
-        }
-    },
+            'res': 1,
+            "result": "00",
+            "result_message": "检测通过或查询有记录",
+            "content": {
+                "id_card_name": "李..",
+                "marital_status": "10",
+                "id_card_code": "1306251....",
+                "verify": "一致",
+                "company": "暂无",
+                "nation": "汉族",
+                "former_name": "",
+                "native_place": "河北省保定市徐水县",
+                "birthday": "1988-09-10",
+                "birth_place": "河北省保定市徐水县",
+                "sex_id": "2",
+                "photo": "",
+                "education": "大学本科（简称'大学'）",
+                "address": "河北省保定市徐水区高林村镇"
+            }
+        },
         {
             'res': 0,
             "result": "00",
@@ -4407,5 +4409,4 @@ data = {
             ]
         },
     ]
-
 }
