@@ -23,11 +23,13 @@
 import json
 # import logging
 import requests
+import pymongo
 
 from braces.views import CsrfExemptMixin
 from django.views.generic import View
-from vendor.utils.encrypt import Cryption
+
 from apps.featureapi.response import JSONResponse
+from apps.integration.tools import do_request, get_token
 
 
 # logger = logging.getLogger('apps.featureapi')
@@ -50,12 +52,9 @@ class Simulation(CsrfExemptMixin, View):
         data_identity = data_identity
         req_data = json.loads(request.body)
         try:
-            req_data.update({'data_identity': data_identity})
-            token = get_token(dataocean_url_grant, client_secret)
-            req_data.update({"access_token": token["access_token"]})
-            print req_data
-            content = do_request(dataocean_url_data, req_data, des_key)
-            content['res_data'] = json.loads(content['res_data'])
+            # content = remote_test(req_data, data_identity)
+            content = local_test(req_data, data_identity)
+
             # print content
             data.update({"res_data": content})
         except Exception, e:
@@ -68,25 +67,31 @@ class Simulation(CsrfExemptMixin, View):
         return JSONResponse(data=data)
 
 
-def do_request(url, data, des_key):
-    json_data = json.dumps(data, encoding="UTF-8", ensure_ascii=False)
-    # print "gyf---------", json_data
-    req_data = Cryption.aes_base64_encrypt(json_data, des_key)
-    content = requests.post(url, json.dumps(
-        {"req_data": req_data, "client": client_id}, encoding="UTF-8", ensure_ascii=False
-    )).content
-    content = json.loads(content)
-    if content.get('res_data', None):
-        content['res_data'] = Cryption.aes_base64_decrypt(content['res_data'], des_key)
+def local_test(req_data, data_identity):
+    query = {
+        'data_identity': data_identity
+    }
+    query.update(req_data)
+
+    conn = pymongo.MongoClient('192.168.1.198', 27017)
+    coll = conn['feature_storage']['test_data']
+    data = coll.find_one(query)
+
+    return data.get('data', None)
+
+
+def remote_test(req_data, data_identity):
+    req_data.update({'data_identity': data_identity})
+    token = get_token(dataocean_url_grant, client_secret)
+    req_data.update({"access_token": token["access_token"]})
+    content = do_request(dataocean_url_data, req_data, des_key)
+    content['res_data'] = json.loads(content['res_data'])
     return content
 
 
-def get_token(url, client_secret):
-    grant_type = "client_credentials"
-    datas = dict(grant_type=grant_type,
-                 client_secret=client_secret,
-                 )
-    content = do_request(url, datas, des_key)
-    # print content
-    token = json.loads(content['res_data'])
-    return token
+def test():
+    pass
+
+
+if __name__ == '__main__':
+    test()
