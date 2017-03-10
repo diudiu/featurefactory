@@ -23,6 +23,7 @@
 import json
 # import logging
 import requests
+import pymongo
 
 from braces.views import CsrfExemptMixin
 from django.views.generic import View
@@ -51,7 +52,9 @@ class Simulation(CsrfExemptMixin, View):
         data_identity = data_identity
         req_data = json.loads(request.body)
         try:
-            content = remote_test(req_data, data_identity)
+            # content = remote_test(req_data, data_identity)
+            content = local_test(req_data, data_identity)
+
             # print content
             data.update({"res_data": content})
         except Exception, e:
@@ -64,6 +67,19 @@ class Simulation(CsrfExemptMixin, View):
         return JSONResponse(data=data)
 
 
+def local_test(req_data, data_identity):
+    query = {
+        'data_identity': data_identity
+    }
+    query.update(req_data)
+
+    conn = pymongo.MongoClient('192.168.1.198', 27017)
+    coll = conn['feature_storage']['test_data']
+    data = coll.find_one(query)
+
+    return data.get('data', None)
+
+
 def remote_test(req_data, data_identity):
     req_data.update({'data_identity': data_identity})
     token = get_token(dataocean_url_grant, client_secret)
@@ -71,3 +87,11 @@ def remote_test(req_data, data_identity):
     content = do_request(dataocean_url_data, req_data, des_key)
     content['res_data'] = json.loads(content['res_data'])
     return content
+
+
+def test():
+    pass
+
+
+if __name__ == '__main__':
+    test()
