@@ -19,10 +19,16 @@
      \XX\       \X/    \XXX/    \X/       /XX/
         "\       "      \X/      "       /"
 """
+# import os
+# import sys
+# import django
+#
+# home_path = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+# sys.path.append(home_path)
+# os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'featurefactory.settings')
+# django.setup()
 
 import json
-# import logging
-import requests
 import pymongo
 
 from braces.views import CsrfExemptMixin
@@ -75,8 +81,7 @@ def local_test(req_data, data_identity):
 
     conn = pymongo.MongoClient('192.168.1.198', 27017)
     coll = conn['feature_storage']['test_data']
-    data = coll.find_one(query)
-
+    data = coll.find_one({'args': query})
     return data.get('data', None)
 
 
@@ -87,11 +92,3 @@ def remote_test(req_data, data_identity):
     content = do_request(dataocean_url_data, req_data, des_key)
     content['res_data'] = json.loads(content['res_data'])
     return content
-
-
-def test():
-    pass
-
-
-if __name__ == '__main__':
-    test()
