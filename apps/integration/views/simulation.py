@@ -58,9 +58,10 @@ class Simulation(CsrfExemptMixin, View):
         data_identity = data_identity
         req_data = json.loads(request.body)
         try:
-            # content = remote_test(req_data, data_identity)
-            content = local_test(req_data, data_identity)
-
+            if data_identity in ['personal_info', 'geo_location']:
+                content = remote_test(req_data, data_identity)
+            else:
+                content = local_test(req_data, data_identity)
             # print content
             data.update({"res_data": content})
         except Exception, e:
