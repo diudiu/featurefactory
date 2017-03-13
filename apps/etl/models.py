@@ -15,6 +15,8 @@ class FeatureConf(BaseModel):
     data_identity = models.CharField(u'原始数据标识', max_length=512)
     collect_type = models.CharField(u'数据获取方式', max_length=64, null=True)
     raw_field_name = models.CharField(u'参数字段名', max_length=2048)
+    feature_type = models.IntegerField(u'特征类型', null=True)
+    feature_type_desc = models.CharField(u'特征类型解释', max_length=2048, null=True)
 
     class Meta:
         db_table = 'fic_feature_common_conf'

@@ -45,7 +45,7 @@ dataocean_url_data = dataocean_url + "/source/queryinfo/"
 dataocean_url_grant = dataocean_url + "/oauth2/token/"
 client_id = "jpWstKTB3bqPLWNoocVncCVVHniytPn6ROHy82Ze"
 client_secret = "kXXNuP6IOMYr5WxhZihef4Ub6QbOFRPglX0WPPZ5D2sAydh3vDZTCvuMGRFAwlJcu3LoqlQuzs60XE72mxlisrZfhW2DGGCjUHJojkPhiouYrjKrkBj357ThuC61qupk"
-des_key = 'sjdguhcphysghcih'
+des_key = "sjdguhcphysghcih"
 
 
 class Simulation(CsrfExemptMixin, View):
@@ -58,9 +58,10 @@ class Simulation(CsrfExemptMixin, View):
         data_identity = data_identity
         req_data = json.loads(request.body)
         try:
-            # content = remote_test(req_data, data_identity)
-            content = local_test(req_data, data_identity)
-
+            if data_identity in ['personal_info', 'geo_location']:
+                content = remote_test(req_data, data_identity)
+            else:
+                content = local_test(req_data, data_identity)
             # print content
             data.update({"res_data": content})
         except Exception, e:
@@ -88,7 +89,7 @@ def local_test(req_data, data_identity):
 def remote_test(req_data, data_identity):
     req_data.update({'data_identity': data_identity})
     token = get_token(dataocean_url_grant, client_secret)
-    req_data.update({"access_token": token["access_token"]})
+    req_data.update({'access_token': token['access_token']})
     content = do_request(dataocean_url_data, req_data, des_key)
     content['res_data'] = json.loads(content['res_data'])
     return content
