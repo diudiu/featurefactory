@@ -1848,52 +1848,249 @@ done_data = {
             }
         },
     ],
+    'unicom_finance_portrait_s': [
+        {
+            'args': {
+                'data_identity': 'unicom_finance_portrait_s',
+                'mobile': '18511116256'
+            },
+            'data': {
+                "result": "00",
+                "result_message": "检测通过或查询有记录",
+                "content": {
+                    "last12": {
+                        "credit": {
+                            "charge_off_range": "b",
+                            "charge_off_times": 25,
+                            "income_times": 35,
+                            "income_range": "c"
+                        },
+                        "debit": {
+                            "charge_off_range": "13",
+                            "charge_off_times": 138,
+                            "income_times": 16,
+                            "income_range": "13",
+                        }
+                    }
+                }
+            }
+        }
+    ],
+    'multi_id_card_info_s': [
+        {
+            'args': {
+                'data_identity': 'multi_id_card_info_s',
+            },
+            'data': {
+                "result": "00",
+                "result_message": "检测通过或查询有记录",
+                "content": {
+                    "id_card_name": "李..",
+                    "marital_status": "10",
+                    "id_card_code": "1306251....",
+                    "verify": "一致",
+                    "company": "暂无",
+                    "nation": "汉族",
+                    "former_name": "",
+                    "native_place": "河北省保定市徐水县",
+                    "birthday": "1988-09-10",
+                    "birth_place": "河北省保定市徐水县",
+                    "sex_id": "2",
+                    "photo": "",
+                    "education": "大学本科（简称'大学'）",
+                    "address": "河北省保定市徐水区高林村镇"
+                }
+            }
+        }
+    ],
+    'industrial_commercial_s': [
+        {
+            'args': {
+                'data_identity': 'industrial_commercial_s',
+                'enterprise_name': 'GE Wuhan Boiler CO,. Ltd.'
+            },
+            'data': {
+                "result": "00",
+                "result_message": "检测通过或查询有记录",
+                "content": {
+                    "operation_start": "2009-09-08",
+                    "register_code": "371102200011819",
+                    "currency": "人民币",
+                    "postal_code": "",
+                    "national_economy_code": "5165",
+                    "enterprise_type": "有限责任公司(自然人投资或控股)",
+                    "operation_project": "矿产品(国家专控除外)、煤炭、钢材、木制品、建材、初级农产品、工程机械、机电设备、金属制品、摩托车、家用电器、文化用品、橡胶制品、化工产品（危险化学品及易制毒化学品除外）销售；普通货物进出口(法律禁止和国家专控除外限制的项目需取得许可证方可经营)。(依法须经批准的项目，经相关部门批准后方可开展经营活动)。",
+                    "industry_category_code": "F",
+                    "registered_assets": "1000.000000",
+                    "legal_person_name": "孙国庆",
+                    "authority_code": "",
+                    "start_business_date": "2009-09-08",
+                    "annual_inspection_year": "",
+                    "operation_scope_form": "矿产品(国家专控除外)、煤炭、钢材、木制品、建材、初级农产品、工程机械、机电设备、金属制品、摩托车、家用电器、文化用品、橡胶制品、化工产品（危险化学品及易制毒化学品除外）销售；普通货物进出口(法律禁止和国家专控除外限制的项目需取得许可证方可经营)。(依法须经批准的项目，经相关部门批准后方可开展经营活动)。",
+                    "staff_count": "30",
+                    "revoke_date": "",
+                    "registration_authority": "日照市工商行政管理局东港分局",
+                    "tp_deal_identifying": "",
+                    "enterprise_phone": "",
+                    "annual_inspection_date": "",
+                    "authority_name": "",
+                    "organization_code": "",
+                    "address": "日照市黄海一路兴业国际商城001号楼01单元903号",
+                    "enterprise_name": "山东南港国际贸易有限公司",
+                    "operation_end": "2019-09-07",
+                    "organization_code_end": "",
+                    "organization_code_start": "",
+                    "licensing_project": "",
+                    "cancellation_date": "",
+                    "operation_status": "在营（开业）",
+                    "operation_scope": "矿产品(国家专控除外)、煤炭、钢材、木制品、建材、初级农产品、工程机械、机电设备、金属制品、摩托车、家用电器、文化用品、橡胶制品、化工产品（危险化学品及易制毒化学品除外）销售；普通货物进出口(法律禁止和国家专控除外限制的项目需取得许可证方可经营)。(依法须经批准的项目，经相关部门批准后方可开展经营活动)。"
+                },
+            }
+        }
+    ],
+    'education_review_s': [
+        {
+            'args': {
+                'data_identity': 'education_review_s',
+                'id_card_name': '璐璐1',
+                'id_card_code': '132600198906251568',
+            },
+            'data': {
+                "result_message": "检测通过或查询有记录",
+                "result": "00",
+                "content": {
+                    "person_base": {
+                        "original_address": "",
+                        "id_card_code": "130**24821",
+                        "name": "甄**",
+                        "degree": "本科",
+                        "gender": "女",
+                        "age": "25",
+                        "birthday": "19910512",
+                        "graduate_years": "4"
+                    },
+                    "college": {
+                        "create_data": "",
+                        "master_pilot": "",
+                        "manage_dept": "",
+                        "science_batch": "",
+                        "school_nature": "985,211工程院校",
+                        "school_category": " 本科",
+                        "post_doctoral_studies": None,
+                        "art_batch": "",
+                        "school_level": "",
+                        "create_years": "",
+                        "significant_accounts": "",
+                        "graduate_school": "",
+                        "school_trade": "",
+                        "doctor_station": "",
+                        "address": "",
+                        "is211": "N",
+                        "academician_count": "",
+                        "college_name": "石家庄学院"
+                    },
+                    "degree": {
+                        "degree": "专科",
+                        "level_no": None,
+                        "photo": "",
+                        "start_time": "2010",
+                        "specialty": "生物技术及应用",
+                        "graduate_style": "普通",
+                        "graduate_time": "2013",
+                        "graduate_result": "毕业",
+                        "education_approach": "普通全日制",
+                        "college": "石家庄学院",
+                        "photo_style": "jpg",
+                        "is_key_subject": "N"
+                    },
+                },
+            }
+        }
+    ],
+    'loan_history': [
+        {
+            'args': {
+                'data_identity': 'loan_history',
+                'card_id': '132600198906251568',
+            },
+            'data': {
+                'status': 1,
+                'message': '操作成功',
+                'res_data': {
+                    'is_unclear_loan': 2,
+                },
+            }
+        }
+    ],
+    'mobile_locale': [
+        {
+            'args': {
+                'data_identity': 'mobile_locale',
+                'mobile': '13311538888',
+            },
+            'data': {
+                "result": "00",
+                "result_message": "检测通过或查询有记录",
+                "content": {
+                    "mobile_area": "北京市",
+                },
+            }
+        }
+    ],
 }
 
 data = {
-    'unicom_finance_portrait_s': {
+    'trustutn_loan_overdue': {
         'args': {
-
+            'data_identity': 'trustutn_loan_overdue',
         },
         'data': {
 
         }
     },
-    'multi_id_card_info_s': {
+    'trustutn_loan_blacklist': {
         'args': {
-
+            'data_identity': 'trustutn_loan_blacklist',
         },
         'data': {
 
         }
     },
-    'industrial_commercial_s': {
+    'multi_loan_91': {
         'args': {
-
+            'data_identity': 'multi_loan_91',
         },
         'data': {
 
         }
     },
-    'education_review_s': {
+    'trustutn_loan_loanmsg': {
         'args': {
-
+            'data_identity': 'trustutn_loan_loanmsg',
         },
         'data': {
 
         }
     },
-    'loan_history': {
+    'trustutn_loan_phone': {
         'args': {
-
+            'data_identity': 'trustutn_loan_phone',
         },
         'data': {
 
         }
     },
-    'mobile_locale': {
+    'cc_credit': {
         'args': {
+            'data_identity': 'cc_credit',
+        },
+        'data': {
 
+        }
+    },
+    'trustutn_loan_otheragent': {
+        'args': {
+            'data_identity': 'trustutn_loan_otheragent',
         },
         'data': {
 
@@ -1904,7 +2101,7 @@ data = {
 unuse_data = {
     'high_way_over_speed': {
         'args': {
-
+            'data_identity': 'high_way_over_speed',
         },
         'data': {
 
@@ -1912,55 +2109,7 @@ unuse_data = {
     },
     'high_way_over_load': {
         'args': {
-
-        },
-        'data': {
-
-        }
-    },
-    'trustutn_loan_overdue': {
-        'args': {
-
-        },
-        'data': {
-
-        }
-    },
-    'trustutn_loan_blacklist': {
-        'args': {
-
-        },
-        'data': {
-
-        }
-    },
-    'multi_loan_91': {
-        'args': {
-
-        },
-        'data': {
-
-        }
-    },
-    'trustutn_loan_loanmsg': {
-        'args': {
-
-        },
-        'data': {
-
-        }
-    },
-    'trustutn_loan_phone': {
-        'args': {
-
-        },
-        'data': {
-
-        }
-    },
-    'cc_credit': {
-        'args': {
-
+            'data_identity': 'high_way_over_load',
         },
         'data': {
 
@@ -1968,15 +2117,7 @@ unuse_data = {
     },
     'cc_car_credit': {
         'args': {
-
-        },
-        'data': {
-
-        }
-    },
-    'trustutn_loan_otheragent': {
-        'args': {
-
+            'data_identity': 'cc_car_credit',
         },
         'data': {
 
@@ -1991,6 +2132,7 @@ num = 0
 for key in keys:
     temp_data = data[key]
     for i in temp_data:
+        # coll.insert_one(i)
         num += 1
 
 print num
