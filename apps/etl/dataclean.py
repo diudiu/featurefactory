@@ -45,7 +45,8 @@ class DataClean(object):
                 (cons.SOURCE_TYPE_MESSAGE[self.clean_style], self.origin_data)
             )
         # TODO temp_data may is unicode string
-        temp_data = eval(temp_data.encode('utf8'))
+        import json
+        temp_data = json.loads(temp_data)
         return temp_data
 
     def _91_credit_clean(self):
