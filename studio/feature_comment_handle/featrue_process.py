@@ -4,8 +4,6 @@ import os
 from django.utils.module_loading import import_string
 from jsonparse_handle import JSONPathParser
 from exec_chain_handle import func_exec_chain
-from vendor.errors.feature import FeatureProcessError
-from vendor.utils.defaults import *
 
 
 import logging
@@ -105,7 +103,6 @@ class FeatureProcess(object):
             logger.error(e.message)
             return None
         except Exception as e:
-            # print '**********************' + self.feature_name + '**********************' + e.message
             logger.error(e.message)
             return {self.feature_name: eval(self.default_value)}
         return {self.feature_name: result}

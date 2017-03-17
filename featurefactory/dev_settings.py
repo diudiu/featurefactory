@@ -140,6 +140,30 @@ LOGGING = {
             'maxBytes': 1024 * 1024 * 20,
             'backupCount': 200,
         },
+        'pregranting': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'formatter': 'verbose',
+            'filename': os.path.join(log_path, 'apps.pregranting.out'),
+            'maxBytes': 1024 * 1024 * 20,
+            'backupCount': 200,
+        },
+        'interface': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'formatter': 'verbose',
+            'filename': os.path.join(log_path, 'apps.interface.out'),
+            'maxBytes': 1024 * 1024 * 20,
+            'backupCount': 200,
+        },
+        'integration': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'formatter': 'verbose',
+            'filename': os.path.join(log_path, 'apps.integration.out'),
+            'maxBytes': 1024 * 1024 * 20,
+            'backupCount': 200,
+        },
     },
     'loggers': {
         'django': {
@@ -179,6 +203,21 @@ LOGGING = {
         },
         'apps.featuretest': {
             'handlers': ['featuretest', 'console'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'apps.pregranting': {
+            'handlers': ['pregranting', 'console'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'apps.interface': {
+            'handlers': ['interface', 'console'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'apps.integration': {
+            'handlers': ['integration', 'console'],
             'level': 'INFO',
             'propagate': False,
         },

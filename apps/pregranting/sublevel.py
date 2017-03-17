@@ -8,7 +8,7 @@ from apps.etl.context import PortraitContext
 from .base import GrantCreditAbstract
 from .dao import PreModelDao
 
-logger = logging.getLogger('apps.openapi')
+logger = logging.getLogger('apps.pregranting')
 
 
 class BasePreGrant(object):

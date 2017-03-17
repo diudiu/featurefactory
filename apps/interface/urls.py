@@ -7,6 +7,7 @@ from django.conf.urls import patterns, url
 
 from apps.interface.views.authentication import Authentication
 from apps.interface.views.configuration import *
+from apps.interface.views.featureprocess import *
 
 urlpatterns = patterns(
     '',
@@ -30,4 +31,5 @@ urlpatterns = patterns(
     url(r'^remote_conf/update/(?P<id>\w+)/$', RemoteConfig.as_view(), name='remote_config_update'),
     url(r'^remote_conf/add/$', RemoteConfig.as_view(), name='remote_config_add'),
 
+    url(r'^feature_process/config/$', FeatureProcessAPI.as_view(), name='feature_process'),
 )

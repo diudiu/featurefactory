@@ -30,6 +30,7 @@
 
 import json
 import pymongo
+import logging
 
 from braces.views import CsrfExemptMixin
 from django.views.generic import View
@@ -38,7 +39,7 @@ from apps.featureapi.response import JSONResponse
 from apps.integration.tools import do_request, get_token
 
 
-# logger = logging.getLogger('apps.featureapi')
+logger = logging.getLogger('apps.integration')
 
 dataocean_url = "http://apitest.digcredit.com"
 dataocean_url_data = dataocean_url + "/source/queryinfo/"
@@ -65,7 +66,7 @@ class Simulation(CsrfExemptMixin, View):
             # print content
             data.update({"res_data": content})
         except Exception, e:
-            print e.message
+            logger.error(e.message)
             data.update({
                 'status': 0,
                 'message': 'error'

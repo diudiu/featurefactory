@@ -3,7 +3,7 @@
 import logging
 from django.utils.importlib import import_module
 
-logger = logging.getLogger('apps.openapi')
+logger = logging.getLogger('apps.pregranting')
 
 PRE_GRANT_MODEL_CLS = 'apps.pregranting.sublevel.LinearPreGrant'
 

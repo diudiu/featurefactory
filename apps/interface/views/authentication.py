@@ -29,6 +29,8 @@ from django.views.generic import View
 
 from apps.interface.decorator import data_check, data_send, json_load
 
+logger = logging.getLogger('apps.interface')
+
 
 class Authentication(CsrfExemptMixin, View):
 

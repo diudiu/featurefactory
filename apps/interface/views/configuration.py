@@ -34,7 +34,7 @@ from apps.datasource.models import *
 from vendor.utils.pagination import ExtPaginator
 from vendor.utils.commons import json_response
 
-logger = logging.getLogger('apps.common')
+logger = logging.getLogger('apps.interface')
 
 
 class FeatureConfig(CsrfExemptMixin, View):
