@@ -59,26 +59,16 @@ class Courier(object):
 
     @staticmethod
     def data_analysis(feature_name, useful_data):
-        obj_string = cons.LP_BASE_HANDLE + cons.HANDLE_COMBINE \
-                     + 'lp_' + feature_name + cons.HANDLE_COMBINE + cons.HANDLE_CLASS
-        try:
-            feature_obj = FeatureProcess(feature_name, useful_data)
-            ret = feature_obj.run()
-            logger.info('New Feature process complete, value : %s' % ret)
-            if not ret:
-                obj = import_string(obj_string)
-                handler = obj(useful_data)
-                logger.info('get handle --%s--' % obj_string)
-                ret = handler.handle()
-                logger.info('No value with New Feature process, use the classic process, value : %s' % ret)
-        except Exception as e:
-            logger.error('%s \nhandle init error , massage is :\n %s' % (obj_string, e))
-            raise HandleInitializeFailed
 
-        logger.info('Handle completed, result is %s' % ret)
+        feature_obj = FeatureProcess(feature_name, useful_data)
+        ret = feature_obj.run()
+        logger.info('New Feature process complete, value : %s' % ret)
         if not ret:
-            logger.error('handle work complete, nothing return: %s' % obj_string)
+            logger.error('Feature:%s return is None' % feature_name)
             raise HandleWorkError
+
+        logger.info('Feature Handle completed, result is %s' % ret)
+
         if feature_name not in ret.keys():
             logger.error(
                 'Wrong config of the feature, not the expect feature_name, feature_name: %s' % feature_name)

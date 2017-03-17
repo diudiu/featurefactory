@@ -44,6 +44,8 @@ class DataClean(object):
                 'Unavailable data from %s :\n%s' %
                 (cons.SOURCE_TYPE_MESSAGE[self.clean_style], self.origin_data)
             )
+        # TODO temp_data may is unicode string
+        temp_data = eval(temp_data.encode('utf8'))
         return temp_data
 
     def _91_credit_clean(self):
