@@ -8,7 +8,7 @@ from vendor.func_lib.filter_handle import *
 from vendor.func_lib.reduce_handle import *
 
 
-def do_assert_list(data, func_list_str):
+def func_exec_chain(data, func_list_str):
     if not data:
         raise
     data = data[0]

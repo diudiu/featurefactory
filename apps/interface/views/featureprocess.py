@@ -61,7 +61,7 @@ class FeatureProcessAPI(CsrfExemptMixin, View):
         if json_path_str:
             temp_data = jsonpath.jsonpath(origin_data, json_path_str)
         if assert_list_str:
-            temp_data = do_assert_list(temp_data, assert_list_str)
+            temp_data = func_exec_chain(temp_data, assert_list_str)
         if f_map_and_filter_chain:
             temp_data = func_exec_chain(temp_data, f_map_and_filter_chain)
         if reduce_chain:
