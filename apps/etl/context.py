@@ -175,7 +175,7 @@ class PortraitContext(BaseContext):
         # self.cache_base = MongoBase(collection_name=CACHE_BASE_NAME)
 
     def load(self):
-        query = {'proposer_id': self.apply_id}
+        query = {'proposer_id': self.apply_id, 'is_delete': False}
         data = self.portrait_base.search(query)
         return data
 
