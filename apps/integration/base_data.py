@@ -2134,6 +2134,4 @@ for key in keys:
     for i in temp_data:
         # coll.insert_one(i)
         num += 1
-
 print num
-
