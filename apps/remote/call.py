@@ -16,6 +16,7 @@ from apps.etl.dataclean import DataClean
 from apps.etl.context import CacheContext, ArgsContext, ApplyContext, PortraitContext
 from apps.datasource.models import DsInterfaceInfo
 from vendor.errors.remote_error import *
+from vendor.errors.contact_error import *
 
 logger = logging.getLogger('apps.remote')
 
@@ -57,7 +58,9 @@ class DataPrepare(object):
             is_delete=False
         )
         if not ds_conf:
-            raise
+            logger.error('Stream in call class ,Get DsInterfaceInfo error, data_identity is : ' %
+                         self.data_identity)
+            raise DataIdentityUnfound
         else:
             ds_conf = ds_conf[0]
         self.prepare_parms()
@@ -69,12 +72,15 @@ class DataPrepare(object):
         elif ds_conf.method == 'REMOTE':
             origin_data = self.do_request(data_prams)
         if not origin_data:
-            raise  # TODO get data error
+            logger.error('Stream in call class ,Get origin data error, data_identity is : ' %
+                         self.data_identity)
+            raise OriginDataGetError
         cleaner = DataClean(origin_data, ds_conf.data_origin_type)
         clear_data = cleaner.worked()
         if not clear_data:
-            # TODO 源数据 不符合规范
-            raise
+            logger.error('Stream in call class ,Get clean data error, data_identity is : ' %
+                         self.data_identity)
+            raise OriginDataGetError
         self.cache_base.kwargs.update({
             self.data_identity: {
                 'origin_data': clear_data,
@@ -82,19 +88,25 @@ class DataPrepare(object):
             }
         })
         self.cache_base.save()
-        return {self.data_identity: clear_data}
+        return clear_data
 
     def prepare_parms(self):
         arguments = self.argument_base.load()
         for key in self.parm_keys:
             value = arguments.get(key, None)
             if not value:
-                raise
+                logger.error('Stream in call class ,Get prepare_parms error, miss parms %s, data_identity is : %s'
+                             % (key, self.data_identity))
+                raise OriginDataGetParmsMiss
             self.parm_dict.update({
                 key: value
             })
 
     def do_request(self, data):
+        data = {
+            "client_token": "test_lp_syph_code",
+            "req_data": data
+        }
         response = requests.post(self.url, json.dumps(data))
         content = response.content
         content = json.loads(content)
