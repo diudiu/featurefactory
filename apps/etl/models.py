@@ -17,6 +17,10 @@ class FeatureConf(BaseModel):
     raw_field_name = models.CharField(u'参数字段名', max_length=2048)
     feature_type = models.IntegerField(u'特征类型', null=True)
     feature_type_desc = models.CharField(u'特征类型解释', max_length=2048, null=True)
+    feature_rule_type = models.IntegerField(u'特征规则类型', null=True)
+    feature_rule_type_desc = models.CharField(u'特征规则类型解释', max_length=2048, null=True)
+    feature_card_type = models.IntegerField(u'特征评分卡类型', null=True)
+    feature_card_type_desc = models.CharField(u'特征评分卡类型解释', max_length=2048, null=True)
 
     class Meta:
         db_table = 'fic_feature_common_conf'
