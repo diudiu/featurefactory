@@ -8,6 +8,7 @@
     Change Activity:
 """
 import logging
+import json
 
 from vendor.utils.constant import cons
 from procuratorate.lp_judger import Judger
@@ -45,7 +46,7 @@ class DataClean(object):
                 (cons.SOURCE_TYPE_MESSAGE[self.clean_style], self.origin_data)
             )
         # TODO temp_data may is unicode string
-        import json
+
         temp_data = json.loads(temp_data)
         return temp_data
 

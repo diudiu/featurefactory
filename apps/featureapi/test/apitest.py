@@ -26,7 +26,7 @@ def feature_post():
                 # u'is_court_zhixing',
                 # u'airfare_sum12',
                 # u'is_net_black',
-                # u'income_level'
+                u'income_level'
                 u'overload_count'
             ]
         },
@@ -37,6 +37,7 @@ def feature_post():
     content = json.loads(response.content)
     print content
     print time.time() - a
+
 
 if __name__ == '__main__':
     feature_post()

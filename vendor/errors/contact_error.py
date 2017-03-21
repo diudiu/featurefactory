@@ -72,3 +72,8 @@ class FeatureConfigError(ServerError):
 class RelevanceFeatureConfigError(ServerError):
     status = ResponseCode.RELEVANCE_FEATURE_CONFIG_ERROR
     message = ResponseCode.message(status)
+
+
+class CommonFeatureConfigError(ServerError):
+    status = ResponseCode.COMMON_FEATURE_CONFIG_ERROR
+    message = ResponseCode.message(status)

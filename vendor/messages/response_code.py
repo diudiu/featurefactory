@@ -44,6 +44,7 @@ class ResponseCode(object):
     ORIGIN_DATA_GET_ERROR = 60001
     ORIGIN_DATA_GET_PARMS_MISS = 60002
     RELEVANCE_FEATURE_CONFIG_ERROR = 60003
+    COMMON_FEATURE_CONFIG_ERROR = 60004
 
     RESPONSE_MESSAGE = {
         FAILED:                         u"操作失败",
@@ -84,7 +85,8 @@ class ResponseCode(object):
 
         ORIGIN_DATA_GET_ERROR:          u"原始数据获取失败",
         ORIGIN_DATA_GET_PARMS_MISS:     u"获取原始数据参数丢失",
-        RELEVANCE_FEATURE_CONFIG_ERROR:   U'依赖特征表配置错误'
+        RELEVANCE_FEATURE_CONFIG_ERROR: u'依赖特征表配置错误',
+        COMMON_FEATURE_CONFIG_ERROR:    u'通用配置表错误',
     }
 
     @classmethod

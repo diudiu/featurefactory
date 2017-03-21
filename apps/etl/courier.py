@@ -82,7 +82,7 @@ class Courier(object):
         if not args_config:
             logger.error("feature_name:%s config error in common feature table miss data_identity:%s"
                          % (self.feature_name, data_identity))
-            raise RelevanceFeatureConfigError
+            raise CommonFeatureConfigError
         dp = DataPrepare(data_identity, self.apply_id, self.feature_conf[data_identity])
         data = dp.get_original_data()
         return data
@@ -158,22 +158,17 @@ class Courier(object):
         feature_data_identity_list.reverse()
         for feature_name, data_identity in feature_data_identity_list:
             if isinstance(data_identity, list):
-
                 self._get_relevance_feature_userful_data(feature_name, data_identity)
+
             data = self.get_useful_data(data_identity)
             feature_value = self.data_analysis(feature_name, data)
-
-            self.useful_data.update({
-                data_identity: data
-            })
-            self.argument_base.kwargs.update(feature_value)
-            self.argument_base.save()
+            self.useful_data.update(data)
+            if feature_name != feature_data_identity_list[-1][0]:
+                self.argument_base.kwargs.update(feature_value)
+                self.argument_base.save()
 
     def get_relevance_data(self):
-        # TODO 获取依赖逻辑数据
         self._get_relevance_feature_list(self.feature_name)
-        # relevance_feature_list = self.relevance_feature_list.reverse()
-        # relevance_data_identity = self.relevance_data_identity_list.reverse()
         if len(self.relevance_feature_list) != len(self.relevance_data_identity_list):
             logger.error("feature_name:%s config error in relevance feature table " % self.feature_name)
             raise RelevanceFeatureConfigError
