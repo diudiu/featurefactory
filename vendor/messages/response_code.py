@@ -43,6 +43,7 @@ class ResponseCode(object):
 
     ORIGIN_DATA_GET_ERROR = 60001
     ORIGIN_DATA_GET_PARMS_MISS = 60002
+    RELEVANCE_FEATURE_CONFIG_ERROR = 60003
 
     RESPONSE_MESSAGE = {
         FAILED:                         u"操作失败",
@@ -82,7 +83,8 @@ class ResponseCode(object):
         FEATURE_PROCESS_ERROR:          u"特征加工计算出现错误",
 
         ORIGIN_DATA_GET_ERROR:          u"原始数据获取失败",
-        ORIGIN_DATA_GET_PARMS_MISS:     u"获取原始数据参数丢失"
+        ORIGIN_DATA_GET_PARMS_MISS:     u"获取原始数据参数丢失",
+        RELEVANCE_FEATURE_CONFIG_ERROR:   U'依赖特征表配置错误'
     }
 
     @classmethod

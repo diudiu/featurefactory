@@ -137,7 +137,6 @@ class CacheContext(BaseContext):
 
     def save(self):
         """save kwargs to backend"""
-        data_identity = self.kwargs.keys()[0]
         self.data_identity = self.kwargs.keys()[0]
         insert_id = self.cache_base.save(self.kwargs)
         self.kwargs = {}

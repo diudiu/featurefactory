@@ -10,7 +10,7 @@
 import logging
 from django.utils.module_loading import import_string
 
-from apps.etl.context import CacheContext, ApplyContext
+from apps.etl.context import CacheContext, ApplyContext, ArgsContext
 from apps.etl.models import FeatureShuntConf, FeatureRelevanceConf
 from apps.remote.call import DataPrepare
 from studio.feature_comment_handle.featrue_process import FeatureProcess
@@ -32,9 +32,11 @@ class Courier(object):
         self.apply_id = apply_id
         self.data_identity_list = []
         self.cache_base = CacheContext(self.apply_id)
+        self.argument_base = ArgsContext(self.apply_id)
         self.useful_data = {}
         self.is_relevance = False
-        self.relevance_feature_list = [feature_name]
+        self.relevance_feature_list = []
+        self.relevance_data_identity_list = []
 
     def get_feature(self):
         logger.info('Stream in courier function name : get_feature\nFeature name :\n%s' %
@@ -50,7 +52,7 @@ class Courier(object):
 
         elif self.collect_type == 'RelevanceCourier':
             logger.info('Stream in courier function name : get_feature\ncollect_type is RelevanceCourier')
-            self.get_relevance_data(self.data_identity_list[0])
+            self.get_relevance_data()
 
         if not self.useful_data:
             logger.error('Get feature value error : useful data is empty  feature_name is %s' % self.feature_name)
@@ -76,18 +78,19 @@ class Courier(object):
         return ret
 
     def get_useful_data(self, data_identity):
+        args_config = self.feature_conf.get(data_identity)
+        if not args_config:
+            logger.error("feature_name:%s config error in common feature table miss data_identity:%s"
+                         % (self.feature_name, data_identity))
+            raise RelevanceFeatureConfigError
         dp = DataPrepare(data_identity, self.apply_id, self.feature_conf[data_identity])
         data = dp.get_original_data()
         return data
 
     def get_general_data(self):
         logger.info('Stream in courier function name : get_general_data')
-        # useful_data = {}
         for data_identity in self.data_identity_list:
             data = self.get_useful_data(data_identity)
-            # useful_data.update({
-            #     data_identity: data
-            # })
             self.useful_data.update({
                 data_identity: data
             })
@@ -95,11 +98,9 @@ class Courier(object):
 
     def get_shunt_data(self):
         logger.info('Stream in courier function name : get_shunt_data')
-        # useful_data = {}
         data = self.get_shunt_rel_data()
         if not data:
             raise
-        # useful_data.update(data)
         logger.info('Stream get_shunt_data complete\nUseful_data : %s' % data)
         self.useful_data.update(data)
 
@@ -133,38 +134,50 @@ class Courier(object):
                     logger.info('Stream get_shunt_rel_data complete\nUseful_data : %s' % data)
                     return data
 
-    def _get_relevance_feature_list(self, next_data_identity=None):
+    def _get_relevance_feature_list(self, feature_name):
+        relevance_conf = FeatureRelevanceConf.objects.filter(
+            feature_name=feature_name,
+            is_delete=False
+        )[0]
+        if not relevance_conf:
+            logger.error("Don't find feature_name:%s config in relevance feature table " % feature_name)
+            raise RelevanceFeatureConfigError
+        self.relevance_data_identity_list.append(relevance_conf.data_identity)
+        self.relevance_feature_list.append(feature_name)
+        next_di = relevance_conf.depend_di
+        next_feature = relevance_conf.depend_feature
+        if next_feature:
+            if not next_di:
+                raise RelevanceFeatureConfigError
+            next_feature_list = next_feature.split(',')
+            for feature in next_feature_list:
+                self._get_relevance_feature_list(feature)
 
-        # useful_data = {}
-        if next_data_identity:
-            relevance_conf = FeatureRelevanceConf.objects.filter(
-                data_identity=next_data_identity,
-                is_delete=False
-            )[0]
-            if not relevance_conf:
-                raise
-            next_di = relevance_conf.depend_di
-            next_feature = relevance_conf.depend_feature
-            if next_di:
-                self.relevance_feature_list.append(next_feature)
-                self.get_relevance_data(next_di)
+    def _get_relevance_feature_userful_data(self, relevance_feature_list, relevance_data_identity):
+        feature_data_identity_list = zip(relevance_feature_list, relevance_data_identity)
+        feature_data_identity_list.reverse()
+        for feature_name, data_identity in feature_data_identity_list:
+            if isinstance(data_identity, list):
 
-    def get_relevance_data(self, data_identity):
+                self._get_relevance_feature_userful_data(feature_name, data_identity)
+            data = self.get_useful_data(data_identity)
+            feature_value = self.data_analysis(feature_name, data)
+
+            self.useful_data.update({
+                data_identity: data
+            })
+            self.argument_base.kwargs.update(feature_value)
+            self.argument_base.save()
+
+    def get_relevance_data(self):
         # TODO 获取依赖逻辑数据
-        self._get_relevance_feature_list(data_identity)
-        relevance_feature_list = self.relevance_feature_list.reverse()
-        relevance_data_identity = self.data_identity_list.reverse()
-
-        for feature_name, data_identity in zip(relevance_feature_list, relevance_data_identity):
-            if feature_name != relevance_feature_list[-1]:
-                data = self.get_useful_data(data_identity)
-                feature_value = self.data_analysis(feature_name, data)
-
-                self.useful_data.update({
-                    feature_name: feature_value
-                })
-
-        # return useful_data
+        self._get_relevance_feature_list(self.feature_name)
+        # relevance_feature_list = self.relevance_feature_list.reverse()
+        # relevance_data_identity = self.relevance_data_identity_list.reverse()
+        if len(self.relevance_feature_list) != len(self.relevance_data_identity_list):
+            logger.error("feature_name:%s config error in relevance feature table " % self.feature_name)
+            raise RelevanceFeatureConfigError
+        self._get_relevance_feature_userful_data(self.relevance_feature_list, self.relevance_data_identity_list)
 
     def _get_di_from_conf(self, base_conf):
         logger.info('Stream in courier function name : _get_di_from_conf\nBase_conf :\n%s' %

@@ -67,3 +67,8 @@ class FeatureProcessError(ServerError):
 class FeatureConfigError(ServerError):
     status = ResponseCode.WRONG_FEATURE_CONFIG
     message = ResponseCode.message(status)
+
+
+class RelevanceFeatureConfigError(ServerError):
+    status = ResponseCode.RELEVANCE_FEATURE_CONFIG_ERROR
+    message = ResponseCode.message(status)
