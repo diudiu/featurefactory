@@ -59,6 +59,16 @@ class FeatureConfig(CsrfExemptMixin, View):
                 x.update({"created_on": x["created_on"].strftime('%Y-%m-%d %H:%M:%S') if x["created_on"] else ''}),
                 x.update({"updated_on": x["updated_on"].strftime('%Y-%m-%d %H:%M:%S') if x["updated_on"] else ''}),
                 x.update({"raw_field_name": eval(x["raw_field_name"]) if x["raw_field_name"] else ''}),
+                x.update(
+                    {"feature_select_value": eval(x["feature_select_value"]) if x["feature_select_value"] else ''}),
+                x.update({"feature_type": FeatureType.objects.get(pk=x["feature_type"]).feature_type_desc if x[
+                    "feature_type"] else ''}),
+                x.update(
+                    {"feature_rule_type": FeatureRuleType.objects.get(pk=x["feature_rule_type"]).feature_type_desc if x[
+                        "feature_rule_type"] else ''}),
+                x.update(
+                    {"feature_card_type": FeatureCardType.objects.get(pk=x["feature_card_type"]).feature_type_desc if x[
+                        "feature_card_type"] else ''}),
             ], object_list)
 
             page_num = paginator.num_pages
@@ -92,9 +102,6 @@ class FeatureConfig(CsrfExemptMixin, View):
         try:
             body = json.loads(request.body)
             logger.info("update feature config request data=%s", body)
-            # field_list = ['feature_name', 'feature_name_cn', 'feature_type', 'feature_rule_type', 'feature_card_type',
-            #               'raw_field_name', 'collect_type', 'is_delete', 'feature_type_desc']
-            # field_list_value = {i: body.get(i) for i in field_list if body.get(i) is not None}
             updated_on = datetime.datetime.now()
             if item == 'feature_info':
                 FeatureConf.objects.filter(pk=int(featureid)).update(
@@ -104,6 +111,7 @@ class FeatureConfig(CsrfExemptMixin, View):
                     feature_type=body.get('feature_type'),
                     feature_rule_type=body.get('feature_rule_type'),
                     feature_card_type=body.get('feature_card_type'),
+                    feature_select_value=body.get('feature_select_value'),
                     updated_on=updated_on,
                     is_delete=body.get('is_delete')
                 )
