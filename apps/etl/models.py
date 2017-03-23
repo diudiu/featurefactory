@@ -21,6 +21,7 @@ class FeatureConf(BaseModel):
     feature_rule_type_desc = models.CharField(u'特征规则类型解释', max_length=2048, null=True)
     feature_card_type = models.IntegerField(u'特征评分卡类型', null=True)
     feature_card_type_desc = models.CharField(u'特征评分卡类型解释', max_length=2048, null=True)
+    feature_select_value = models.CharField(u'特征可选值', max_length=2048, null=True)
 
     class Meta:
         db_table = 'fic_feature_common_conf'
