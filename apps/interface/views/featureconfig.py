@@ -48,9 +48,9 @@ class FeatureConfig(CsrfExemptMixin, View):
             current_page = page
             page_size = 10
             if featurename == 'all':
-                feature_config_obj = FeatureConf.objects.filter(is_delete=False).values()
+                feature_config_obj = FeatureConf.objects.values()
             else:
-                feature_config_obj = FeatureConf.objects.filter(is_delete=False, feature_name=featurename).values()
+                feature_config_obj = FeatureConf.objects.filter(feature_name=featurename).values()
             feature_config_count = feature_config_obj.count()
 
             paginator = ExtPaginator(list(feature_config_obj), page_size, feature_config_count)
@@ -59,7 +59,6 @@ class FeatureConfig(CsrfExemptMixin, View):
                 x.update({"created_on": x["created_on"].strftime('%Y-%m-%d %H:%M:%S') if x["created_on"] else ''}),
                 x.update({"updated_on": x["updated_on"].strftime('%Y-%m-%d %H:%M:%S') if x["updated_on"] else ''}),
                 x.update({"raw_field_name": eval(x["raw_field_name"]) if x["raw_field_name"] else ''}),
-                x.update({"data_identity": eval(x["data_identity"]) if x["data_identity"] else ''}),
             ], object_list)
 
             page_num = paginator.num_pages
@@ -78,12 +77,12 @@ class FeatureConfig(CsrfExemptMixin, View):
             logger.error(e.message)
             data = {
                 'status': '0',
-                'message': 'error'
+                'message': e.message
             }
 
         return json_response(data)
 
-    def put(self, request, featureid, *args, **kwargs):
+    def put(self, request, item, featureid, *args, **kwargs):
         """更新特征基础配置信息"""
         data = {
             'status': 1,
@@ -93,33 +92,34 @@ class FeatureConfig(CsrfExemptMixin, View):
         try:
             body = json.loads(request.body)
             logger.info("update feature config request data=%s", body)
-            # id = body['id']
-            feature_name = body['feature_name']
-            feature_name_cn = body['feature_name_cn']
-            data_identity = body['data_identity']
-            collect_type = body['collect_type']
-            raw_field_name = body['raw_field_name']
-            feature_type = body['feature_type']
-            feature_type_desc = body['feature_type_desc']
-            is_delete = body['is_delete']
+            # field_list = ['feature_name', 'feature_name_cn', 'feature_type', 'feature_rule_type', 'feature_card_type',
+            #               'raw_field_name', 'collect_type', 'is_delete', 'feature_type_desc']
+            # field_list_value = {i: body.get(i) for i in field_list if body.get(i) is not None}
             updated_on = datetime.datetime.now()
-
-            FeatureConf.objects.filter(pk=int(featureid)).update(
-                feature_name=feature_name,
-                feature_name_cn=feature_name_cn,
-                data_identity=data_identity,
-                collect_type=collect_type,
-                raw_field_name=raw_field_name,
-                feature_type=feature_type,
-                feature_type_desc=feature_type_desc,
-                updated_on=updated_on,
-                is_delete=is_delete
-            )
+            if item == 'feature_info':
+                FeatureConf.objects.filter(pk=int(featureid)).update(
+                    feature_name=body.get('feature_name'),
+                    feature_name_cn=body.get('feature_name_cn'),
+                    raw_field_name=body.get('raw_field_name'),
+                    feature_type=body.get('feature_type'),
+                    feature_rule_type=body.get('feature_rule_type'),
+                    feature_card_type=body.get('feature_card_type'),
+                    updated_on=updated_on,
+                    is_delete=body.get('is_delete')
+                )
+            elif item == 'feature_source':
+                FeatureConf.objects.filter(pk=int(featureid)).update(
+                    collect_type=body.get('collect_type'),
+                    raw_field_name=body.get('raw_field_name'),
+                    updated_on=updated_on
+                )
+            else:
+                raise Exception('url error')
         except Exception as e:
             logger.error(e.message)
             data = {
                 'status': '0',
-                'message': 'error'
+                'message': e.message
             }
 
         return json_response(data)

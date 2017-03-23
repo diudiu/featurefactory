@@ -12,7 +12,7 @@ class FeatureConf(BaseModel):
     id = models.AutoField(u'主键', primary_key=True)
     feature_name = models.CharField(u'特征字段名', max_length=64)
     feature_name_cn = models.CharField(u'特征中文名', max_length=128)
-    data_identity = models.CharField(u'原始数据标识', max_length=512)
+    # data_identity = models.CharField(u'原始数据标识', max_length=512)
     collect_type = models.CharField(u'数据获取方式', max_length=64, null=True)
     raw_field_name = models.CharField(u'参数字段名', max_length=2048)
     feature_type = models.IntegerField(u'特征类型', null=True)
