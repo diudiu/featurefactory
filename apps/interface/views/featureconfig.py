@@ -52,13 +52,12 @@ class FeatureConfig(CsrfExemptMixin, View):
             else:
                 feature_config_obj = FeatureConf.objects.filter(feature_name=featurename).values()
             feature_config_count = feature_config_obj.count()
-
             paginator = ExtPaginator(list(feature_config_obj), page_size, feature_config_count)
             object_list = paginator.page(current_page)
             map(lambda x: [
                 x.update({"created_on": x["created_on"].strftime('%Y-%m-%d %H:%M:%S') if x["created_on"] else ''}),
                 x.update({"updated_on": x["updated_on"].strftime('%Y-%m-%d %H:%M:%S') if x["updated_on"] else ''}),
-                x.update({"raw_field_name": eval(x["raw_field_name"]) if x["raw_field_name"] else ''}),
+                x.update({"data_identity": eval(x["data_identity"]) if x["data_identity"] else ''}),
                 x.update(
                     {"feature_select_value": eval(x["feature_select_value"]) if x["feature_select_value"] else ''}),
                 x.update({"feature_type": FeatureType.objects.get(pk=x["feature_type"]).feature_type_desc if x[
@@ -107,7 +106,6 @@ class FeatureConfig(CsrfExemptMixin, View):
                 FeatureConf.objects.filter(pk=int(featureid)).update(
                     feature_name=body.get('feature_name'),
                     feature_name_cn=body.get('feature_name_cn'),
-                    raw_field_name=body.get('raw_field_name'),
                     feature_type=body.get('feature_type'),
                     feature_rule_type=body.get('feature_rule_type'),
                     feature_card_type=body.get('feature_card_type'),
@@ -118,7 +116,7 @@ class FeatureConfig(CsrfExemptMixin, View):
             elif item == 'feature_source':
                 FeatureConf.objects.filter(pk=int(featureid)).update(
                     collect_type=body.get('collect_type'),
-                    raw_field_name=body.get('raw_field_name'),
+                    data_identity=body.get('data_identity'),
                     updated_on=updated_on
                 )
             else:
@@ -132,7 +130,7 @@ class FeatureConfig(CsrfExemptMixin, View):
 
         return json_response(data)
 
-    def post(self, request, *args, **kwargs):
+    def post(self, item, request, *args, **kwargs):
         """添加特征基本信息配置"""
         data = {
             'status': 1,
@@ -141,35 +139,39 @@ class FeatureConfig(CsrfExemptMixin, View):
         try:
             body = json.loads(request.body)
             logger.info("update feature config request data=%s", body)
-            feature_name = body['feature_name']
-            feature_name_cn = body['feature_name_cn']
-            data_identity = body['data_identity']
-            collect_type = body['collect_type']
-            raw_field_name = body['raw_field_name']
-            feature_type = body['feature_type']
-            feature_type_desc = body['feature_type_desc']
-            is_delete = body['is_delete']
             created_on = datetime.datetime.now()
+            if item == 'feature_info':
+                feature_name = body.get('feature_name')
+                count = FeatureConf.objects.filter(feature_name=feature_name)
+                if count:
+                    raise Exception('%s already exists' % feature_name)
+                FeatureConf(
+                    feature_name=body.get('feature_name'),
+                    feature_name_cn=body.get('feature_name_cn'),
+                    feature_type=body.get('feature_type'),
+                    feature_rule_type=body.get('feature_rule_type'),
+                    feature_card_type=body.get('feature_card_type'),
+                    feature_select_value=body.get('feature_select_value'),
+                    is_delete=body.get('is_delete'),
+                    updated_on=created_on,
+                    created_on=created_on
+                ).save()
 
-            FeatureConf(
-                feature_name=feature_name,
-                feature_name_cn=feature_name_cn,
-                data_identity=data_identity,
-                collect_type=collect_type,
-                raw_field_name=raw_field_name,
-                feature_type=feature_type,
-                feature_type_desc=feature_type_desc,
-                is_delete=is_delete,
-                updated_on=created_on,
-                created_on=created_on
-            ).save()
+            elif item == 'feature_source':
+                FeatureConf(
+                    collect_type=body.get('collect_type'),
+                    data_identity=body.get('data_identity'),
+                    updated_on=created_on,
+                    created_on=created_on
+                ).save()
+            else:
+                raise Exception('url error')
         except Exception as e:
             logger.error(e.message)
             data = {
                 'status': '0',
-                'message': 'error'
+                'message': e.message
             }
-
         return json_response(data)
 
 

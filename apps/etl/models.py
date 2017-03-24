@@ -8,15 +8,63 @@ from apps.common.models import BaseModel
 from apps.datasource.models import DsInterfaceInfo
 
 
+class FeatureType(BaseModel):
+    id = models.AutoField(u'主键', primary_key=True)
+    # feature_type_desc = models.CharField(u'特征类型解释', max_length=2048, primary_key=True)
+    # feature_type = models.CharField(u'特征类型解释', max_length=2048, primary_key=True)
+    feature_type_desc = models.CharField(u'特征类型解释', max_length=2048, null=True)
+
+    class Meta:
+        db_table = 'fic_feature_type'
+        verbose_name = u'特征类型配置表'
+        verbose_name_plural = u'特征类型配置表'
+
+    def __unicode__(self):
+        return "%s" % self.feature_type_desc
+
+
+class FeatureCardType(BaseModel):
+    id = models.AutoField(u'主键', primary_key=True)
+    # feature_type_desc = models.CharField(u'特征评分卡类型解释', max_length=2048, primary_key=True)
+    # feature_type = models.CharField(u'特征评分卡类型解释', max_length=2048, primary_key=True)
+    feature_type_desc = models.CharField(u'特征评分卡类型解释', max_length=2048, null=True)
+
+    class Meta:
+        db_table = 'fic_feature_card_type'
+        verbose_name = u'特征评分卡类型配置表'
+        verbose_name_plural = u'特征评分卡类型配置表'
+
+    def __unicode__(self):
+        return "%s" % self.feature_type_desc
+
+
+class FeatureRuleType(BaseModel):
+    id = models.AutoField(u'主键', primary_key=True)
+    # feature_type_desc = models.CharField(u'特征规则类型解释', max_length=2048, primary_key=True)
+    # feature_type = models.CharField(u'特征规则类型解释', max_length=2048, primary_key=True)
+    feature_type_desc = models.CharField(u'特征规则类型解释', max_length=2048, null=True)
+
+    class Meta:
+        db_table = 'fic_feature_rule_type'
+        verbose_name = u'特征规则类型配置表'
+        verbose_name_plural = u'特征规则类型配置表'
+
+    def __unicode__(self):
+        return "%s" % self.feature_type_desc
+
+
 class FeatureConf(BaseModel):
     id = models.AutoField(u'主键', primary_key=True)
     feature_name = models.CharField(u'特征字段名', max_length=64)
-    feature_name_cn = models.CharField(u'特征中文名', max_length=128)
+    feature_name_cn = models.CharField(u'特征中文名', max_length=128, null=True)
     collect_type = models.CharField(u'数据获取方式', max_length=64, null=True)
-    data_identity = models.CharField(u'参数字段名', max_length=2048)
-    feature_type = models.IntegerField(u'特征类型', null=True)
-    feature_rule_type = models.IntegerField(u'特征规则类型', null=True)
-    feature_card_type = models.IntegerField(u'特征评分卡类型', null=True)
+    data_identity = models.CharField(u'参数字段名', max_length=2048, null=True)
+    # feature_type = models.IntegerField(u'特征类型', null=True)
+    # feature_rule_type = models.IntegerField(u'特征规则类型', null=True)
+    # feature_card_type = models.IntegerField(u'特征评分卡类型', null=True)
+    feature_type = models.ForeignKey(FeatureType, db_column="feature_type", null=True)
+    feature_rule_type = models.ForeignKey(FeatureRuleType, db_column="feature_rule_type", null=True)
+    feature_card_type = models.ForeignKey(FeatureCardType, db_column="feature_card_type", null=True)
     feature_select_value = models.CharField(u'特征可选值', max_length=2048, null=True)
 
     class Meta:
@@ -24,9 +72,11 @@ class FeatureConf(BaseModel):
         verbose_name = u'一般特征处理逻辑配置表'
         verbose_name_plural = u'一般特征处理逻辑配置表'
 
+    def __unicode__(self):
+        return "%s" % self.id
+
 
 class FeatureShuntConf(BaseModel):
-
     id = models.AutoField(u'主键', primary_key=True)
     feature_name = models.CharField(u'特征字段名', max_length=64)
     shunt_key = models.CharField(u'分流依据字段名称', max_length=64)
@@ -41,7 +91,6 @@ class FeatureShuntConf(BaseModel):
 
 
 class FeatureRelevanceConf(BaseModel):
-
     id = models.AutoField(u'主键', primary_key=True)
     feature_name = models.CharField(u'特征字段名', max_length=64)
     depend_feature = models.CharField(u'此特征依赖的其他特征名', max_length=64, null=True)
@@ -55,7 +104,6 @@ class FeatureRelevanceConf(BaseModel):
 
 
 class PreFieldInfo(BaseModel):
-
     id = models.AutoField(u'主键', primary_key=True)
     field_name = models.CharField(u'字段名称', max_length=64)
     field_name_cn = models.CharField(u'中文名称', max_length=64)
@@ -69,7 +117,6 @@ class PreFieldInfo(BaseModel):
 
 
 class FeatureProcess(BaseModel):
-
     id = models.AutoField(u'主键', primary_key=True)
     feature_name = models.CharField(u'特征字段名', max_length=64)
     feature_data_type = models.CharField(u'特征字段类型', max_length=64)
@@ -82,37 +129,3 @@ class FeatureProcess(BaseModel):
         db_table = 'fic_feature_process_info'
         verbose_name = u'特征计算方式配置表'
         verbose_name_plural = u'特征计算方式配置表'
-
-
-class FeatureType(BaseModel):
-
-    id = models.AutoField(u'主键', primary_key=True)
-    feature_type_desc = models.CharField(u'特征类型解释', max_length=2048, null=True)
-
-    class Meta:
-        db_table = 'fic_feature_type'
-        verbose_name = u'特征类型配置表'
-        verbose_name_plural = u'特征类型配置表'
-
-
-class FeatureCardType(BaseModel):
-
-    id = models.AutoField(u'主键', primary_key=True)
-    feature_type_desc = models.CharField(u'特征评分卡类型解释', max_length=2048, null=True)
-
-    class Meta:
-        db_table = 'fic_feature_card_type'
-        verbose_name = u'特征评分卡类型配置表'
-        verbose_name_plural = u'特征评分卡类型配置表'
-
-
-class FeatureRuleType(BaseModel):
-
-    id = models.AutoField(u'主键', primary_key=True)
-    feature_type_desc = models.CharField(u'特征规则类型解释', max_length=2048, null=True)
-
-    class Meta:
-        db_table = 'fic_feature_rule_type'
-        verbose_name = u'特征规则类型配置表'
-        verbose_name_plural = u'特征规则类型配置表'
-

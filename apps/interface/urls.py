@@ -16,7 +16,7 @@ urlpatterns = patterns(
     url(r'^common_conf/show/(?P<featurename>\w+)/(?P<page>\d+)/$', FeatureConfig.as_view(),
         name='feature_config_show'),
     url(r'^common_conf/update/(?P<item>\w+)/(?P<featureid>\d+)/$', FeatureConfig.as_view(), name='feature_config_update'),
-    url(r'^common_conf/add/$', FeatureConfig.as_view(), name='feature_config_add'),
+    url(r'^common_conf/add/(?P<item>\w+)$', FeatureConfig.as_view(), name='feature_config_add'),
     url(r'^shunt_conf/show/(?P<featurename>\w+)/(?P<page>\d+)/$', FeatureShuntConfig.as_view(),
         name='feature_shunt_config_show'),
     url(r'^shunt_conf/update/(?P<featureid>\d+)/$', FeatureShuntConfig.as_view(),
