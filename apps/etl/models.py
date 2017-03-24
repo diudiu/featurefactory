@@ -12,7 +12,7 @@ class FeatureType(BaseModel):
     id = models.AutoField(u'主键', primary_key=True)
     # feature_type_desc = models.CharField(u'特征类型解释', max_length=2048, primary_key=True)
     # feature_type = models.CharField(u'特征类型解释', max_length=2048, primary_key=True)
-    feature_type_desc = models.CharField(u'特征类型解释', max_length=2048, null=True)
+    feature_type_desc = models.CharField(u'特征类型解释', max_length=2048)
 
     class Meta:
         db_table = 'fic_feature_type'
@@ -27,7 +27,7 @@ class FeatureCardType(BaseModel):
     id = models.AutoField(u'主键', primary_key=True)
     # feature_type_desc = models.CharField(u'特征评分卡类型解释', max_length=2048, primary_key=True)
     # feature_type = models.CharField(u'特征评分卡类型解释', max_length=2048, primary_key=True)
-    feature_type_desc = models.CharField(u'特征评分卡类型解释', max_length=2048, null=True)
+    feature_type_desc = models.CharField(u'特征评分卡类型解释', max_length=2048)
 
     class Meta:
         db_table = 'fic_feature_card_type'
@@ -42,7 +42,7 @@ class FeatureRuleType(BaseModel):
     id = models.AutoField(u'主键', primary_key=True)
     # feature_type_desc = models.CharField(u'特征规则类型解释', max_length=2048, primary_key=True)
     # feature_type = models.CharField(u'特征规则类型解释', max_length=2048, primary_key=True)
-    feature_type_desc = models.CharField(u'特征规则类型解释', max_length=2048, null=True)
+    feature_type_desc = models.CharField(u'特征规则类型解释', max_length=2048)
 
     class Meta:
         db_table = 'fic_feature_rule_type'
@@ -62,9 +62,9 @@ class FeatureConf(BaseModel):
     # feature_type = models.IntegerField(u'特征类型', null=True)
     # feature_rule_type = models.IntegerField(u'特征规则类型', null=True)
     # feature_card_type = models.IntegerField(u'特征评分卡类型', null=True)
-    feature_type = models.ForeignKey(FeatureType, db_column="feature_type", null=True)
-    feature_rule_type = models.ForeignKey(FeatureRuleType, db_column="feature_rule_type", null=True)
-    feature_card_type = models.ForeignKey(FeatureCardType, db_column="feature_card_type", null=True)
+    feature_type = models.ForeignKey(FeatureType, db_column="feature_type")
+    feature_rule_type = models.ForeignKey(FeatureRuleType, db_column="feature_rule_type")
+    feature_card_type = models.ForeignKey(FeatureCardType, db_column="feature_card_type")
     feature_select_value = models.CharField(u'特征可选值', max_length=2048, null=True)
 
     class Meta:
