@@ -16,7 +16,7 @@ urlpatterns = patterns(
     url(r'^common_conf/show/(?P<featurename>\w+)/(?P<page>\d+)/$', FeatureConfig.as_view(),
         name='feature_config_show'),
     url(r'^common_conf/update/(?P<item>\w+)/(?P<featureid>\d+)/$', FeatureConfig.as_view(), name='feature_config_update'),
-    url(r'^common_conf/add/(?P<item>\w+)$', FeatureConfig.as_view(), name='feature_config_add'),
+    url(r'^common_conf/add/(?P<item>\w+)/$', FeatureConfig.as_view(), name='feature_config_add'),
     url(r'^shunt_conf/show/(?P<featurename>\w+)/(?P<page>\d+)/$', FeatureShuntConfig.as_view(),
         name='feature_shunt_config_show'),
     url(r'^shunt_conf/update/(?P<featureid>\d+)/$', FeatureShuntConfig.as_view(),
@@ -32,4 +32,11 @@ urlpatterns = patterns(
     url(r'^remote_conf/add/$', RemoteConfig.as_view(), name='remote_config_add'),
 
     url(r'^feature_process/config/$', FeatureProcessAPI.as_view(), name='feature_process'),
+    url(r'^get_list/(?P<item>\w+)/$', GetItemList.as_view(), name='get_list'),
+
+    url(r'^pre_filed_conf/show/(?P<fieldname>\w+)/(?P<page>\d+)/$', PreFieldInfoConfig.as_view(),
+        name='pre_filed_conf_show'),
+    url(r'^pre_filed_conf/update/(?P<fieldid>\d+)/$', PreFieldInfoConfig.as_view(), name='pre_filed_conf_update'),
+    url(r'^pre_filed_conf/add/$', PreFieldInfoConfig.as_view(), name='pre_filed_conf_add'),
+
 )

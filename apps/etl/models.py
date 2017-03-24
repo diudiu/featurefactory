@@ -98,8 +98,8 @@ class PreFieldInfo(BaseModel):
     id = models.AutoField(u'主键', primary_key=True)
     field_name = models.CharField(u'字段名称', max_length=64)
     field_name_cn = models.CharField(u'中文名称', max_length=64)
-    source = models.CharField(u'数据来源', max_length=64)
-    path = models.CharField(u'JsonPath路径', max_length=256)
+    source = models.CharField(u'数据来源', max_length=64, null=True)
+    path = models.CharField(u'JsonPath路径', max_length=256, null=True)
 
     class Meta:
         db_table = 'fic_pre_field_info'
@@ -121,3 +121,22 @@ class FeatureProcess(BaseModel):
         db_table = 'fic_feature_process_info'
         verbose_name = u'特征计算方式配置表'
         verbose_name_plural = u'特征计算方式配置表'
+
+
+class FuncLibSource(BaseModel):
+    FUNC_TYPE_CHOICES = [
+        ('M', u'map'),
+        ('F', u'filter'),
+        ('R', u'reduce'),
+        ('A', u'assert'),
+    ]
+    # id = models.AutoField(u'主键', primary_key=True)
+    func_name = models.CharField(u'函数名', max_length=64, primary_key=True)
+    func_desc = models.CharField(u'函数描述', max_length=64)
+    func_type = models.CharField(u'函数类型', choices=FUNC_TYPE_CHOICES, default="M", max_length=10, db_index=True)
+
+    class Meta:
+        db_table = 'fic_func_lib'
+        verbose_name = u'函数库配置表'
+        verbose_name_plural = u'函数库配置表'
+
