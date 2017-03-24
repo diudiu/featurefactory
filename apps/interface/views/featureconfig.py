@@ -48,7 +48,7 @@ class FeatureConfig(CsrfExemptMixin, View):
             current_page = page
             page_size = 10
             if featurename == 'all':
-                feature_config_obj = FeatureConf.objects.values()
+                feature_config_obj = FeatureConf.objects.all()
             else:
                 feature_config_obj = FeatureConf.objects.filter(feature_name=featurename).values()
             feature_config_count = feature_config_obj.count()
