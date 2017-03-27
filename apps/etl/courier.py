@@ -144,11 +144,11 @@ class Courier(object):
             raise RelevanceFeatureConfigError
         self.relevance_data_identity_list.append(relevance_conf.data_identity)
         self.relevance_feature_list.append(feature_name)
-        next_di = relevance_conf.depend_di
+        # next_di = relevance_conf.depend_di
         next_feature = relevance_conf.depend_feature
         if next_feature:
-            if not next_di:
-                raise RelevanceFeatureConfigError
+            # if not next_di:
+            #     raise RelevanceFeatureConfigError
             next_feature_list = next_feature.split(',')
             for feature in next_feature_list:
                 self._get_relevance_feature_list(feature)

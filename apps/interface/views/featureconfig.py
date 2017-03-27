@@ -162,7 +162,7 @@ class FeatureConfig(CsrfExemptMixin, View):
                     raise Exception(u'特征名和特征中文名不能为空！')
                 count = FeatureConf.objects.filter(feature_name=feature_name)
                 if count:
-                    raise Exception('%s already exists' % feature_name)
+                    raise Exception('%s already exists!' % feature_name)
                 feature_type = body.get('feature_type_id')
                 feature_rule_type = body.get('feature_rule_type_id')
                 feature_card_type = body.get('feature_card_type_id')
@@ -212,7 +212,7 @@ class FeatureShuntConfig(CsrfExemptMixin, View):
             map(lambda x: [
                 x.update({"created_on": x["created_on"].strftime('%Y-%m-%d %H:%M:%S') if x["created_on"] else ''}),
                 x.update({"updated_on": x["updated_on"].strftime('%Y-%m-%d %H:%M:%S') if x["updated_on"] else ''}),
-                x.update({"shunt_value": eval(x["shunt_value"]) if x["shunt_value"] else ''}),
+                x.update({"shunt_value": x["shunt_value"] if x["shunt_value"] else ''}),
             ], object_list)
 
             page_num = paginator.num_pages
@@ -231,7 +231,7 @@ class FeatureShuntConfig(CsrfExemptMixin, View):
             logger.error(e.message)
             data = {
                 'status': '0',
-                'message': 'error'
+                'message': 'error message:%s' % e.message
             }
 
         return json_response(data)
@@ -246,16 +246,16 @@ class FeatureShuntConfig(CsrfExemptMixin, View):
         try:
             body = json.loads(request.body)
             logger.info("update shunt feature config request data=%s", body)
-            feature_name = body['feature_name']
-            shunt_key = body['shunt_key']
-            shunt_type = body['shunt_type']
-            shunt_value = tuple(body['shunt_value'])
-            data_identity = body['data_identity']
-            is_delete = body['is_delete']
-            if not (feature_name and shunt_key and data_identity and shunt_type and shunt_value and is_delete):
+            feature_name = body.get('feature_name')
+            shunt_key = body.get('shunt_key')
+            shunt_type = body.get('shunt_type')
+            shunt_value = body.get('shunt_value')
+            data_identity = body.get('data_identity')
+            is_delete = body.get('is_delete')
+            if not (feature_name and shunt_key and data_identity and shunt_type and shunt_value):
                 raise Exception("all values don't is null !")
 
-            if isinstance(body['shunt_value'], tuple):
+            if not isinstance(eval(body['shunt_value']), tuple):
                 raise Exception(u'数据源适应范围必须为元组类型!')
             updated_on = datetime.datetime.now()
             FeatureShuntConf.objects.filter(pk=int(featureid)).update(
@@ -271,7 +271,7 @@ class FeatureShuntConfig(CsrfExemptMixin, View):
             logger.error(e.message)
             data = {
                 'status': '0',
-                'message': 'error'
+                'message': 'error message:%s' % e.message
             }
 
         return json_response(data)
@@ -285,25 +285,32 @@ class FeatureShuntConfig(CsrfExemptMixin, View):
         try:
             body = json.loads(request.body)
             logger.info("add shunt feature config request data=%s", body)
-            feature_name = body['feature_name']
-            shunt_key = body['shunt_key']
-            shunt_type = body['shunt_type']
-            shunt_value = tuple(body['shunt_value'])
-            data_identity = body['data_identity']
-            is_delete = body['is_delete']
+            feature_name = body.get('feature_name')
+            shunt_key = body.get('shunt_key')
+            shunt_type = body.get('shunt_type')
+            shunt_value = body.get('shunt_value')
+            data_identity = body.get('data_identity')
+            is_delete = body.get('is_delete')
+            if not (feature_name and shunt_key and data_identity and shunt_type and shunt_value):
+                raise Exception("all values don't is null !")
+
+            if not isinstance(eval(body['shunt_value']), (tuple, list)):
+                raise Exception(u'数据源适应范围必须为元组类型!')
+            if FeatureShuntConf.objects.filter(feature_name=feature_name).count():
+                raise Exception('this feature_name already exists!')
             FeatureShuntConf(
                 feature_name=feature_name,
                 shunt_key=shunt_key,
                 data_identity=data_identity,
                 shunt_type=shunt_type,
-                shunt_value=shunt_value,
+                shunt_value=tuple(eval(shunt_value)),
                 is_delete=is_delete
             ).save()
         except Exception as e:
             logger.error(e.message)
             data = {
                 'status': '0',
-                'message': 'error'
+                'message': 'error message:%s' % e.message
             }
 
         return json_response(data)
@@ -318,12 +325,11 @@ class FeatureRelevanceConfig(CsrfExemptMixin, View):
         }
         try:
             current_page = page
-            page_size = 10
+            page_size = 100
             if featurename == 'all':
-                feature_config_obj = FeatureRelevanceConf.objects.filter(is_delete=False).values()
+                feature_config_obj = FeatureRelevanceConf.objects.values()
             else:
                 feature_config_obj = FeatureRelevanceConf.objects.filter(
-                    is_delete=False,
                     feature_name=featurename
                 ).values()
             feature_config_count = feature_config_obj.count()
@@ -351,7 +357,7 @@ class FeatureRelevanceConfig(CsrfExemptMixin, View):
             logger.error(e.message)
             data = {
                 'status': '0',
-                'message': 'error'
+                'message': 'error message:%s' % e.message
             }
 
         return json_response(data)
@@ -432,12 +438,11 @@ class RemoteConfig(CsrfExemptMixin, View):
         }
         try:
             current_page = page
-            page_size = 10
+            page_size = 100
             if data_identity == 'all':
-                data_identity_obj = DsInterfaceInfo.objects.filter(is_delete=False).values()
+                data_identity_obj = DsInterfaceInfo.objects.values()
             else:
                 data_identity_obj = DsInterfaceInfo.objects.filter(
-                    is_delete=False,
                     data_identity=data_identity
                 ).values()
             data_identity_count = data_identity_obj.count()
@@ -465,7 +470,7 @@ class RemoteConfig(CsrfExemptMixin, View):
             logger.error(e.message)
             data = {
                 'status': '0',
-                'message': 'error'
+                'message': 'error message:%s' % e.message
             }
 
         return json_response(data)
