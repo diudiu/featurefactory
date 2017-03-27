@@ -105,6 +105,10 @@ class FeatureConfig(CsrfExemptMixin, View):
             logger.info("update feature config request data=%s", body)
             updated_on = datetime.datetime.now()
             if item == 'feature_info':
+                feature_name_cn = body.get('feature_name_cn')
+                if not feature_name_cn:
+                    raise Exception(u'特征中文名不能为空！')
+
                 feature_type = body.get('feature_type_id')
                 feature_rule_type = body.get('feature_rule_type_id')
                 feature_card_type = body.get('feature_card_type_id')
@@ -122,6 +126,9 @@ class FeatureConfig(CsrfExemptMixin, View):
                     is_delete=body.get('is_delete')
                 )
             elif item == 'feature_source':
+                data_identity = body.get('data_identity')
+                if not data_identity:
+                    raise Exception(u'特征数据源不能为空！')
                 FeatureConf.objects.filter(pk=int(featureid)).update(
                     collect_type=body.get('collect_type'),
                     data_identity=body.get('data_identity'),
@@ -150,6 +157,9 @@ class FeatureConfig(CsrfExemptMixin, View):
             created_on = datetime.datetime.now()
             if item == 'feature_info':
                 feature_name = body.get('feature_name')
+                feature_name_cn = body.get('feature_name_cn')
+                if not feature_name_cn or not feature_name_cn:
+                    raise Exception(u'特征名和特征中文名不能为空！')
                 count = FeatureConf.objects.filter(feature_name=feature_name)
                 if count:
                     raise Exception('%s already exists' % feature_name)
@@ -170,15 +180,6 @@ class FeatureConfig(CsrfExemptMixin, View):
                     updated_on=created_on,
                     created_on=created_on
                 ).save()
-
-            # elif item == 'feature_source':
-            #
-            #     FeatureConf(
-            #         collect_type=body.get('collect_type'),
-            #         data_identity=body.get('data_identity'),
-            #         updated_on=created_on,
-            #         created_on=created_on
-            #     ).save()
             else:
                 raise Exception('url error')
         except Exception as e:
@@ -199,11 +200,11 @@ class FeatureShuntConfig(CsrfExemptMixin, View):
         }
         try:
             current_page = page
-            page_size = 10
+            page_size = 500
             if featurename == 'all':
-                feature_config_obj = FeatureShuntConf.objects.filter(is_delete=False).values()
+                feature_config_obj = FeatureShuntConf.objects.values()
             else:
-                feature_config_obj = FeatureShuntConf.objects.filter(is_delete=False, feature_name=featurename).values()
+                feature_config_obj = FeatureShuntConf.objects.filter(feature_name=featurename).values()
             feature_config_count = feature_config_obj.count()
 
             paginator = ExtPaginator(list(feature_config_obj), page_size, feature_config_count)
@@ -251,8 +252,12 @@ class FeatureShuntConfig(CsrfExemptMixin, View):
             shunt_value = tuple(body['shunt_value'])
             data_identity = body['data_identity']
             is_delete = body['is_delete']
-            updated_on = datetime.datetime.now()
+            if not (feature_name and shunt_key and data_identity and shunt_type and shunt_value and is_delete):
+                raise Exception("all values don't is null !")
 
+            if isinstance(body['shunt_value'], tuple):
+                raise Exception(u'数据源适应范围必须为元组类型!')
+            updated_on = datetime.datetime.now()
             FeatureShuntConf.objects.filter(pk=int(featureid)).update(
                 feature_name=feature_name,
                 shunt_key=shunt_key,
@@ -418,133 +423,6 @@ class FeatureRelevanceConfig(CsrfExemptMixin, View):
         return json_response(data)
 
 
-class PreFieldInfoConfig(CsrfExemptMixin, View):
-    def get(self, request, fieldname, page, *args, **kwargs):
-        """获取数据源参数配置信息"""
-        data = {
-            'status': 1,
-            'message': 'success'
-        }
-        try:
-            current_page = page
-            page_size = 100
-            if fieldname == 'all':
-                config_obj = PreFieldInfo.objects.values()
-            else:
-                config_obj = PreFieldInfo.objects.filter(field_name=fieldname).values()
-            config_count = config_obj.count()
-            paginator = ExtPaginator(list(config_obj), page_size, config_count)
-            object_list = paginator.page(current_page)
-            map(lambda x: [
-                x.update({"created_on": x["created_on"].strftime('%Y-%m-%d %H:%M:%S') if x["created_on"] else ''}),
-                x.update({"updated_on": x["updated_on"].strftime('%Y-%m-%d %H:%M:%S') if x["updated_on"] else ''}),
-            ], object_list)
-
-            page_num = paginator.num_pages
-            page_range = paginator.page_range
-
-            res_data = dict(
-                total_count=config_count,
-                page_num=page_num,
-                current_page=current_page,
-                config_list=list(object_list),
-                page_range=page_range
-            )
-
-            data.update({"res_data": res_data})
-        except Exception as e:
-            logger.error(e.message)
-            data = {
-                'status': '0',
-                'message': 'error message:%s' % e.message
-            }
-
-        return json_response(data)
-
-    def put(self, request, fieldid, *args, **kwargs):
-        """更新特征基础配置信息"""
-        data = {
-            'status': 1,
-            'message': 'success'
-        }
-
-        try:
-            body = json.loads(request.body)
-            logger.info("update feature config request data=%s", body)
-            updated_on = datetime.datetime.now()
-            source = body.get('source')
-            path = body.get('path')
-            if (source and path) or (not source and not path):
-                raise Exception(u'参数来源和jsonpath只能同时为空或同时不为空!')
-            PreFieldInfo.objects.filter(pk=int(fieldid)).update(
-                field_name=body.get('field_name'),
-                field_name_cn=body.get('field_name_cn'),
-                source=body.get('source'),
-                path=body.get('path'),
-                updated_on=updated_on,
-                is_delete=body.get('is_delete')
-            )
-        except Exception as e:
-            logger.error(e.message)
-            data = {
-                'status': '0',
-                'message': 'error message:%s' % e.message
-            }
-
-        return json_response(data)
-
-    def post(self, request, item, *args, **kwargs):
-        """添加特征基本信息配置"""
-        data = {
-            'status': 1,
-            'message': 'success'
-        }
-        try:
-            body = json.loads(request.body)
-            logger.info("update feature config request data=%s", body)
-            created_on = datetime.datetime.now()
-            if item == 'feature_info':
-                feature_name = body.get('feature_name')
-                count = FeatureConf.objects.filter(feature_name=feature_name)
-                if count:
-                    raise Exception('%s already exists' % feature_name)
-                feature_type = body.get('feature_type_id')
-                feature_rule_type = body.get('feature_rule_type_id')
-                feature_card_type = body.get('feature_card_type_id')
-                feature_type = FeatureType.objects.get(pk=feature_type) if feature_type else None
-                feature_rule_type = FeatureRuleType.objects.get(pk=feature_rule_type) if feature_rule_type else None
-                feature_card_type = FeatureCardType.objects.get(pk=feature_card_type) if feature_card_type else None
-                FeatureConf(
-                    feature_name=body.get('feature_name'),
-                    feature_name_cn=body.get('feature_name_cn'),
-                    feature_type=feature_type,
-                    feature_rule_type=feature_rule_type,
-                    feature_card_type=feature_card_type,
-                    feature_select_value=body.get('feature_select_value'),
-                    is_delete=body.get('is_delete'),
-                    updated_on=created_on,
-                    created_on=created_on
-                ).save()
-
-            # elif item == 'feature_source':
-            #
-            #     FeatureConf(
-            #         collect_type=body.get('collect_type'),
-            #         data_identity=body.get('data_identity'),
-            #         updated_on=created_on,
-            #         created_on=created_on
-            #     ).save()
-            else:
-                raise Exception('url error')
-        except Exception as e:
-            logger.error(e.message)
-            data = {
-                'status': '0',
-                'message': 'error message:%s' % e.message
-            }
-        return json_response(data)
-
-
 class RemoteConfig(CsrfExemptMixin, View):
     def get(self, request, data_identity, page, *args, **kwargs):
         """获取数据源基础配置信息"""
@@ -692,12 +570,125 @@ class RemoteConfig(CsrfExemptMixin, View):
         return json_response(data)
 
 
+class PreFieldInfoConfig(CsrfExemptMixin, View):
+    def get(self, request, fieldname, page, *args, **kwargs):
+        """获取数据源参数配置信息"""
+        data = {
+            'status': 1,
+            'message': 'success'
+        }
+        try:
+            current_page = page
+            page_size = 100
+            if fieldname == 'all':
+                config_obj = PreFieldInfo.objects.values()
+            else:
+                config_obj = PreFieldInfo.objects.filter(field_name=fieldname).values()
+            config_count = config_obj.count()
+            paginator = ExtPaginator(list(config_obj), page_size, config_count)
+            object_list = paginator.page(current_page)
+            map(lambda x: [
+                x.update({"created_on": x["created_on"].strftime('%Y-%m-%d %H:%M:%S') if x["created_on"] else ''}),
+                x.update({"updated_on": x["updated_on"].strftime('%Y-%m-%d %H:%M:%S') if x["updated_on"] else ''}),
+            ], object_list)
+
+            page_num = paginator.num_pages
+            page_range = paginator.page_range
+
+            res_data = dict(
+                total_count=config_count,
+                page_num=page_num,
+                current_page=current_page,
+                config_list=list(object_list),
+                page_range=page_range
+            )
+
+            data.update({"res_data": res_data})
+        except Exception as e:
+            logger.error(e.message)
+            data = {
+                'status': '0',
+                'message': 'error message:%s' % e.message
+            }
+
+        return json_response(data)
+
+    def put(self, request, fieldid, *args, **kwargs):
+        """更新数据源参数配置信息"""
+        data = {
+            'status': 1,
+            'message': 'success'
+        }
+
+        try:
+            body = json.loads(request.body)
+            logger.info("update feature config request data=%s", body)
+            updated_on = datetime.datetime.now()
+            source = body.get('source')
+            path = body.get('path')
+            if not ((source and path) or (not source and not path)):
+                raise Exception(u'参数来源和jsonpath只能同时为空或同时不为空!')
+            PreFieldInfo.objects.filter(pk=int(fieldid)).update(
+                field_name=body.get('field_name'),
+                field_name_cn=body.get('field_name_cn'),
+                source=body.get('source'),
+                path=body.get('path'),
+                updated_on=updated_on,
+                is_delete=body.get('is_delete')
+            )
+        except Exception as e:
+            logger.error(e.message)
+            data = {
+                'status': '0',
+                'message': 'error message:%s' % e.message
+            }
+
+        return json_response(data)
+
+    def post(self, request, *args, **kwargs):
+        """添加数据源参数配置信息"""
+        data = {
+            'status': 1,
+            'message': 'success'
+        }
+        try:
+            body = json.loads(request.body)
+            logger.info("update feature config request data=%s", body)
+            created_on = datetime.datetime.now()
+            field_name = body.get('field_name')
+            count = PreFieldInfo.objects.filter(field_name=field_name)
+            source = body.get('source')
+            path = body.get('path')
+            if count:
+                raise Exception('%s already exists' % field_name)
+            if not ((source and path) or (not source and not path)):
+                raise Exception(u'参数来源和jsonpath只能同时为空或同时不为空!')
+            PreFieldInfo(
+                field_name=field_name,
+                field_name_cn=body.get('field_name_cn'),
+                source=source,
+                path=path,
+                updated_on=created_on,
+                created_on=created_on,
+                is_delete=body.get('is_delete')
+            ).save()
+
+        except Exception as e:
+            logger.error(e.message)
+            data = {
+                'status': '0',
+                'message': 'error message:%s' % e.message
+            }
+        return json_response(data)
+
+
 class GetItemList(CsrfExemptMixin, View):
     def get(self, request, item, *args, **kwargs):
         """获取下拉列表信息"""
         try:
             if item == 'feature_name':
-                data = FeatureConf.objects.filter(is_delete=False).values_list('id', 'feature_name')
+                data = FeatureConf.objects.filter(is_delete=False).values_list('id', 'feature_name').order_by(
+                    'feature_name')
             elif item == 'feature_type':
                 data = FeatureType.objects.values_list('id', 'feature_type_desc')
             elif item == 'feature_card_type':
@@ -707,9 +698,9 @@ class GetItemList(CsrfExemptMixin, View):
             elif item == 'args':
                 data = PreFieldInfo.objects.filter(is_delete=False).values_list('id', 'field_name')
             elif item == 'funcname':
-                data = FuncLibSource.objects.values_list('func_name', 'func_type')
+                data = FuncLibSource.objects.values_list('func_name', 'func_type').order_by('func_type')
             elif item == 'data_identity':
-                data = DsInterfaceInfo.objects.values_list('id', 'data_identity')
+                data = DsInterfaceInfo.objects.values_list('id', 'data_identity').order_by('data_identity')
             else:
                 raise Exception('url error')
             data = {id: value for id, value in data}

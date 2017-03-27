@@ -52,7 +52,7 @@ class FeatureConf(BaseModel):
     feature_name = models.CharField(u'特征字段名', max_length=64)
     feature_name_cn = models.CharField(u'特征中文名', max_length=128)
     collect_type = models.CharField(u'数据获取方式', max_length=64, null=True)
-    data_identity = models.CharField(u'参数字段名', max_length=2048)
+    data_identity = models.CharField(u'参数字段名', max_length=2048, null=True)
     feature_type = models.ForeignKey(FeatureType, db_column="feature_type", null=True)
     feature_rule_type = models.ForeignKey(FeatureRuleType, db_column="feature_rule_type", null=True)
     feature_card_type = models.ForeignKey(FeatureCardType, db_column="feature_card_type", null=True)
