@@ -70,6 +70,8 @@ class FeatureProcess(object):
             self.feature_conf = config[self.conf_str]
             self.default_value = self.feature_conf['default_value']
             self.json_path_list = self.feature_conf['json_path_list']
+            if not self.json_path_list:
+                raise Exception("json_path_list cannot be empty!")
             self.f_map_and_filter_chain = self.feature_conf['f_map_and_filter_chain']
             self.reduce_chain = self.feature_conf['reduce_chain']
             self.l_map_and_filter_chain = self.feature_conf['l_map_and_filter_chain']

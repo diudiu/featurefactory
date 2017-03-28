@@ -7,7 +7,7 @@ from django.conf.urls import patterns, url
 
 from apps.interface.views.authentication import Authentication
 from apps.interface.views.featureconfig import *
-from apps.interface.views.featureprocess import *
+# from apps.interface.views.featureprocess import *
 
 urlpatterns = patterns(
     '',
@@ -27,11 +27,12 @@ urlpatterns = patterns(
     url(r'^relevance_conf/update/(?P<featureid>\d+)/$', FeatureRelevanceConfig.as_view(),
         name='feature_relevance_config_update'),
     url(r'^relevance_conf/add/$', FeatureRelevanceConfig.as_view(), name='feature_relevance_config_add'),
+    url(r'^relevance_conf/check/$', FeatureRelevanceConfig.as_view(), name='feature_relevance_config_check'),
     url(r'^remote_conf/show/(?P<data_identity>\w+)/(?P<page>\d+)/$', RemoteConfig.as_view(), name='remote_config_show'),
     url(r'^remote_conf/update/(?P<id>\w+)/$', RemoteConfig.as_view(), name='remote_config_update'),
     url(r'^remote_conf/add/$', RemoteConfig.as_view(), name='remote_config_add'),
 
-    url(r'^feature_process/config/$', FeatureProcessAPI.as_view(), name='feature_process'),
+    url(r'^feature_process/test/$', FeatureProcessAPI.as_view(), name='feature_process'),
     url(r'^get_list/(?P<item>\w+)/$', GetItemList.as_view(), name='get_list'),
 
     url(r'^pre_filed_conf/show/(?P<fieldname>\w+)/(?P<page>\d+)/$', PreFieldInfoConfig.as_view(),

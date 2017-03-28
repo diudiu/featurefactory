@@ -23,6 +23,7 @@
 import json
 import logging
 import datetime
+import re
 
 from braces.views import CsrfExemptMixin
 from django.http.response import HttpResponse
@@ -33,6 +34,7 @@ from apps.etl.models import *
 from apps.datasource.models import *
 from vendor.utils.pagination import ExtPaginator
 from vendor.utils.commons import json_response
+from studio.feature_comment_handle.featrue_process import FeatureProcess
 
 logger = logging.getLogger('apps.interface')
 
@@ -59,7 +61,7 @@ class FeatureConfig(CsrfExemptMixin, View):
                 x.update({"updated_on": x["updated_on"].strftime('%Y-%m-%d %H:%M:%S') if x["updated_on"] else ''}),
                 x.update({"data_identity": eval(x["data_identity"]) if x["data_identity"] else ''}),
                 x.update(
-                    {"feature_select_value": eval(x["feature_select_value"]) if x["feature_select_value"] else ''}),
+                    {"feature_select_value": x["feature_select_value"] if x["feature_select_value"] else ''}),
                 x.update({"feature_type_desc": FeatureType.objects.get(pk=x["feature_type_id"]).feature_type_desc if x[
                     "feature_type_id"] else ''}),
                 x.update(
@@ -88,7 +90,7 @@ class FeatureConfig(CsrfExemptMixin, View):
             logger.error(e.message)
             data = {
                 'status': '0',
-                'message': 'error message:%s' % e.message
+                'message': e.message
             }
 
         return json_response(data)
@@ -99,7 +101,6 @@ class FeatureConfig(CsrfExemptMixin, View):
             'status': 1,
             'message': 'success'
         }
-
         try:
             body = json.loads(request.body)
             logger.info("update feature config request data=%s", body)
@@ -107,7 +108,7 @@ class FeatureConfig(CsrfExemptMixin, View):
             if item == 'feature_info':
                 feature_name_cn = body.get('feature_name_cn')
                 if not feature_name_cn:
-                    raise Exception(u'特征中文名不能为空！')
+                    raise Exception(u'特征中文名不能为空')
 
                 feature_type = body.get('feature_type_id')
                 feature_rule_type = body.get('feature_rule_type_id')
@@ -140,7 +141,7 @@ class FeatureConfig(CsrfExemptMixin, View):
             logger.error(e.message)
             data = {
                 'status': '0',
-                'message': 'error message:%s' % e.message
+                'message': e.message
             }
 
         return json_response(data)
@@ -186,7 +187,7 @@ class FeatureConfig(CsrfExemptMixin, View):
             logger.error(e.message)
             data = {
                 'status': '0',
-                'message': 'error message:%s' % e.message
+                'message': e.message
             }
         return json_response(data)
 
@@ -231,7 +232,7 @@ class FeatureShuntConfig(CsrfExemptMixin, View):
             logger.error(e.message)
             data = {
                 'status': '0',
-                'message': 'error message:%s' % e.message
+                'message': e.message
             }
 
         return json_response(data)
@@ -271,7 +272,7 @@ class FeatureShuntConfig(CsrfExemptMixin, View):
             logger.error(e.message)
             data = {
                 'status': '0',
-                'message': 'error message:%s' % e.message
+                'message': e.message
             }
 
         return json_response(data)
@@ -310,7 +311,7 @@ class FeatureShuntConfig(CsrfExemptMixin, View):
             logger.error(e.message)
             data = {
                 'status': '0',
-                'message': 'error message:%s' % e.message
+                'message': e.message
             }
 
         return json_response(data)
@@ -357,7 +358,7 @@ class FeatureRelevanceConfig(CsrfExemptMixin, View):
             logger.error(e.message)
             data = {
                 'status': '0',
-                'message': 'error message:%s' % e.message
+                'message': e.message
             }
 
         return json_response(data)
@@ -375,7 +376,6 @@ class FeatureRelevanceConfig(CsrfExemptMixin, View):
             feature_name = body['feature_name']
             depend_feature = body['depend_feature']
             data_identity = body['data_identity']
-            depend_di = body['depend_di']
             is_delete = body['is_delete']
             updated_on = datetime.datetime.now()
 
@@ -383,7 +383,6 @@ class FeatureRelevanceConfig(CsrfExemptMixin, View):
                 feature_name=feature_name,
                 depend_feature=depend_feature,
                 data_identity=data_identity,
-                depend_di=depend_di,
                 updated_on=updated_on,
                 is_delete=is_delete
             )
@@ -391,7 +390,7 @@ class FeatureRelevanceConfig(CsrfExemptMixin, View):
             logger.error(e.message)
             data = {
                 'status': '0',
-                'message': 'error'
+                'message': e.message
             }
 
         return json_response(data)
@@ -403,27 +402,41 @@ class FeatureRelevanceConfig(CsrfExemptMixin, View):
             'message': 'success'
         }
         try:
-            body = json.loads(request.body)
-            logger.info("add shunt feature config request data=%s", body)
-            feature_name = body['feature_name']
-            depend_feature = body['depend_feature']
-            data_identity = body['data_identity']
-            depend_di = body['depend_di']
-            is_delete = body['is_delete']
-            updated_on = datetime.datetime.now()
-            FeatureRelevanceConf(
-                feature_name=feature_name,
-                depend_feature=depend_feature,
-                data_identity=data_identity,
-                depend_di=depend_di,
-                updated_on=updated_on,
-                is_delete=is_delete
-            ).save()
+            path = request.path
+            if 'check' in path:
+                con = FeatureRelevanceConf.objects.filter(is_delete=False)
+                for i in con:
+                    if i.depend_feature:
+                        depend_feature_list = i.depend_feature.split(',')
+                        for j in depend_feature_list:
+                            con = FeatureRelevanceConf.objects.filter(is_delete=False, feature_name=j).count()
+                            if not con:
+                                raise Exception("%s  dependent feature %s, %s is not available in relevance table !" % (
+                                    i.feature_name, j, j))
+
+            else:
+                body = json.loads(request.body)
+                logger.info("add shunt feature config request data=%s", body)
+                feature_name = body['feature_name']
+                depend_feature = body['depend_feature']
+                data_identity = body['data_identity']
+                is_delete = body['is_delete']
+                updated_on = datetime.datetime.now()
+                if FeatureRelevanceConf.objects.filter(feature_name=feature_name).count():
+                    raise Exception('this feature_name already exists!')
+
+                FeatureRelevanceConf(
+                    feature_name=feature_name,
+                    depend_feature=depend_feature,
+                    data_identity=data_identity,
+                    updated_on=updated_on,
+                    is_delete=is_delete
+                ).save()
         except Exception as e:
             logger.error(e.message)
             data = {
                 'status': '0',
-                'message': 'error'
+                'message': e.message
             }
 
         return json_response(data)
@@ -470,7 +483,7 @@ class RemoteConfig(CsrfExemptMixin, View):
             logger.error(e.message)
             data = {
                 'status': '0',
-                'message': 'error message:%s' % e.message
+                'message': e.message
             }
 
         return json_response(data)
@@ -613,7 +626,7 @@ class PreFieldInfoConfig(CsrfExemptMixin, View):
             logger.error(e.message)
             data = {
                 'status': '0',
-                'message': 'error message:%s' % e.message
+                'message': e.message
             }
 
         return json_response(data)
@@ -645,7 +658,7 @@ class PreFieldInfoConfig(CsrfExemptMixin, View):
             logger.error(e.message)
             data = {
                 'status': '0',
-                'message': 'error message:%s' % e.message
+                'message': e.message
             }
 
         return json_response(data)
@@ -682,7 +695,7 @@ class PreFieldInfoConfig(CsrfExemptMixin, View):
             logger.error(e.message)
             data = {
                 'status': '0',
-                'message': 'error message:%s' % e.message
+                'message': e.message
             }
         return json_response(data)
 
@@ -706,6 +719,18 @@ class GetItemList(CsrfExemptMixin, View):
                 data = FuncLibSource.objects.values_list('func_name', 'func_type').order_by('func_type')
             elif item == 'data_identity':
                 data = DsInterfaceInfo.objects.values_list('id', 'data_identity').order_by('data_identity')
+            elif item == 'data_identity_args':
+                data = DsInterfaceInfo.objects.values_list('id', 'data_identity', 'must_data').order_by('data_identity')
+                tmp = []
+                for id, data_identity, must_data in data:
+                    if must_data:
+                        args_list = []
+                        for args in eval(must_data).values():
+                            if re.search("%\\((.*)\\)s", args):
+                                args_list.append(re.search("%\\((.*)\\)s", args).group(1))
+                        tmp.append([id, "'%s':%s" % (data_identity, str(args_list))])
+                data = tmp
+
             else:
                 raise Exception('url error')
             data = {id: value for id, value in data}
@@ -713,7 +738,95 @@ class GetItemList(CsrfExemptMixin, View):
             logger.error(e.message)
             data = {
                 'status': '0',
-                'message': 'error message:%s' % e.message
+                'message': e.message
             }
 
         return json_response(data)
+
+
+class FeatureProcessAPI(CsrfExemptMixin, View):
+    def post(self, request):
+        try:
+            result = {
+                "config": {
+                    "feature_name": "apply_register_duration",
+                    "feature_data_type": "float",
+                    "default_value": "PositiveSignedFloatTypeDefault",
+                    "json_path_list": [
+                        (
+                        "application_on", "$.apply_data.application_on", "f_assert_not_null->f_assert_must_basestring"),
+                        ("registration_on", "$.portrait_data.registration_on",
+                         "f_assert_not_null->f_assert_must_basestring")
+                    ],
+                    "f_map_and_filter_chain": "m_to_slice(0,10)->f_assert_seq0_gte_seq1->m_get_mon_sub(2)",
+                    "reduce_chain": "",
+                    "l_map_and_filter_chain": ''
+                },
+                "origin_data": {
+                    "apply_data": {
+                        "longitudu": 23.45678,
+                        "latitude": 145.23342,
+                        "contacts": 30,
+                        "application_on": "2017-02-01 12:20:10",
+                    },
+                    "portrait_data": {
+                        "product_code": "string",
+                        "registration_on": "2016-01-18",
+                        "name": "string",
+
+                    }
+                }
+            }
+            body = request.body
+            data = json.loads(body)
+            origin_data = data.get('origin_data', None)
+            configx = data.get('config', None)
+            feature_name = configx.get('feature_name', None)
+            feature_obj = FeatureProcess(feature_name, origin_data)
+            result = feature_obj.run()
+        except Exception as e:
+            result = {
+                'status': '0',
+                'message': e.message
+            }
+        return json_response(result)
+
+
+a = {
+    "config": {
+        "feature_name": "apply_register_duration",
+        "feature_data_type": "float",
+        "default_value": "PositiveSignedFloatTypeDefault",
+        "json_path_list": [
+            ("application_on", "$.apply_data.application_on", "f_assert_not_null->f_assert_must_basestring"),
+            ("registration_on", "$.portrait_data.registration_on", "f_assert_not_null->f_assert_must_basestring")
+        ],
+        "f_map_and_filter_chain": "m_to_slice(0,10)->f_assert_seq0_gte_seq1->m_get_mon_sub(2)",
+        "reduce_chain": "",
+        "l_map_and_filter_chain": ''
+    },
+    "origin_data": {
+        "apply_data": {
+            "longitudu": 23.45678,
+            "latitude": 145.23342,
+            "contacts": 30,
+            "application_on": "2017-02-01 12:20:10",
+        },
+        "portrait_data": {
+            "product_code": "string",
+            "registration_on": "2016-01-18",
+            "name": "string",
+
+        }
+    }
+}
+b = {"config": {"default_value": "PositiveSignedFloatTypeDefault",
+                "f_map_and_filter_chain": "m_to_slice(0,10)->f_assert_seq0_gte_seq1->m_get_mon_sub(2)",
+                "reduce_chain": "", "feature_data_type": "float", "l_map_and_filter_chain": "",
+                "feature_name": "apply_register_duration", "json_path_list": [
+        ["application_on", "$.apply_data.application_on", "f_assert_not_null->f_assert_must_basestring"],
+        ["registration_on", "$.portrait_data.registration_on", "f_assert_not_null->f_assert_must_basestring"]]},
+     "origin_data": {
+         "apply_data": {"latitude": 145.23342, "application_on": "2017-02-01 12:20:10", "longitudu": 23.45678,
+                        "contacts": 30},
+         "portrait_data": {"product_code": "string", "name": "string", "registration_on": "2016-01-18"}}}

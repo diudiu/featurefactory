@@ -85,7 +85,6 @@ class FeatureRelevanceConf(BaseModel):
     feature_name = models.CharField(u'特征字段名', max_length=64)
     depend_feature = models.CharField(u'此特征依赖的其他特征名', max_length=64, null=True)
     data_identity = models.CharField(u'', max_length=64)
-    # depend_di = models.CharField(u'依赖特征数据获取标识', max_length=64, null=True)
 
     class Meta:
         db_table = 'fic_feature_relevance_conf'
