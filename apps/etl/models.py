@@ -106,15 +106,15 @@ class PreFieldInfo(BaseModel):
         verbose_name_plural = u'预处理字段表'
 
 
-class FeatureProcess(BaseModel):
-
+class FeatureProcess(models.Model):
     id = models.AutoField(u'主键', primary_key=True)
-    feature_name = models.CharField(u'特征字段名', max_length=64)
-    feature_data_type = models.CharField(u'特征字段类型', max_length=64)
-    default_value = models.CharField(u'特征缺省值', max_length=64)
+    feature_name = models.CharField(u'特征字段名', max_length=100, unique=True)
+    feature_data_type = models.CharField(u'特征字段类型', max_length=50)
+    default_value = models.CharField(u'特征缺省值', max_length=100)
     json_path_list = models.CharField(u'特征处理流程', max_length=2048)
-    map_and_filter_chain = models.CharField(u'特征处理map链', max_length=1024, null=True)
-    reduce_chain = models.CharField(u'特征处理reduce链', max_length=1024)
+    f_map_and_filter_chain = models.CharField(u'特征处理前置map链', max_length=2048, null=True)
+    reduce_chain = models.CharField(u'特征处理reduce链', max_length=2048, null=True)
+    l_map_and_filter_chain = models.CharField(u'特征处理后置map链', max_length=2048, null=True)
 
     class Meta:
         db_table = 'fic_feature_process_info'
@@ -122,16 +122,15 @@ class FeatureProcess(BaseModel):
         verbose_name_plural = u'特征计算方式配置表'
 
 
-class FuncLibSource(BaseModel):
+class FuncLibSource(models.Model):
     FUNC_TYPE_CHOICES = [
         ('M', u'map'),
         ('F', u'filter'),
         ('R', u'reduce'),
         ('A', u'assert'),
     ]
-    # id = models.AutoField(u'主键', primary_key=True)
-    func_name = models.CharField(u'函数名', max_length=64, primary_key=True)
-    func_desc = models.CharField(u'函数描述', max_length=64)
+    func_name = models.CharField(u'函数名', max_length=100, primary_key=True)
+    func_desc = models.CharField(u'函数描述', max_length=2048, null=True)
     func_type = models.CharField(u'函数类型', choices=FUNC_TYPE_CHOICES, default="M", max_length=10, db_index=True)
 
     class Meta:

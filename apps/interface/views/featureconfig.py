@@ -29,12 +29,13 @@ from braces.views import CsrfExemptMixin
 from django.http.response import HttpResponse
 from django.views.generic import View
 
-from apps.interface.decorator import data_check, data_send, json_load
 from apps.etl.models import *
 from apps.datasource.models import *
 from vendor.utils.pagination import ExtPaginator
 from vendor.utils.commons import json_response
-from studio.feature_comment_handle.featrue_process import FeatureProcess
+from studio.feature_comment_handle.exec_chain_handle import func_exec_chain
+from studio.feature_comment_handle.jsonparse_handle import JSONPathParser
+from vendor.utils.defaults import *
 
 logger = logging.getLogger('apps.interface')
 
@@ -59,7 +60,6 @@ class FeatureConfig(CsrfExemptMixin, View):
             map(lambda x: [
                 x.update({"created_on": x["created_on"].strftime('%Y-%m-%d %H:%M:%S') if x["created_on"] else ''}),
                 x.update({"updated_on": x["updated_on"].strftime('%Y-%m-%d %H:%M:%S') if x["updated_on"] else ''}),
-                x.update({"data_identity": eval(x["data_identity"]) if x["data_identity"] else ''}),
                 x.update(
                     {"feature_select_value": x["feature_select_value"] if x["feature_select_value"] else ''}),
                 x.update({"feature_type_desc": FeatureType.objects.get(pk=x["feature_type_id"]).feature_type_desc if x[
@@ -465,7 +465,7 @@ class RemoteConfig(CsrfExemptMixin, View):
             map(lambda x: [
                 x.update({"created_on": x["created_on"].strftime('%Y-%m-%d %H:%M:%S') if x["created_on"] else ''}),
                 x.update({"updated_on": x["updated_on"].strftime('%Y-%m-%d %H:%M:%S') if x["updated_on"] else ''}),
-                x.update({"must_data": eval(x["must_data"]) if x["must_data"] else ''}),
+                # x.update({"must_data": eval(x["must_data"]) if x["must_data"] else ''}),
             ], object_list)
 
             page_num = paginator.num_pages
@@ -745,88 +745,136 @@ class GetItemList(CsrfExemptMixin, View):
 
 
 class FeatureProcessAPI(CsrfExemptMixin, View):
-    def post(self, request):
+    def get(self, request, featurename, page, *args, **kwargs):
+        """获取特征计算配置信息"""
+        data = {
+            'status': 1,
+            'message': 'success'
+        }
         try:
-            result = {
-                "config": {
-                    "feature_name": "apply_register_duration",
-                    "feature_data_type": "float",
-                    "default_value": "PositiveSignedFloatTypeDefault",
-                    "json_path_list": [
-                        (
-                        "application_on", "$.apply_data.application_on", "f_assert_not_null->f_assert_must_basestring"),
-                        ("registration_on", "$.portrait_data.registration_on",
-                         "f_assert_not_null->f_assert_must_basestring")
-                    ],
-                    "f_map_and_filter_chain": "m_to_slice(0,10)->f_assert_seq0_gte_seq1->m_get_mon_sub(2)",
-                    "reduce_chain": "",
-                    "l_map_and_filter_chain": ''
-                },
-                "origin_data": {
-                    "apply_data": {
-                        "longitudu": 23.45678,
-                        "latitude": 145.23342,
-                        "contacts": 30,
-                        "application_on": "2017-02-01 12:20:10",
-                    },
-                    "portrait_data": {
-                        "product_code": "string",
-                        "registration_on": "2016-01-18",
-                        "name": "string",
+            current_page = page
+            page_size = 10
+            if featurename == 'all':
+                feature_config_obj = FeatureProcess.objects.values()
+            else:
+                feature_config_obj = FeatureProcess.objects.filter(feature_name=featurename).values()
+            feature_config_count = feature_config_obj.count()
 
-                    }
-                }
-            }
-            body = request.body
-            data = json.loads(body)
-            origin_data = data.get('origin_data', None)
-            configx = data.get('config', None)
-            feature_name = configx.get('feature_name', None)
-            feature_obj = FeatureProcess(feature_name, origin_data)
-            result = feature_obj.run()
+            paginator = ExtPaginator(list(feature_config_obj), page_size, feature_config_count)
+            object_list = paginator.page(current_page)
+            page_num = paginator.num_pages
+            page_range = paginator.page_range
+
+            res_data = dict(
+                total_count=feature_config_count,
+                page_num=page_num,
+                current_page=current_page,
+                config_list=list(object_list),
+                page_range=page_range
+            )
+
+            data.update({"res_data": res_data})
         except Exception as e:
-            result = {
+            logger.error(e.message)
+            data = {
                 'status': '0',
                 'message': e.message
             }
-        return json_response(result)
 
+        return json_response(data)
 
-a = {
-    "config": {
-        "feature_name": "apply_register_duration",
-        "feature_data_type": "float",
-        "default_value": "PositiveSignedFloatTypeDefault",
-        "json_path_list": [
-            ("application_on", "$.apply_data.application_on", "f_assert_not_null->f_assert_must_basestring"),
-            ("registration_on", "$.portrait_data.registration_on", "f_assert_not_null->f_assert_must_basestring")
-        ],
-        "f_map_and_filter_chain": "m_to_slice(0,10)->f_assert_seq0_gte_seq1->m_get_mon_sub(2)",
-        "reduce_chain": "",
-        "l_map_and_filter_chain": ''
-    },
-    "origin_data": {
-        "apply_data": {
-            "longitudu": 23.45678,
-            "latitude": 145.23342,
-            "contacts": 30,
-            "application_on": "2017-02-01 12:20:10",
-        },
-        "portrait_data": {
-            "product_code": "string",
-            "registration_on": "2016-01-18",
-            "name": "string",
+    def post(self, request):
+        path = request.path
+        body = request.body
+        datas = json.loads(body)
+        if 'delete' in path:
+            data = {
+                'status': 1,
+                'message': 'success'
+            }
+            try:
+                feature_name = datas.get('feature_name')
+                FeatureProcess.objects.filter(feature_name=feature_name).delete()
+            except Exception as e:
+                logger.error(e.message)
+                data = {
+                    'status': '0',
+                    'message': e.message
+                }
+            return json_response(data)
 
+        elif 'test' in path:
+            origin_data = datas.get('origin_data', None)
+            configx = datas.get('config', None)
+            feature_name = 'feature_name'
+            default_value = ''
+            try:
+                feature_name = configx.get('feature_name', 'null')
+                json_path_list = configx.get('json_path_list', None)
+                default_value = configx.get('default_value', None)
+                if not (feature_name and default_value and json_path_list):
+                    raise Exception("feature_name,default_value, json_path_list can't are null !")
+                f_map_and_filter_chain = configx.get('f_map_and_filter_chain', None)
+                reduce_chain = configx.get('reduce_chain', None)
+                l_map_and_filter_chain = configx.get('l_map_and_filter_chain', None)
+                json_path_parser = JSONPathParser()
+                value_list = json_path_parser.parsex(origin_data, json_path_list)
+                result = []
+                for i in value_list:
+                    result = result + i[3]
+                if len(result) == 1 and isinstance(result[0], list):
+                    result = result[0]
+                if f_map_and_filter_chain:
+                    result = func_exec_chain(result, f_map_and_filter_chain)
+                if reduce_chain:
+                    result = func_exec_chain(result, reduce_chain)
+                if l_map_and_filter_chain:
+                    result = func_exec_chain(result, l_map_and_filter_chain)
+                res = {'message': 'success', 'result': {feature_name: result}}
+            except Exception as e:
+                res = {
+                    'message': e.message,
+                    'result': {feature_name: eval(default_value) if default_value else ''}
+                }
+            return json_response(res)
+
+    def put(self, request):
+        data = {
+            'status': 1,
+            'message': 'success'
         }
-    }
-}
-b = {"config": {"default_value": "PositiveSignedFloatTypeDefault",
-                "f_map_and_filter_chain": "m_to_slice(0,10)->f_assert_seq0_gte_seq1->m_get_mon_sub(2)",
-                "reduce_chain": "", "feature_data_type": "float", "l_map_and_filter_chain": "",
-                "feature_name": "apply_register_duration", "json_path_list": [
-        ["application_on", "$.apply_data.application_on", "f_assert_not_null->f_assert_must_basestring"],
-        ["registration_on", "$.portrait_data.registration_on", "f_assert_not_null->f_assert_must_basestring"]]},
-     "origin_data": {
-         "apply_data": {"latitude": 145.23342, "application_on": "2017-02-01 12:20:10", "longitudu": 23.45678,
-                        "contacts": 30},
-         "portrait_data": {"product_code": "string", "name": "string", "registration_on": "2016-01-18"}}}
+        try:
+            body = request.body
+            datas = json.loads(body, encoding='utf8')
+            configx = datas.get('config', None)
+            feature_name = configx.get('feature_name')
+            if FeatureProcess.objects.filter(feature_name=feature_name).count():
+                FeatureProcess.objects.filter(feature_name=feature_name).update(
+                    feature_data_type=configx.get('feature_data_type'),
+                    default_value=configx.get('default_value'),
+                    json_path_list=configx.get('json_path_list'),
+                    reduce_chain=configx.get('reduce_chain'),
+                    f_map_and_filter_chain=configx.get('f_map_and_filter_chain'),
+                    l_map_and_filter_chain=configx.get('l_map_and_filter_chain')
+                )
+
+            else:
+                FeatureProcess(
+                        feature_name=configx.get('feature_name'),
+                        feature_data_type=configx.get('feature_data_type'),
+                        default_value=configx.get('default_value'),
+                        json_path_list=configx.get('json_path_list'),
+                        reduce_chain=configx.get('reduce_chain'),
+                        f_map_and_filter_chain=configx.get('f_map_and_filter_chain'),
+                        l_map_and_filter_chain=configx.get('l_map_and_filter_chain')
+                    ).save()
+        except Exception as e:
+            logger.error(e.message)
+            data = {
+                'status': '0',
+                'message': e.message
+            }
+        return json_response(data)
+
+
+

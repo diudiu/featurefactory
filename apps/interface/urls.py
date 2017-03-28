@@ -31,8 +31,10 @@ urlpatterns = patterns(
     url(r'^remote_conf/show/(?P<data_identity>\w+)/(?P<page>\d+)/$', RemoteConfig.as_view(), name='remote_config_show'),
     url(r'^remote_conf/update/(?P<id>\w+)/$', RemoteConfig.as_view(), name='remote_config_update'),
     url(r'^remote_conf/add/$', RemoteConfig.as_view(), name='remote_config_add'),
-
-    url(r'^feature_process/test/$', FeatureProcessAPI.as_view(), name='feature_process'),
+    url(r'^feature_process/show/(?P<featurename>\w+)/(?P<page>\d+)/$', FeatureProcessAPI.as_view(), name='feature_process_get'),
+    url(r'^feature_process/test/$', FeatureProcessAPI.as_view(), name='feature_process_test'),
+    url(r'^feature_process/write/$', FeatureProcessAPI.as_view(), name='feature_process_write'),
+    url(r'^feature_process/delete/$', FeatureProcessAPI.as_view(), name='feature_process_delete'),
     url(r'^get_list/(?P<item>\w+)/$', GetItemList.as_view(), name='get_list'),
 
     url(r'^pre_filed_conf/show/(?P<fieldname>\w+)/(?P<page>\d+)/$', PreFieldInfoConfig.as_view(),
