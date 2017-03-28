@@ -9,6 +9,13 @@
 """
 
 import pymongo
+"""
+                'access_token': 'aaaaaaaaa',
+璐璐X   13311538888   电信   132600199306251568   123@163.com
+璐璐NC  13661117777   移动   132600198506251568   456@163.com
+璐璐IO  18511116277   联通   132600197206251568   789@163.com
+"""
+
 
 done_data = {
     'loan_agency': [
@@ -272,7 +279,7 @@ done_data = {
                 'mobile': '13311538888',
             },
             'data': {
-                "result": "11",
+                "result": "00",
                 "result_message": "检测通过或查询有记录",
                 "content": []
             }
@@ -384,7 +391,7 @@ done_data = {
                 'mobile': '13311538888',
             },
             'data': {
-                "result": "11",
+                "result": "00",
                 "result_message": "检测通过或查询有记录",
                 "content": []
             }
@@ -498,7 +505,7 @@ done_data = {
                 'mobile': '13311538888'
             },
             'data': {
-                "result": "11",
+                "result": "00",
                 "result_message": "检测通过或查询有记录",
                 "content": []
             }
@@ -629,7 +636,7 @@ done_data = {
                 'entity_id': '132600198906251568',
             },
             'data': {
-                "result": "11",
+                "result": "00",
                 "result_message": "检测通过或查询有记录",
                 "content": []
             }
@@ -2003,21 +2010,6 @@ done_data = {
                         "photo_style": "jpg",
                         "is_key_subject": "N"
                     },
-                },
-            }
-        }
-    ],
-    'loan_history': [
-        {
-            'args': {
-                'data_identity': 'loan_history',
-                'card_id': '132600198906251568',
-            },
-            'data': {
-                'status': 1,
-                'message': '操作成功',
-                'res_data': {
-                    'is_unclear_loan': 2,
                 },
             }
         }
