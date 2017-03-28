@@ -16,6 +16,6 @@ urlpatterns = patterns(
     url(r'^admin/', include(admin.site.urls)),
     url(r'^syph-ff/feature/', include(feature_url)),
     url(r'^api/', include(feature_url)),
-    url(r'^interface/', include(app_url)),
+    url(r'^feature_config/', include(app_url)),
     url(r'^rule/', include(integ_url)),
 )

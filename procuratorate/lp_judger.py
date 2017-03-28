@@ -75,7 +75,7 @@ class Judger(object):
 
         for single_conf in full_conf.iterator():
             try:
-                feature_conf = eval(single_conf.raw_field_name)
+                feature_conf = eval(single_conf.data_identity)
                 feature_conf.update({
                     'collect_type': single_conf.collect_type
                 })

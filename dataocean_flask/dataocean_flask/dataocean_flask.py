@@ -107,7 +107,8 @@ def post(data_identity):
                 }
 
         else:
-            req_data = request.json["req_data"]
+            req_data = json.loads(request.data)['req_data']
+            # req_data = request.json["req_data"]
             req_data.update({'data_identity': data_identity})
             token = get_token(dataocean_url_grant, client_secret)
             req_data.update({"access_token": token["access_token"]})
