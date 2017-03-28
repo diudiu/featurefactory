@@ -24,7 +24,6 @@ def feature_post():
             u'apply_id': u'APPLY20170308154505179519058',
             u'res_keys': [
                 u'is_court_zhixing',
-                # u'airfare_sum12',
                 u'is_net_black',
                 u'income_level',
                 u'overload_count'
