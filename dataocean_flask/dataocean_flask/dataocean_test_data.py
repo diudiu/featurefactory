@@ -1244,7 +1244,6 @@ data = {
             }
         },
     ],
-
     "high_way_over_speed": [
         {
             "req_data": {
@@ -1390,5 +1389,4 @@ data = {
             }
         },
     ],
-
 }
