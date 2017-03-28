@@ -8,19 +8,55 @@ from apps.common.models import BaseModel
 from apps.datasource.models import DsInterfaceInfo
 
 
+class FeatureType(BaseModel):
+    id = models.AutoField(u'主键', primary_key=True)
+    feature_type_desc = models.CharField(u'特征类型解释', max_length=2048)
+
+    class Meta:
+        db_table = 'fic_feature_type'
+        verbose_name = u'特征类型配置表'
+        verbose_name_plural = u'特征类型配置表'
+
+    def __unicode__(self):
+        return "%s" % self.feature_type_desc
+
+
+class FeatureCardType(BaseModel):
+    id = models.AutoField(u'主键', primary_key=True)
+    feature_type_desc = models.CharField(u'特征评分卡类型解释', max_length=2048)
+
+    class Meta:
+        db_table = 'fic_feature_card_type'
+        verbose_name = u'特征评分卡类型配置表'
+        verbose_name_plural = u'特征评分卡类型配置表'
+
+    def __unicode__(self):
+        return "%s" % self.feature_type_desc
+
+
+class FeatureRuleType(BaseModel):
+    id = models.AutoField(u'主键', primary_key=True)
+    feature_type_desc = models.CharField(u'特征规则类型解释', max_length=2048)
+
+    class Meta:
+        db_table = 'fic_feature_rule_type'
+        verbose_name = u'特征规则类型配置表'
+        verbose_name_plural = u'特征规则类型配置表'
+
+    def __unicode__(self):
+        return "%s" % self.feature_type_desc
+
+
 class FeatureConf(BaseModel):
     id = models.AutoField(u'主键', primary_key=True)
     feature_name = models.CharField(u'特征字段名', max_length=64)
     feature_name_cn = models.CharField(u'特征中文名', max_length=128)
-    data_identity = models.CharField(u'原始数据标识', max_length=512)
     collect_type = models.CharField(u'数据获取方式', max_length=64, null=True)
-    raw_field_name = models.CharField(u'参数字段名', max_length=2048)
-    feature_type = models.IntegerField(u'特征类型', null=True)
-    feature_type_desc = models.CharField(u'特征类型解释', max_length=2048, null=True)
-    feature_rule_type = models.IntegerField(u'特征规则类型', null=True)
-    feature_rule_type_desc = models.CharField(u'特征规则类型解释', max_length=2048, null=True)
-    feature_card_type = models.IntegerField(u'特征评分卡类型', null=True)
-    feature_card_type_desc = models.CharField(u'特征评分卡类型解释', max_length=2048, null=True)
+    data_identity = models.CharField(u'参数字段名', max_length=2048)
+    feature_type = models.ForeignKey(FeatureType, db_column="feature_type", null=True)
+    feature_rule_type = models.ForeignKey(FeatureRuleType, db_column="feature_rule_type", null=True)
+    feature_card_type = models.ForeignKey(FeatureCardType, db_column="feature_card_type", null=True)
+    feature_select_value = models.CharField(u'特征可选值', max_length=2048, null=True)
 
     class Meta:
         db_table = 'fic_feature_common_conf'
