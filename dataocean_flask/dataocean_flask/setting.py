@@ -14,6 +14,8 @@ des_key = 'sjdguhcphysghcih'
 # MONGO_NAME = 'dataocean'
 # MONGO_USERNAME = 'dataocean'
 # MONGO_PASSWORD = 'Syph@0918'
+# MONGO_PORT = 27017
+
 MONGO_HOST = '120.27.124.31'
 MONGO_NAME = 'dataocean_debug'
 MONGO_USERNAME = 'dataocean_debug'

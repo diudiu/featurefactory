@@ -1,3 +1,4 @@
+电信
 "data" : {
         "edu_exp_form" : [
                 {
@@ -12,7 +13,7 @@
         "now_indust_code" : "330",
         "upload_contact" : 0,
         "sns_sd_friend_cnt" : 1194,
-        "mobile" : "13311538888",  电信
+        "mobile" : "13311538888",
         "city_code" : "200",
         "work_age" : 11,
         "sns_friends_cnt" : 1,
@@ -47,7 +48,7 @@
         "email" : "123@163.com",
         "now_indust_name" : "能源(电力/水利)"
 }
-
+移动
 "data" : {
         "edu_exp_form" : [
                 {
@@ -62,7 +63,7 @@
         "now_indust_code" : "150",
         "upload_contact" : 0,
         "sns_sd_friend_cnt" : 1902,
-        "mobile" : "13661117777",  移动
+        "mobile" : "13661117777",
         "city_code" : "200",
         "work_age" : 9,
         "sns_friends_cnt" : 21,
@@ -94,10 +95,10 @@
                         "dq_name" : "北京朝阳"
                 }
         ],
-        "email" : "123@164.com",
+        "email" : "456@163.com",
         "now_indust_name" : "基金/证券/期货/投资"
 }
-
+联通
 "data" : {
         "edu_exp_form" : [
                 {
@@ -112,7 +113,7 @@
         "now_indust_code" : "170",
         "upload_contact" : 1,
         "sns_sd_friend_cnt" : 1294,
-        "mobile" : "18511116277",  联通
+        "mobile" : "18511116277",
         "city_code" : "200",
         "work_age" : 14,
         "sns_friends_cnt" : 12,
@@ -144,6 +145,6 @@
                         "dq_name" : "北京朝阳"
                 }
         ],
-        "email" : "123@165.com",
+        "email" : "789@163.com",
         "now_indust_name" : "影视/媒体/艺术/文化/出版"
 }
