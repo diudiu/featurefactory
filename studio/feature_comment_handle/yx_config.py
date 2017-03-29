@@ -83,7 +83,7 @@ config = dict(
 
     graduate_college_config={
         "feature_name": "graduate_college",
-        "feature_data_type": "str",
+        "feature_data_type": "string",
         "default_value": "StringTypeDefault",
         "json_path_list": [("school", "$..school", "f_assert_not_null->f_assert_must_basestring")],
         "f_map_and_filter_chain": "m_get_seq_index_value(0)",
@@ -102,7 +102,7 @@ config = dict(
 
     college_type_config={
         "feature_name": "college_type",
-        "feature_data_type": "str",
+        "feature_data_type": "string",
         "default_value": "StringTypeDefault",
         "json_path_list": [
             ("school_nature", "$.content.college.school_nature", "f_assert_not_null->f_assert_must_basestring"),
@@ -114,7 +114,7 @@ config = dict(
 
     graduate_college_check_config={
         "feature_name": "graduate_college_check",
-        "feature_data_type": "str",
+        "feature_data_type": "string",
         "default_value": "StringTypeDefault",
         "json_path_list": [("college", "$.content.degree.college", "f_assert_not_null")],
         "f_map_and_filter_chain": "m_get_seq_index_value(0)",
@@ -124,7 +124,7 @@ config = dict(
 
     education_degree_check_config={
         "feature_name": "education_degree_check",
-        "feature_data_type": "str",
+        "feature_data_type": "string",
         "default_value": "StringTypeDefault",
         "json_path_list": [("degree", "$..content.degree.degree", "f_assert_not_null")],
         "f_map_and_filter_chain": "m_single_check_code('education_degree_check')",
@@ -134,7 +134,7 @@ config = dict(
 
     pingan_multi_loan_infos_config={
         "feature_name": "pingan_multi_loan_infos",
-        "feature_data_type": "str",
+        "feature_data_type": "string",
         "default_value": "StringTypeDefault",
         "json_path_list": [("record", "$..record", "f_assert_not_null")],
         "f_map_and_filter_chain": "m_del_invalid_value(6)",
