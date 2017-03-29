@@ -5,14 +5,11 @@
 
 from django.conf.urls import patterns, url
 
-from apps.interface.views.authentication import Authentication
 from apps.interface.views.featureconfig import *
 # from apps.interface.views.featureprocess import *
 
 urlpatterns = patterns(
     '',
-    url(r'^auth/login/$', Authentication.as_view(), name='authentication'),
-    url(r'^auth/logout/$', Authentication.as_view(), name='authentication'),
     url(r'^common_conf/show/(?P<featurename>\w+)/(?P<page>\d+)/$', FeatureConfig.as_view(),
         name='feature_config_show'),
     url(r'^common_conf/update/(?P<item>\w+)/(?P<featureid>\d+)/$', FeatureConfig.as_view(), name='feature_config_update'),

@@ -716,7 +716,18 @@ class GetItemList(CsrfExemptMixin, View):
             elif item == 'args':
                 data = PreFieldInfo.objects.filter(is_delete=False).values_list('id', 'field_name')
             elif item == 'funcname':
-                data = FuncLibSource.objects.values_list('func_name', 'func_type').order_by('func_type')
+                data = FuncLibSource.objects.values_list('func_name', 'func_type', 'func_desc').order_by('func_type')
+                tmp = {}
+                for func_name, func_type, func_desc in data:
+                    f = re.search("(.*)\\((.*)\\)", func_name)
+                    f_name = f.group(1)
+                    f_args = f.group(2)
+                    f_s_args = ''
+                    if len(f_args.split(',')) > 1:
+                        f_s_args = f_args.split(',')[1]
+                    tmp['%s' % f_name] = [func_name, f_s_args, func_type, func_desc]
+                return json_response(tmp)
+
             elif item == 'data_identity':
                 data = DsInterfaceInfo.objects.values_list('id', 'data_identity').order_by('data_identity')
             elif item == 'data_identity_args':

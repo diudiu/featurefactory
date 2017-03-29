@@ -111,7 +111,7 @@ class FeatureProcess(models.Model):
     feature_name = models.CharField(u'特征字段名', max_length=100, unique=True)
     feature_data_type = models.CharField(u'特征字段类型', max_length=50)
     default_value = models.CharField(u'特征缺省值', max_length=100)
-    json_path_list = models.CharField(u'特征处理流程', max_length=2048)
+    json_path_list = models.TextField(u'特征处理流程', null=True)
     f_map_and_filter_chain = models.CharField(u'特征处理前置map链', max_length=2048, null=True)
     reduce_chain = models.CharField(u'特征处理reduce链', max_length=2048, null=True)
     l_map_and_filter_chain = models.CharField(u'特征处理后置map链', max_length=2048, null=True)
