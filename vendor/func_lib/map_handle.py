@@ -692,7 +692,7 @@ def m_seq_del_999999(seq):
         return seq
 
 
-def m_r_to_now_work_time(seq,):
+def m_r_to_now_work_time(seq):
     """
     计算传入参数两个时间点距离当前时间的月数
     计算逻辑:

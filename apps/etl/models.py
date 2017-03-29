@@ -129,8 +129,8 @@ class FuncLibSource(models.Model):
         ('R', u'reduce'),
         ('A', u'assert'),
     ]
-    func_name = models.CharField(u'函数名', max_length=100, primary_key=True)
-    func_desc = models.CharField(u'函数描述', max_length=2048, null=True)
+    func_name = models.CharField(u'函数名', max_length=80, primary_key=True)
+    func_desc = models.TextField(u'函数描述', null=True)
     func_type = models.CharField(u'函数类型', choices=FUNC_TYPE_CHOICES, default="M", max_length=10, db_index=True)
 
     class Meta:
