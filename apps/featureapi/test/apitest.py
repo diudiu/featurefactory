@@ -35,7 +35,10 @@ def feature_post():
                 # 'car_number',
                 # 'card_id',
                 # 'cc_bill_age',
-                'college_type',
+                # 'college_type',
+                # 'company_addr_city_level',
+                # 'contacts',
+                'creditcard_count',
 
                 # u'is_court_zhixing',
                 # u'is_net_black',

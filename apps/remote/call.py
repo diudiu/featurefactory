@@ -61,8 +61,8 @@ class DataPrepare(object):
             logger.error('Stream in call class ,Get DsInterfaceInfo error, data_identity is : ' %
                          self.data_identity)
             raise DataIdentityUnfound
-        else:
-            ds_conf = ds_conf[0]
+        else:            ds_conf = ds_conf[0]
+
         self.prepare_parms()
         self.url = ds_conf.data_source.backend_url + ds_conf.route + self.data_identity + '/'
         if self.is_list_args:
