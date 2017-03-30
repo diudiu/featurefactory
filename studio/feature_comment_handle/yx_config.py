@@ -107,7 +107,7 @@ config = dict(
         "json_path_list": [
             ("school_nature", "$.content.college.school_nature", "f_assert_not_null->f_assert_must_basestring"),
             ("degree", "$.content.degree.degree", "f_assert_not_null->f_assert_must_basestring")],
-        "f_map_and_filter_chain": "m_college_type->m_get_seq_index_value(0)->m_check_code('college_type','eq')",
+        "f_map_and_filter_chain": "m_college_type->m_check_code('college_type','eq')",
         "reduce_chain": "",
         "l_map_and_filter_chain": ''
     },

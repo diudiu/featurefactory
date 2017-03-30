@@ -716,33 +716,33 @@ def m_college_type(seq):
     获取学校的类型信息
     当学校的类型是985,211工程院校时：
         :param seq:【“985,211工程院校”，“本科”】
-        :return:【“985工程院校”】
+        :return:“985工程院校”
     当学校的类型是211工程院校时：
         :param seq:【“211工程院校”，“硕士”】
-        :return:【“211工程院校”】
+        :return:“211工程院校”
     当学校的类型是普通本科或者专科时：
        如果获取的某人的学历信息是博士、硕士和本科时
        输出的学校类型为普通本科
        :param seq:【“****”，“硕士”】
-       :return:【“普通本科”】
+       :return:“普通本科”
        如果获取的某个人的学历信息时专科时：
        输出的学校类型为专科
        :param seq:【“****”，“专科”】
-       :return:【“专科”】
+       :return:“专科”
 
     """
     if "985" in seq[0]:
-        tmp = ["985工程院校"]
+        tmp = "985,211工程院校"
         return tmp
     elif "211" in seq[0] and "985" not in seq[0]:
-        tmp = ["211工程院校"]
+        tmp = "211工程院校"
         return tmp
     else:
         if seq[1] in ["博士", "硕士", "本科"]:
-            tmp = ["普通本科"]
+            tmp = "本科"
             return tmp
         else:
-            tmp = ["专科"]
+            tmp = "专科"
             return tmp
 
 
@@ -888,7 +888,7 @@ def m_check_code(seq, args=None):
                 res = key
                 break
     if res in ('', None):
-        raise FeatureProcessError("don't find %s=% code value" % (feature_name, seq))
+        raise FeatureProcessError("don't find %s=%s code value" % (feature_name, seq))
     return res
 
 
@@ -930,7 +930,7 @@ def m_single_check_code(seq, feature_name):
             res = key
             break
     if res in ('', None):
-        raise FeatureProcessError("don't find %s=% code value" % (feature_name, seq))
+        raise FeatureProcessError("don't find %s=%s code value" % (feature_name, seq))
     return res
 
 
