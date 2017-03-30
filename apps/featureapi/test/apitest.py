@@ -25,8 +25,15 @@ def feature_post():
             # u'apply_id': u'APPLY20170308154505179ydlisi',
             # u'apply_id': u'APPLY2017030815450ltzhangsan',
             u'res_keys': [
+                # 'age',
+                # 'airfare_sum12',
+                # 'application_on',
+                # u'application_on_plus',
+                # 'apply_register_duration',
+                'car_count',
                 # u'is_court_zhixing',
-                u'is_net_black',
+                # u'is_net_black',
+
                 # u'income_level',
                 # u'overload_count'
             ]

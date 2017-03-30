@@ -123,6 +123,10 @@ class DataPrepare(object):
             })
 
     def do_request(self, data):
+        if 'int(time.time())' in data.values():
+            for k, v in data.items():
+                if v == 'int(time.time())':
+                    data.update({k: eval(v)})
         data = {
             "client_token": "test_lp_syph_code",
             "req_data": data
