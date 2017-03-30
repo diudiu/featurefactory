@@ -84,6 +84,19 @@ def post(data_identity):
 
                 ]
             }
+        if data_identity == 'cc_credit':
+            content = {
+                "status": "OK",
+                "result": {
+                    "rrx_once_all": {
+                        "banks_num": "开卡银行个数",
+                        "debit_cards_num": "3",
+                        "credit_cards_num": "1",
+                        "debit_card_account_age": "2",
+                        "credit_card_account_age": "3"
+                    }
+                }
+            }
         elif data_identity == 'high_way_over_load':
 
             content = {

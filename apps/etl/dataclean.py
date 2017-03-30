@@ -69,7 +69,7 @@ class DataClean(object):
         return temp_data
 
     def _cc_credit_clean(self):
-        temp_data = Judger.get_value(self.origin_data, '$.res_data.result')
+        temp_data = Judger.get_value(self.origin_data, '$.res_data')
         if not temp_data:
             logger.error(
                 'Unavailable data from %s :\n%s' %
