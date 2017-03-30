@@ -91,9 +91,7 @@ class Courier(object):
         logger.info('Stream in courier function name : get_general_data')
         for data_identity in self.data_identity_list:
             data = self.get_useful_data(data_identity)
-            self.useful_data.update({
-                data_identity: data
-            })
+            self.useful_data.update(data)
         logger.info('Stream get_general_data complete\nUseful_data : %s' % self.useful_data)
 
     def get_shunt_data(self):

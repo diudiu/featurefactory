@@ -88,7 +88,7 @@ class FeatureProcess(object):
         self.json_path_list = self.feature_conf.json_path_list
         if not self.json_path_list:
             raise Exception("json_path_list cannot be empty!")
-        # self.json_path_list = eval(self.json_path_list)
+        self.json_path_list = eval(self.json_path_list)
         self.f_map_and_filter_chain = self.feature_conf.f_map_and_filter_chain
         self.reduce_chain = self.feature_conf.reduce_chain
         self.l_map_and_filter_chain = self.feature_conf.l_map_and_filter_chain
@@ -100,8 +100,8 @@ class FeatureProcess(object):
              FeatureProcessError  自定义的特征处理异常，在程序的外层可捕获该异常
         """
         try:
-            # self._load()
-            self._load_config()
+            self._load()
+            # self._load_config()
             json_path_parser = JSONPathParser()
             value_list = json_path_parser.parsex(self.data, self.json_path_list)
             result = []
