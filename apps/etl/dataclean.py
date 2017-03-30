@@ -40,7 +40,7 @@ class DataClean(object):
 
     def _data_ocean_clean(self):
         temp_data = Judger.get_value(self.origin_data, '$.res_data.res_data')
-        if not temp_data:
+        if not temp_data or temp_data == '{}':
             logger.error(
                 'Unavailable data from %s :\n%s' %
                 (cons.SOURCE_TYPE_MESSAGE[self.clean_style], self.origin_data)

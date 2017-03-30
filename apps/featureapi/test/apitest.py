@@ -21,12 +21,14 @@ def feature_post():
     data = {
         u'content': {
             u'callback': u'',
-            u'apply_id': u'APPLY20170308154505179519058',
+            u'apply_id': u'APPLY201703081545051dxdinger',
+            # u'apply_id': u'APPLY20170308154505179ydlisi',
+            # u'apply_id': u'APPLY2017030815450ltzhangsan',
             u'res_keys': [
-                u'is_court_zhixing',
+                # u'is_court_zhixing',
                 u'is_net_black',
-                u'income_level',
-                u'overload_count'
+                # u'income_level',
+                # u'overload_count'
             ]
         },
         u'client_code': u'lp_test'
