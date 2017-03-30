@@ -8,6 +8,7 @@
     Change Activity:
 """
 import logging
+import json
 
 from vendor.utils.constant import cons
 from procuratorate.lp_judger import Judger
@@ -39,11 +40,14 @@ class DataClean(object):
 
     def _data_ocean_clean(self):
         temp_data = Judger.get_value(self.origin_data, '$.res_data.res_data')
-        if not temp_data:
+        if not temp_data or temp_data == '{}':
             logger.error(
                 'Unavailable data from %s :\n%s' %
                 (cons.SOURCE_TYPE_MESSAGE[self.clean_style], self.origin_data)
             )
+        # TODO temp_data may is unicode string
+
+        temp_data = json.loads(temp_data)
         return temp_data
 
     def _91_credit_clean(self):
@@ -65,7 +69,7 @@ class DataClean(object):
         return temp_data
 
     def _cc_credit_clean(self):
-        temp_data = Judger.get_value(self.origin_data, '$.res_data.result')
+        temp_data = Judger.get_value(self.origin_data, '$.res_data')
         if not temp_data:
             logger.error(
                 'Unavailable data from %s :\n%s' %

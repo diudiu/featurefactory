@@ -256,6 +256,7 @@ data = {
                 }
             }, ]
     },
+
     'is_organization_g_black': {
         "result": "00",
         "result_message": "检测通过或查询有记录",
@@ -301,6 +302,7 @@ data = {
             "imsi": "",
         }
     },
+
     'pingan_multi_loan_count': {
         "result": 0,
         "message": None,
@@ -393,6 +395,7 @@ data = {
             }
         ]
     },
+
     'online_time': {
         'telecom_online_time': {
             "result": "00",
@@ -402,6 +405,7 @@ data = {
             },
         },
     },
+
     'income_level': {
         # "portrait_data": {
         #     "product_code": "string",
@@ -541,12 +545,12 @@ data = {
 
 def test():
     for feature_name, datas in data.items():
-        fecture_obj = FeatureProcess(feature_name, datas)
-        result = fecture_obj.run()
+        feature_obj = FeatureProcess(feature_name, datas)
+        result = feature_obj.run()
         print result
 
 
 if __name__ == '__main__':
-    # data = {'education_degree_code': data['education_degree_code']}
+    data = {'car_count': data['car_count']}
     test()
 

@@ -460,7 +460,8 @@ data = {
                 "gender": "女",
                 "age": "25",
                 "birthday": "19910512",
-                "graduate_years": "4"},
+                "graduate_years": "4"
+            },
             "college": {
                 "create_data": "",
                 "master_pilot": "",
@@ -479,7 +480,8 @@ data = {
                 "address": "",
                 "is211": "N",
                 "academician_count": "",
-                "college_name": "石家庄学院"},
+                "college_name": "石家庄学院"
+            },
             "degree": {
                 "degree": "专科",
                 "level_no": None,
@@ -492,7 +494,8 @@ data = {
                 "education_approach": "普通全日制",
                 "college": "石家庄学院",
                 "photo_style": "jpg",
-                "is_key_subject": "N"},
+                "is_key_subject": "N"
+            },
             "result_message": "检测通过或查询有记录",
             "result": "00"
         },
@@ -539,15 +542,13 @@ data = {
             "imsi": "",
         }
     },
-
-
 }
 
 
 def test():
     for feature_name, datas in data.items():
-        fecture_obj = FeatureProcess(feature_name, datas)
-        result = fecture_obj.run()
+        feature_obj = FeatureProcess(feature_name, datas)
+        result = feature_obj.run()
         print result
 
 

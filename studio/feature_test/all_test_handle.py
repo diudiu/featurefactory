@@ -14,8 +14,9 @@ def test(data):
     for feature_name, datas_list in data.items():
         for datas in datas_list:
             res = datas.pop('res')
-            fecture_obj = FeatureProcess(feature_name, datas)
-            result = fecture_obj.run()
+            feature_obj = FeatureProcess(feature_name, datas)
+            result = feature_obj.run()
+            # print result
             if result:
                 result = result[feature_name]
                 if result != res:
@@ -44,5 +45,5 @@ if __name__ == '__main__':
 
 
     test_datas = load_feature_test()
-    test_datas = {'mobile': test_datas['mobile']}
+    # test_datas = {'gps_city_code': test_datas['gps_city_code']}
     test(test_datas)

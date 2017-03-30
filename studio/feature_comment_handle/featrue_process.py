@@ -4,9 +4,8 @@ import os
 from django.utils.module_loading import import_string
 from jsonparse_handle import JSONPathParser
 from exec_chain_handle import func_exec_chain
-from vendor.errors.feature import FeatureProcessError
+from apps.etl.models import FeatureProcess as FeatureProcessTable
 from vendor.utils.defaults import *
-
 
 import logging
 
@@ -72,11 +71,27 @@ class FeatureProcess(object):
             self.feature_conf = config[self.conf_str]
             self.default_value = self.feature_conf['default_value']
             self.json_path_list = self.feature_conf['json_path_list']
+            if not self.json_path_list:
+                raise Exception("json_path_list cannot be empty!")
             self.f_map_and_filter_chain = self.feature_conf['f_map_and_filter_chain']
             self.reduce_chain = self.feature_conf['reduce_chain']
             self.l_map_and_filter_chain = self.feature_conf['l_map_and_filter_chain']
         except:
             raise NameError("%s config not find or config error!!! " % self.feature_name)
+
+    def _load_config(self):
+        feature_conf = FeatureProcessTable.objects.filter(feature_name=self.feature_name)
+        if not feature_conf.count():
+            raise NameError("%s config not find or config error!!! " % self.feature_name)
+        self.feature_conf = feature_conf[0]
+        self.default_value = self.feature_conf.default_value
+        self.json_path_list = self.feature_conf.json_path_list
+        if not self.json_path_list:
+            raise Exception("json_path_list cannot be empty!")
+        self.json_path_list = eval(self.json_path_list)
+        self.f_map_and_filter_chain = self.feature_conf.f_map_and_filter_chain
+        self.reduce_chain = self.feature_conf.reduce_chain
+        self.l_map_and_filter_chain = self.feature_conf.l_map_and_filter_chain
 
     def run(self):
         """ 实际执行的方法，获取特征加工的结果
@@ -86,6 +101,7 @@ class FeatureProcess(object):
         """
         try:
             self._load()
+            # self._load_config()
             json_path_parser = JSONPathParser()
             value_list = json_path_parser.parsex(self.data, self.json_path_list)
             result = []
@@ -105,7 +121,6 @@ class FeatureProcess(object):
             logger.error(e.message)
             return None
         except Exception as e:
-            # print '**********************' + self.feature_name + '**********************' + e.message
             logger.error(e.message)
             return {self.feature_name: eval(self.default_value)}
         return {self.feature_name: result}

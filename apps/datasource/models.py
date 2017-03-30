@@ -34,8 +34,6 @@ class DsInterfaceInfo(BaseModel):
     data_origin_type = models.IntegerField(u'数据源标记', null=True)  # Choice by cons.LP_xxxx
     route = models.CharField(u'访问路由', max_length=128, help_text=u'/api/gateway/')
     method = models.CharField(u'访问方式', max_length=32, choices=cons.HTTP_METHOD)
-    comment = models.CharField(u'描述', max_length=512, blank=True, null=True)
-    common_data = models.CharField(u'公共参数', max_length=1024, null=True)
     must_data = models.CharField(u'必传参数', max_length=1024)
     is_need_token = models.BooleanField(u'是否需要access_token', default=False)
     is_need_encrypt = models.BooleanField(u'是否需要加密', default=True)

@@ -2,9 +2,9 @@
 import os
 import xlrd
 
-excle_path = os.path.join(os.path.dirname(__file__), 'tp.xlsx')
+excel_path = os.path.join(os.path.dirname(__file__), 'tp.xlsx')
 file_path = os.path.join(os.path.dirname(__file__), 'config zl.py')
-txt_path = os.path.join(os.path.dirname(__file__), 'templete.txt')
+txt_path = os.path.join(os.path.dirname(__file__), 'templet.txt')
 
 
 def create(feature_data, feature_name, feature_default, feature_data_type):
@@ -17,7 +17,7 @@ def create(feature_data, feature_name, feature_default, feature_data_type):
 
 
 def load_feature_conf():
-    book = xlrd.open_workbook(excle_path)
+    book = xlrd.open_workbook(excel_path)
     book_sheet = book.sheet_by_index(0)
     nrows = book_sheet.nrows
     feature_hand = open(file_path,'w+')

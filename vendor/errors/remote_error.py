@@ -7,3 +7,10 @@ from vendor.messages.response_code import ResponseCode
 class OriginDataGetError(ServerError):
     status = ResponseCode.ORIGIN_DATA_GET_ERROR
     message = ResponseCode.message(status)
+
+
+class OriginDataGetParmsMiss(ServerError):
+    status = ResponseCode.ORIGIN_DATA_GET_PARMS_MISS
+    message = ResponseCode.message(status)
+
+

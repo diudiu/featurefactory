@@ -15,8 +15,8 @@ config = dict(
         "feature_data_type": "float",
         "default_value": "PositiveSignedFloatTypeDefault",
         "json_path_list": [
-            ("application_on", "$.apply_data.application_on", "f_assert_not_null->f_assert_must_basestring"),
-            ("registration_on", "$.portrait_data.registration_on", "f_assert_not_null->f_assert_must_basestring")
+            ("application_on", "$.apply_data.data.application_on", "f_assert_not_null->f_assert_must_basestring"),
+            ("registration_on", "$.portrait_data.data.registration_on", "f_assert_not_null->f_assert_must_basestring")
         ],
         "f_map_and_filter_chain": "m_to_slice(0,10)->f_assert_seq0_gte_seq1->m_get_mon_sub(2)",
         "reduce_chain": "",
@@ -27,7 +27,7 @@ config = dict(
         "feature_name": "application_on",
         "feature_data_type": "string",
         "default_value": "StringTypeDefault",
-        "json_path_list": [("application_on", "$.application_on", "f_assert_not_null->f_assert_must_basestring")],
+        "json_path_list": [("application_on", "$..application_on", "f_assert_not_null->f_assert_must_basestring")],
         "f_map_and_filter_chain": "m_get_seq_index_value(0)",
         "reduce_chain": "",
         "l_map_and_filter_chain": "",
@@ -37,7 +37,7 @@ config = dict(
         "feature_name": "application_on_plus",
         "feature_data_type": "string",
         "default_value": "StringTypeDefault",
-        "json_path_list": [("application_on", "$.application_on", "f_assert_not_null->f_assert_must_basestring")],
+        "json_path_list": [("application_on", "$..application_on", "f_assert_not_null->f_assert_must_basestring")],
         "f_map_and_filter_chain": "m_get_seq_index_value(0)->m_datetime_only_hour_minute",
         "reduce_chain": "",
         "l_map_and_filter_chain": "",
@@ -48,7 +48,7 @@ config = dict(
         "feature_data_type": "int",
         "default_value": "PositiveSignedTypeDefault",
         "json_path_list": [
-            ("result", "$..result", "f_assert_must_list"),
+            ("result", "$..result", "f_assert_jsonpath_true->f_assert_must_list"),
         ],
         "f_map_and_filter_chain": "f_not_null->m_to_len",
         "reduce_chain": "",

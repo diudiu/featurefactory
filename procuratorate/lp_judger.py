@@ -51,7 +51,7 @@ class Judger(object):
 
     def _fill_attributes(self):
         self.apply_id = self.content.get('apply_id', None)
-        self.callback_url = self.content.get('callback_url', None)
+        self.callback_url = self.content.get('callback', None)
         if not self.callback_url:
             self.async = False
         self.feature_list = self.content.get('res_keys', None)
@@ -75,7 +75,7 @@ class Judger(object):
 
         for single_conf in full_conf.iterator():
             try:
-                feature_conf = eval(single_conf.raw_field_name)
+                feature_conf = eval(single_conf.data_identity)
                 feature_conf.update({
                     'collect_type': single_conf.collect_type
                 })
@@ -86,6 +86,10 @@ class Judger(object):
     def _load_args(self):
         arg_base = ArgsContext(self.apply_id)
         self.arguments = arg_base.load()
+        if self.arguments:
+            del self.arguments['_id']
+            del self.arguments['create_time']
+            del self.arguments['update_time']
         if not self.arguments:
             self.arguments = {}
             apply_data = ApplyContext(self.apply_id).load()

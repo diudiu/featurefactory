@@ -86,9 +86,7 @@ if __name__ == '__main__':
             f = import_module(i.split('.')[0])
             data = f.data
             print data
-            for fecture, v in data.items():
-                data_identify = v['data_identify']
-                lists = v['req_res']
+            for data_identify, lists in data.items():
                 for req_res in lists:
                     req_data = req_res['req_data']
                     res_data = req_res['res_data']
@@ -96,3 +94,14 @@ if __name__ == '__main__':
                     for k in req_data:
                         tmp_req_data[u'%s' % k] = u'%s' % req_data[k]
                     insert_mongo(data_identify, tmp_req_data, res_data)
+
+            # for fecture, v in data.items():
+            #     data_identify = v['data_identify']
+            #     lists = v['req_res']
+            #     for req_res in lists:
+            #         req_data = req_res['req_data']
+            #         res_data = req_res['res_data']
+            #         tmp_req_data = {}
+            #         for k in req_data:
+            #             tmp_req_data[u'%s' % k] = u'%s' % req_data[k]
+            #         insert_mongo(data_identify, tmp_req_data, res_data)
