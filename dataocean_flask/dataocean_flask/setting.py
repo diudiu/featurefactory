@@ -21,3 +21,15 @@ MONGO_NAME = 'dataocean_debug'
 MONGO_USERNAME = 'dataocean_debug'
 MONGO_PASSWORD = 'Syph@dataocean_debug'
 MONGO_PORT = 27017
+
+# from featurefactory.settings import MONGODB_HOST as host
+# from featurefactory.settings import MONGODB_NAME as name
+# from featurefactory.settings import MONGODB_USERNAME as username
+# from featurefactory.settings import MONGODB_PASSWORD as password
+# from featurefactory.settings import MONGODB_PORT as port
+
+host = '192.168.1.198'
+name = 'feature_storage'
+username = 'feature_storage'
+password = 'feature_storage'
+port = 27017
