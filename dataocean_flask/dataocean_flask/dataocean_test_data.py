@@ -1338,6 +1338,47 @@ data = {
             }
         },
     ],
+    'geo_location': [
+        {
+            "req_data": {
+                'access_token': 'aaaaaaaaa',
+                'data_identity': 'geo_location',
+                'gps_longitude': '23.45678',
+                'gps_latitude': '145.23342'
+            },
+            "res_data": {
+                "content": {
+                    "status": 0,
+                    "result": {
+                        "location": {
+                            "lng": 114.23075168099999,
+                            "lat": 29.57908754899005
+                        },
+                        "formatted_address": "湖北省咸宁市崇阳县G56(杭瑞高速)",
+                        "business": "",
+                        "addressComponent": {
+                            "country": "中国",
+                            "country_code": 0,
+                            "province": "湖北省",
+                            "city": "咸宁市",
+                            "district": "崇阳县",
+                            "adcode": "421223",
+                            "street": "G56(杭瑞高速)",
+                            "street_number": "",
+                            "direction": "",
+                            "distance": ""
+                        },
+                        "pois": [],
+                        "poiRegions": [],
+                        "sematic_description": "大屋沈家南210米",
+                        "cityCode": 362
+                    }
+                },
+                "result_message": "检测通过或查询有记录",
+                "result": "00"
+            }
+        },
+    ],
     "high_way_over_load": [
         {
             "req_data": {

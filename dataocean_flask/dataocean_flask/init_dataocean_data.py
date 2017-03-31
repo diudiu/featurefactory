@@ -85,15 +85,16 @@ if __name__ == '__main__':
         if i.startswith('dataocean_test_data'):
             f = import_module(i.split('.')[0])
             data = f.data
-            print data
             for data_identify, lists in data.items():
-                for req_res in lists:
-                    req_data = req_res['req_data']
-                    res_data = req_res['res_data']
-                    tmp_req_data = {}
-                    for k in req_data:
-                        tmp_req_data[u'%s' % k] = u'%s' % req_data[k]
-                    insert_mongo(data_identify, tmp_req_data, res_data)
+                # if data_identify == 'geo_location':
+                if True:
+                    for req_res in lists:
+                        req_data = req_res['req_data']
+                        res_data = req_res['res_data']
+                        tmp_req_data = {}
+                        for k in req_data:
+                            tmp_req_data[u'%s' % k] = u'%s' % req_data[k]
+                        insert_mongo(data_identify, tmp_req_data, res_data)
 
             # for fecture, v in data.items():
             #     data_identify = v['data_identify']

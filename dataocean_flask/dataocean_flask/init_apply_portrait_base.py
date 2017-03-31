@@ -20,7 +20,7 @@ if __name__ == '__main__':
     db = get_mongo_db()
     db.portrait_base.insert({"_class": "com.digcredit.brms.model.orm.mongo.Portrait", "proposer_id": "123456789dinger",
                              "product_code": "12345", "data": {"edu_exp_form": [
-            {"school": "北京理工", "start": "201009", "end": "201406", "degree": "30", "degree_name": "硕士", "tz": 1}],
+            {"school": "北京理工", "start": "201009", "end": "201406", "degree": "20", "degree_name": "硕士", "tz": 1}],
             "now_indust_code": "330", "upload_contact": 0,
             "sns_sd_friend_cnt": 1194, "mobile": "13311538888",
             "city_code": "200", "work_age": 11, "sns_friends_cnt": 1,
@@ -34,7 +34,7 @@ if __name__ == '__main__':
             "now_indust_name": "能源(电力/水利)"}, "is_delete": False})
     db.portrait_base.insert({"_class": "com.digcredit.brms.model.orm.mongo.Portrait", "proposer_id": "123456789lisi",
                              "product_code": "12345", "data": {"edu_exp_form": [
-            {"school": "北京理工", "start": "201009", "end": "201406", "degree": "10", "degree_name": "博士", "tz": 1}],
+            {"school": "北京理工", "start": "201009", "end": "201406", "degree": "40", "degree_name": "博士", "tz": 1}],
             "now_indust_code": "150", "upload_contact": 0,
             "sns_sd_friend_cnt": 1902, "mobile": "13661117777",
             "city_code": "200", "work_age": 9, "sns_friends_cnt": 21,
@@ -49,7 +49,7 @@ if __name__ == '__main__':
     db.portrait_base.insert(
         {"_class": "com.digcredit.brms.model.orm.mongo.Portrait", "proposer_id": "123456789zhangsan",
          "product_code": "12345", "data": {"edu_exp_form": [
-            {"school": "北京理工", "start": "201009", "end": "201406", "degree": "20", "degree_name": "MBA/EMBA", "tz": 1}],
+            {"school": "北京理工", "start": "201009", "end": "201406", "degree": "50", "degree_name": "MBA/EMBA", "tz": 1}],
             "now_indust_code": "170", "upload_contact": 1, "sns_sd_friend_cnt": 1294,
             "mobile": "18511116277", "city_code": "200", "work_age": 14,
             "sns_friends_cnt": 12, "registration_on": "2016-10-01 12:20:10",

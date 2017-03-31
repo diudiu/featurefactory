@@ -118,7 +118,8 @@ config = dict(
             ("flight_times", "$..content.flight_times", "f_assert_not_null->f_assert_must_digit_or_float"),
             ("inland_count", "$..content.inland_count", "f_assert_not_null->f_assert_must_digit_or_float"),
             (
-            "international_count", "$..content.international_count", "f_assert_not_null->f_assert_must_digit_or_float"),
+                "international_count", "$..content.international_count",
+                "f_assert_not_null->f_assert_must_digit_or_float"),
         ],
         "f_map_and_filter_chain": "m_max_flight_area->f_assert_not_null",
         "reduce_chain": "",
@@ -316,7 +317,7 @@ config = dict(
     },
 
     gps_city_code_config={
-        "feature_name": "mobile_area_city_code",
+        "feature_name": "gps_city_code",
         "feature_data_type": "string",
         "default_value": "StringTypeDefault",
         "json_path_list": [
@@ -368,6 +369,19 @@ config = dict(
         "feature_name": "mobile_identity",
         "feature_data_type": "int",
         "default_value": "BooleanTypeDefault",
+        "json_path_list": [
+            ("mobile_identity", "$.unicom_mobile_identity_s.result", "m_mobile_id_judge"),
+            ("mobile_identity", "$.yd_mobile_identity_s.result", "m_mobile_id_judge"),
+            ("mobile_identity", "$.telecom_mobile_identity_s.result", "m_mobile_id_judge"),
+        ],
+        "f_map_and_filter_chain": "m_to_sum->m_to_bool",
+        "reduce_chain": "",
+        "l_map_and_filter_chain": ""
+    },
+    income_expense_comparison_config={
+        "feature_name": "income_expense_comparison",
+        "feature_data_type": "int",
+        "default_value": "PositiveSignedTypeDefault",
         "json_path_list": [
             ("mobile_identity", "$.unicom_mobile_identity_s.result", "m_mobile_id_judge"),
             ("mobile_identity", "$.yd_mobile_identity_s.result", "m_mobile_id_judge"),
