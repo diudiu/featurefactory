@@ -38,7 +38,7 @@ class DataPrepare(object):
         if not ret_data:
             ret_data = self.get_origin_data_from_interface()
         if not ret_data:
-            logger.error('Stream in call class name DataPrepare\nGet origin data error, data_identity is : ' %
+            logger.error('Stream in call class name DataPrepare\nGet origin data error, data_identity is : %s' %
                          self.data_identity)
             raise OriginDataGetError
         return ret_data
@@ -58,7 +58,7 @@ class DataPrepare(object):
             is_delete=False
         )
         if not ds_conf:
-            logger.error('Stream in call class ,Get DsInterfaceInfo error, data_identity is : ' %
+            logger.error('Stream in call class ,Get DsInterfaceInfo error, data_identity is : %s' %
                          self.data_identity)
             raise DataIdentityUnfound
         else:            ds_conf = ds_conf[0]
@@ -97,7 +97,7 @@ class DataPrepare(object):
         elif ds_conf.method == 'REMOTE':
             origin_data = self.do_request(data_prams)
         if not origin_data:
-            logger.error('Stream in call class ,Get origin data error, data_identity is : ' %
+            logger.error('Stream in call class ,Get origin data error, data_identity is : %s' %
                          self.data_identity)
             raise OriginDataGetError
         cleaner = DataClean(origin_data, ds_conf.data_origin_type)

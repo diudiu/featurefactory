@@ -51,14 +51,14 @@ def feature_post():
                 # 'gender',#
                 # 'gps_city_code',
                 # 'graduate_college',
-                # 'graduate_college_check',
+                'graduate_college_check',
 
                 # u'is_court_zhixing',
                 # u'is_net_black',
 
                 # u'income_level',
                 # u'overload_count',
-                'is_unclear_loan'
+                # 'is_unclear_loan'
             ]
         },
         u'client_code': u'lp_test'
