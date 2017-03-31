@@ -26,7 +26,7 @@ def feature_post():
             # u'apply_id': u'APPLY20170308154505179ydlisi',
             # u'apply_id': u'APPLY2017030815450ltzhangsan',
             u'res_keys': [
-                'age',
+                # 'age',
                 # 'airfare_sum12',
                 # 'application_on',
                 # u'application_on_plus',
@@ -35,27 +35,30 @@ def feature_post():
                 # 'car_number',
                 # 'card_id',
                 # 'cc_bill_age',
-                # 'college_type',
+                # 'college_type',#
                 # 'company_addr_city_level',
                 # 'contacts',
                 # 'creditcard_count',
                 # 'cur_company',
-                # 'cur_corp_years',
-                # 'cur_employee_number',
-                # 'cur_work_status',
+                # 'cur_corp_years', #
+                # 'cur_employee_number',#
+                # 'cur_work_status',#
                 # 'dc_bill_age',
-                # 'education_degree_check',
-                # 'education_degree_code',
+                # 'education_degree_check',#
+                # 'education_degree_code',#
                 # 'education_tz',
                 # 'folk',
-                # 'gender',
+                # 'gender',#
                 # 'gps_city_code',
+                # 'graduate_college',
+                # 'graduate_college_check',
 
                 # u'is_court_zhixing',
                 # u'is_net_black',
 
                 # u'income_level',
-                # u'overload_count'
+                # u'overload_count',
+                'is_unclear_loan'
             ]
         },
         u'client_code': u'lp_test'

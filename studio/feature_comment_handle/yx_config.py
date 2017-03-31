@@ -105,9 +105,9 @@ config = dict(
         "feature_data_type": "string",
         "default_value": "StringTypeDefault",
         "json_path_list": [
-            ("school_nature", "$.content.college.school_nature", "f_assert_not_null->f_assert_must_basestring"),
-            ("degree", "$.content.degree.degree", "f_assert_not_null->f_assert_must_basestring")],
-        "f_map_and_filter_chain": "m_college_type->m_check_code('college_type','eq')",
+            ("school_nature", "$..content.college.school_nature", "f_assert_not_null->f_assert_must_basestring"),
+            ("degree", "$..content.degree.degree", "f_assert_not_null->f_assert_must_basestring")],
+        "f_map_and_filter_chain": "m_college_type->m_to_code('college_type')",
         "reduce_chain": "",
         "l_map_and_filter_chain": ''
     },
@@ -116,7 +116,7 @@ config = dict(
         "feature_name": "graduate_college_check",
         "feature_data_type": "string",
         "default_value": "StringTypeDefault",
-        "json_path_list": [("college", "$.content.degree.college", "f_assert_not_null")],
+        "json_path_list": [("college", "$..content.degree.college", "f_assert_not_null->f_assert_must_basestring")],
         "f_map_and_filter_chain": "m_get_seq_index_value(0)",
         "reduce_chain": "",
         "l_map_and_filter_chain": ''
@@ -127,7 +127,7 @@ config = dict(
         "feature_data_type": "string",
         "default_value": "StringTypeDefault",
         "json_path_list": [("degree", "$..content.degree.degree", "f_assert_not_null")],
-        "f_map_and_filter_chain": "m_single_check_code('education_degree_check')",
+        "f_map_and_filter_chain": "m_get_seq_index_value(0)->m_to_code('education_degree_check')",
         "reduce_chain": "",
         "l_map_and_filter_chain": ''
     },

@@ -97,7 +97,7 @@ config = dict(
         "default_value": "PositiveSignedTypeDefault",
         "json_path_list": [("start_business_date", "$..start_business_date", "f_assert_not_null")],
         "f_map_and_filter_chain": "m_get_seq_index_value(0)->m_get_date_to_now_years(2)"
-                                  "->m_check_code('cur_corp_years','gt_lte')",
+                                  "->m_to_code('cur_corp_years')",
         "reduce_chain": "",
         "l_map_and_filter_chain": "",
     },
@@ -107,7 +107,7 @@ config = dict(
         "feature_data_type": "int",
         "default_value": "PositiveSignedTypeDefault",
         "json_path_list": [("staff_count", "$..staff_count", "f_assert_not_null")],
-        "f_map_and_filter_chain": "m_get_seq_index_value(0)->m_to_int->m_check_code('cur_employee_number','gte_lt')",
+        "f_map_and_filter_chain": "m_get_seq_index_value(0)->m_to_int->m_to_code('cur_employee_number')",
         "reduce_chain": "",
         "l_map_and_filter_chain": "",
     },

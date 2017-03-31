@@ -45,6 +45,7 @@ class DataClean(object):
                 'Unavailable data from %s :\n%s' %
                 (cons.SOURCE_TYPE_MESSAGE[self.clean_style], self.origin_data)
             )
+            return {}
         # TODO temp_data may is unicode string
 
         temp_data = json.loads(temp_data)

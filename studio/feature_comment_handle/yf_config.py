@@ -81,7 +81,7 @@ config = dict(
         "json_path_list": [
             ("sex", "$..content.sex", "f_assert_not_null->f_assert_must_basestring"),
         ],
-        "f_map_and_filter_chain": "m_get_seq_index_value(0)->m_sex_to_code->m_check_code('gender','eq')",
+        "f_map_and_filter_chain": "m_get_seq_index_value(0)->m_sex_to_code->m_to_code('gender')",
         "reduce_chain": "",
         "l_map_and_filter_chain": ""
     },
@@ -335,7 +335,7 @@ config = dict(
         "json_path_list": [
             ("cur_work_status", "$..cur_work_status", "f_assert_not_null->f_assert_must_basestring"),
         ],
-        "f_map_and_filter_chain": "m_get_work_status_map('cur_work_status')->f_assert_not_null",
+        "f_map_and_filter_chain": "m_get_seq_index_value(0)->m_to_code('cur_work_status')",
         "reduce_chain": "",
         "l_map_and_filter_chain": ""
     },

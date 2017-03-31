@@ -103,7 +103,7 @@ config = dict(
         "feature_data_type": "int",
         "default_value": "PositiveSignedTypeDefault",
         "json_path_list": [("education_degree_code", "$..edu_exp_form[*].degree", "f_not_null->f_assert_must_digit")],
-        "f_map_and_filter_chain": "m_to_int->r_min->m_to_str->m_check_code('education_degree_code', 'eq')",
+        "f_map_and_filter_chain": "m_to_int->r_min->m_to_str->m_to_code('education_degree_code')",
         "reduce_chain": "",
         "l_map_and_filter_chain": "",
     },

@@ -103,7 +103,7 @@ class DataPrepare(object):
         cleaner = DataClean(origin_data, ds_conf.data_origin_type)
         clear_data = cleaner.worked()
         if not clear_data:
-            logger.error('Stream in call class ,Get clean data error, data_identity is : ' %
+            logger.error('Stream in call class ,Get clean data error, data_identity is : %s' %
                          self.data_identity)
             raise OriginDataGetError
         return clear_data

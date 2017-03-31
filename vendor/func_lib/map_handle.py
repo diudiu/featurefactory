@@ -614,7 +614,7 @@ def m_max_flight_class(seq):
         result = 1
     return result
 
-
+#Todo
 def m_get_work_status_map(seq, feature_name):
     """
     对seq数据针对工作状态匹配相应code码
@@ -884,6 +884,50 @@ def m_check_code(seq, args=None):
                 res = key
                 break
         elif op == 'eq':
+            if seq == value[0]:
+                res = key
+                break
+    if res in ('', None):
+        raise FeatureProcessError("don't find %s=%s code value" % (feature_name, seq))
+    return res
+
+
+def m_to_code(seq, args=None):
+    """
+    将数值转化成对应的code
+    :param seq:  上一步得到的数据
+    :param args:  [feature_name,操作符]
+    :return:  对应code
+
+    example：
+                :data:         20
+                :args         ['education_degree_code','gte_lt']
+                :return         2
+    """
+    if not seq:
+        return []
+    feature_name = args
+    fcm = FeatureCodeMapping.objects.filter(
+        feature_name=feature_name,
+        is_delete= False
+    )
+    res = ''
+    num_map = {int(conf.mapped_value): [conf.unitary_value, conf.dual_value, conf.arithmetic_type] for conf in fcm}
+    for key, value in num_map.iteritems():
+        arithmetic_type = value[2]
+        if arithmetic_type == '[)':
+            if float(value[0]) <= float(seq) < float(value[1]):
+                res = key
+                break
+        elif arithmetic_type == '(]':
+            if float(value[0]) < float(seq) <= float(value[1]):
+                res = key
+                break
+        elif arithmetic_type == 'in':
+            if seq in value[0]:
+                res = key
+                break
+        elif arithmetic_type == '==':
             if seq == value[0]:
                 res = key
                 break
