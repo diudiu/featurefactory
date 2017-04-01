@@ -22,9 +22,9 @@ def feature_post():
     data = {
         u'content': {
             u'callback': u'',
-            u'apply_id': u'APPLY201703081545051dxdinger',
+            # u'apply_id': u'APPLY201703081545051dxdinger',
             # u'apply_id': u'APPLY20170308154505179ydlisi',
-            # u'apply_id': u'APPLY2017030815450ltzhangsan',
+            u'apply_id': u'APPLY2017030815450ltzhangsan',
             u'res_keys': [
                 # 'age',
                 # 'airfare_sum12',
@@ -51,7 +51,11 @@ def feature_post():
                 # 'gender',#
                 # 'gps_city_code',
                 # 'graduate_college',
-                'graduate_college_check',
+                # 'graduate_college_check',
+                # 'has_negative_info',
+                'income_expense_comparison',
+                # 'income_level',
+
 
                 # u'is_court_zhixing',
                 # u'is_net_black',

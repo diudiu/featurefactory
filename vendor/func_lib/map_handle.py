@@ -506,25 +506,6 @@ def m_get_city_name(address):
     return city_name
 
 
-def m_get_city_name1(city):
-    """
-           m_get_city_name 包含 m_get_city_name1 这个弃用
-            提取公司所在地址的城市名称
-            :param city: 地址
-            :return:    城市
-            example：
-                    :address  'beijing'
-                    :return  '北京'
-                    :address  '广州'
-                    :return  '广州'
-    """
-    if "-" in city:
-        city = city.split('-')[1]
-    if ('市' in city) or ('盟' in city) or ('州' in city and len(city) > 6):
-        city = city[:-3]
-    return city
-
-
 def m_city_name_to_level(city_name):
     """
        获取城市名所对应的level
@@ -614,7 +595,8 @@ def m_max_flight_class(seq):
         result = 1
     return result
 
-#Todo
+
+# Todo
 def m_get_work_status_map(seq, feature_name):
     """
     对seq数据针对工作状态匹配相应code码
@@ -896,20 +878,20 @@ def m_to_code(seq, args=None):
     """
     将数值转化成对应的code
     :param seq:  上一步得到的数据
-    :param args:  [feature_name,操作符]
+    :param args:  feature_name
     :return:  对应code
 
     example：
                 :data:         20
-                :args         ['education_degree_code','gte_lt']
+                :args         'education_degree_code'
                 :return         2
     """
-    if not seq:
+    if not seq and seq != 0:
         return []
     feature_name = args
     fcm = FeatureCodeMapping.objects.filter(
         feature_name=feature_name,
-        is_delete= False
+        is_delete=False
     )
     res = ''
     num_map = {int(conf.mapped_value): [conf.unitary_value, conf.dual_value, conf.arithmetic_type] for conf in fcm}
@@ -923,12 +905,24 @@ def m_to_code(seq, args=None):
             if float(value[0]) < float(seq) <= float(value[1]):
                 res = key
                 break
+        elif arithmetic_type == '()':
+            if float(value[0]) < float(seq) < float(value[1]):
+                res = key
+                break
+        elif arithmetic_type == '>=':
+            if float(seq) >= float(value[0]):
+                res = key
+                break
+        elif arithmetic_type == '<=':
+            if float(seq) <= float(value[0]):
+                res = key
+                break
         elif arithmetic_type == 'in':
             if seq in value[0]:
                 res = key
                 break
         elif arithmetic_type == '==':
-            if seq == value[0]:
+            if str(seq) == value[0]:
                 res = key
                 break
     if res in ('', None):
@@ -1090,9 +1084,9 @@ def m_lp_income(seq, discount):
 
 def m_single_to_list(seq):
     """
-
-    :param seq:
-    :return:
+    转换单值为列表
+    :param seq: 5
+    :return:[5]
     """
     if isinstance(seq, list):
         return seq
@@ -1113,70 +1107,108 @@ def m_to_str(seq):
     return str(seq)
 
 
+def m_get_income_expense_comparison(seq, args=None):
+    """
+       获取用户的入账与支出关系
+
+        :param seq: 入账和支出信息
+
+        :return:  入账/支出的比率或空列表
+
+
+    """
+    amount_dict = {'0': 500, '1': 1500, '2': 2500, '3': 3500, '4': 4500, '5': 5500, '6': 6500, '7': 7500, '8': 8500,
+                   '9': 9500, 'a': 15000, 'b': 25000, 'c': 35000, 'd': 45000, 'e': 55000, 'f': 65000, '10': 75000,
+                   '11': 85000, '12': 95000, '13': 150000, '14': 250000, '15': 350000, '16': 450000, '17': 550000,
+                   '18': 650000, '19': 750000, '1a': 850000, '1b': 950000, '1c': 1500000, '1d': 2500000, '1e': 3500000,
+                   '1f': 4500000, '20': 5500000, '21': 6500000, '22': 7500000, '23': 8500000, '24': 9500000, '25':15000000
+                   }
+
+    ratio = ''
+    income_level = ''
+    expense_level = ''
+    if isinstance(seq, list) and seq:
+        seq = seq[0]
+    if not (seq and isinstance(seq, dict)):
+        return [ratio]
+    if args == 'unicome':
+        income_level = amount_dict.get(seq.get('income_range'))
+        expense_level = amount_dict.get(seq.get('charge_off_range'))
+    if args == 'cc_credit':
+        income_level = seq.get('debit_card_12m_passentry_amount')
+        expense_level = seq.get('debit_card_12m_chargeoff_amount')
+    if income_level and expense_level:
+        if income_level == expense_level:
+            ratio = 1
+        else:
+            ratio = float(income_level) / float(expense_level)
+    return [ratio]
+
+
 if __name__ == '__main__':
     data = [
-            {
-                "res": 9,
-                "product_code": "string",
-                "name": "string",
-                "card_id": "string",
-                "mobile": "string",
-                "email": "string",
-                "registration_on": "2016-10-01 12:20:10",
-                "city_code": "string",
-                "city_name": "string",
-                "now_indust_code": "string",
-                "now_indust_name": "string",
-                "work_age": 0,
-                "complete_degree": 0,
-                "cur_work_status": "string",
-                "upload_contact": 0,
-                "sns_friends_cnt": 0,
-                "sns_sd_friend_cnt": 0,
-                "sns_h_fans_cn": 0,
-                "sns_skill_tag_list": [
-                    {
-                        "skill_tag": "string",
-                        "certified_num": 0
-                    }
-                ],
-                "work_exp_form": [
-                    {
-                        "title": "string",
-                        "has_certified": "string",
-                        "certified_num": 0,
-                        "comp_name": "string",
-                        "months": 0,
-                        "salary": 0,
-                        "work_start": "201605",
-                        "work_end": '999999',
-                        "industry": "数云普惠",
-                        "industry_name": "string",
-                        "dq": "string",
-                        "dq_name": "string"
-                    },
+        {
+            "res": 9,
+            "product_code": "string",
+            "name": "string",
+            "card_id": "string",
+            "mobile": "string",
+            "email": "string",
+            "registration_on": "2016-10-01 12:20:10",
+            "city_code": "string",
+            "city_name": "string",
+            "now_indust_code": "string",
+            "now_indust_name": "string",
+            "work_age": 0,
+            "complete_degree": 0,
+            "cur_work_status": "string",
+            "upload_contact": 0,
+            "sns_friends_cnt": 0,
+            "sns_sd_friend_cnt": 0,
+            "sns_h_fans_cn": 0,
+            "sns_skill_tag_list": [
+                {
+                    "skill_tag": "string",
+                    "certified_num": 0
+                }
+            ],
+            "work_exp_form": [
+                {
+                    "title": "string",
+                    "has_certified": "string",
+                    "certified_num": 0,
+                    "comp_name": "string",
+                    "months": 0,
+                    "salary": 0,
+                    "work_start": "201605",
+                    "work_end": '999999',
+                    "industry": "数云普惠",
+                    "industry_name": "string",
+                    "dq": "string",
+                    "dq_name": "string"
+                },
 
-                ],
-                "edu_exp_form": [
-                    {
-                        "school": "string",
-                        "start": "string",
-                        "end": "string",
-                        "degree": "5",
-                        "degree_name": "string",
-                        "tz": 0
-                    },
-                    {
-                        "school": "string",
-                        "start": "string",
-                        "end": "string",
-                        "degree": "30",
-                        "degree_name": "string",
-                        "tz": 1
-                    }
-                ]
-            },
+            ],
+            "edu_exp_form": [
+                {
+                    "school": "string",
+                    "start": "string",
+                    "end": "string",
+                    "degree": "5",
+                    "degree_name": "string",
+                    "tz": 0
+                },
+                {
+                    "school": "string",
+                    "start": "string",
+                    "end": "string",
+                    "degree": "30",
+                    "degree_name": "string",
+                    "tz": 1
+                }
+            ]
+        },
     ]
-    data = m_r_to_now_work_time()
+    # data = m_r_to_now_work_time()
+    data = m_to_code(0, args='income_expense_comparison')
     print data
-

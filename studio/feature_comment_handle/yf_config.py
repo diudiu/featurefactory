@@ -383,11 +383,11 @@ config = dict(
         "feature_data_type": "int",
         "default_value": "PositiveSignedTypeDefault",
         "json_path_list": [
-            ("mobile_identity", "$.unicom_mobile_identity_s.result", "m_mobile_id_judge"),
-            ("mobile_identity", "$.yd_mobile_identity_s.result", "m_mobile_id_judge"),
-            ("mobile_identity", "$.telecom_mobile_identity_s.result", "m_mobile_id_judge"),
+            ("debit", "$.unicom_finance_portrait_s.content.last12.debit", "m_get_income_expense_comparison('unicome')"),
+            ("rrx_inc_12m", "$.cc_credit.result.rrx_inc_12m", "m_get_income_expense_comparison('cc_credit')"),
         ],
-        "f_map_and_filter_chain": "m_to_sum->m_to_bool",
+        "f_map_and_filter_chain": "f_not_null->f_assert_not_null->m_get_seq_index_value(0)"
+                                  "->m_to_code('income_expense_comparison')",
         "reduce_chain": "",
         "l_map_and_filter_chain": ""
     },

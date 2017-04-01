@@ -15,8 +15,10 @@ from apps.etl.models import FeatureShuntConf, FeatureRelevanceConf
 from apps.remote.call import DataPrepare
 from studio.feature_comment_handle.featrue_process import FeatureProcess
 
-from vendor.utils.phone_operator_judge import PhoneOperator
+from vendor.utils.shunt_operator_judge import *
+from vendor.errors.remote_error import *
 from vendor.errors.contact_error import *
+from vendor.errors.api_errors import *
 from vendor.utils.constant import cons
 
 logger = logging.getLogger('apps.etl')
@@ -91,6 +93,11 @@ class Courier(object):
         logger.info('Stream in courier function name : get_general_data')
         for data_identity in self.data_identity_list:
             data = self.get_useful_data(data_identity)
+            if not data:
+                logger.error('Stream in call class name DataPrepare\nGet origin data error, data_identity is : %s' %
+                             data_identity)
+
+                raise OriginDataGetError
             self.useful_data.update(data)
         logger.info('Stream get_general_data complete\nUseful_data : %s' % self.useful_data)
 
@@ -98,7 +105,10 @@ class Courier(object):
         logger.info('Stream in courier function name : get_shunt_data')
         data = self.get_shunt_rel_data()
         if not data:
-            raise
+            logger.error('Stream in call class name DataPrepare\nGet origin data error, feature_name is : %s' %
+                         self.feature_name)
+
+            raise OriginDataGetError
         logger.info('Stream get_shunt_data complete\nUseful_data : %s' % data)
         self.useful_data.update(data)
 
@@ -109,7 +119,8 @@ class Courier(object):
             is_delete=False
         ).order_by('id')
         if not feature_conf_list:
-            raise
+            logger.error("feature_name:%s miss config  in shunt feature table" % self.feature_name)
+            raise ShuntFeatureConfigError
         apply_base = ApplyContext(self.apply_id)
         apply_data = (apply_base.load())['data']
         for feature_conf in feature_conf_list:
@@ -117,20 +128,23 @@ class Courier(object):
             data_identity = feature_conf.data_identity
             value = apply_data.get(shunt_key, None)
             if not value:
-                raise
+                logger.error("feature_name:%s shunt_key:%s get value error  in shunt feature table"
+                             % (self.feature_name, shunt_key))
+                raise GetArgumentsError
             oper = feature_conf.shunt_type
-            if oper == 'PhoneOperator':
-                po = PhoneOperator(value)
-                shunt = po.distinguish()
-                if shunt in eval(feature_conf.shunt_value):
-                    useful_data_identity = data_identity
-                    if not useful_data_identity:
-                        raise
-                    data = self.get_useful_data(data_identity)
-                    if not data:
-                        continue
-                    logger.info('Stream get_shunt_rel_data complete\nUseful_data : %s' % data)
-                    return data
+            oper = eval(oper)
+            po = oper(value)
+            shunt = po.distinguish()
+            if shunt in eval(feature_conf.shunt_value):
+                useful_data_identity = data_identity
+                if not useful_data_identity:
+                    logger.error("feature_name:%s  miss  data_identity in shunt feature table" % self.feature_name)
+                    raise ShuntFeatureConfigError
+                data = self.get_useful_data(data_identity)
+                if not data:
+                    continue
+                logger.info('Stream get_shunt_rel_data complete\nUseful_data : %s' % data)
+                return data
 
     def _get_relevance_feature_list(self, feature_name):
         relevance_conf = FeatureRelevanceConf.objects.filter(

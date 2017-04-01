@@ -45,6 +45,7 @@ class ResponseCode(object):
     ORIGIN_DATA_GET_PARMS_MISS = 60002
     RELEVANCE_FEATURE_CONFIG_ERROR = 60003
     COMMON_FEATURE_CONFIG_ERROR = 60004
+    SHUNT_FEATURE_CONFIG_ERROR = 60004
 
     RESPONSE_MESSAGE = {
         FAILED:                         u"操作失败",
@@ -87,6 +88,7 @@ class ResponseCode(object):
         ORIGIN_DATA_GET_PARMS_MISS:     u"获取原始数据参数丢失",
         RELEVANCE_FEATURE_CONFIG_ERROR: u'依赖特征表配置错误',
         COMMON_FEATURE_CONFIG_ERROR:    u'通用配置表错误',
+        SHUNT_FEATURE_CONFIG_ERROR:     u'分流配置表错误',
     }
 
     @classmethod

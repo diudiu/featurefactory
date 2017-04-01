@@ -58,6 +58,7 @@ class DataClean(object):
                 'Unavailable data from %s :\n%s' %
                 (cons.SOURCE_TYPE_MESSAGE[self.clean_style], self.origin_data)
             )
+            return {}
         return temp_data
 
     def _pingan_credit_clean(self):
@@ -67,6 +68,7 @@ class DataClean(object):
                 'Unavailable data from %s :\n%s' %
                 (cons.SOURCE_TYPE_MESSAGE[self.clean_style], self.origin_data)
             )
+            return {}
         return temp_data
 
     def _cc_credit_clean(self):
@@ -76,6 +78,7 @@ class DataClean(object):
                 'Unavailable data from %s :\n%s' %
                 (cons.SOURCE_TYPE_MESSAGE[self.clean_style], self.origin_data)
             )
+            return {}
         return temp_data
 
     def test_worked(self):

@@ -37,10 +37,6 @@ class DataPrepare(object):
         ret_data = self.get_data_from_db()
         if not ret_data:
             ret_data = self.get_origin_data_from_interface()
-        if not ret_data:
-            logger.error('Stream in call class name DataPrepare\nGet origin data error, data_identity is : %s' %
-                         self.data_identity)
-            raise OriginDataGetError
         return ret_data
 
     def get_data_from_db(self):
@@ -61,7 +57,8 @@ class DataPrepare(object):
             logger.error('Stream in call class ,Get DsInterfaceInfo error, data_identity is : %s' %
                          self.data_identity)
             raise DataIdentityUnfound
-        else:            ds_conf = ds_conf[0]
+        else:
+            ds_conf = ds_conf[0]
 
         self.prepare_parms()
         self.url = ds_conf.data_source.backend_url + ds_conf.route + self.data_identity + '/'
@@ -77,17 +74,21 @@ class DataPrepare(object):
             origin_data = {}
             for data in data_prams:
                 clear_data = self._get_data_from_interface(ds_conf, data)
-                origin_data.update({data.get(self.is_list_args): clear_data})
+                if clear_data:
+                    origin_data.update({data.get(self.is_list_args): clear_data})
+                else:
+                    logger.warn('Stream in call class ,Get origin data error, data_identity is : %s args:%s' %
+                                (self.data_identity, data))
         else:
             origin_data = self._get_data_from_interface(ds_conf, data_prams)
-
-        self.cache_base.kwargs.update({
-            self.data_identity: {
-                'origin_data': origin_data,
-                'prams': self.parm_dict,
-            }
-        })
-        self.cache_base.save()
+        if origin_data:
+            self.cache_base.kwargs.update({
+                self.data_identity: {
+                    'origin_data': origin_data,
+                    'prams': self.parm_dict,
+                }
+            })
+            self.cache_base.save()
         return origin_data
 
     def _get_data_from_interface(self, ds_conf, data_prams):
@@ -96,16 +97,9 @@ class DataPrepare(object):
             origin_data = self.do_local_request(ds_conf, data_prams)
         elif ds_conf.method == 'REMOTE':
             origin_data = self.do_request(data_prams)
-        if not origin_data:
-            logger.error('Stream in call class ,Get origin data error, data_identity is : %s' %
-                         self.data_identity)
-            raise OriginDataGetError
+
         cleaner = DataClean(origin_data, ds_conf.data_origin_type)
         clear_data = cleaner.worked()
-        if not clear_data:
-            logger.error('Stream in call class ,Get clean data error, data_identity is : %s' %
-                         self.data_identity)
-            raise OriginDataGetError
         return clear_data
 
     def prepare_parms(self):
