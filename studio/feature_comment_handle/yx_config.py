@@ -5,7 +5,7 @@ config = dict(
         "feature_name": "is_netsky_multi_loan",
         "feature_data_type": "int",
         "default_value": "BooleanTypeDefault",
-        "json_path_list": [("result", "$.result", "f_assert_not_null->f_assert_must_basestring")],
+        "json_path_list": [("result", "$..result", "f_assert_not_null->f_assert_must_basestring")],
         "f_map_and_filter_chain": "m_get_seq_index_value(0)->m_to_bool('00')",
         "reduce_chain": "",
         "l_map_and_filter_chain": ''
@@ -15,7 +15,7 @@ config = dict(
         "feature_name": "is_skyeye_black",
         "feature_data_type": "int",
         "default_value": "BooleanTypeDefault",
-        "json_path_list": [("result", "$.result", "f_assert_not_null->f_assert_must_basestring")],
+        "json_path_list": [("result", "$..result", "f_assert_not_null->f_assert_must_basestring")],
         "f_map_and_filter_chain": "m_get_seq_index_value(0)->m_to_bool('00')",
         "reduce_chain": "",
         "l_map_and_filter_chain": ''
@@ -25,7 +25,7 @@ config = dict(
         "feature_name": "is_court_shixin",
         "feature_data_type": "int",
         "default_value": "BooleanTypeDefault",
-        "json_path_list": [("result", "$.result", "f_assert_not_null->f_assert_must_basestring")],
+        "json_path_list": [("result", "$..result", "f_assert_not_null->f_assert_must_basestring")],
         "f_map_and_filter_chain": "m_get_seq_index_value(0)->m_to_bool('00')",
         "reduce_chain": "",
         "l_map_and_filter_chain": ''
@@ -44,7 +44,7 @@ config = dict(
         "feature_name": "has_negative_info",
         "feature_data_type": "int",
         "default_value": "BooleanTypeDefault",
-        "json_path_list": [("result", "$.result", "f_assert_not_null->f_assert_must_basestring")],
+        "json_path_list": [("result", "$..result", "f_assert_not_null->f_assert_must_basestring")],
         "f_map_and_filter_chain": "m_get_seq_index_value(0)->m_to_bool('00')",
         "reduce_chain": "",
         "l_map_and_filter_chain": ''
@@ -54,7 +54,7 @@ config = dict(
         "feature_name": "is_netsky_grey",
         "feature_data_type": "int",
         "default_value": "BooleanTypeDefault",
-        "json_path_list": [("result", "$.result", "f_assert_not_null->f_assert_must_basestring")],
+        "json_path_list": [("result", "$..result", "f_assert_not_null->f_assert_must_basestring")],
         "f_map_and_filter_chain": "m_get_seq_index_value(0)->m_to_bool('00')",
         "reduce_chain": "",
         "l_map_and_filter_chain": ''

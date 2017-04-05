@@ -98,22 +98,11 @@ class Courier(object):
                              data_identity)
 
                 raise OriginDataGetError
-            self.useful_data.update(data)
+            self.useful_data.update({data_identity: data})
         logger.info('Stream get_general_data complete\nUseful_data : %s' % self.useful_data)
 
     def get_shunt_data(self):
         logger.info('Stream in courier function name : get_shunt_data')
-        data = self.get_shunt_rel_data()
-        if not data:
-            logger.error('Stream in call class name DataPrepare\nGet origin data error, feature_name is : %s' %
-                         self.feature_name)
-
-            raise OriginDataGetError
-        logger.info('Stream get_shunt_data complete\nUseful_data : %s' % data)
-        self.useful_data.update(data)
-
-    def get_shunt_rel_data(self):
-        logger.info('Stream in courier function name : get_shunt_rel_data')
         feature_conf_list = FeatureShuntConf.objects.filter(
             feature_name=self.feature_name,
             is_delete=False
@@ -123,6 +112,7 @@ class Courier(object):
             raise ShuntFeatureConfigError
         apply_base = ApplyContext(self.apply_id)
         apply_data = (apply_base.load())['data']
+        has_value = False
         for feature_conf in feature_conf_list:
             shunt_key = feature_conf.shunt_key
             data_identity = feature_conf.data_identity
@@ -141,10 +131,17 @@ class Courier(object):
                     logger.error("feature_name:%s  miss  data_identity in shunt feature table" % self.feature_name)
                     raise ShuntFeatureConfigError
                 data = self.get_useful_data(data_identity)
-                if not data:
-                    continue
-                logger.info('Stream get_shunt_rel_data complete\nUseful_data : %s' % data)
-                return data
+                if data:
+                    has_value = True
+                    data = {data_identity: data}
+                    logger.info('Stream get_shunt_data complete\nUseful_data : %s' % data)
+                    self.useful_data.update(data)
+                    break
+
+        if not has_value:
+            logger.error('Stream in call class name DataPrepare\nGet origin data error, feature_name is : %s' %
+                         self.feature_name)
+            raise OriginDataGetError
 
     def _get_relevance_feature_list(self, feature_name):
         relevance_conf = FeatureRelevanceConf.objects.filter(
@@ -156,11 +153,8 @@ class Courier(object):
             raise RelevanceFeatureConfigError
         self.relevance_data_identity_list.append(relevance_conf.data_identity)
         self.relevance_feature_list.append(feature_name)
-        # next_di = relevance_conf.depend_di
         next_feature = relevance_conf.depend_feature
         if next_feature:
-            # if not next_di:
-            #     raise RelevanceFeatureConfigError
             next_feature_list = next_feature.split(',')
             for feature in next_feature_list:
                 self._get_relevance_feature_list(feature)
