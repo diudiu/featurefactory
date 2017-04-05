@@ -22,9 +22,9 @@ def feature_post():
     data = {
         u'content': {
             u'callback': u'',
-            # u'apply_id': u'APPLY201703081545051dxdinger',
+            u'apply_id': u'APPLY201703081545051dxdinger',
             # u'apply_id': u'APPLY20170308154505179ydlisi',
-            u'apply_id': u'APPLY2017030815450ltzhangsan',
+            # u'apply_id': u'APPLY2017030815450ltzhangsan',
             u'res_keys': [
                 # 'age',
                 # 'airfare_sum12',
@@ -53,8 +53,34 @@ def feature_post():
                 # 'graduate_college',
                 # 'graduate_college_check',
                 # 'has_negative_info',
-                'income_expense_comparison',
+                # 'income_expense_comparison',
                 # 'income_level',
+                # 'industry_change_count',
+                # 'is_court_shixin',
+                # 'is_court_zhixing',
+                # 'is_cur_corp_shixin',
+                # 'is_loan_agency',
+                # 'is_mobile_black',
+                # 'is_net_black',
+                # 'is_netsky_black',
+                # 'is_netsky_grey',
+                # 'is_netsky_multi_loan',
+                # 'is_organization_g_black',
+                # 'is_recruitment',
+                # 'is_skyeye_black',#err
+                # 'is_unclear_loan',#no
+                # 'jiuyao_multi_loan_denied_count',
+                # 'jiuyao_multi_loan_m2_count',
+                # 'last_industry_code',
+                # 'loan_infos',
+                # 'marital_status',
+                # 'max_flight_area',
+                # 'max_flight_class',
+                # 'mobile',
+                # 'mobile_activeness',
+                # 'mobile_area_city_level',
+                'mobile_area_code',
+
 
 
                 # u'is_court_zhixing',

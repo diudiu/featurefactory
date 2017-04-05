@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 
-# dataocean_url = "http://127.0.0.1:8001"
+# dataocean_url = "http://127.0.0.1:8000"
 dataocean_url = "http://apitest.digcredit.com"
 dataocean_url_data = dataocean_url + "/source/queryinfo/"
 dataocean_url_grant = dataocean_url + "/oauth2/token/"

@@ -43,9 +43,7 @@ class DataPrepare(object):
         ret_data = {}
         data = self.cache_base.get(self.data_identity)
         if data:
-            ret_data.update({
-                self.data_identity: data[self.data_identity]['origin_data']
-            })
+            ret_data = data[self.data_identity]['origin_data']
         return ret_data
 
     def get_origin_data_from_interface(self):

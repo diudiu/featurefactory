@@ -6,7 +6,7 @@ config = dict(
         "default_value": "PositiveSignedTypeDefault",
         "json_path_list": [
             ("tags", "$..tags", "f_assert_not_null->f_assert_must_dict"),
-            ("mobile", "$..apply_base.mobile", "f_assert_not_null"),
+            ("mobile", "$..apply_data.data.mobile", "f_assert_not_null"),
         ],
         "f_map_and_filter_chain": "f_mobile_m1_m5_sum_max_seq(['contactAmount'])->m_seq_to_agv(2)",
         "reduce_chain": "",
@@ -19,7 +19,7 @@ config = dict(
         "default_value": "PositiveSignedTypeDefault",
         "json_path_list": [
             ("tags", "$..tags", "f_assert_not_null->f_assert_must_dict"),
-            ("mobile", "$..apply_base.mobile", "f_assert_not_null"),
+            ("mobile", "$..apply_data.data.mobile", "f_assert_not_null"),
         ],
         "f_map_and_filter_chain": "f_mobile_m1_m5_sum_max_seq(['callTimes','calledTimes'])->m_get_mobile_stability",
         "reduce_chain": "",
@@ -69,7 +69,7 @@ config = dict(
         "json_path_list": [
             ("marital_status", "$..content.marital_status", "f_assert_not_null->f_assert_must_digit"),
         ],
-        "f_map_and_filter_chain": "m_get_seq_index_value(0)->m_marital_status_to_code",
+        "f_map_and_filter_chain": "m_get_seq_index_value(0)->m_marital_status->m_to_code('marital_status')",
         "reduce_chain": "",
         "l_map_and_filter_chain": ""
     },
@@ -121,7 +121,7 @@ config = dict(
                 "international_count", "$..content.international_count",
                 "f_assert_not_null->f_assert_must_digit_or_float"),
         ],
-        "f_map_and_filter_chain": "m_max_flight_area->f_assert_not_null",
+        "f_map_and_filter_chain": "m_max_flight_area->f_assert_not_null->m_to_code('max_flight_area')",
         "reduce_chain": "",
         "l_map_and_filter_chain": ""
     },
@@ -135,7 +135,7 @@ config = dict(
             ("executive_class_count", "$..content.executive_class_count", "f_assert_not_null->f_assert_must_digit"),
             ("tourist_class_count", "$..content.tourist_class_count", "f_assert_not_null->f_assert_must_digit"),
         ],
-        "f_map_and_filter_chain": "m_to_int->m_max_flight_class",
+        "f_map_and_filter_chain": "m_to_int->m_max_flight_class->m_to_code('max_flight_class')",
         "reduce_chain": "",
         "l_map_and_filter_chain": ""
     },
@@ -263,7 +263,7 @@ config = dict(
             ("industry", "$..work_exp_form[*].industry", "f_assert_not_null"),
 
         ],
-        "f_map_and_filter_chain": "m_to_len(1)",
+        "f_map_and_filter_chain": "m_list_to_distinct->m_to_len(1)",
         "reduce_chain": "",
         "l_map_and_filter_chain": ""
     },
@@ -388,6 +388,18 @@ config = dict(
         ],
         "f_map_and_filter_chain": "f_not_null->f_assert_not_null->m_get_seq_index_value(0)"
                                   "->m_to_code('income_expense_comparison')",
+        "reduce_chain": "",
+        "l_map_and_filter_chain": ""
+    },
+
+    mobile_area_code_config={
+        "feature_name": "mobile_area_code",
+        "feature_data_type": "string",
+        "default_value": "StringTypeDefault",
+        "json_path_list": [
+            ("mobile_area", "$..mobile_area", "f_assert_not_null->f_assert_must_basestring"),
+        ],
+        "f_map_and_filter_chain": "m_get_seq_index_value(0)",
         "reduce_chain": "",
         "l_map_and_filter_chain": ""
     },

@@ -82,6 +82,19 @@ def m_to_len(seq, args=0):
     return seq
 
 
+def m_list_to_distinct(seq):
+    """
+        序列去除重复的值
+        :param seq: 可以为字符串、列表
+        :return:    去重后的字符串、列表
+        example：
+                :seq： [1, -2， 1]
+                :return： [1, -2]
+    """
+    seq = list(set(seq))
+    return seq
+
+
 def m_to_sum(seq):
     """
         求序列中值得和
@@ -226,9 +239,9 @@ def m_digit_to_floor(seq):
     return int(seq)
 
 
-def m_marital_status_to_code(seq):
+def m_marital_status(seq):
     """
-        结婚状态的code值
+        结婚状态
         :param seq: 整数
         :return:    小于seq的最大10的倍数
         example：
@@ -552,23 +565,23 @@ def m_city_name_to_code(city_name):
 
 def m_max_flight_area(seq):
     """
-       一年内飞机出行中最多出行区域的code
+       一年内飞机出行中最多出行区域
         :param seq: 飞行次数、国内次数、国外次数
-        :return:    飞行次数==0 返回3    国内次数>国外次数 返回1 国外次数>国内次数 返回2
+        :return:    飞行次数==0 返回0    国内次数>国外次数 返回inland 国外次数>国内次数 返回international
         example：
                 :seq  [2, 2, 3]
-                :return  2
+                :return  international
     """
     """"""
     flight_times = seq[0]
     inland_count = seq[1]
     international_count = seq[2]
     if int(flight_times) == 0:
-        seq = 3
+        seq = 0
     elif int(inland_count) >= int(international_count):
-        seq = 1
+        seq = 'inland'
     elif int(inland_count) < int(international_count):
-        seq = 2
+        seq = 'international'
     else:
         raise FeatureProcessError("don't know  max_flight_area code")
     return seq
@@ -576,23 +589,23 @@ def m_max_flight_area(seq):
 
 def m_max_flight_class(seq):
     """
-       一年内飞机出行中最多机舱类型的code
+       一年内飞机出行中最多机舱类型
         :param seq: [商务舱乘机次数、公务舱乘机次数、经济舱乘机次数]
-        :return:    code
+        :return:    乘机次数==0 返回0    乘坐商务舱最多 返回business_class 乘坐公务舱最多 executive_class 乘坐经济舱最多 返回tourist_class
         example：
                 :seq  [2, 2, 3]
-                :return  1
+                :return  tourist_class
     """
     temp_index = seq.index(max(seq))
     result = ''
     if sum(seq) == 0:
-        result = 4
+        result = 0
     elif temp_index == 0:
-        result = 3
+        result = 'business_class'
     elif temp_index == 1:
-        result = 2
+        result = 'executive_class'
     elif temp_index == 2:
-        result = 1
+        result = 'tourist_class'
     return result
 
 

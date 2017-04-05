@@ -86,8 +86,8 @@ if __name__ == '__main__':
             f = import_module(i.split('.')[0])
             data = f.data
             for data_identify, lists in data.items():
-                # if data_identify == 'geo_location':
-                if True:
+                if data_identify == 'tianyan_black':
+                # if True:
                     for req_res in lists:
                         req_data = req_res['req_data']
                         res_data = req_res['res_data']
