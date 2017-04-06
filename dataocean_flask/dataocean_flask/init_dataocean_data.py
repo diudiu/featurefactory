@@ -75,7 +75,7 @@ def insert_mongo(data_identity, req_data, res_data):
                     request=req_id,
                     created_time=created_time)
     res_id = res_col.insert(response)
-    print "do_%s_request--%s do_%s_response--%s" % (req_data['data_identity'], req_id, req_data['data_identity'], res_id)
+    print "hstr:%s do_%s_request--id:%s do_%s_response--id:%s" % (hstr, req_data['data_identity'], req_id, req_data['data_identity'], res_id)
 
 
 if __name__ == '__main__':
@@ -86,7 +86,7 @@ if __name__ == '__main__':
             f = import_module(i.split('.')[0])
             data = f.data
             for data_identify, lists in data.items():
-                if data_identify == 'personal_info':
+                if data_identify == 'tianyan_blacks':
                 # if True:
                     for req_res in lists:
                         req_data = req_res['req_data']

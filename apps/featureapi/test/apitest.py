@@ -67,7 +67,7 @@ def feature_post():
                 # 'is_netsky_multi_loan',
                 # 'is_organization_g_black',
                 # 'is_recruitment',
-                # 'is_skyeye_black',#err
+                # 'is_skyeye_black',#
                 # 'is_unclear_loan',#no
                 # 'jiuyao_multi_loan_denied_count',
                 # 'jiuyao_multi_loan_m2_count',
@@ -89,10 +89,7 @@ def feature_post():
                 # u'overload_count',
                 # 'overspeed_count',
                 # 'register_city_level',
-                'work_time',
-
-
-                # u'income_level',
+                # 'work_time',
             ]
         },
         u'client_code': u'lp_test'
