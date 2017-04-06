@@ -662,23 +662,21 @@ def m_seq_inx_to_int(seq, args=0):
     return seq
 
 
-def m_seq_inx_to_999999(seq, args=0):
+def m_now_industry_code(seq):
     """
-        将列表中为‘999999’得提取出来
-        :param seq: 列表形成的列表
-        :param args: 列表的次序
-        :return:    转换后的列表
+        获取当前工作行业
+        :param seq: 历史工作列表 行业结束时间为999999时代表当前从事行业
+        :return:    当前工作行业 当前没有工作返回空
         example：
-                :seq  [['30', 0], ['5', 1]]
-                :args   0
-                :return  [[30, 0], [5, 1]]
+                :seq  [['30', 0], ['5', 1],['999999', 1]]
+                :return  1
     """
+    tmp = ''
     for i in seq:
-        if i[args] == '999999':
-            seq = i
-        else:
-            seq = [i[args], '']
-    return seq
+        if i[0] == '999999':
+            tmp = i[1]
+            break
+    return tmp
 
 
 def m_seq_del_999999(seq):

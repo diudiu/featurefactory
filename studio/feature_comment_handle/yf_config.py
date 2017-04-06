@@ -222,8 +222,8 @@ config = dict(
         "json_path_list": [
             ("work_exp_form", "$..work_exp_form[*]", "f_assert_not_null->f_assert_must_dict"),
         ],
-        "f_map_and_filter_chain": "m_get_new_list('work_end','industry')->f_assert_not_null"
-                                  "->m_seq_inx_to_999999->m_get_seq_index_value(1)",
+        "f_map_and_filter_chain": "m_get_new_list('work_end','industry')->f_assert_not_null->m_now_industry_code",
+
         "reduce_chain": "",
         "l_map_and_filter_chain": ""
     },
@@ -236,7 +236,7 @@ config = dict(
             ("work_exp_form", "$..work_exp_form[*]", "f_assert_not_null->f_assert_must_dict"),
 
         ],
-        "f_map_and_filter_chain": "m_get_new_list('work_end','industry')->f_assert_not_null->m_seq_inx_to_int()"
+        "f_map_and_filter_chain": "m_get_new_list('work_end','industry')->f_assert_not_null->m_seq_inx_to_int"
                                   "->m_seq_inx0_sort_in_list(True)->m_get_seq_index_value(0)->m_get_seq_index_value(1)",
         "reduce_chain": "",
         "l_map_and_filter_chain": ""
@@ -342,13 +342,14 @@ config = dict(
 
     now_workplace_code_config={
         "feature_name": "now_workplace_code",
-        "feature_data_type": "int",
-        "default_value": "PositiveSignedTypeDefault",
+        "feature_data_type": "string",
+        "default_value": "StringTypeDefault",
         "json_path_list": [
-            ("industry", "$..work_exp_form[*].industry", "f_assert_not_null->f_assert_must_basestring"),
-            ("work_end", "$..work_exp_form[*].work_end", "f_assert_not_null->f_assert_must_basestring"),
+            ("work_exp_form", "$..work_exp_form[*]", "f_assert_not_null->f_assert_must_dict"),
         ],
-        "f_map_and_filter_chain": "f_get_workplace_now",
+        "f_map_and_filter_chain": "m_get_new_list('work_end','dq')->f_assert_not_null"
+                                  "->m_seq_inx0_sort_in_list(True)->m_get_seq_index_value(0)->m_get_seq_index_value(1)",
+
         "reduce_chain": "",
         "l_map_and_filter_chain": ""
     },

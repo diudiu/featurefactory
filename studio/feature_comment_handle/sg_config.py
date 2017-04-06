@@ -126,7 +126,7 @@ config = dict(
         "feature_name": "name",
         "feature_data_type": "string",
         "default_value": "StringTypeDefault",
-        "json_path_list": [("name", "$..apply_data.name", "f_assert_not_null->f_assert_must_basestring")],
+        "json_path_list": [("name", "$..apply_data.data.name", "f_assert_not_null->f_assert_must_basestring")],
         "f_map_and_filter_chain": "m_get_seq_index_value(0)",
         "reduce_chain": "",
         "l_map_and_filter_chain": "",

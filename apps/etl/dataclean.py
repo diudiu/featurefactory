@@ -53,7 +53,7 @@ class DataClean(object):
 
     def _91_credit_clean(self):
         temp_data = Judger.get_value(self.origin_data, '$.res_data')
-        if not temp_data:
+        if not temp_data or temp_data == '{}':
             logger.error(
                 'Unavailable data from %s :\n%s' %
                 (cons.SOURCE_TYPE_MESSAGE[self.clean_style], self.origin_data)
@@ -63,7 +63,7 @@ class DataClean(object):
 
     def _pingan_credit_clean(self):
         temp_data = Judger.get_value(self.origin_data, '$.res_data.data')
-        if not temp_data:
+        if not temp_data or temp_data == '{}':
             logger.error(
                 'Unavailable data from %s :\n%s' %
                 (cons.SOURCE_TYPE_MESSAGE[self.clean_style], self.origin_data)
@@ -73,7 +73,7 @@ class DataClean(object):
 
     def _cc_credit_clean(self):
         temp_data = Judger.get_value(self.origin_data, '$.res_data')
-        if not temp_data:
+        if not temp_data or temp_data == '{}':
             logger.error(
                 'Unavailable data from %s :\n%s' %
                 (cons.SOURCE_TYPE_MESSAGE[self.clean_style], self.origin_data)

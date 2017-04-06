@@ -65,18 +65,19 @@ class DataPrepare(object):
             for i in self.parm_dict[self.is_list_args]:
                 parm_dict = self.parm_dict.copy()
                 parm_dict.update({self.is_list_args: i})
-                data_prams.append(parm_dict)
+                prams = eval(ds_conf.must_data % parm_dict)
+                data_prams.append([i, prams])
         else:
             data_prams = eval(ds_conf.must_data % self.parm_dict)
         if isinstance(data_prams, list):
             origin_data = {}
-            for data in data_prams:
-                clear_data = self._get_data_from_interface(ds_conf, data)
+            for flag, prams in data_prams:
+                clear_data = self._get_data_from_interface(ds_conf, prams)
                 if clear_data:
-                    origin_data.update({data.get(self.is_list_args): clear_data})
+                    origin_data.update({flag: clear_data})
                 else:
                     logger.warn('Stream in call class ,Get origin data error, data_identity is : %s args:%s' %
-                                (self.data_identity, data))
+                                (self.data_identity, prams))
         else:
             origin_data = self._get_data_from_interface(ds_conf, data_prams)
         if origin_data:

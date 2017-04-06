@@ -1260,7 +1260,7 @@ data = {
             "req_data": {
                 'access_token': 'aaaaaaaaa',
                 'data_identity': 'high_way_over_speed',
-                'license_plate': '京P3L43H',
+                'license_plate': '豫SFD777',
                 "high_way_period": "4",
                 "start_time": "",
                 "end_time": ""
@@ -1269,7 +1269,7 @@ data = {
                 "result": "00",
                 "result_message": "检测通过或查询有记录",
                 "content": {
-                    "license_plate": "京P3L43H",
+                    "license_plate": "豫SFD777",
                     "start_time": "201401",
                     "end_time": "201412",
                     "over_speed_times": 2,
@@ -1287,7 +1287,7 @@ data = {
             "req_data": {
                 'access_token': 'aaaaaaaaa',
                 'data_identity': 'high_way_over_speed',
-                'license_plate': '京P3L82G',
+                'license_plate': '豫SFD888',
                 "high_way_period": "4",
                 "start_time": "",
                 "end_time": ""
@@ -1296,7 +1296,7 @@ data = {
                 "result": "00",
                 "result_message": "检测通过或查询有记录",
                 "content": {
-                    "license_plate": "京P3L82G",
+                    "license_plate": "豫SFD888",
                     "start_time": "201401",
                     "end_time": "201412",
                     "over_speed_times": 2,
@@ -1384,7 +1384,7 @@ data = {
             "req_data": {
                 'access_token': 'aaaaaaaaa',
                 'data_identity': 'high_way_over_load',
-                'license_plate': '京P3L43H',
+                'license_plate': '豫SFD888',
                 "high_way_period": "4",
                 "start_time": "",
                 "end_time": ""
@@ -1393,7 +1393,7 @@ data = {
                 "result": "00",
                 "result_message": "检测通过或查询有记录",
                 "content": {
-                    "license_plate": "京P3L43H",
+                    "license_plate": "豫SFD888",
                     "start_time": "201401",
                     "end_time": "201412",
                     "over_load_times": 2,
@@ -1410,7 +1410,7 @@ data = {
             "req_data": {
                 'access_token': 'aaaaaaaaa',
                 'data_identity': 'high_way_over_load',
-                'license_plate': '京P3L82G',
+                'license_plate': '豫SFD777',
                 "high_way_period": "4",
                 "start_time": "",
                 "end_time": ""
@@ -1419,7 +1419,7 @@ data = {
                 "result": "00",
                 "result_message": "检测通过或查询有记录",
                 "content": {
-                    "license_plate": "京P3L82G",
+                    "license_plate": "豫SFD777",
                     "start_time": "201401",
                     "end_time": "201412",
                     "over_load_times": 2,
@@ -1455,6 +1455,62 @@ data = {
                             "month_times": 2,
                         }
                     ]
+                }
+            }
+        },
+    ],
+    "personal_info": [
+        {
+            "req_data": {
+                'access_token': 'aaaaaaaaa',
+                'data_identity': 'personal_info',
+                'id_card_name': '张三',
+                'id_card_code': '132600197206251568'
+            },
+            "res_data": {
+                "result": "00",
+                "result_message": "检测通过或查询有记录",
+                "content": {
+                    "constellation": "水瓶座",
+                    "age": 24,
+                    "home_address": "江西-九江",
+                    "sex": "男"
+                }
+            }
+        },
+        {
+            "req_data": {
+                'access_token': 'aaaaaaaaa',
+                'data_identity': 'personal_info',
+                'id_card_name': '丁二',
+                'id_card_code': '132600199306251568'
+            },
+            "res_data": {
+                "result": "00",
+                "result_message": "检测通过或查询有记录",
+                "content": {
+                    "constellation": "水瓶座",
+                    "age": 24,
+                    "home_address": "江西-九江",
+                    "sex": "男"
+                }
+            }
+        },
+        {
+            "req_data": {
+                'access_token': 'aaaaaaaaa',
+                'data_identity': 'personal_info',
+                'id_card_name': '李四',
+                'id_card_code': '132600198506251568'
+            },
+            "res_data": {
+                "result": "00",
+                "result_message": "检测通过或查询有记录",
+                "content": {
+                    "constellation": "水瓶座",
+                    "age": 24,
+                    "home_address": "江西-九江",
+                    "sex": "男"
                 }
             }
         },

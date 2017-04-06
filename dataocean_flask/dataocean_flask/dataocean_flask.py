@@ -76,8 +76,8 @@ def post(data_identity):
                         "brand_name": "北京现代BH7162MW轿⻋",
                         "ccity": "信阳"
                     },
-                    {"license_no": "豫SFD123"},
-                    {"license_no": "豫SFD456"},
+                    {"license_no": "豫SFD777"},
+                    {"license_no": "豫SFD888"},
                     {"license_no": "ASFD456"},
                     {"license_no": "京SFD45"},
 
@@ -96,61 +96,61 @@ def post(data_identity):
                     }
                 }
             }
-        elif data_identity == 'high_way_over_load':
-
-            content = {
-                "status": "1",
-                "message": "操作成功",
-                "res_data": json.dumps({
-                    "result": "00",
-                    "result_message": "检测通过或查询有记录",
-                    "content": {
-                        "license_plate": "渝FC8***",
-                        "start_time": "201401",
-                        "end_time": "201412",
-                        "over_speed_times": 2,
-                        "over_speed_list": [{
-                            "count_month": "201506",
-                            "month_times": 2,
-                            "section": "北京通州站-河北燕郊站，河北廊坊站-天津蓟县站",}
-                        ]
-                    }
-                })
-            }
-        elif data_identity == 'multi_loan_91':
-            content = {'loanInfos': [
-                {
-                    'borrowType': 1,
-                    'borrowState': 2,
-                    'borrowAmount': 3,
-                    'contractDate': 1487224222000,
-                    'loanPeriod': 24,
-                    'repayState': 7,
-                    'arrearsAmount': 0,
-                    'companyCode': 'P2P4HJK0000100010'
-                },
-                {
-                    'borrowType': 1,
-                    'borrowState': 1,
-                    'borrowAmount': 3,
-                    'contractDate': 1487224222000,
-                    'loanPeriod': 24,
-                    'repayState': 7,
-                    'arrearsAmount': 0,
-                    'companyCode': 'P2P4HJK0000100011'
-                },
-                {
-                    'borrowType': 1,
-                    'borrowState': 1,
-                    'borrowAmount': 3,
-                    'contractDate': '',
-                    'loanPeriod': 24,
-                    'repayState': 7,
-                    'arrearsAmount': 0,
-                    'companyCode': 'P2P4HJK0000100011'
-                }
-            ]
-            }
+        # elif data_identity == 'high_way_over_load':
+        #
+        #     content = {
+        #         "status": "1",
+        #         "message": "操作成功",
+        #         "res_data": json.dumps({
+        #             "result": "00",
+        #             "result_message": "检测通过或查询有记录",
+        #             "content": {
+        #                 "license_plate": "渝FC8***",
+        #                 "start_time": "201401",
+        #                 "end_time": "201412",
+        #                 "over_speed_times": 2,
+        #                 "over_speed_list": [{
+        #                     "count_month": "201506",
+        #                     "month_times": 2,
+        #                     "section": "北京通州站-河北燕郊站，河北廊坊站-天津蓟县站",}
+        #                 ]
+        #             }
+        #         })
+        #     }
+        # elif data_identity == 'multi_loan_91':
+        #     content = {'loanInfos': [
+        #         {
+        #             'borrowType': 1,
+        #             'borrowState': 2,
+        #             'borrowAmount': 3,
+        #             'contractDate': 1487224222000,
+        #             'loanPeriod': 24,
+        #             'repayState': 7,
+        #             'arrearsAmount': 0,
+        #             'companyCode': 'P2P4HJK0000100010'
+        #         },
+        #         {
+        #             'borrowType': 1,
+        #             'borrowState': 1,
+        #             'borrowAmount': 3,
+        #             'contractDate': 1487224222000,
+        #             'loanPeriod': 24,
+        #             'repayState': 7,
+        #             'arrearsAmount': 0,
+        #             'companyCode': 'P2P4HJK0000100011'
+        #         },
+        #         {
+        #             'borrowType': 1,
+        #             'borrowState': 1,
+        #             'borrowAmount': 3,
+        #             'contractDate': '',
+        #             'loanPeriod': 24,
+        #             'repayState': 7,
+        #             'arrearsAmount': 0,
+        #             'companyCode': 'P2P4HJK0000100011'
+        #         }
+        #     ]
+        #     }
         elif data_identity == 'loan_agency':
             content = {
                 "result": "00",
@@ -168,18 +168,6 @@ def post(data_identity):
                 }, ]
             }
             content = {'res_data': json.dumps(content), 'status': 0, 'message': 'success'}
-        # elif data_identity == 'trustutn_loan_phone':
-        #     content = {
-        #         "result": 0,
-        #         "data": {
-        #             "grayscale": {
-        #                 "M0": {},
-        #                 "bank": {
-        #                     "contactTimes": "3"
-        #                 }
-        #             }
-        #         }
-        #     }
         elif data_identity == 'multi_loan_91':
             content = {
                 "result": 0,
