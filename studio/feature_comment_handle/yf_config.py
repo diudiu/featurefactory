@@ -250,7 +250,7 @@ config = dict(
 
         ],
         "f_map_and_filter_chain": "m_get_new_list('work_end','work_start')->f_assert_not_null"
-                                  "->m_seq_inx0_sort_in_list(True)->m_get_seq_index_value(0)->m_r_to_now_work_time()",
+                                  "->m_seq_inx0_sort_in_list(True)->m_get_seq_index_value(0)->m_r_to_now_work_time",
         "reduce_chain": "",
         "l_map_and_filter_chain": ""
     },
@@ -361,7 +361,7 @@ config = dict(
         "json_path_list": [
             ("work_start", "$..work_exp_form[*].work_start", "f_assert_must_basestring"),
         ],
-        "f_map_and_filter_chain": "f_not_null->f_assert_not_null->m_get_month_from_now",
+        "f_map_and_filter_chain": "f_not_null->f_assert_not_null->m_get_max_month_to_now",
         "reduce_chain": "",
         "l_map_and_filter_chain": ""
     },

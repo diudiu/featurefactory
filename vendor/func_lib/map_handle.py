@@ -627,12 +627,12 @@ def m_get_work_status_map(seq, feature_name):
             return int(key)
 
 
-def m_get_month_from_now(seq):
+def m_get_max_month_to_now(seq):
     """
     计算时间字符串列表中时间距离今天的最长月数
     计算逻辑为天数除以30
     时间字符串'999999'代表当前  做去除处理
-    :param seq: 时间戳列表
+    :param seq: 时间列表
     :return: 传入列表中距离当前时间最长的月数
     """
 
@@ -677,12 +677,6 @@ def m_now_industry_code(seq):
             tmp = i[1]
             break
     return tmp
-
-
-def m_seq_del_999999(seq):
-    if '999999' in seq:
-        seq.remove('999999')
-        return seq
 
 
 def m_r_to_now_work_time(seq):

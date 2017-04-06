@@ -89,7 +89,7 @@ def feature_post():
                 # u'overload_count',
                 # 'overspeed_count',
                 # 'register_city_level',
-                # 'work_time',
+                'work_time',
             ]
         },
         u'client_code': u'lp_test'
