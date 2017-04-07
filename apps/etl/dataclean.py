@@ -62,7 +62,7 @@ class DataClean(object):
         return temp_data
 
     def _pingan_credit_clean(self):
-        temp_data = Judger.get_value(self.origin_data, '$.res_data.data')
+        temp_data = Judger.get_value(self.origin_data, '$.res_data')
         if not temp_data or temp_data == '{}':
             logger.error(
                 'Unavailable data from %s :\n%s' %

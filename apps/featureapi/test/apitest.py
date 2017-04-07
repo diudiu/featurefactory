@@ -68,7 +68,7 @@ def feature_post():
                 # 'is_organization_g_black',
                 # 'is_recruitment',
                 # 'is_skyeye_black',#
-                # 'is_unclear_loan',#no
+                'is_unclear_loan',#no
                 # 'jiuyao_multi_loan_denied_count',
                 # 'jiuyao_multi_loan_m2_count',
                 # 'last_industry_code',
@@ -88,8 +88,16 @@ def feature_post():
                 # 'online_time',
                 # u'overload_count',
                 # 'overspeed_count',
+                # 'pingan_max_overdue_days',
+                # 'pingan_multi_loan_count',
+                # 'pingan_multi_loan_infos',
+                # 'pingan_other_loan_count',
+                # 'pingan_other_loan_infos',
+                # 'pingan_overdue_corp_count',
+                # 'pingan_overdue_count',
+                # 'pingan_overdue_loan_infos',
                 # 'register_city_level',
-                'work_time',
+                # 'work_time',
             ]
         },
         u'client_code': u'lp_test'

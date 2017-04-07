@@ -134,8 +134,8 @@ config = dict(
 
     pingan_multi_loan_infos_config={
         "feature_name": "pingan_multi_loan_infos",
-        "feature_data_type": "string",
-        "default_value": "StringTypeDefault",
+        "feature_data_type": "list",
+        "default_value": "ListTypeDefault",
         "json_path_list": [("record", "$..record", "f_assert_not_null")],
         "f_map_and_filter_chain": "m_del_invalid_value(6)",
         "reduce_chain": "",

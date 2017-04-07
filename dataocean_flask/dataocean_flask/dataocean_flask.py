@@ -96,61 +96,6 @@ def post(data_identity):
                     }
                 }
             }
-        # elif data_identity == 'high_way_over_load':
-        #
-        #     content = {
-        #         "status": "1",
-        #         "message": "操作成功",
-        #         "res_data": json.dumps({
-        #             "result": "00",
-        #             "result_message": "检测通过或查询有记录",
-        #             "content": {
-        #                 "license_plate": "渝FC8***",
-        #                 "start_time": "201401",
-        #                 "end_time": "201412",
-        #                 "over_speed_times": 2,
-        #                 "over_speed_list": [{
-        #                     "count_month": "201506",
-        #                     "month_times": 2,
-        #                     "section": "北京通州站-河北燕郊站，河北廊坊站-天津蓟县站",}
-        #                 ]
-        #             }
-        #         })
-        #     }
-        # elif data_identity == 'multi_loan_91':
-        #     content = {'loanInfos': [
-        #         {
-        #             'borrowType': 1,
-        #             'borrowState': 2,
-        #             'borrowAmount': 3,
-        #             'contractDate': 1487224222000,
-        #             'loanPeriod': 24,
-        #             'repayState': 7,
-        #             'arrearsAmount': 0,
-        #             'companyCode': 'P2P4HJK0000100010'
-        #         },
-        #         {
-        #             'borrowType': 1,
-        #             'borrowState': 1,
-        #             'borrowAmount': 3,
-        #             'contractDate': 1487224222000,
-        #             'loanPeriod': 24,
-        #             'repayState': 7,
-        #             'arrearsAmount': 0,
-        #             'companyCode': 'P2P4HJK0000100011'
-        #         },
-        #         {
-        #             'borrowType': 1,
-        #             'borrowState': 1,
-        #             'borrowAmount': 3,
-        #             'contractDate': '',
-        #             'loanPeriod': 24,
-        #             'repayState': 7,
-        #             'arrearsAmount': 0,
-        #             'companyCode': 'P2P4HJK0000100011'
-        #         }
-        #     ]
-        #     }
         elif data_identity == 'loan_agency':
             content = {
                 "result": "00",
@@ -806,7 +751,168 @@ def post(data_identity):
                         }
                 }
             }
-
+        elif data_identity == 'trustutn_loan_overdue':
+            content = {
+    "result": 0,
+    "message": None,
+    "data": {
+        "record": [{
+            "matchType": "idCard",
+            "matchValue": "340825198609101051",
+            "matchId": "92a297643fdcd96644cf30942b8a2e5f",
+            "classification": [
+                {
+                    "M3": {
+                        "bankCredit": None,
+                        "otherLoan": {
+                            "orgNums": 12,
+                            "recordNums": 1,
+                            "maxAmount": "(1000, 2000]",
+                            "longestDays": "6"
+                        },
+                        "otherCredit": None,
+                        "bankLoan": None
+                        }
+                },
+                {
+                    "M6": {
+                        "bankCredit": None,
+                        "otherLoan": {
+                            "orgNums": 1,
+                            "recordNums": 1,
+                            "maxAmount": "(1000, 2000]",
+                            "longestDays": "1"
+                        },
+                        "otherCredit": None,
+                        "bankLoan": None
+                        }
+                },
+                {
+                    "M9": {
+                        "bankCredit": None,
+                        "otherLoan": {
+                            "orgNums": 1,
+                            "recordNums": 2,
+                            "maxAmount": "(1000, 2000]",
+                            "longestDays": "1"
+                        },
+                        "otherCredit": None,
+                        "bankLoan": None
+                    }
+                },
+                {
+                    "M24": {
+                        "bankCredit": None,
+                        "otherLoan": {
+                            "orgNums": 1,
+                            "recordNums": 1,
+                            "maxAmount": "(1000, 2000]",
+                            "longestDays": "1"
+                        },
+                        "otherCredit": None,
+                        "bankLoan": None
+                    }
+                }
+            ]
+        }
+        ],
+        "phone": "15821732543",
+        "imei": "",
+        "imsi": ""}
+}
+        elif data_identity == 'trustutn_loan_loanmsg':
+            content = {
+    "result": 0,
+    "message": None,
+    "data": {
+        "record": [
+            {"matchType": "phone",
+             "matchValue": "18627180708",
+             "matchId": "AA28960E040AE2BB960CD4736012A791",
+             "classification": [
+                 {
+                     "M6": {
+                         "other": {
+                             "orgNums": 1, "loanAmount": None, "totalAmount": "(200, 500]", "repayAmount": None
+                         },
+                         "bank": None,
+                     }},
+                 {
+                     "M9": {
+                         "other": {"orgNums": 1, "loanAmount": None, "totalAmount": "(0, 200]",
+                                   "repayAmount": None},
+                         "bank": {"orgNums": 1},
+                     }},
+                 {
+                     "M12": {
+                         "other": {"orgNums": 2, "loanAmount": None, "totalAmount": "(500, 1000]",
+                                   "repayAmount": None},
+                         "bank": {},
+                     }},
+                 {
+                     "M24": {
+                         "other": {"orgNums": 2, "loanAmount": None, "totalAmount": "(1000, 2000]",
+                                   "repayAmount": None},
+                         "bank": None,
+                     }}
+             ]
+             }
+        ],
+        "phone": "18627180708",
+        "imei": "",
+        "imsi": ""}}
+        elif data_identity == 'trustutn_loan_otheragent':
+            content = {
+    "result": 0,
+    "message": None,
+    "data": {
+        "201603": {
+            "orgNums": "23",
+            "queryNums": "123"
+        },
+        "201602": None,
+        "201601": {
+            "orgNums": 123,
+            "queryNums": "123"
+        },
+        "201512": {
+            "orgNums": "29",
+            "queryNums": "123"
+        },
+        "201511": {
+            "orgNums": "28",
+            "queryNums": "123"
+        },
+        "201510": {
+            "orgNums": "12",
+            "queryNums": "123"
+        },
+        "201509": {
+            "orgNums": "22",
+            "queryNums": "123"
+        },
+        "201508": {
+            "orgNums": "",
+            "queryNums": "123"
+        },
+        "201507": {
+            "orgNums": "",
+            "queryNums": ""
+        },
+        "201506": {
+            "orgNums": "20",
+            "queryNums": "123"
+        },
+        "201505": {
+            "orgNums": None,
+            "queryNums": "123"
+        },
+        "201504": {
+            "orgNums": None,
+            "queryNums": None
+        }
+    }
+}
         else:
             req_data = json.loads(request.data)['req_data']
             # req_data = request.json["req_data"]
