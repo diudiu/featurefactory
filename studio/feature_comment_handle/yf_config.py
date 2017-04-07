@@ -6,7 +6,7 @@ config = dict(
         "default_value": "PositiveSignedTypeDefault",
         "json_path_list": [
             ("tags", "$..tags", "f_assert_not_null->f_assert_must_dict"),
-            ("mobile", "$..apply_base.mobile", "f_assert_not_null"),
+            ("mobile", "$..apply_data.data.mobile", "f_assert_not_null"),
         ],
         "f_map_and_filter_chain": "f_mobile_m1_m5_sum_max_seq(['contactAmount'])->m_seq_to_agv(2)",
         "reduce_chain": "",
@@ -19,7 +19,7 @@ config = dict(
         "default_value": "PositiveSignedTypeDefault",
         "json_path_list": [
             ("tags", "$..tags", "f_assert_not_null->f_assert_must_dict"),
-            ("mobile", "$..apply_base.mobile", "f_assert_not_null"),
+            ("mobile", "$..apply_data.data.mobile", "f_assert_not_null"),
         ],
         "f_map_and_filter_chain": "f_mobile_m1_m5_sum_max_seq(['callTimes','calledTimes'])->m_get_mobile_stability",
         "reduce_chain": "",
@@ -69,7 +69,7 @@ config = dict(
         "json_path_list": [
             ("marital_status", "$..content.marital_status", "f_assert_not_null->f_assert_must_digit"),
         ],
-        "f_map_and_filter_chain": "m_get_seq_index_value(0)->m_marital_status_to_code",
+        "f_map_and_filter_chain": "m_get_seq_index_value(0)->m_marital_status->m_to_code('marital_status')",
         "reduce_chain": "",
         "l_map_and_filter_chain": ""
     },
@@ -81,7 +81,7 @@ config = dict(
         "json_path_list": [
             ("sex", "$..content.sex", "f_assert_not_null->f_assert_must_basestring"),
         ],
-        "f_map_and_filter_chain": "m_get_seq_index_value(0)->m_sex_to_code->m_check_code('gender','eq')",
+        "f_map_and_filter_chain": "m_get_seq_index_value(0)->m_sex_to_code->m_to_code('gender')",
         "reduce_chain": "",
         "l_map_and_filter_chain": ""
     },
@@ -118,9 +118,10 @@ config = dict(
             ("flight_times", "$..content.flight_times", "f_assert_not_null->f_assert_must_digit_or_float"),
             ("inland_count", "$..content.inland_count", "f_assert_not_null->f_assert_must_digit_or_float"),
             (
-            "international_count", "$..content.international_count", "f_assert_not_null->f_assert_must_digit_or_float"),
+                "international_count", "$..content.international_count",
+                "f_assert_not_null->f_assert_must_digit_or_float"),
         ],
-        "f_map_and_filter_chain": "m_max_flight_area->f_assert_not_null",
+        "f_map_and_filter_chain": "m_max_flight_area->f_assert_not_null->m_to_code('max_flight_area')",
         "reduce_chain": "",
         "l_map_and_filter_chain": ""
     },
@@ -134,7 +135,7 @@ config = dict(
             ("executive_class_count", "$..content.executive_class_count", "f_assert_not_null->f_assert_must_digit"),
             ("tourist_class_count", "$..content.tourist_class_count", "f_assert_not_null->f_assert_must_digit"),
         ],
-        "f_map_and_filter_chain": "m_to_int->m_max_flight_class",
+        "f_map_and_filter_chain": "m_to_int->m_max_flight_class->m_to_code('max_flight_class')",
         "reduce_chain": "",
         "l_map_and_filter_chain": ""
     },
@@ -221,8 +222,8 @@ config = dict(
         "json_path_list": [
             ("work_exp_form", "$..work_exp_form[*]", "f_assert_not_null->f_assert_must_dict"),
         ],
-        "f_map_and_filter_chain": "m_get_new_list('work_end','industry')->f_assert_not_null"
-                                  "->m_seq_inx_to_999999->m_get_seq_index_value(1)",
+        "f_map_and_filter_chain": "m_get_new_list('work_end','industry')->f_assert_not_null->m_now_industry_code",
+
         "reduce_chain": "",
         "l_map_and_filter_chain": ""
     },
@@ -235,7 +236,7 @@ config = dict(
             ("work_exp_form", "$..work_exp_form[*]", "f_assert_not_null->f_assert_must_dict"),
 
         ],
-        "f_map_and_filter_chain": "m_get_new_list('work_end','industry')->f_assert_not_null->m_seq_inx_to_int()"
+        "f_map_and_filter_chain": "m_get_new_list('work_end','industry')->f_assert_not_null->m_seq_inx_to_int"
                                   "->m_seq_inx0_sort_in_list(True)->m_get_seq_index_value(0)->m_get_seq_index_value(1)",
         "reduce_chain": "",
         "l_map_and_filter_chain": ""
@@ -249,7 +250,7 @@ config = dict(
 
         ],
         "f_map_and_filter_chain": "m_get_new_list('work_end','work_start')->f_assert_not_null"
-                                  "->m_seq_inx0_sort_in_list(True)->m_get_seq_index_value(0)->m_r_to_now_work_time()",
+                                  "->m_seq_inx0_sort_in_list(True)->m_get_seq_index_value(0)->m_r_to_now_work_time",
         "reduce_chain": "",
         "l_map_and_filter_chain": ""
     },
@@ -262,7 +263,7 @@ config = dict(
             ("industry", "$..work_exp_form[*].industry", "f_assert_not_null"),
 
         ],
-        "f_map_and_filter_chain": "m_to_len(1)",
+        "f_map_and_filter_chain": "m_list_to_distinct->m_to_len(1)",
         "reduce_chain": "",
         "l_map_and_filter_chain": ""
     },
@@ -316,7 +317,7 @@ config = dict(
     },
 
     gps_city_code_config={
-        "feature_name": "mobile_area_city_code",
+        "feature_name": "gps_city_code",
         "feature_data_type": "string",
         "default_value": "StringTypeDefault",
         "json_path_list": [
@@ -334,20 +335,21 @@ config = dict(
         "json_path_list": [
             ("cur_work_status", "$..cur_work_status", "f_assert_not_null->f_assert_must_basestring"),
         ],
-        "f_map_and_filter_chain": "m_get_work_status_map('cur_work_status')->f_assert_not_null",
+        "f_map_and_filter_chain": "m_get_seq_index_value(0)->m_to_code('cur_work_status')",
         "reduce_chain": "",
         "l_map_and_filter_chain": ""
     },
 
     now_workplace_code_config={
         "feature_name": "now_workplace_code",
-        "feature_data_type": "int",
-        "default_value": "PositiveSignedTypeDefault",
+        "feature_data_type": "string",
+        "default_value": "StringTypeDefault",
         "json_path_list": [
-            ("industry", "$..work_exp_form[*].industry", "f_assert_not_null->f_assert_must_basestring"),
-            ("work_end", "$..work_exp_form[*].work_end", "f_assert_not_null->f_assert_must_basestring"),
+            ("work_exp_form", "$..work_exp_form[*]", "f_assert_not_null->f_assert_must_dict"),
         ],
-        "f_map_and_filter_chain": "f_get_workplace_now",
+        "f_map_and_filter_chain": "m_get_new_list('work_end','dq')->f_assert_not_null"
+                                  "->m_seq_inx0_sort_in_list(True)->m_get_seq_index_value(0)->m_get_seq_index_value(1)",
+
         "reduce_chain": "",
         "l_map_and_filter_chain": ""
     },
@@ -359,7 +361,7 @@ config = dict(
         "json_path_list": [
             ("work_start", "$..work_exp_form[*].work_start", "f_assert_must_basestring"),
         ],
-        "f_map_and_filter_chain": "f_not_null->f_assert_not_null->m_get_month_from_now",
+        "f_map_and_filter_chain": "f_not_null->f_assert_not_null->m_get_max_month_to_now",
         "reduce_chain": "",
         "l_map_and_filter_chain": ""
     },
@@ -374,6 +376,31 @@ config = dict(
             ("mobile_identity", "$.telecom_mobile_identity_s.result", "m_mobile_id_judge"),
         ],
         "f_map_and_filter_chain": "m_to_sum->m_to_bool",
+        "reduce_chain": "",
+        "l_map_and_filter_chain": ""
+    },
+    income_expense_comparison_config={
+        "feature_name": "income_expense_comparison",
+        "feature_data_type": "int",
+        "default_value": "PositiveSignedTypeDefault",
+        "json_path_list": [
+            ("debit", "$.unicom_finance_portrait_s.content.last12.debit", "m_get_income_expense_comparison('unicome')"),
+            ("rrx_inc_12m", "$.cc_credit.result.rrx_inc_12m", "m_get_income_expense_comparison('cc_credit')"),
+        ],
+        "f_map_and_filter_chain": "f_not_null->f_assert_not_null->m_get_seq_index_value(0)"
+                                  "->m_to_code('income_expense_comparison')",
+        "reduce_chain": "",
+        "l_map_and_filter_chain": ""
+    },
+
+    mobile_area_code_config={
+        "feature_name": "mobile_area_code",
+        "feature_data_type": "string",
+        "default_value": "StringTypeDefault",
+        "json_path_list": [
+            ("mobile_area", "$..mobile_area", "f_assert_not_null->f_assert_must_basestring"),
+        ],
+        "f_map_and_filter_chain": "m_get_seq_index_value(0)",
         "reduce_chain": "",
         "l_map_and_filter_chain": ""
     },

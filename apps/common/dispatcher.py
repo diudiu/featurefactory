@@ -30,9 +30,6 @@ def client_dispatch(client_code, content):
         logger.error('client code unavailable, no such client %s' % client_code)
         raise ClientCodeInexistence
 
-    # if not pretreatment(content.get('apply_id', None)):
-    #     raise
-
     data = handle_base[0]
     obj_string = data.manage_type
     if not obj_string:

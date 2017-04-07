@@ -5,7 +5,7 @@ config = dict(
         "feature_name": "is_netsky_multi_loan",
         "feature_data_type": "int",
         "default_value": "BooleanTypeDefault",
-        "json_path_list": [("result", "$.result", "f_assert_not_null->f_assert_must_basestring")],
+        "json_path_list": [("result", "$..result", "f_assert_not_null->f_assert_must_basestring")],
         "f_map_and_filter_chain": "m_get_seq_index_value(0)->m_to_bool('00')",
         "reduce_chain": "",
         "l_map_and_filter_chain": ''
@@ -15,7 +15,7 @@ config = dict(
         "feature_name": "is_skyeye_black",
         "feature_data_type": "int",
         "default_value": "BooleanTypeDefault",
-        "json_path_list": [("result", "$.result", "f_assert_not_null->f_assert_must_basestring")],
+        "json_path_list": [("result", "$..result", "f_assert_not_null->f_assert_must_basestring")],
         "f_map_and_filter_chain": "m_get_seq_index_value(0)->m_to_bool('00')",
         "reduce_chain": "",
         "l_map_and_filter_chain": ''
@@ -25,7 +25,7 @@ config = dict(
         "feature_name": "is_court_shixin",
         "feature_data_type": "int",
         "default_value": "BooleanTypeDefault",
-        "json_path_list": [("result", "$.result", "f_assert_not_null->f_assert_must_basestring")],
+        "json_path_list": [("result", "$..result", "f_assert_not_null->f_assert_must_basestring")],
         "f_map_and_filter_chain": "m_get_seq_index_value(0)->m_to_bool('00')",
         "reduce_chain": "",
         "l_map_and_filter_chain": ''
@@ -44,7 +44,7 @@ config = dict(
         "feature_name": "has_negative_info",
         "feature_data_type": "int",
         "default_value": "BooleanTypeDefault",
-        "json_path_list": [("result", "$.result", "f_assert_not_null->f_assert_must_basestring")],
+        "json_path_list": [("result", "$..result", "f_assert_not_null->f_assert_must_basestring")],
         "f_map_and_filter_chain": "m_get_seq_index_value(0)->m_to_bool('00')",
         "reduce_chain": "",
         "l_map_and_filter_chain": ''
@@ -54,7 +54,7 @@ config = dict(
         "feature_name": "is_netsky_grey",
         "feature_data_type": "int",
         "default_value": "BooleanTypeDefault",
-        "json_path_list": [("result", "$.result", "f_assert_not_null->f_assert_must_basestring")],
+        "json_path_list": [("result", "$..result", "f_assert_not_null->f_assert_must_basestring")],
         "f_map_and_filter_chain": "m_get_seq_index_value(0)->m_to_bool('00')",
         "reduce_chain": "",
         "l_map_and_filter_chain": ''
@@ -105,9 +105,9 @@ config = dict(
         "feature_data_type": "string",
         "default_value": "StringTypeDefault",
         "json_path_list": [
-            ("school_nature", "$.content.college.school_nature", "f_assert_not_null->f_assert_must_basestring"),
-            ("degree", "$.content.degree.degree", "f_assert_not_null->f_assert_must_basestring")],
-        "f_map_and_filter_chain": "m_college_type->m_get_seq_index_value(0)->m_check_code('college_type','eq')",
+            ("school_nature", "$..content.college.school_nature", "f_assert_not_null->f_assert_must_basestring"),
+            ("degree", "$..content.degree.degree", "f_assert_not_null->f_assert_must_basestring")],
+        "f_map_and_filter_chain": "m_college_type->m_to_code('college_type')",
         "reduce_chain": "",
         "l_map_and_filter_chain": ''
     },
@@ -116,7 +116,7 @@ config = dict(
         "feature_name": "graduate_college_check",
         "feature_data_type": "string",
         "default_value": "StringTypeDefault",
-        "json_path_list": [("college", "$.content.degree.college", "f_assert_not_null")],
+        "json_path_list": [("college", "$..content.degree.college", "f_assert_not_null->f_assert_must_basestring")],
         "f_map_and_filter_chain": "m_get_seq_index_value(0)",
         "reduce_chain": "",
         "l_map_and_filter_chain": ''
@@ -127,15 +127,15 @@ config = dict(
         "feature_data_type": "string",
         "default_value": "StringTypeDefault",
         "json_path_list": [("degree", "$..content.degree.degree", "f_assert_not_null")],
-        "f_map_and_filter_chain": "m_single_check_code('education_degree_check')",
+        "f_map_and_filter_chain": "m_get_seq_index_value(0)->m_to_code('education_degree_check')",
         "reduce_chain": "",
         "l_map_and_filter_chain": ''
     },
 
     pingan_multi_loan_infos_config={
         "feature_name": "pingan_multi_loan_infos",
-        "feature_data_type": "string",
-        "default_value": "StringTypeDefault",
+        "feature_data_type": "list",
+        "default_value": "ListTypeDefault",
         "json_path_list": [("record", "$..record", "f_assert_not_null")],
         "f_map_and_filter_chain": "m_del_invalid_value(6)",
         "reduce_chain": "",

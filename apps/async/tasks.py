@@ -59,13 +59,13 @@ def audit_task(base_data):
 
 
 def mission_control(base_data):
-    logger.info('Streams in mission control center\nFeature prepared have been done\nCollecting feature now')
+    logger.info('\n============Streams in mission control center,Collecting feature now===========')
     collecter = CollectFeature(base_data)
     collecter.get_feature_value()
     if collecter.error_list:
         # TODO 特征处理有异常
         pass
     ret_data = collecter.feature_ret
-    logger.info('\n**********\nfeature compared completed\n**********\n')
+    logger.info('\n============feature compared completed=========================================\n')
     logger.info('All feature is %s', ret_data)
     return ret_data

@@ -26,14 +26,13 @@ class CollectFeature(object):
         self.apply_id = base_data.get('apply_id', None)
 
     def get_feature_value(self):
-        logger.info('Stream in feature_collect function name : get_feature_value\nFeature list :\n%s' %
+        logger.info('Stream in feature_collect function name : get_feature_value\nFeature list :%s' %
                     self.feature_list)
         for feature_name in self.feature_list:
-            logger.info('Get feature value, named %s' % feature_name)
+            logger.info('*******Get feature:%s value*******' % feature_name)
             courier = Courier(feature_name, self.feature_config[feature_name], self.apply_id)
             ret = courier.get_feature()
             if ret:
-                logger.info('Single feature value has been gotten, %s' % ret)
                 self.feature_ret.update(ret)
             else:
                 logger.error('Get single feature value field, result is None')

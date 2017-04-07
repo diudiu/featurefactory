@@ -82,6 +82,19 @@ def m_to_len(seq, args=0):
     return seq
 
 
+def m_list_to_distinct(seq):
+    """
+        序列去除重复的值
+        :param seq: 可以为字符串、列表
+        :return:    去重后的字符串、列表
+        example：
+                :seq： [1, -2， 1]
+                :return： [1, -2]
+    """
+    seq = list(set(seq))
+    return seq
+
+
 def m_to_sum(seq):
     """
         求序列中值得和
@@ -226,9 +239,9 @@ def m_digit_to_floor(seq):
     return int(seq)
 
 
-def m_marital_status_to_code(seq):
+def m_marital_status(seq):
     """
-        结婚状态的code值
+        结婚状态
         :param seq: 整数
         :return:    小于seq的最大10的倍数
         example：
@@ -506,25 +519,6 @@ def m_get_city_name(address):
     return city_name
 
 
-def m_get_city_name1(city):
-    """
-           m_get_city_name 包含 m_get_city_name1 这个弃用
-            提取公司所在地址的城市名称
-            :param city: 地址
-            :return:    城市
-            example：
-                    :address  'beijing'
-                    :return  '北京'
-                    :address  '广州'
-                    :return  '广州'
-    """
-    if "-" in city:
-        city = city.split('-')[1]
-    if ('市' in city) or ('盟' in city) or ('州' in city and len(city) > 6):
-        city = city[:-3]
-    return city
-
-
 def m_city_name_to_level(city_name):
     """
        获取城市名所对应的level
@@ -571,23 +565,23 @@ def m_city_name_to_code(city_name):
 
 def m_max_flight_area(seq):
     """
-       一年内飞机出行中最多出行区域的code
+       一年内飞机出行中最多出行区域
         :param seq: 飞行次数、国内次数、国外次数
-        :return:    飞行次数==0 返回3    国内次数>国外次数 返回1 国外次数>国内次数 返回2
+        :return:    飞行次数==0 返回0    国内次数>国外次数 返回inland 国外次数>国内次数 返回international
         example：
                 :seq  [2, 2, 3]
-                :return  2
+                :return  international
     """
     """"""
     flight_times = seq[0]
     inland_count = seq[1]
     international_count = seq[2]
     if int(flight_times) == 0:
-        seq = 3
+        seq = 0
     elif int(inland_count) >= int(international_count):
-        seq = 1
+        seq = 'inland'
     elif int(inland_count) < int(international_count):
-        seq = 2
+        seq = 'international'
     else:
         raise FeatureProcessError("don't know  max_flight_area code")
     return seq
@@ -595,26 +589,27 @@ def m_max_flight_area(seq):
 
 def m_max_flight_class(seq):
     """
-       一年内飞机出行中最多机舱类型的code
+       一年内飞机出行中最多机舱类型
         :param seq: [商务舱乘机次数、公务舱乘机次数、经济舱乘机次数]
-        :return:    code
+        :return:    乘机次数==0 返回0    乘坐商务舱最多 返回business_class 乘坐公务舱最多 executive_class 乘坐经济舱最多 返回tourist_class
         example：
                 :seq  [2, 2, 3]
-                :return  1
+                :return  tourist_class
     """
     temp_index = seq.index(max(seq))
     result = ''
     if sum(seq) == 0:
-        result = 4
+        result = 0
     elif temp_index == 0:
-        result = 3
+        result = 'business_class'
     elif temp_index == 1:
-        result = 2
+        result = 'executive_class'
     elif temp_index == 2:
-        result = 1
+        result = 'tourist_class'
     return result
 
 
+# Todo
 def m_get_work_status_map(seq, feature_name):
     """
     对seq数据针对工作状态匹配相应code码
@@ -632,12 +627,12 @@ def m_get_work_status_map(seq, feature_name):
             return int(key)
 
 
-def m_get_month_from_now(seq):
+def m_get_max_month_to_now(seq):
     """
     计算时间字符串列表中时间距离今天的最长月数
     计算逻辑为天数除以30
     时间字符串'999999'代表当前  做去除处理
-    :param seq: 时间戳列表
+    :param seq: 时间列表
     :return: 传入列表中距离当前时间最长的月数
     """
 
@@ -667,29 +662,21 @@ def m_seq_inx_to_int(seq, args=0):
     return seq
 
 
-def m_seq_inx_to_999999(seq, args=0):
+def m_now_industry_code(seq):
     """
-        将列表中为‘999999’得提取出来
-        :param seq: 列表形成的列表
-        :param args: 列表的次序
-        :return:    转换后的列表
+        获取当前工作行业
+        :param seq: 历史工作列表 行业结束时间为999999时代表当前从事行业
+        :return:    当前工作行业 当前没有工作返回空
         example：
-                :seq  [['30', 0], ['5', 1]]
-                :args   0
-                :return  [[30, 0], [5, 1]]
+                :seq  [['30', 0], ['5', 1],['999999', 1]]
+                :return  1
     """
+    tmp = ''
     for i in seq:
-        if i[args] == '999999':
-            seq = i
-        else:
-            seq = [i[args], '']
-    return seq
-
-
-def m_seq_del_999999(seq):
-    if '999999' in seq:
-        seq.remove('999999')
-        return seq
+        if i[0] == '999999':
+            tmp = i[1]
+            break
+    return tmp
 
 
 def m_r_to_now_work_time(seq):
@@ -716,33 +703,33 @@ def m_college_type(seq):
     获取学校的类型信息
     当学校的类型是985,211工程院校时：
         :param seq:【“985,211工程院校”，“本科”】
-        :return:【“985工程院校”】
+        :return:“985工程院校”
     当学校的类型是211工程院校时：
         :param seq:【“211工程院校”，“硕士”】
-        :return:【“211工程院校”】
+        :return:“211工程院校”
     当学校的类型是普通本科或者专科时：
        如果获取的某人的学历信息是博士、硕士和本科时
        输出的学校类型为普通本科
        :param seq:【“****”，“硕士”】
-       :return:【“普通本科”】
+       :return:“普通本科”
        如果获取的某个人的学历信息时专科时：
        输出的学校类型为专科
        :param seq:【“****”，“专科”】
-       :return:【“专科”】
+       :return:“专科”
 
     """
     if "985" in seq[0]:
-        tmp = ["985工程院校"]
+        tmp = "985,211工程院校"
         return tmp
     elif "211" in seq[0] and "985" not in seq[0]:
-        tmp = ["211工程院校"]
+        tmp = "211工程院校"
         return tmp
     else:
         if seq[1] in ["博士", "硕士", "本科"]:
-            tmp = ["普通本科"]
+            tmp = "本科"
             return tmp
         else:
-            tmp = ["专科"]
+            tmp = "专科"
             return tmp
 
 
@@ -888,7 +875,63 @@ def m_check_code(seq, args=None):
                 res = key
                 break
     if res in ('', None):
-        raise FeatureProcessError("don't find %s=% code value" % (feature_name, seq))
+        raise FeatureProcessError("don't find %s=%s code value" % (feature_name, seq))
+    return res
+
+
+def m_to_code(seq, args=None):
+    """
+    将数值转化成对应的code
+    :param seq:  上一步得到的数据
+    :param args:  feature_name
+    :return:  对应code
+
+    example：
+                :data:         20
+                :args         'education_degree_code'
+                :return         2
+    """
+    if not seq and seq != 0:
+        return []
+    feature_name = args
+    fcm = FeatureCodeMapping.objects.filter(
+        feature_name=feature_name,
+        is_delete=False
+    )
+    res = ''
+    num_map = {int(conf.mapped_value): [conf.unitary_value, conf.dual_value, conf.arithmetic_type] for conf in fcm}
+    for key, value in num_map.iteritems():
+        arithmetic_type = value[2]
+        if arithmetic_type == '[)':
+            if float(value[0]) <= float(seq) < float(value[1]):
+                res = key
+                break
+        elif arithmetic_type == '(]':
+            if float(value[0]) < float(seq) <= float(value[1]):
+                res = key
+                break
+        elif arithmetic_type == '()':
+            if float(value[0]) < float(seq) < float(value[1]):
+                res = key
+                break
+        elif arithmetic_type == '>=':
+            if float(seq) >= float(value[0]):
+                res = key
+                break
+        elif arithmetic_type == '<=':
+            if float(seq) <= float(value[0]):
+                res = key
+                break
+        elif arithmetic_type == 'in':
+            if seq in value[0]:
+                res = key
+                break
+        elif arithmetic_type == '==':
+            if str(seq) == value[0]:
+                res = key
+                break
+    if res in ('', None):
+        raise FeatureProcessError("don't find %s=%s code value" % (feature_name, seq))
     return res
 
 
@@ -930,7 +973,7 @@ def m_single_check_code(seq, feature_name):
             res = key
             break
     if res in ('', None):
-        raise FeatureProcessError("don't find %s=% code value" % (feature_name, seq))
+        raise FeatureProcessError("don't find %s=%s code value" % (feature_name, seq))
     return res
 
 
@@ -1046,9 +1089,9 @@ def m_lp_income(seq, discount):
 
 def m_single_to_list(seq):
     """
-
-    :param seq:
-    :return:
+    转换单值为列表
+    :param seq: 5
+    :return:[5]
     """
     if isinstance(seq, list):
         return seq
@@ -1069,70 +1112,108 @@ def m_to_str(seq):
     return str(seq)
 
 
+def m_get_income_expense_comparison(seq, args=None):
+    """
+       获取用户的入账与支出关系
+
+        :param seq: 入账和支出信息
+
+        :return:  入账/支出的比率或空列表
+
+
+    """
+    amount_dict = {'0': 500, '1': 1500, '2': 2500, '3': 3500, '4': 4500, '5': 5500, '6': 6500, '7': 7500, '8': 8500,
+                   '9': 9500, 'a': 15000, 'b': 25000, 'c': 35000, 'd': 45000, 'e': 55000, 'f': 65000, '10': 75000,
+                   '11': 85000, '12': 95000, '13': 150000, '14': 250000, '15': 350000, '16': 450000, '17': 550000,
+                   '18': 650000, '19': 750000, '1a': 850000, '1b': 950000, '1c': 1500000, '1d': 2500000, '1e': 3500000,
+                   '1f': 4500000, '20': 5500000, '21': 6500000, '22': 7500000, '23': 8500000, '24': 9500000, '25':15000000
+                   }
+
+    ratio = ''
+    income_level = ''
+    expense_level = ''
+    if isinstance(seq, list) and seq:
+        seq = seq[0]
+    if not (seq and isinstance(seq, dict)):
+        return [ratio]
+    if args == 'unicome':
+        income_level = amount_dict.get(seq.get('income_range'))
+        expense_level = amount_dict.get(seq.get('charge_off_range'))
+    if args == 'cc_credit':
+        income_level = seq.get('debit_card_12m_passentry_amount')
+        expense_level = seq.get('debit_card_12m_chargeoff_amount')
+    if income_level and expense_level:
+        if income_level == expense_level:
+            ratio = 1
+        else:
+            ratio = float(income_level) / float(expense_level)
+    return [ratio]
+
+
 if __name__ == '__main__':
     data = [
-            {
-                "res": 9,
-                "product_code": "string",
-                "name": "string",
-                "card_id": "string",
-                "mobile": "string",
-                "email": "string",
-                "registration_on": "2016-10-01 12:20:10",
-                "city_code": "string",
-                "city_name": "string",
-                "now_indust_code": "string",
-                "now_indust_name": "string",
-                "work_age": 0,
-                "complete_degree": 0,
-                "cur_work_status": "string",
-                "upload_contact": 0,
-                "sns_friends_cnt": 0,
-                "sns_sd_friend_cnt": 0,
-                "sns_h_fans_cn": 0,
-                "sns_skill_tag_list": [
-                    {
-                        "skill_tag": "string",
-                        "certified_num": 0
-                    }
-                ],
-                "work_exp_form": [
-                    {
-                        "title": "string",
-                        "has_certified": "string",
-                        "certified_num": 0,
-                        "comp_name": "string",
-                        "months": 0,
-                        "salary": 0,
-                        "work_start": "201605",
-                        "work_end": '999999',
-                        "industry": "数云普惠",
-                        "industry_name": "string",
-                        "dq": "string",
-                        "dq_name": "string"
-                    },
+        {
+            "res": 9,
+            "product_code": "string",
+            "name": "string",
+            "card_id": "string",
+            "mobile": "string",
+            "email": "string",
+            "registration_on": "2016-10-01 12:20:10",
+            "city_code": "string",
+            "city_name": "string",
+            "now_indust_code": "string",
+            "now_indust_name": "string",
+            "work_age": 0,
+            "complete_degree": 0,
+            "cur_work_status": "string",
+            "upload_contact": 0,
+            "sns_friends_cnt": 0,
+            "sns_sd_friend_cnt": 0,
+            "sns_h_fans_cn": 0,
+            "sns_skill_tag_list": [
+                {
+                    "skill_tag": "string",
+                    "certified_num": 0
+                }
+            ],
+            "work_exp_form": [
+                {
+                    "title": "string",
+                    "has_certified": "string",
+                    "certified_num": 0,
+                    "comp_name": "string",
+                    "months": 0,
+                    "salary": 0,
+                    "work_start": "201605",
+                    "work_end": '999999',
+                    "industry": "数云普惠",
+                    "industry_name": "string",
+                    "dq": "string",
+                    "dq_name": "string"
+                },
 
-                ],
-                "edu_exp_form": [
-                    {
-                        "school": "string",
-                        "start": "string",
-                        "end": "string",
-                        "degree": "5",
-                        "degree_name": "string",
-                        "tz": 0
-                    },
-                    {
-                        "school": "string",
-                        "start": "string",
-                        "end": "string",
-                        "degree": "30",
-                        "degree_name": "string",
-                        "tz": 1
-                    }
-                ]
-            },
+            ],
+            "edu_exp_form": [
+                {
+                    "school": "string",
+                    "start": "string",
+                    "end": "string",
+                    "degree": "5",
+                    "degree_name": "string",
+                    "tz": 0
+                },
+                {
+                    "school": "string",
+                    "start": "string",
+                    "end": "string",
+                    "degree": "30",
+                    "degree_name": "string",
+                    "tz": 1
+                }
+            ]
+        },
     ]
-    data = m_r_to_now_work_time()
+    # data = m_r_to_now_work_time()
+    data = m_to_code(0, args='income_expense_comparison')
     print data
-

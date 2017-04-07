@@ -80,7 +80,9 @@ class Judger(object):
                     'collect_type': single_conf.collect_type
                 })
             except (NameError, SyntaxError) as e:
-                raise
+                logger.error('feature:%s common config error,data_identity:%s'
+                             % (single_conf.feature_name, single_conf.data_identity))
+                raise CommonFeatureConfigError
             self.ret_msg.update({single_conf.feature_name: feature_conf})
 
     def _load_args(self):

@@ -1,5 +1,5 @@
 import unittest
-from studio.lp_dataocean_handle.lp_lp_income_level import Handle
+from studio.lp_dataocean_handle.lp_income_level import Handle
 data = {
         "product_code": "string",
         "registration_on": "2016-01-18",

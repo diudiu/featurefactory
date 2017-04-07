@@ -15,8 +15,10 @@ from apps.etl.models import FeatureShuntConf, FeatureRelevanceConf
 from apps.remote.call import DataPrepare
 from studio.feature_comment_handle.featrue_process import FeatureProcess
 
-from vendor.utils.phone_operator_judge import PhoneOperator
+from vendor.utils.shunt_operator_judge import *
+from vendor.errors.remote_error import *
 from vendor.errors.contact_error import *
+from vendor.errors.api_errors import *
 from vendor.utils.constant import cons
 
 logger = logging.getLogger('apps.etl')
@@ -39,19 +41,19 @@ class Courier(object):
         self.relevance_data_identity_list = []
 
     def get_feature(self):
-        logger.info('Stream in courier function name : get_feature\nFeature name :\n%s' %
+        logger.info('Stream in courier function name : get_feature Feature name :%s' %
                     self.feature_name)
         self.data_identity_list = self._get_di_from_conf(self.feature_conf)
         if self.collect_type == 'Courier':
-            logger.info('Stream in courier function name : get_feature\ncollect_type is Courier')
+            logger.info('Stream in courier function name : get_feature collect_type is Courier')
             self.get_general_data()
 
         elif len(self.data_identity_list) > 1 and self.collect_type == 'ShuntCourier':
-            logger.info('Stream in courier function name : get_feature\ncollect_type is ShuntCourier')
+            logger.info('Stream in courier function name : get_feature collect_type is ShuntCourier')
             self.get_shunt_data()
 
         elif self.collect_type == 'RelevanceCourier':
-            logger.info('Stream in courier function name : get_feature\ncollect_type is RelevanceCourier')
+            logger.info('Stream in courier function name : get_feature collect_type is RelevanceCourier')
             self.get_relevance_data()
 
         if not self.useful_data:
@@ -64,17 +66,14 @@ class Courier(object):
 
         feature_obj = FeatureProcess(feature_name, useful_data)
         ret = feature_obj.run()
-        logger.info('New Feature process complete, value : %s' % ret)
         if not ret:
             logger.error('Feature:%s return is None' % feature_name)
             raise HandleWorkError
-
-        logger.info('Feature Handle completed, result is %s' % ret)
-
         if feature_name not in ret.keys():
             logger.error(
                 'Wrong config of the feature, not the expect feature_name, feature_name: %s' % feature_name)
             raise FeatureConfigError
+        logger.info('Feature Handle completed, result is \n%s' % ret)
         return ret
 
     def get_useful_data(self, data_identity):
@@ -91,46 +90,61 @@ class Courier(object):
         logger.info('Stream in courier function name : get_general_data')
         for data_identity in self.data_identity_list:
             data = self.get_useful_data(data_identity)
-            self.useful_data.update(data)
+            if not data:
+                logger.error('Get origin data error, data_identity is : %s' %data_identity)
+
+                raise OriginDataGetError
+            self.useful_data.update({data_identity: data})
         logger.info('Stream get_general_data complete\nUseful_data : %s' % self.useful_data)
 
     def get_shunt_data(self):
         logger.info('Stream in courier function name : get_shunt_data')
-        data = self.get_shunt_rel_data()
-        if not data:
-            raise
-        logger.info('Stream get_shunt_data complete\nUseful_data : %s' % data)
-        self.useful_data.update(data)
-
-    def get_shunt_rel_data(self):
-        logger.info('Stream in courier function name : get_shunt_rel_data')
         feature_conf_list = FeatureShuntConf.objects.filter(
             feature_name=self.feature_name,
             is_delete=False
         ).order_by('id')
         if not feature_conf_list:
-            raise
+            logger.error("feature_name:%s miss config  in shunt feature table" % self.feature_name)
+            raise ShuntFeatureConfigError
         apply_base = ApplyContext(self.apply_id)
         apply_data = (apply_base.load())['data']
+        has_value = False
         for feature_conf in feature_conf_list:
             shunt_key = feature_conf.shunt_key
             data_identity = feature_conf.data_identity
             value = apply_data.get(shunt_key, None)
             if not value:
-                raise
+                logger.error("feature_name:%s shunt_key:%s get value error  in shunt feature table"
+                             % (self.feature_name, shunt_key))
+                raise GetArgumentsError
             oper = feature_conf.shunt_type
-            if oper == 'PhoneOperator':
-                po = PhoneOperator(value)
-                shunt = po.distinguish()
-                if shunt in eval(feature_conf.shunt_value):
-                    useful_data_identity = data_identity
-                    if not useful_data_identity:
-                        raise
-                    data = self.get_useful_data(data_identity)
-                    if not data:
-                        continue
-                    logger.info('Stream get_shunt_rel_data complete\nUseful_data : %s' % data)
-                    return data
+            oper = eval(oper)
+            po = oper(value)
+            shunt = po.distinguish()
+            if shunt in eval(feature_conf.shunt_value):
+                useful_data_identity = data_identity
+                if not useful_data_identity:
+                    logger.error("feature_name:%s  miss  data_identity in shunt feature table" % self.feature_name)
+                    raise ShuntFeatureConfigError
+                data = self.get_useful_data(data_identity)
+                if data:
+                    has_value = True
+                    data = {data_identity: data}
+                    logger.info('Find shunt_data,stream get_shunt_data complete\nUseful_data : %s' % data)
+                    self.useful_data.update(data)
+                    break
+
+        if not has_value:
+            logger.error('Get origin data error, feature_name is : %s' %
+                         self.feature_name)
+            raise OriginDataGetError
+
+    def get_relevance_data(self):
+        self._get_relevance_feature_list(self.feature_name)
+        if len(self.relevance_feature_list) != len(self.relevance_data_identity_list):
+            logger.error("feature_name:%s config error in relevance feature table " % self.feature_name)
+            raise RelevanceFeatureConfigError
+        self._get_relevance_feature_userful_data(self.relevance_feature_list, self.relevance_data_identity_list)
 
     def _get_relevance_feature_list(self, feature_name):
         relevance_conf = FeatureRelevanceConf.objects.filter(
@@ -142,11 +156,8 @@ class Courier(object):
             raise RelevanceFeatureConfigError
         self.relevance_data_identity_list.append(relevance_conf.data_identity)
         self.relevance_feature_list.append(feature_name)
-        # next_di = relevance_conf.depend_di
         next_feature = relevance_conf.depend_feature
         if next_feature:
-            # if not next_di:
-            #     raise RelevanceFeatureConfigError
             next_feature_list = next_feature.split(',')
             for feature in next_feature_list:
                 self._get_relevance_feature_list(feature)
@@ -159,21 +170,19 @@ class Courier(object):
                 self._get_relevance_feature_userful_data(feature_name, data_identity)
 
             data = self.get_useful_data(data_identity)
-            feature_value = self.data_analysis(feature_name, data)
-            self.useful_data.update(data)
+            if not data:
+                logger.error('Get origin data error,feature_name is:%s data_identity:%s'
+                             % (self.feature_name, data_identity))
+                raise OriginDataGetError
+            self.useful_data.update({data_identity: data})
             if feature_name != feature_data_identity_list[-1][0]:
+                feature_value = self.data_analysis(feature_name, data)
                 self.argument_base.kwargs.update(feature_value)
                 self.argument_base.save()
-
-    def get_relevance_data(self):
-        self._get_relevance_feature_list(self.feature_name)
-        if len(self.relevance_feature_list) != len(self.relevance_data_identity_list):
-            logger.error("feature_name:%s config error in relevance feature table " % self.feature_name)
-            raise RelevanceFeatureConfigError
-        self._get_relevance_feature_userful_data(self.relevance_feature_list, self.relevance_data_identity_list)
+        logger.info('Stream get_relevance_data complete\nUseful_data : %s' % self.useful_data)
 
     def _get_di_from_conf(self, base_conf):
-        logger.info('Stream in courier function name : _get_di_from_conf\nBase_conf :\n%s' %
+        logger.info('Stream in courier function name : _get_di_from_conf\nBase_conf :%s' %
                     base_conf)
         data_identity_list = base_conf.keys()
         if 'collect_type' in data_identity_list:

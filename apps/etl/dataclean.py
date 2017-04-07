@@ -39,42 +39,52 @@ class DataClean(object):
             return self.origin_data
 
     def _data_ocean_clean(self):
+        logger.info('Start clean data, use clean type: _data_ocean_clean')
         temp_data = Judger.get_value(self.origin_data, '$.res_data.res_data')
+        logger.info('completed clean, clean result:\n%s' % temp_data)
         if not temp_data or temp_data == '{}':
             logger.error(
                 'Unavailable data from %s :\n%s' %
                 (cons.SOURCE_TYPE_MESSAGE[self.clean_style], self.origin_data)
             )
-        # TODO temp_data may is unicode string
-
+            return {}
         temp_data = json.loads(temp_data)
         return temp_data
 
     def _91_credit_clean(self):
+        logger.info('Start clean data, use clean type: _91_credit_clean')
         temp_data = Judger.get_value(self.origin_data, '$.res_data')
-        if not temp_data:
+        logger.info('completed clean, clean result:\n%s' % temp_data)
+        if not temp_data or temp_data == '{}':
             logger.error(
                 'Unavailable data from %s :\n%s' %
                 (cons.SOURCE_TYPE_MESSAGE[self.clean_style], self.origin_data)
             )
+            return {}
         return temp_data
 
     def _pingan_credit_clean(self):
-        temp_data = Judger.get_value(self.origin_data, '$.res_data.data')
-        if not temp_data:
+        logger.info('Start clean data, use clean type: _pingan_credit_clean')
+        temp_data = Judger.get_value(self.origin_data, '$.res_data')
+        logger.info('completed clean, clean result:\n%s' % temp_data)
+        if not temp_data or temp_data == '{}':
             logger.error(
                 'Unavailable data from %s :\n%s' %
                 (cons.SOURCE_TYPE_MESSAGE[self.clean_style], self.origin_data)
             )
+            return {}
         return temp_data
 
     def _cc_credit_clean(self):
+        logger.info('Start clean data, use clean type: _cc_credit_clean')
         temp_data = Judger.get_value(self.origin_data, '$.res_data')
-        if not temp_data:
+        logger.info('completed clean, clean result:\n%s' % temp_data)
+        if not temp_data or temp_data == '{}':
             logger.error(
                 'Unavailable data from %s :\n%s' %
                 (cons.SOURCE_TYPE_MESSAGE[self.clean_style], self.origin_data)
             )
+            return {}
         return temp_data
 
     def test_worked(self):
