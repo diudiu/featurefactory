@@ -23,7 +23,7 @@ logger = logging.getLogger('apps.remote')
 
 class DataPrepare(object):
     def __init__(self, data_identity, apply_id, args_list):
-        logger.info('Init DatePrepare')
+        logger.info('Init DataPrepare')
         self.data_identity = data_identity
         self.apply_id = apply_id
         self.cache_base = CacheContext(self.apply_id)
@@ -44,9 +44,11 @@ class DataPrepare(object):
         data = self.cache_base.get(self.data_identity)
         if data:
             ret_data = data[self.data_identity]['origin_data']
+            logger.info('Find cache_base data_identity:%s data:\n%s' % (self.data_identity, ret_data))
         return ret_data
 
     def get_origin_data_from_interface(self):
+        logger.info('get_origin_data_from_interface data_identity:%s' % self.data_identity)
         ds_conf = DsInterfaceInfo.objects.filter(
             data_identity=self.data_identity,
             is_delete=False
@@ -69,6 +71,9 @@ class DataPrepare(object):
                 data_prams.append([i, prams])
         else:
             data_prams = eval(ds_conf.must_data % self.parm_dict)
+
+        logger.info('prams:%s' % data_prams)
+
         if isinstance(data_prams, list):
             origin_data = {}
             for flag, prams in data_prams:
@@ -124,9 +129,11 @@ class DataPrepare(object):
             "client_token": "test_lp_syph_code",
             "req_data": data
         }
+        logger.info('From REMOTE get data, data_identity:%s param:%s' % (self.data_identity, data))
         response = requests.post(self.url, json.dumps(data))
         content = response.content
         content = json.loads(content)
+        logger.info('data_identity:%s, REMOTE interface return:\n%s' % (self.data_identity, content))
         return content
 
     @staticmethod
@@ -134,7 +141,9 @@ class DataPrepare(object):
         base_index = ds_conf.data_identity
         data_bases = None
         if base_index == 'apply_data':
+            logger.info('From LOCAL get interface data, data from apply_data')
             data_bases = ApplyContext((data_prams.values())[0])
         if base_index == 'portrait_data':
+            logger.info('From LOCAL get interface data, data from portrait_data')
             data_bases = PortraitContext((data_prams.values())[0])
         return data_bases.load() if data_bases else None

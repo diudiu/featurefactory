@@ -41,19 +41,19 @@ class Courier(object):
         self.relevance_data_identity_list = []
 
     def get_feature(self):
-        logger.info('Stream in courier function name : get_feature\nFeature name :\n%s' %
+        logger.info('Stream in courier function name : get_feature Feature name :%s' %
                     self.feature_name)
         self.data_identity_list = self._get_di_from_conf(self.feature_conf)
         if self.collect_type == 'Courier':
-            logger.info('Stream in courier function name : get_feature\ncollect_type is Courier')
+            logger.info('Stream in courier function name : get_feature collect_type is Courier')
             self.get_general_data()
 
         elif len(self.data_identity_list) > 1 and self.collect_type == 'ShuntCourier':
-            logger.info('Stream in courier function name : get_feature\ncollect_type is ShuntCourier')
+            logger.info('Stream in courier function name : get_feature collect_type is ShuntCourier')
             self.get_shunt_data()
 
         elif self.collect_type == 'RelevanceCourier':
-            logger.info('Stream in courier function name : get_feature\ncollect_type is RelevanceCourier')
+            logger.info('Stream in courier function name : get_feature collect_type is RelevanceCourier')
             self.get_relevance_data()
 
         if not self.useful_data:
@@ -66,17 +66,14 @@ class Courier(object):
 
         feature_obj = FeatureProcess(feature_name, useful_data)
         ret = feature_obj.run()
-        logger.info('New Feature process complete, value : %s' % ret)
         if not ret:
             logger.error('Feature:%s return is None' % feature_name)
             raise HandleWorkError
-
-        logger.info('Feature Handle completed, result is %s' % ret)
-
         if feature_name not in ret.keys():
             logger.error(
                 'Wrong config of the feature, not the expect feature_name, feature_name: %s' % feature_name)
             raise FeatureConfigError
+        logger.info('Feature Handle completed, result is \n%s' % ret)
         return ret
 
     def get_useful_data(self, data_identity):
@@ -133,7 +130,7 @@ class Courier(object):
                 if data:
                     has_value = True
                     data = {data_identity: data}
-                    logger.info('Stream get_shunt_data complete\nUseful_data : %s' % data)
+                    logger.info('Find shunt_data,stream get_shunt_data complete\nUseful_data : %s' % data)
                     self.useful_data.update(data)
                     break
 
@@ -177,15 +174,15 @@ class Courier(object):
                 logger.error('Get origin data error,feature_name is:%s data_identity:%s'
                              % (self.feature_name, data_identity))
                 raise OriginDataGetError
-            feature_value = self.data_analysis(feature_name, data)
             self.useful_data.update({data_identity: data})
             if feature_name != feature_data_identity_list[-1][0]:
+                feature_value = self.data_analysis(feature_name, data)
                 self.argument_base.kwargs.update(feature_value)
                 self.argument_base.save()
         logger.info('Stream get_relevance_data complete\nUseful_data : %s' % self.useful_data)
 
     def _get_di_from_conf(self, base_conf):
-        logger.info('Stream in courier function name : _get_di_from_conf\nBase_conf :\n%s' %
+        logger.info('Stream in courier function name : _get_di_from_conf\nBase_conf :%s' %
                     base_conf)
         data_identity_list = base_conf.keys()
         if 'collect_type' in data_identity_list:

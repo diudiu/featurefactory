@@ -86,7 +86,7 @@ def feature_post():
                 # 'mobile_activeness',
                 # 'mobile_area_city_level',
                 # 'mobile_area_code',
-                # 'mobile_identity',
+                'mobile_identity',
                 # # 'mobile_mark',#nodata
                 # 'mobile_stability',
                 # 'name',
