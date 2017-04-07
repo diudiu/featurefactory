@@ -86,7 +86,7 @@ if __name__ == '__main__':
             f = import_module(i.split('.')[0])
             data = f.data
             for data_identify, lists in data.items():
-                if data_identify == 'tianyan_blacks':
+                if data_identify == 'education_review_s':
                 # if True:
                     for req_res in lists:
                         req_data = req_res['req_data']
