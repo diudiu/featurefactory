@@ -163,8 +163,10 @@ class Courier(object):
                 self._get_relevance_feature_list(feature)
 
     def _get_relevance_feature_userful_data(self, relevance_feature_list, relevance_data_identity):
+
         feature_data_identity_list = zip(relevance_feature_list, relevance_data_identity)
         feature_data_identity_list.reverse()
+        logger.info("Relevance feature:%s config order:\n%s" % (self.feature_name, feature_data_identity_list))
         for feature_name, data_identity in feature_data_identity_list:
             if isinstance(data_identity, list):
                 self._get_relevance_feature_userful_data(feature_name, data_identity)
