@@ -100,8 +100,8 @@ class FeatureProcess(object):
              FeatureProcessError  自定义的特征处理异常，在程序的外层可捕获该异常
         """
         try:
-            self._load()
-            # self._load_config()
+            # self._load()
+            self._load_config()
             json_path_parser = JSONPathParser()
             value_list = json_path_parser.parsex(self.data, self.json_path_list)
             result = []

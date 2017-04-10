@@ -30,6 +30,7 @@ from django.http.response import HttpResponse
 from django.views.generic import View
 
 from apps.etl.models import *
+from apps.common.models import FeatureCodeMapping
 from apps.datasource.models import *
 from vendor.utils.pagination import ExtPaginator
 from vendor.utils.commons import json_response
@@ -708,11 +709,11 @@ class GetItemList(CsrfExemptMixin, View):
                 data = FeatureConf.objects.filter(is_delete=False).values_list('id', 'feature_name').order_by(
                     'feature_name')
             elif item == 'feature_type':
-                data = FeatureType.objects.values_list('id', 'feature_type_desc')
+                data = FeatureType.objects.filter(is_delete=False).values_list('id', 'feature_type_desc')
             elif item == 'feature_card_type':
-                data = FeatureCardType.objects.values_list('id', 'feature_type_desc')
+                data = FeatureCardType.objects.filter(is_delete=False).values_list('id', 'feature_type_desc')
             elif item == 'feature_rule_type':
-                data = FeatureRuleType.objects.values_list('id', 'feature_type_desc')
+                data = FeatureRuleType.objects.filter(is_delete=False).values_list('id', 'feature_type_desc')
             elif item == 'args':
                 data = PreFieldInfo.objects.filter(is_delete=False).values_list('id', 'field_name')
             elif item == 'funcname':
@@ -871,14 +872,14 @@ class FeatureProcessAPI(CsrfExemptMixin, View):
 
             else:
                 FeatureProcess(
-                        feature_name=configx.get('feature_name'),
-                        feature_data_type=configx.get('feature_data_type'),
-                        default_value=configx.get('default_value'),
-                        json_path_list=configx.get('json_path_list'),
-                        reduce_chain=configx.get('reduce_chain'),
-                        f_map_and_filter_chain=configx.get('f_map_and_filter_chain'),
-                        l_map_and_filter_chain=configx.get('l_map_and_filter_chain')
-                    ).save()
+                    feature_name=configx.get('feature_name'),
+                    feature_data_type=configx.get('feature_data_type'),
+                    default_value=configx.get('default_value'),
+                    json_path_list=configx.get('json_path_list'),
+                    reduce_chain=configx.get('reduce_chain'),
+                    f_map_and_filter_chain=configx.get('f_map_and_filter_chain'),
+                    l_map_and_filter_chain=configx.get('l_map_and_filter_chain')
+                ).save()
         except Exception as e:
             logger.error(e.message)
             data = {
@@ -886,6 +887,269 @@ class FeatureProcessAPI(CsrfExemptMixin, View):
                 'message': e.message
             }
         return json_response(data)
+
+
+class TypeInfoConfig(CsrfExemptMixin, View):
+    def get(self, request, item, page, *args, **kwargs):
+        """获取规则类型、特征类型、打分卡类型 配置信息"""
+        data = {
+            'status': 1,
+            'message': 'success'
+        }
+        try:
+            current_page = page
+            page_size = 100
+            obj = FeatureType
+            if item == 'feature_type':
+                obj = FeatureType.objects.values()
+            elif item == 'feature_card_type':
+                obj = FeatureCardType.objects.values()
+            elif item == 'feature_rule_type':
+                obj = FeatureRuleType.objects.values()
+            count = obj.count()
+
+            paginator = ExtPaginator(list(obj), page_size, count)
+            object_list = paginator.page(current_page)
+            page_num = paginator.num_pages
+            page_range = paginator.page_range
+
+            res_data = dict(
+                total_count=count,
+                page_num=page_num,
+                current_page=current_page,
+                config_list=list(object_list),
+                page_range=page_range
+            )
+
+            data.update({"res_data": res_data})
+        except Exception as e:
+            logger.error(e.message)
+            data = {
+                'status': '0',
+                'message': e.message
+            }
+
+        return json_response(data)
+
+    def put(self, request, item, id, *args, **kwargs):
+        """更新类型配置信息"""
+        data = {
+            'status': 1,
+            'message': 'success'
+        }
+
+        try:
+            body = json.loads(request.body)
+            logger.info("update type config request data=%s", body)
+            is_delete = body.get('is_delete', 0)
+            feature_type_desc = body.get('feature_type_desc', '')
+            obj = FeatureType
+            if not feature_type_desc:
+                raise Exception(u'类型描述不能为空!')
+            if item == 'feature_type':
+                obj = FeatureType
+            elif item == 'feature_card_type':
+                obj = FeatureCardType
+            elif item == 'feature_rule_type':
+                obj = FeatureRuleType
+            obj.objects.filter(pk=id).update(is_delete=is_delete, feature_type_desc=feature_type_desc)
+        except Exception as e:
+            logger.error(e.message)
+            data = {
+                'status': '0',
+                'message': e.message
+            }
+
+        return json_response(data)
+
+    def post(self, request, item, *args, **kwargs):
+        """添加类型配置信息"""
+        data = {
+            'status': 1,
+            'message': 'success'
+        }
+        try:
+            body = json.loads(request.body)
+            logger.info("update type config request data=%s", body)
+            is_delete = body.get('is_delete', 0)
+            feature_type_desc = body.get('feature_type_desc', '')
+            obj = ''
+            if not feature_type_desc:
+                raise Exception(u'类型描述不能为空!')
+            if item == 'feature_type':
+                obj = FeatureType
+            elif item == 'feature_card_type':
+                obj = FeatureCardType
+            elif item == 'feature_rule_type':
+                obj = FeatureRuleType
+            if obj.objects.filter(feature_type_desc=feature_type_desc).count():
+                raise Exception(u"此类型已经存在！")
+            obj(is_delete=is_delete, feature_type_desc=feature_type_desc).save()
+
+        except Exception as e:
+            logger.error(e.message)
+            data = {
+                'status': '0',
+                'message': e.message
+            }
+
+        return json_response(data)
+
+
+class MapCodeConfig(CsrfExemptMixin, View):
+    def get(self, request, featurename, page, *args, **kwargs):
+        """获取map code表配置信息"""
+        data = {
+            'status': 1,
+            'message': 'success'
+        }
+        try:
+            current_page = page
+            page_size = 10
+            if featurename == 'all':
+                obj = FeatureCodeMapping.objects.values()
+            else:
+                obj = FeatureCodeMapping.objects.filter(feature_name=featurename).values()
+            count = obj.count()
+            paginator = ExtPaginator(list(obj), page_size, count)
+            object_list = paginator.page(current_page)
+            map(lambda x: [
+                x.update({"created_on": x["created_on"].strftime('%Y-%m-%d %H:%M:%S') if x["created_on"] else ''}),
+                x.update({"updated_on": x["updated_on"].strftime('%Y-%m-%d %H:%M:%S') if x["updated_on"] else ''}),
+            ], object_list)
+
+            page_num = paginator.num_pages
+            page_range = paginator.page_range
+
+            res_data = dict(
+                total_count=count,
+                page_num=page_num,
+                current_page=current_page,
+                config_list=list(object_list),
+                page_range=page_range
+            )
+
+            data.update({"res_data": res_data})
+        except Exception as e:
+            logger.error(e.message)
+            data = {
+                'status': '0',
+                'message': e.message
+            }
+
+        return json_response(data)
+
+    # def put(self, request,id, *args, **kwargs):
+    #     """更新mapcode配置信息"""
+    #     data = {
+    #         'status': 1,
+    #         'message': 'success'
+    #     }
+    #     try:
+    #         {
+    #             "dual_value": "5000.0",
+    #             "mapped_value": 0,
+    #             "value_type": "float",
+    #             "feature_desc": "一年内乘机总票价",
+    #             "is_delete": true,
+    #             "unitary_value": "0.0",
+    #             "created_on": "2017-03-03 16:03:09",
+    #             "feature_name": "airfare_sum12",
+    #             "updated_on": "2017-03-03 16:03:09",
+    #             "arithmetic_type": "[)",
+    #             "id": 1
+    #         }
+    #         body = json.loads(request.body)
+    #         logger.info("update feature config request data=%s", body)
+    #         updated_on = datetime.datetime.now()
+    #         is_delete = body.get('is_delete', 0)
+    #         feature_name = body.get('feature_name', '')
+    #
+    #         if item == 'feature_info':
+    #             feature_name_cn = body.get('feature_name_cn')
+    #             if not feature_name_cn:
+    #                 raise Exception(u'特征中文名不能为空')
+    #
+    #             feature_type = body.get('feature_type_id')
+    #             feature_rule_type = body.get('feature_rule_type_id')
+    #             feature_card_type = body.get('feature_card_type_id')
+    #             feature_type = FeatureType.objects.get(pk=feature_type) if feature_type else None
+    #             feature_rule_type = FeatureRuleType.objects.get(pk=feature_rule_type) if feature_rule_type else None
+    #             feature_card_type = FeatureCardType.objects.get(pk=feature_card_type) if feature_card_type else None
+    #             FeatureConf.objects.filter(pk=int(featureid)).update(
+    #                 feature_name=body.get('feature_name'),
+    #                 feature_name_cn=body.get('feature_name_cn'),
+    #                 feature_type=feature_type,
+    #                 feature_rule_type=feature_rule_type,
+    #                 feature_card_type=feature_card_type,
+    #                 feature_select_value=body.get('feature_select_value'),
+    #                 updated_on=updated_on,
+    #                 is_delete=body.get('is_delete')
+    #             )
+    #         elif item == 'feature_source':
+    #             data_identity = body.get('data_identity')
+    #             if not data_identity:
+    #                 raise Exception(u'特征数据源不能为空！')
+    #             FeatureConf.objects.filter(pk=int(featureid)).update(
+    #                 collect_type=body.get('collect_type'),
+    #                 data_identity=body.get('data_identity'),
+    #                 updated_on=updated_on
+    #             )
+    #         else:
+    #             raise Exception('url error')
+    #     except Exception as e:
+    #         logger.error(e.message)
+    #         data = {
+    #             'status': '0',
+    #             'message': e.message
+    #         }
+    #
+    #     return json_response(data)
+
+    # def post(self, request, item, *args, **kwargs):
+    #     """添加特征基本信息配置"""
+    #     data = {
+    #         'status': 1,
+    #         'message': 'success'
+    #     }
+    #     try:
+    #         body = json.loads(request.body)
+    #         logger.info("update feature config request data=%s", body)
+    #         created_on = datetime.datetime.now()
+    #         if item == 'feature_info':
+    #             feature_name = body.get('feature_name')
+    #             feature_name_cn = body.get('feature_name_cn')
+    #             if not feature_name_cn or not feature_name_cn:
+    #                 raise Exception(u'特征名和特征中文名不能为空！')
+    #             count = FeatureConf.objects.filter(feature_name=feature_name)
+    #             if count:
+    #                 raise Exception('%s already exists!' % feature_name)
+    #             feature_type = body.get('feature_type_id')
+    #             feature_rule_type = body.get('feature_rule_type_id')
+    #             feature_card_type = body.get('feature_card_type_id')
+    #             feature_type = FeatureType.objects.get(pk=feature_type) if feature_type else None
+    #             feature_rule_type = FeatureRuleType.objects.get(pk=feature_rule_type) if feature_rule_type else None
+    #             feature_card_type = FeatureCardType.objects.get(pk=feature_card_type) if feature_card_type else None
+    #             FeatureConf(
+    #                 feature_name=body.get('feature_name'),
+    #                 feature_name_cn=body.get('feature_name_cn'),
+    #                 feature_type=feature_type,
+    #                 feature_rule_type=feature_rule_type,
+    #                 feature_card_type=feature_card_type,
+    #                 feature_select_value=body.get('feature_select_value'),
+    #                 is_delete=body.get('is_delete'),
+    #                 updated_on=created_on,
+    #                 created_on=created_on
+    #             ).save()
+    #         else:
+    #             raise Exception('url error')
+    #     except Exception as e:
+    #         logger.error(e.message)
+    #         data = {
+    #             'status': '0',
+    #             'message': e.message
+    #         }
+    #     return json_response(data)
 
 
 

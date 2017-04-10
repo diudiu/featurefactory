@@ -8,9 +8,10 @@ from apps.common.models import BaseModel
 from apps.datasource.models import DsInterfaceInfo
 
 
-class FeatureType(BaseModel):
+class FeatureType(models.Model):
     id = models.AutoField(u'主键', primary_key=True)
     feature_type_desc = models.CharField(u'特征类型解释', max_length=2048)
+    is_delete = models.BooleanField(u'是否逻辑删除', default=False)
 
     class Meta:
         db_table = 'fic_feature_type'
@@ -21,9 +22,10 @@ class FeatureType(BaseModel):
         return "%s" % self.feature_type_desc
 
 
-class FeatureCardType(BaseModel):
+class FeatureCardType(models.Model):
     id = models.AutoField(u'主键', primary_key=True)
     feature_type_desc = models.CharField(u'特征评分卡类型解释', max_length=2048)
+    is_delete = models.BooleanField(u'是否逻辑删除', default=False)
 
     class Meta:
         db_table = 'fic_feature_card_type'
@@ -34,9 +36,10 @@ class FeatureCardType(BaseModel):
         return "%s" % self.feature_type_desc
 
 
-class FeatureRuleType(BaseModel):
+class FeatureRuleType(models.Model):
     id = models.AutoField(u'主键', primary_key=True)
     feature_type_desc = models.CharField(u'特征规则类型解释', max_length=2048)
+    is_delete = models.BooleanField(u'是否逻辑删除', default=False)
 
     class Meta:
         db_table = 'fic_feature_rule_type'

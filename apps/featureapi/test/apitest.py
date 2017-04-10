@@ -26,7 +26,7 @@ def feature_post():
             # u'apply_id': u'APPLY20170308154505179ydlisi',
             # u'apply_id': u'APPLY2017030815450ltzhangsan',
             u'res_keys': [
-                'age',
+                # 'age',
                 # 'airfare_sum12',
                 # 'application_on',
                 # 'application_on_plus',
@@ -54,7 +54,7 @@ def feature_post():
                 # 'graduate_college',
                 # 'graduate_college_check',
                 # 'has_negative_info',
-                # # 'income_expense_comparison',#nodata
+                # 'income_expense_comparison',#nodata
                 # 'income_level',
                 # 'industry_change_count',
                 # 'is_court_shixin',
@@ -74,7 +74,7 @@ def feature_post():
                 # 'is_pingan_overdue_loan',
                 # 'is_recruitment',
                 # 'is_skyeye_black',#
-                # # 'is_unclear_loan',#nodata
+                # 'is_unclear_loan',#nodata
                 # 'jiuyao_multi_loan_denied_count',
                 # 'jiuyao_multi_loan_m2_count',
                 # 'last_industry_code',
@@ -86,15 +86,15 @@ def feature_post():
                 # 'mobile_activeness',
                 # 'mobile_area_city_level',
                 # 'mobile_area_code',
-                'mobile_identity',
-                # # 'mobile_mark',#nodata
+                # 'mobile_identity',
+                # 'mobile_mark',#nodata
                 # 'mobile_stability',
                 # 'name',
                 # 'now_industry_code',
                 # 'now_workplace_code',
                 # 'now_work_time',
                 # 'online_time',
-                # 'overload_count',
+                'overload_count',
                 # 'overspeed_count',
                 # 'pingan_max_overdue_days',
                 # 'pingan_multi_loan_count',
