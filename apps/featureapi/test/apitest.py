@@ -26,7 +26,7 @@ def feature_post():
             # u'apply_id': u'APPLY20170308154505179ydlisi',
             # u'apply_id': u'APPLY2017030815450ltzhangsan',
             u'res_keys': [
-                # 'age',
+                'age',
                 # 'airfare_sum12',
                 # 'application_on',
                 # 'application_on_plus',
@@ -94,7 +94,7 @@ def feature_post():
                 # 'now_workplace_code',
                 # 'now_work_time',
                 # 'online_time',
-                'overload_count',
+                # 'overload_count',
                 # 'overspeed_count',
                 # 'pingan_max_overdue_days',
                 # 'pingan_multi_loan_count',
