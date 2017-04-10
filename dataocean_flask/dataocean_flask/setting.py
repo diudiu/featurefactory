@@ -16,11 +16,11 @@ des_key = 'sjdguhcphysghcih'
 # MONGO_PASSWORD = 'Syph@0918'
 # MONGO_PORT = 27017
 
-MONGO_HOST = '120.27.124.31'
-MONGO_NAME = 'dataocean_debug'
-MONGO_USERNAME = 'dataocean_debug'
-MONGO_PASSWORD = 'Syph@dataocean_debug'
-MONGO_PORT = 27017
+# MONGO_HOST = '120.27.124.31'
+# MONGO_NAME = 'dataocean_debug'
+# MONGO_USERNAME = 'dataocean_debug'
+# MONGO_PASSWORD = 'Syph@dataocean_debug'
+# MONGO_PORT = 27017
 
 # from featurefactory.settings import MONGODB_HOST as host
 # from featurefactory.settings import MONGODB_NAME as name
