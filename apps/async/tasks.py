@@ -34,6 +34,7 @@ def audit_task(base_data):
         cons.RESPONSE_REQUEST_MESSAGE: ResponseCode.message(ResponseCode.FEATURE_SUCCESS)
     }
     try:
+        logger.info('\n============Streams in ASYNC mission control center,Collecting feature now===========')
         ret_data = mission_control(base_data)
         data.update({
             'client_code': base_data.get('client_code', None),
@@ -59,11 +60,9 @@ def audit_task(base_data):
 
 
 def mission_control(base_data):
-    logger.info('\n============Streams in mission control center,Collecting feature now===========')
     collecter = CollectFeature(base_data)
     collecter.get_feature_value()
     if collecter.error_list:
-        # TODO 特征处理有异常
         pass
     ret_data = collecter.feature_ret
     logger.info('\n============feature compared completed=========================================\n')

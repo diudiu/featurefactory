@@ -59,9 +59,11 @@ class FeatureExtract(CsrfExemptMixin, View):
             base_data = client_dispatch(client_code, content)
             if base_data['is_async']:
                 # ASYNC
+                logger.info('\n============Streams come in ASYNC ===========')
                 audit_task.apply_async((base_data, ), retry=True, queue='re_task_audit', routing_key='re_task_audit')
             else:
                 # SYNC
+                logger.info('\n============Streams in SYNC mission control center,Collecting feature now===========')
                 ret_data = mission_control(base_data)
                 data.update({
                     'client_code': base_data.get('client_code', None),

@@ -21,13 +21,13 @@ def feature_post():
     # url = 'http://192.168.1.199:9900/syph-ff/feature/extract/'
     data = {
         u'content': {
-            u'callback': u'',
+            u'callback': u'http://127.0.0.1:9999/feature_config/common_conf/add/feature_info/',
             u'apply_id': u'APPLY201703081545051dxdinger',
             # u'apply_id': u'APPLY20170308154505179ydlisi',
             # u'apply_id': u'APPLY2017030815450ltzhangsan',
             u'res_keys': [
                 'age',
-                # 'airfare_sum12',
+                'airfare_sum12',
                 # 'application_on',
                 # 'application_on_plus',
                 # 'apply_register_duration',
