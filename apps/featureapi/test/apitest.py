@@ -27,7 +27,7 @@ def feature_post():
             # u'apply_id': u'APPLY2017030815450ltzhangsan',
             u'res_keys': [
                 'age',
-                'airfare_sum12',
+                # 'airfare_sum12',
                 # 'application_on',
                 # 'application_on_plus',
                 # 'apply_register_duration',
