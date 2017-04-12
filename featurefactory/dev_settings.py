@@ -72,7 +72,8 @@ LOGGING = {
     'disable_existing_loggers': False,
     'formatters': {
         'verbose': {
-            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(filename)s [line:%(lineno)d] %(message)s',
+            'format': '[Level: %(levelname)s] %(asctime)s %(module)s %(process)d %(filename)s [line:%(lineno)d] '
+                      '%(message)s',
             'datefmt': '%Y-%m-%d %H:%M:%S',
         },
         'simple': {
