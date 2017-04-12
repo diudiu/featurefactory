@@ -32,6 +32,7 @@ from apps.common.dispatcher import client_dispatch
 from apps.featureapi.decorator import post_data_check
 from apps.featureapi.response import JSONResponse
 from vendor.errors.api_errors import *
+from vendor.errors.contact_error import *
 from vendor.utils.constant import cons
 
 logger = logging.getLogger('apps.featureapi')
@@ -75,11 +76,12 @@ class FeatureExtract(CsrfExemptMixin, View):
                 cons.RESPONSE_REQUEST_STATUS: e.status,
                 cons.RESPONSE_REQUEST_MESSAGE: e.message,
             }
-
+            logger.error(data)
         except Exception as e:
             data = {
                 cons.RESPONSE_REQUEST_STATUS: ResponseCode.FAILED,
                 cons.RESPONSE_REQUEST_MESSAGE: e.message,
             }
+            logger.error(data)
         logger.info('Mission completed request data :\n %s' % data)
         return JSONResponse(data)

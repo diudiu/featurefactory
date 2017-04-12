@@ -82,7 +82,7 @@ class Courier(object):
             logger.error("feature_name:%s config error in common feature table miss data_identity:%s"
                          % (self.feature_name, data_identity))
             raise CommonFeatureConfigError
-        dp = DataPrepare(data_identity, self.apply_id, self.feature_conf[data_identity])
+        dp = DataPrepare(data_identity, self.apply_id, self.feature_conf[data_identity], self.collect_type)
         data = dp.get_original_data()
         return data
 

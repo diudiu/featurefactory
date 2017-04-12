@@ -82,3 +82,18 @@ class CommonFeatureConfigError(ServerError):
 class ShuntFeatureConfigError(ServerError):
     status = ResponseCode.SHUNT_FEATURE_CONFIG_ERROR
     message = ResponseCode.message(status)
+
+
+class AsyncCallInterfaceError(ServerError):
+    status = ResponseCode.ASYNC_CALL_INTERFACE_ERROR
+    message = ResponseCode.message(status)
+
+
+class DoingAsyncCallInterface(ServerError):
+    status = ResponseCode.DOING_ASYNC_CALL_INTERFACE
+    message = ResponseCode.message(status)
+
+
+class AsyncCallInterfaceTimeout(ServerError):
+    status = ResponseCode.ASYNC_CALL_INTERFACE_TIMEOUT
+    message = ResponseCode.message(status)

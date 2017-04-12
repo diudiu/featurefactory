@@ -11,10 +11,12 @@
 import requests
 import json
 
+from apps.etl.dataclean import DataClean
 from apps.etl.feature_collect import CollectFeature
 from vendor.utils.constant import cons
 from vendor.errors.common import ServerError
 from vendor.messages.response_code import ResponseCode
+from vendor.errors.contact_error import *
 
 import logging
 from celery import shared_task
@@ -68,3 +70,23 @@ def mission_control(base_data):
     logger.info('\n============feature compared completed=========================================\n')
     logger.info('All feature is %s', ret_data)
     return ret_data
+
+
+@shared_task
+def request_data_from_interface_async(data, url, data_identity):
+    if 'int(time.time())' in data.values():
+        for k, v in data.items():
+            if v == 'int(time.time())':
+                data.update({k: eval(v)})
+    data = {
+        "client_token": "test_lp_syph_code",
+        "req_data": data
+    }
+    response = requests.post(url, json.dumps(data))
+    content = response.content
+    content = json.loads(content)
+    if content['status'] != 1:
+        logger.error("Async call interface:%s error response:%s" % (data_identity, content))
+        raise AsyncCallInterfaceError
+    logger.info("Async call interface:%s success response:%s" % (data_identity, content))
+

@@ -46,6 +46,9 @@ class ResponseCode(object):
     RELEVANCE_FEATURE_CONFIG_ERROR = 60003
     COMMON_FEATURE_CONFIG_ERROR = 60004
     SHUNT_FEATURE_CONFIG_ERROR = 60004
+    ASYNC_CALL_INTERFACE_ERROR = 60005
+    DOING_ASYNC_CALL_INTERFACE = 60006
+    ASYNC_CALL_INTERFACE_TIMEOUT = 60006
 
     RESPONSE_MESSAGE = {
         FAILED:                         u"操作失败",
@@ -89,6 +92,9 @@ class ResponseCode(object):
         RELEVANCE_FEATURE_CONFIG_ERROR: u'依赖特征表配置错误',
         COMMON_FEATURE_CONFIG_ERROR:    u'通用配置表错误',
         SHUNT_FEATURE_CONFIG_ERROR:     u'分流配置表错误',
+        ASYNC_CALL_INTERFACE_ERROR:               u'异步调用数据源错误',
+        DOING_ASYNC_CALL_INTERFACE:     u'启动异步调用数据源',
+        ASYNC_CALL_INTERFACE_TIMEOUT:   u'异步调用数据源超时',
     }
 
     @classmethod
