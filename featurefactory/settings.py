@@ -108,8 +108,8 @@ USE_TZ = False
 # LOGIN_URL = ''
 # LOGIN_REDIRECT_URL = ''
 
-# from .home_settings import *
-from .dev_settings import *
-# from .prod_settings import *
+
+# from .dev_settings import *
+from .prod_settings import *
 
 from celery_config import *
