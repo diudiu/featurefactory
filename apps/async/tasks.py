@@ -72,21 +72,4 @@ def mission_control(base_data):
     return ret_data
 
 
-@shared_task
-def request_data_from_interface_async(data, url, data_identity):
-    if 'int(time.time())' in data.values():
-        for k, v in data.items():
-            if v == 'int(time.time())':
-                data.update({k: eval(v)})
-    data = {
-        "client_token": "test_lp_syph_code",
-        "req_data": data
-    }
-    response = requests.post(url, json.dumps(data))
-    content = response.content
-    content = json.loads(content)
-    if content['status'] != 1:
-        logger.error("Async call interface:%s error response:%s" % (data_identity, content))
-        raise AsyncCallInterfaceError
-    logger.info("Async call interface:%s success response:%s" % (data_identity, content))
 

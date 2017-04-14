@@ -97,3 +97,8 @@ class DoingAsyncCallInterface(ServerError):
 class AsyncCallInterfaceTimeout(ServerError):
     status = ResponseCode.ASYNC_CALL_INTERFACE_TIMEOUT
     message = ResponseCode.message(status)
+
+
+class InterfaceInfoTableConfigError(ServerError):
+    status = ResponseCode.INTERFACE_INFO_TABLE_CONFIG_ERROR
+    message = ResponseCode.message(status)

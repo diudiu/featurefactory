@@ -49,6 +49,7 @@ class ResponseCode(object):
     ASYNC_CALL_INTERFACE_ERROR = 60005
     DOING_ASYNC_CALL_INTERFACE = 60006
     ASYNC_CALL_INTERFACE_TIMEOUT = 60006
+    INTERFACE_INFO_TABLE_CONFIG_ERROR = 60007
 
     RESPONSE_MESSAGE = {
         FAILED:                         u"操作失败",
@@ -95,6 +96,7 @@ class ResponseCode(object):
         ASYNC_CALL_INTERFACE_ERROR:               u'异步调用数据源错误',
         DOING_ASYNC_CALL_INTERFACE:     u'启动异步调用数据源',
         ASYNC_CALL_INTERFACE_TIMEOUT:   u'异步调用数据源超时',
+        INTERFACE_INFO_TABLE_CONFIG_ERROR: u'接口配置表must_data配置错误'
     }
 
     @classmethod

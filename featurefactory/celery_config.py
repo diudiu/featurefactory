@@ -9,7 +9,7 @@ djcelery.setup_loader()
 
 BROKER_BACKEND = 'redis'
 
-BROKER_URL = 'redis://:syph@dev@192.168.1.198:6379/13'
+BROKER_URL = 'redis://:syph@dev@192.168.1.198:6379/9'
 
 CELERY_TASK_SERIALIZER = 'json'
 

@@ -73,7 +73,7 @@ class Courier(object):
             logger.error(
                 'Wrong config of the feature, not the expect feature_name, feature_name: %s' % feature_name)
             raise FeatureConfigError
-        logger.info('Feature Handle completed, result is \n%s' % ret)
+        logger.info('Feature Handle completed, result is: \n%s' % ret)
         return ret
 
     def get_useful_data(self, data_identity):

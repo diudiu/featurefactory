@@ -95,3 +95,7 @@ class RedisX(object):
     def decr(self, name, amount=1):
         a = self.conn.decr(name, amount)
         return a
+
+    def expire(self, name, time=CACHE_TIMEOUT):
+        a = self.conn.expire(name, time)
+        return a

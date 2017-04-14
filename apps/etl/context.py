@@ -24,7 +24,6 @@ BASE_ARGS_NAME = 'base_args'
 
 
 class BaseContext(object):
-
     def __init__(self, apply_id, **kwargs):
         self.apply_id = apply_id
         self.kwargs = kwargs if kwargs else {}
@@ -158,87 +157,52 @@ class CacheContext(BaseContext):
         else:
             return None
 
-    def delete(self, key):
+    def delete_cache(self, key):
         """get value for key"""
         self.red.ping()
         redis_key = self.apply_id + ':' + key
         ret = self.red.delete(redis_key)
         return ret
 
-    # def set_async_flag(self, value):
-    #     self.red.ping()
-    #     key = self.apply_id + '_' + self.data_identity
-    #     if not self.red.set(key, value):
-    #         raise Exception("redis cache_base %s key error!" % key)
-
-    # def incr(self):
-    #     self.red.ping()
-    #     key = self.apply_id + '_' + self.data_identity
-    #     ret = self.red.incr(name=key)
-    #     return ret
-    #
-    # def decr(self):
-    #     self.red.ping()
-    #     key = self.apply_id + '_' + self.data_identity
-    #     ret = self.red.decr(name=key)
-    #     return ret
-    #
-    # def rpush(self, flag):
-    #     self.red.ping()
-    #     key = self.apply_id + '_' + self.data_identity
-    #     if not self.red.rpush(key, flag):
-    #         raise Exception("redis async data_identity cache %s key error!" % self.async_data_identity_list_key)
-    #
-    # def lrem(self):
-    #     self.red.ping()
-    #     key = self.apply_id + '_' + self.data_identity
-    #     ret = self.red.lrem(key, self.data_identity)
-    #     return ret
-    #
-    # def llen(self):
-    #     self.red.ping()
-    #     key = self.apply_id + '_' + self.data_identity
-    #     return self.red.llen(key)
-
     def sadd_async(self, value):
         self.red.ping()
-        key = self.apply_id + '_data_identity'
-        if not self.red.sadd(key, value):
-            raise Exception("redis sadd key:%d value:%s cache error!" % (key, value))
+        key = self.apply_id + '__data_identity'
+        self.red.sadd(key, value)
+        self.red.expire(name=key)
 
     def delete_async(self):
         self.red.ping()
-        key = self.apply_id + '_data_identity'
+        key = self.apply_id + '__data_identity'
         ret = self.red.delete(key)
         return ret
 
     def smembers_async(self):
         self.red.ping()
-        key = self.apply_id + '_data_identity'
+        key = self.apply_id + '__data_identity'
         ret = self.red.smembers(key)
         return ret
 
     def srem_async(self, value):
         self.red.ping()
-        key = self.apply_id + '_data_identity'
+        key = self.apply_id + '__data_identity'
         ret = self.red.srem(key, value)
         return ret
 
-    def sadd_async_args(self, value):
+    def sadd_async_args(self, data_identity, value):
         self.red.ping()
-        key = self.apply_id + '_' + self.data_identity+'_args'
-        if not self.red.sadd(key, value):
-            raise Exception("redis sadd key:%d value:%s cache error!" % (key, value))
+        key = self.apply_id + '__' + data_identity + '__args'
+        self.red.sadd(key, value)
+        self.red.expire(name=key)
 
-    def smembers_async_args(self):
+    def smembers_async_args(self, data_identity):
         self.red.ping()
-        key = self.apply_id + '_' + self.data_identity + '_args'
+        key = self.apply_id + '__' + data_identity + '__args'
         ret = self.red.smembers(key)
         return ret
 
-    def srem_async_args(self, value):
+    def srem_async_args(self, data_identity, value):
         self.red.ping()
-        key = self.apply_id + '_' + self.data_identity + '_args'
+        key = self.apply_id + '__' + data_identity + '__args'
         ret = self.red.srem(key, value)
         return ret
 
