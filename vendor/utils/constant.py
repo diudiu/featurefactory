@@ -37,7 +37,7 @@ cons.CLIENT_ID = 'client_id'
 cons.CLIENT_SECRET = 'client_secret'
 cons.DES_KEY = 'des_key'
 cons.CALLBACK = 'http://127.0.0.1:9999/syph-ff/feature/async/callback/'
-cons.IS_PORTRAIT_BASE = True
+cons.IS_PORTRAIT_BASE = 1
 cons.ASYNC_CALL_OVERTIME = 80
 cons.ASYNC_SUCCESS_CALL_STATUS = 1
 
