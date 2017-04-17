@@ -44,15 +44,15 @@ class Courier(object):
         logger.info('Stream in courier function name : get_feature Feature name :%s' %
                     self.feature_name)
         self.data_identity_list = self._get_di_from_conf(self.feature_conf)
-        if self.collect_type == 'Courier':
+        if self.collect_type == cons.COMMON_TYPE:
             logger.info('Stream in courier function name : get_feature collect_type is Courier')
             self.get_general_data()
 
-        elif len(self.data_identity_list) > 1 and self.collect_type == 'ShuntCourier':
+        elif len(self.data_identity_list) > 1 and self.collect_type == cons.SHUNT_TYPE:
             logger.info('Stream in courier function name : get_feature collect_type is ShuntCourier')
             self.get_shunt_data()
 
-        elif self.collect_type == 'RelevanceCourier':
+        elif self.collect_type == cons.RELEVANCE:
             logger.info('Stream in courier function name : get_feature collect_type is RelevanceCourier')
             self.get_relevance_data()
 
