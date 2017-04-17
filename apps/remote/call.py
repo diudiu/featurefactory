@@ -23,7 +23,7 @@ from apps.etl.context import CacheContext, ArgsContext, ApplyContext, PortraitCo
 from apps.datasource.models import DsInterfaceInfo
 from vendor.errors.remote_error import *
 from vendor.errors.contact_error import *
-from  vendor.utils.constant import cons
+from vendor.utils.constant import cons
 
 logger = logging.getLogger('apps.remote')
 
@@ -128,7 +128,8 @@ class DataPrepare(object):
     def get_origin_data_asyns(self, data_prams):
         """异步获取数据"""
         if isinstance(data_prams, list):
-            logger.info("data_identity:%s argument is a list , multiple async requests will be performed" % self.data_identity)
+            logger.info(
+                "data_identity:%s argument is a list , multiple async requests will be performed" % self.data_identity)
             self.cache_base.smembers_async_args(self.data_identity)
             for flag, prams in data_prams:
                 redis_cache = {u'%s' % self.is_list_args_to_real: u'%s' % prams[self.is_list_args_to_real]}
