@@ -893,6 +893,8 @@ def m_to_code(seq, args=None):
     """
     if not seq and seq != 0:
         return []
+    if isinstance(seq, list):
+        seq = seq[0]
     feature_name = args
     fcm = FeatureCodeMapping.objects.filter(
         feature_name=feature_name,

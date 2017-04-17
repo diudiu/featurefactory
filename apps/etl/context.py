@@ -24,7 +24,6 @@ BASE_ARGS_NAME = 'base_args'
 
 
 class BaseContext(object):
-
     def __init__(self, apply_id, **kwargs):
         self.apply_id = apply_id
         self.kwargs = kwargs if kwargs else {}
@@ -137,16 +136,18 @@ class CacheContext(BaseContext):
 
     def save(self):
         """save kwargs to backend"""
+        self.red.ping()
         self.data_identity = self.kwargs.keys()[0]
         insert_id = self.cache_base.save(self.kwargs)
         self.kwargs = {}
         o_id = insert_id.inserted_id
         key = self.apply_id + ':' + self.data_identity
         if not self.red.set(key, o_id):
-            raise
+            raise Exception("redis cache_base %s key error!" % key)
 
     def get(self, key):
         """get value for key"""
+        self.red.ping()
         redis_key = self.apply_id + ':' + key
         o_id = self.red.get(redis_key)
         if o_id:
@@ -155,6 +156,55 @@ class CacheContext(BaseContext):
             return ret
         else:
             return None
+
+    def delete_cache(self, key):
+        """get value for key"""
+        self.red.ping()
+        redis_key = self.apply_id + ':' + key
+        ret = self.red.delete(redis_key)
+        return ret
+
+    def sadd_async(self, value):
+        self.red.ping()
+        key = self.apply_id + '__data_identity'
+        self.red.sadd(key, value)
+        self.red.expire(name=key)
+
+    def delete_async(self):
+        self.red.ping()
+        key = self.apply_id + '__data_identity'
+        ret = self.red.delete(key)
+        return ret
+
+    def smembers_async(self):
+        self.red.ping()
+        key = self.apply_id + '__data_identity'
+        ret = self.red.smembers(key)
+        return ret
+
+    def srem_async(self, value):
+        self.red.ping()
+        key = self.apply_id + '__data_identity'
+        ret = self.red.srem(key, value)
+        return ret
+
+    def sadd_async_args(self, data_identity, value):
+        self.red.ping()
+        key = self.apply_id + '__' + data_identity + '__args'
+        self.red.sadd(key, value)
+        self.red.expire(name=key)
+
+    def smembers_async_args(self, data_identity):
+        self.red.ping()
+        key = self.apply_id + '__' + data_identity + '__args'
+        ret = self.red.smembers(key)
+        return ret
+
+    def srem_async_args(self, data_identity, value):
+        self.red.ping()
+        key = self.apply_id + '__' + data_identity + '__args'
+        ret = self.red.srem(key, value)
+        return ret
 
 
 class PortraitContext(BaseContext):

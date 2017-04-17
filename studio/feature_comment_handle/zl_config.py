@@ -186,7 +186,7 @@ config = dict(
             ("unicom_finance_portrait_s", "$..last12.debit.income_range",
              "m_to_code('income_level_lt')->m_single_to_list"),
         ],
-        "f_map_and_filter_chain": "m_to_sum",
+        "f_map_and_filter_chain": "f_assert_not_null->m_to_sum",
         "reduce_chain": "",
         "l_map_and_filter_chain": "",
     },

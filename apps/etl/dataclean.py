@@ -39,11 +39,11 @@ class DataClean(object):
             return self.origin_data
 
     def _data_ocean_clean(self):
-        logger.info('Start clean data, use clean type: _data_ocean_clean')
+        logger.info('Start clean data, use clean type: _data_ocean_clean  data:\n %s' % self.origin_data)
         temp_data = Judger.get_value(self.origin_data, '$.res_data.res_data')
         logger.info('completed clean, clean result:\n%s' % temp_data)
         if not temp_data or temp_data == '{}':
-            logger.error(
+            logger.info(
                 'Unavailable data from %s :\n%s' %
                 (cons.SOURCE_TYPE_MESSAGE[self.clean_style], self.origin_data)
             )
@@ -56,7 +56,7 @@ class DataClean(object):
         temp_data = Judger.get_value(self.origin_data, '$.res_data')
         logger.info('completed clean, clean result:\n%s' % temp_data)
         if not temp_data or temp_data == '{}':
-            logger.error(
+            logger.info(
                 'Unavailable data from %s :\n%s' %
                 (cons.SOURCE_TYPE_MESSAGE[self.clean_style], self.origin_data)
             )
@@ -68,7 +68,7 @@ class DataClean(object):
         temp_data = Judger.get_value(self.origin_data, '$.res_data')
         logger.info('completed clean, clean result:\n%s' % temp_data)
         if not temp_data or temp_data == '{}':
-            logger.error(
+            logger.info(
                 'Unavailable data from %s :\n%s' %
                 (cons.SOURCE_TYPE_MESSAGE[self.clean_style], self.origin_data)
             )
@@ -80,7 +80,7 @@ class DataClean(object):
         temp_data = Judger.get_value(self.origin_data, '$.res_data')
         logger.info('completed clean, clean result:\n%s' % temp_data)
         if not temp_data or temp_data == '{}':
-            logger.error(
+            logger.info(
                 'Unavailable data from %s :\n%s' %
                 (cons.SOURCE_TYPE_MESSAGE[self.clean_style], self.origin_data)
             )

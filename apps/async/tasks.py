@@ -11,10 +11,12 @@
 import requests
 import json
 
+from apps.etl.dataclean import DataClean
 from apps.etl.feature_collect import CollectFeature
 from vendor.utils.constant import cons
 from vendor.errors.common import ServerError
 from vendor.messages.response_code import ResponseCode
+from vendor.errors.contact_error import *
 
 import logging
 from celery import shared_task
@@ -34,6 +36,7 @@ def audit_task(base_data):
         cons.RESPONSE_REQUEST_MESSAGE: ResponseCode.message(ResponseCode.FEATURE_SUCCESS)
     }
     try:
+        logger.info('\n============Streams in ASYNC mission control center,Collecting feature now===========')
         ret_data = mission_control(base_data)
         data.update({
             'client_code': base_data.get('client_code', None),
@@ -47,6 +50,8 @@ def audit_task(base_data):
             cons.RESPONSE_REQUEST_MESSAGE: e.message
         }
     except Exception as e:
+        import traceback
+        traceback.print_exc()
         data = {
             cons.RESPONSE_REQUEST_STATUS: ResponseCode.FAILED,
             cons.RESPONSE_REQUEST_MESSAGE: e.message,
@@ -59,13 +64,14 @@ def audit_task(base_data):
 
 
 def mission_control(base_data):
-    logger.info('\n============Streams in mission control center,Collecting feature now===========')
     collecter = CollectFeature(base_data)
     collecter.get_feature_value()
     if collecter.error_list:
-        # TODO 特征处理有异常
         pass
     ret_data = collecter.feature_ret
     logger.info('\n============feature compared completed=========================================\n')
     logger.info('All feature is %s', ret_data)
     return ret_data
+
+
+

@@ -32,6 +32,7 @@ from apps.common.dispatcher import client_dispatch
 from apps.featureapi.decorator import post_data_check
 from apps.featureapi.response import JSONResponse
 from vendor.errors.api_errors import *
+from vendor.errors.contact_error import *
 from vendor.utils.constant import cons
 
 logger = logging.getLogger('apps.featureapi')
@@ -59,9 +60,11 @@ class FeatureExtract(CsrfExemptMixin, View):
             base_data = client_dispatch(client_code, content)
             if base_data['is_async']:
                 # ASYNC
+                logger.info('\n============Streams come in ASYNC ===========')
                 audit_task.apply_async((base_data, ), retry=True, queue='re_task_audit', routing_key='re_task_audit')
             else:
                 # SYNC
+                logger.info('\n============Streams in SYNC mission control center,Collecting feature now===========')
                 ret_data = mission_control(base_data)
                 data.update({
                     'client_code': base_data.get('client_code', None),
@@ -73,11 +76,12 @@ class FeatureExtract(CsrfExemptMixin, View):
                 cons.RESPONSE_REQUEST_STATUS: e.status,
                 cons.RESPONSE_REQUEST_MESSAGE: e.message,
             }
-
+            logger.error(data)
         except Exception as e:
             data = {
                 cons.RESPONSE_REQUEST_STATUS: ResponseCode.FAILED,
                 cons.RESPONSE_REQUEST_MESSAGE: e.message,
             }
+            logger.error(data)
         logger.info('Mission completed request data :\n %s' % data)
         return JSONResponse(data)
