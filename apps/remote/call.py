@@ -130,7 +130,7 @@ class DataPrepare(object):
         if isinstance(data_prams, list):
             logger.info(
                 "data_identity:%s argument is a list , multiple async requests will be performed" % self.data_identity)
-            self.cache_base.smembers_async_args(self.data_identity)
+            # self.cache_base.smembers_async_args(self.data_identity)
             for flag, prams in data_prams:
                 redis_cache = {u'%s' % self.is_list_args_to_real: u'%s' % prams[self.is_list_args_to_real]}
                 self.cache_base.sadd_async_args(self.data_identity, redis_cache)
