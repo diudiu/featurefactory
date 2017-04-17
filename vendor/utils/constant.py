@@ -39,6 +39,7 @@ cons.DES_KEY = 'des_key'
 cons.CALLBACK = 'http://127.0.0.1:9999/syph-ff/feature/async/callback/'
 cons.IS_PORTRAIT_BASE = True
 cons.ASYNC_CALL_OVERTIME = 80
+cons.ASYNC_SUCCESS_CALL_STATUS = 1
 
 cons.COMMON_TYPE = 'Courier'
 cons.SHUNT_TYPE = 'ShuntCourier'

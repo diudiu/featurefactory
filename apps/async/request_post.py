@@ -42,7 +42,7 @@ def request_data_from_interface_async(data, url, apply_id, data_identity):
     content = response.content
     content = json.loads(content)
     logger.info("Async call remote interface return:\n %s" % content)
-    if content['status'] != 1:
+    if content['status'] != cons.ASYNC_SUCCESS_CALL_STATUS:
         logger.error("Async call interface:%s error response:%s" % (data_identity, content))
         raise AsyncCallInterfaceError
     logger.info("Async call interface:%s success response:%s" % (data_identity, content))
