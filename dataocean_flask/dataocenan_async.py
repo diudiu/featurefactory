@@ -983,6 +983,10 @@ def post(url, data_identity, req_data, apply_id):
                     }
                 }
             }
+        elif data_identity == 'high_way_over_load' and req_data['license_plate']== u'\u8c6bSFD888':
+            content = {}
+        elif data_identity == 'unicom_finance_portrait_s':
+            content = {}
         # if True:
         else:
             req_data.update({'data_identity': data_identity})
@@ -1002,12 +1006,28 @@ def post(url, data_identity, req_data, apply_id):
 
 
 if __name__ == '__main__':
-    data_identity = 'high_way_over_load'
-    a = [{u'id_card_name': u'\u4e01\u4e8c', u'id_card_code': u'132600199306251568'}]
-    a = [{u'start_time': u'', u'high_way_period': u'4', u'license_plate': u'\u8c6bSFD777', u'end_time': u''},
-         {u'start_time': u'', u'high_way_period': u'4', u'license_plate': u'\u8c6bSFD888', u'end_time': u''}]
-    for i in a:
-        req_data = i
-        apply_id = 'APPLY201703081545051dxdinger'
-        url = 'http://127.0.0.1:9999/syph-ff/feature/async/callback/'
-        post(url, data_identity, req_data, apply_id)
+    # apply_id = 'APPLY201703081545051dxdinger'
+    apply_id = 'APPLY2017030815450ltzhangsan'
+    url = 'http://127.0.0.1:9999/syph-ff/feature/async/callback/'
+    test_data = [
+        # {'data_identity':'personal_info',
+        #  'request_parms':[{u'id_card_name': u'\u4e01\u4e8c', u'id_card_code': u'132600199306251568'}]
+        #  },
+        # {'data_identity': 'high_way_over_load',
+        #  'request_parms': [{u'start_time': u'', u'high_way_period': u'4', u'license_plate': u'\u8c6bSFD777', u'end_time': u''},
+        #  {u'start_time': u'', u'high_way_period': u'4', u'license_plate': u'\u8c6bSFD888', u'end_time': u''}]
+        # #  },
+        # {'data_identity': 'unicom_finance_portrait_s',
+        #  'request_parms': [{'mobile': '18511116277'}]
+        #  },
+        {'data_identity': 'cc_credit',
+         'request_parms': [{'mobile': '18511116277'}]
+         },
+    ]
+    # test_data = test_data[0:1]
+    for data in test_data:
+        data_identity = data['data_identity']
+        request_parms = data['request_parms']
+        for i in request_parms:
+            req_data = i
+            post(url, data_identity, req_data, apply_id)

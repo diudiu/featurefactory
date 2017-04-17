@@ -12,7 +12,7 @@ import requests
 import json
 from vendor.utils.constant import cons
 from vendor.errors.contact_error import *
-
+import time
 import logging
 from celery import shared_task
 import django

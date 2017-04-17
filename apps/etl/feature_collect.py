@@ -7,16 +7,15 @@
     Change Activity:
 
 """
-
+import time
 import logging
 
 from apps.etl.context import CacheContext
 from apps.etl.courier import Courier
 from vendor.errors.contact_error import *
+from vendor.utils.constant import cons
 
 logger = logging.getLogger("apps.etl")
-
-n = 1000
 
 
 class CollectFeature(object):
@@ -26,8 +25,8 @@ class CollectFeature(object):
         self.feature_list = self.feature_config.keys()
         self.feature_ret = {}
         self.error_list = []
+        self.use_time = {}
         self.apply_id = base_data.get('apply_id', None)
-        self.counter = 0
         self.cache_base = CacheContext(self.apply_id)
 
     def delete_async_cache(self):
@@ -40,7 +39,6 @@ class CollectFeature(object):
                     self.feature_list)
         feature_list = tuple(self.feature_list)
         for feature_name in feature_list:
-            print 'counter++++', self.counter
             try:
                 logger.info('*******Get feature:%s value*******' % feature_name)
                 courier = Courier(feature_name, self.feature_config[feature_name], self.apply_id)
@@ -53,6 +51,14 @@ class CollectFeature(object):
                     self.error_list.append(courier.error_no)
             except DoingAsyncCallInterface:
                 logger.info("Feature:%s doing asynchronous call" % feature_name)
+                calling_interface = DoingAsyncCallInterface.data_identify
+                self.use_time['%s:start_time' % calling_interface] = self.use_time.get(
+                    '%s:start_time' % calling_interface, int(time.time()))
+                self.use_time['%s:use_time' % calling_interface] = int(time.time()) - self.use_time[
+                    '%s:start_time' % calling_interface]
+                logger.info("feature call use_time:\n%s" % self.use_time)
+                if self.use_time['%s:use_time' % calling_interface] > cons.ASYNC_CALL_OVERTIME:
+                    raise AsyncCallInterfaceTimeout
                 continue
             except Exception as e:
                 import traceback
@@ -61,12 +67,5 @@ class CollectFeature(object):
                 raise Exception(e.message)
 
         if self.feature_list:
-            import time
             time.sleep(10)
-            if self.counter > 10:
-                self.delete_async_cache()
-                raise AsyncCallInterfaceTimeout
-            logger.info(" Get async feature value, feature_list:%s " % self.feature_list)
-            self.counter += 1
             self.get_feature_value()
-

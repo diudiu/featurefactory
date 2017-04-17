@@ -101,7 +101,7 @@ class Courier(object):
         logger.info('Stream in courier function name : get_shunt_data')
         feature_conf_list = FeatureShuntConf.objects.filter(
             feature_name=self.feature_name,
-            is_delete=False
+            is_delete=False,
         ).order_by('id')
         if not feature_conf_list:
             logger.error("feature_name:%s miss config  in shunt feature table" % self.feature_name)
@@ -128,6 +128,12 @@ class Courier(object):
                     raise ShuntFeatureConfigError
                 data = self.get_useful_data(data_identity)
                 if data:
+                    for feature_con in feature_conf_list:
+                        data_id = feature_con.data_identity
+                        if data_id != data_identity:
+                            self.cache_base.delete_cache(data_id)
+                        else:
+                            break
                     has_value = True
                     data = {data_identity: data}
                     logger.info('Find shunt_data,stream get_shunt_data complete\nUseful_data : %s' % data)

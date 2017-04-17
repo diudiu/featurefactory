@@ -50,6 +50,8 @@ def audit_task(base_data):
             cons.RESPONSE_REQUEST_MESSAGE: e.message
         }
     except Exception as e:
+        import traceback
+        traceback.print_exc()
         data = {
             cons.RESPONSE_REQUEST_STATUS: ResponseCode.FAILED,
             cons.RESPONSE_REQUEST_MESSAGE: e.message,

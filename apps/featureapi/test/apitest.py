@@ -23,11 +23,11 @@ def feature_post():
         u'content': {
             u'callback': '',
             # u'callback': u'http://127.0.0.1:9999/feature_config/common_conf/add/feature_info/',
-            u'apply_id': u'APPLY201703081545051dxdinger',
+            # u'apply_id': u'APPLY201703081545051dxdinger',
             # u'apply_id': u'APPLY20170308154505179ydlisi',
-            # u'apply_id': u'APPLY2017030815450ltzhangsan',
+            u'apply_id': u'APPLY2017030815450ltzhangsan',
             u'res_keys': [
-                # 'age',
+                'age',
                 # 'airfare_sum12',
                 # 'application_on',
                 # 'application_on_plus',
@@ -56,7 +56,7 @@ def feature_post():
                 # 'graduate_college_check',
                 # 'has_negative_info',
                 # 'income_expense_comparison',#nodata
-                # 'income_level',
+                'income_level',
                 # 'industry_change_count',
                 # 'is_court_shixin',
                 # 'is_court_zhixing',
@@ -95,7 +95,7 @@ def feature_post():
                 # 'now_workplace_code',
                 # 'now_work_time',
                 # 'online_time',
-                'overload_count',
+                # 'overload_count',
                 # 'overspeed_count',
                 # 'pingan_max_overdue_days',
                 # 'pingan_multi_loan_count',

@@ -92,6 +92,11 @@ class AsyncCallInterfaceError(ServerError):
 class DoingAsyncCallInterface(ServerError):
     status = ResponseCode.DOING_ASYNC_CALL_INTERFACE
     message = ResponseCode.message(status)
+    data_identify = ''
+
+    # @staticmethod
+    # def set_data_identify(data_identify):
+    #     DoingAsyncCallInterface.data_identify = data_identify
 
 
 class AsyncCallInterfaceTimeout(ServerError):

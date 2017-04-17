@@ -11,6 +11,7 @@ import logging
 import requests
 import json
 import re
+import time
 
 from braces.views import CsrfExemptMixin
 from apps.featureapi.response import JSONResponse
@@ -44,7 +45,7 @@ class DataPrepare(object):
 
     def get_original_data(self):
         ret_data = self.get_data_from_db()
-        if (not self.is_cache) and (self.data_identity not in self.cache_base.smembers_async()):
+        if not self.is_cache:
             ret_data = self.get_origin_data_from_interface()
         return ret_data
 
@@ -55,7 +56,7 @@ class DataPrepare(object):
             self.is_cache = True
             ret_data = data[self.data_identity]['origin_data']
             logger.info('Find cache_base data_identity:%s data:\n%s' % (self.data_identity, ret_data))
-            if not ret_data:
+            if not ret_data and self.collect_type != 'ShuntCourier':
                 self.cache_base.delete_cache(self.data_identity)
         return ret_data
 
@@ -94,6 +95,7 @@ class DataPrepare(object):
         logger.info('prams:%s' % data_prams)
         if self.is_async:
             if self.data_identity in self.cache_base.smembers_async():
+                DoingAsyncCallInterface.data_identify = self.data_identity
                 raise DoingAsyncCallInterface
             self.get_origin_data_asyns(data_prams)
         else:
@@ -125,12 +127,13 @@ class DataPrepare(object):
     def get_origin_data_asyns(self, data_prams):
         """异步获取数据"""
         print 'async request-----start', data_prams
-        self.cache_base.smembers_async_args(self.data_identity)
+
         print 'data_prams--------',data_prams
         if isinstance(data_prams, list):
+            logger.info("data_identity:%s argument is a list , multiple async requests will be performed" % self.data_identity)
+            self.cache_base.smembers_async_args(self.data_identity)
             for flag, prams in data_prams:
                 redis_cache = {u'%s' % self.is_list_args_to_real: u'%s' % prams[self.is_list_args_to_real]}
-                print redis_cache
                 self.cache_base.sadd_async_args(self.data_identity, redis_cache)
                 request_data_from_interface_async.apply_async((prams, self.url, self.apply_id, self.data_identity),
                                                               retry=True,
@@ -141,6 +144,7 @@ class DataPrepare(object):
                                                           routing_key='re_task_store')
         self.cache_base.sadd_async(self.data_identity)
         logger.info("Start async call interface data_identify:%s" % self.data_identity)
+        DoingAsyncCallInterface.data_identify = self.data_identity
         raise DoingAsyncCallInterface
 
     def _get_data_from_interface(self, ds_conf, data_prams):
@@ -210,10 +214,10 @@ class AsyncCallback(CsrfExemptMixin, View):
             cleaner = DataClean(origin_data, ds_conf.data_origin_type)
             clear_data = cleaner.worked()
             is_list_args_value = ''
-            print cache_base.smembers_async_args(data_identity)
             for i in cache_base.smembers_async_args(data_identity):
                 logger.info('redis_chache_args:%s, request_args:%s' % (eval(i).items(), parm_dict.items()))
                 if set(eval(i).items()).issubset(set(parm_dict.items())):
+                    logger.info("remove data_identify:%s redis_chache_args:%s" % (data_identity, i))
                     is_list_args_value = eval(i).values()[0]
                     cache_base.srem_async_args(data_identity, i)
                     logger.info("remove redis_cache_args: %s" % i)
@@ -242,19 +246,18 @@ class AsyncCallback(CsrfExemptMixin, View):
 
     def post(self, request):
         """异步回调接口"""
-        data = {'status': 0, 'message': 'success'}
+        data = {'status': 1, 'message': 'success'}
         try:
             body = json.loads(request.body)
+            logger.info("Async callback receive:\n%s" % body)
             apply_id = body.get('apply_id')
             data_identity = body.get('data_identity')
             parm_dict = body.get('request_parms')
             if not (apply_id and data_identity and parm_dict):
                 logger.error("async callback function request pattern error, body:%s" % body)
-
                 raise Exception("async callback function request pattern error, body:%s" % body)
             if apply_id and data_identity:
                 self.cache_base_handle(apply_id, data_identity, body, parm_dict)
-
         except Exception as e:
             logger.error(e.message)
             data.update({'message': e.message})
