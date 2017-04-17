@@ -250,7 +250,7 @@ class AsyncCallback(CsrfExemptMixin, View):
             logger.info("Async callback receive:\n%s" % body)
             apply_id = body.get('apply_id')
             data_identity = body.get('data_identity')
-            parm_dict = body.get('request_parms')
+            parm_dict = body.get('req_data')
             if not (apply_id and data_identity and parm_dict):
                 logger.error("async callback function request pattern error, body:%s" % body)
                 raise Exception("async callback function request pattern error, body:%s" % body)

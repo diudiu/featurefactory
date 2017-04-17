@@ -49,7 +49,7 @@ def post(url, data_identity, req_data, apply_id):
     data = {
         "data_identity": data_identity,
         "apply_id": apply_id,
-        'request_parms': req_data.copy()
+        'req_data': req_data.copy()
     }
     try:
         if data_identity == 'cc_car_credit':
