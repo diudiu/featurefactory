@@ -65,7 +65,7 @@ class CollectFeature(object):
                 import traceback
                 traceback.print_exc()
                 self.delete_async_cache()
-                raise Exception(e.message)
+                raise e
 
         if self.feature_list:
             time.sleep(10)
