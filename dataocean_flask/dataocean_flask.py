@@ -1004,7 +1004,7 @@ def post(data_identity):
 @app.route('/api/rule/gateway/async/<data_identity>/', methods=['POST'])
 def async_post(data_identity):
     data = {
-        "status": 0,
+        "status": 1,
         "message": "success"
     }
     req_data = json.loads(request.data)
