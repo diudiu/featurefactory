@@ -100,9 +100,12 @@ class Judger(object):
             if cons.IS_PORTRAIT_BASE:
                 self.proposer_id = apply_data.get('proposer_id', None)
                 if not self.proposer_id:
+                    logger.error("Don't find proposer_id in apply_data,apply_id:%s" % self.apply_id)
                     raise ProposerIdMissing
                 portrait_data = PortraitContext(self.proposer_id).load()
                 if not portrait_data:
+                    logger.error("Portrait_data is null in apply_data,proposer_id:%s apply_id:%s"
+                                 % (self.proposer_id, self.apply_id))
                     raise NoPortraitData
             pre_conf = PreFieldInfo.objects.filter(
                 is_delete=False
