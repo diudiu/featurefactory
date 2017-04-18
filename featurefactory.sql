@@ -1,7 +1,7 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : 198Mysql
+Source Server         : 192.168.1.198-线下测试
 Source Server Version : 50628
 Source Host           : 192.168.1.198:3306
 Source Database       : featurefactory
@@ -10,13 +10,29 @@ Target Server Type    : MYSQL
 Target Server Version : 50628
 File Encoding         : 65001
 
-Date: 2017-03-01 18:47:54
+Date: 2017-04-17 13:42:37
 */
 
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for `auth_group`
+-- Table structure for account
+-- ----------------------------
+DROP TABLE IF EXISTS `account`;
+CREATE TABLE `account` (
+  `acc_id` int(11) NOT NULL AUTO_INCREMENT,
+  `nick_name` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `acc_status` int(11) NOT NULL,
+  PRIMARY KEY (`acc_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of account
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for auth_group
 -- ----------------------------
 DROP TABLE IF EXISTS `auth_group`;
 CREATE TABLE `auth_group` (
@@ -31,7 +47,7 @@ CREATE TABLE `auth_group` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `auth_group_permissions`
+-- Table structure for auth_group_permissions
 -- ----------------------------
 DROP TABLE IF EXISTS `auth_group_permissions`;
 CREATE TABLE `auth_group_permissions` (
@@ -51,7 +67,7 @@ CREATE TABLE `auth_group_permissions` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `auth_permission`
+-- Table structure for auth_permission
 -- ----------------------------
 DROP TABLE IF EXISTS `auth_permission`;
 CREATE TABLE `auth_permission` (
@@ -63,7 +79,7 @@ CREATE TABLE `auth_permission` (
   UNIQUE KEY `content_type_id` (`content_type_id`,`codename`),
   KEY `auth_permission_417f1b1c` (`content_type_id`),
   CONSTRAINT `auth_permissi_content_type_id_51277a81_fk_django_content_type_id` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=79 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=91 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of auth_permission
@@ -146,9 +162,21 @@ INSERT INTO `auth_permission` VALUES ('75', 'Can delete 预处理字段表', '25
 INSERT INTO `auth_permission` VALUES ('76', 'Can add 特征计算方式配置表', '26', 'add_featureprocess');
 INSERT INTO `auth_permission` VALUES ('77', 'Can change 特征计算方式配置表', '26', 'change_featureprocess');
 INSERT INTO `auth_permission` VALUES ('78', 'Can delete 特征计算方式配置表', '26', 'delete_featureprocess');
+INSERT INTO `auth_permission` VALUES ('79', 'Can add 特征类型配置表', '27', 'add_featuretype');
+INSERT INTO `auth_permission` VALUES ('80', 'Can change 特征类型配置表', '27', 'change_featuretype');
+INSERT INTO `auth_permission` VALUES ('81', 'Can delete 特征类型配置表', '27', 'delete_featuretype');
+INSERT INTO `auth_permission` VALUES ('82', 'Can add 特征评分卡类型配置表', '28', 'add_featurecardtype');
+INSERT INTO `auth_permission` VALUES ('83', 'Can change 特征评分卡类型配置表', '28', 'change_featurecardtype');
+INSERT INTO `auth_permission` VALUES ('84', 'Can delete 特征评分卡类型配置表', '28', 'delete_featurecardtype');
+INSERT INTO `auth_permission` VALUES ('85', 'Can add 特征规则类型配置表', '29', 'add_featureruletype');
+INSERT INTO `auth_permission` VALUES ('86', 'Can change 特征规则类型配置表', '29', 'change_featureruletype');
+INSERT INTO `auth_permission` VALUES ('87', 'Can delete 特征规则类型配置表', '29', 'delete_featureruletype');
+INSERT INTO `auth_permission` VALUES ('88', 'Can add 函数库配置表', '30', 'add_funclibsource');
+INSERT INTO `auth_permission` VALUES ('89', 'Can change 函数库配置表', '30', 'change_funclibsource');
+INSERT INTO `auth_permission` VALUES ('90', 'Can delete 函数库配置表', '30', 'delete_funclibsource');
 
 -- ----------------------------
--- Table structure for `auth_user`
+-- Table structure for auth_user
 -- ----------------------------
 DROP TABLE IF EXISTS `auth_user`;
 CREATE TABLE `auth_user` (
@@ -172,7 +200,7 @@ CREATE TABLE `auth_user` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `auth_user_groups`
+-- Table structure for auth_user_groups
 -- ----------------------------
 DROP TABLE IF EXISTS `auth_user_groups`;
 CREATE TABLE `auth_user_groups` (
@@ -192,7 +220,7 @@ CREATE TABLE `auth_user_groups` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `auth_user_user_permissions`
+-- Table structure for auth_user_user_permissions
 -- ----------------------------
 DROP TABLE IF EXISTS `auth_user_user_permissions`;
 CREATE TABLE `auth_user_user_permissions` (
@@ -212,7 +240,7 @@ CREATE TABLE `auth_user_user_permissions` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `celery_taskmeta`
+-- Table structure for celery_taskmeta
 -- ----------------------------
 DROP TABLE IF EXISTS `celery_taskmeta`;
 CREATE TABLE `celery_taskmeta` (
@@ -227,14 +255,226 @@ CREATE TABLE `celery_taskmeta` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `task_id` (`task_id`),
   KEY `celery_taskmeta_662f707d` (`hidden`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=213 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of celery_taskmeta
 -- ----------------------------
+INSERT INTO `celery_taskmeta` VALUES ('1', '745083ec-3b1d-442e-ac9c-26244abeaa5a', 'FAILURE', 'gAJjZXhjZXB0aW9ucwpVbmJvdW5kTG9jYWxFcnJvcgpxAVU6bG9jYWwgdmFyaWFibGUgJ2NhbGxiYWNrX3VybCcgcmVmZXJlbmNlZCBiZWZvcmUgYXNzaWdubWVudHEChXEDUnEELg==', '2017-03-08 16:09:50', 'Traceback (most recent call last):\n  File \"/usr/local/lib/python2.7/dist-packages/celery/app/trace.py\", line 240, in trace_task\n    R = retval = fun(*args, **kwargs)\n  File \"/usr/local/lib/python2.7/dist-packages/celery/app/trace.py\", line 438, in __protected_call__\n    return self.run(*args, **kwargs)\n  File \"/home/spider/www/featurefactory/apps/async/tasks.py\", line 58, in audit_task\n    logger.info(\'Result call back url : %s\' % callback_url)\nUnboundLocalError: local variable \'callback_url\' referenced before assignment\n', '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('2', '93e3dc58-d227-40a6-bfb9-7aa2f887aa9a', 'SUCCESS', null, '2017-03-08 16:09:56', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('3', 'b866d2f5-024b-4720-b35b-4a90549a26b8', 'FAILURE', 'gAJjZXhjZXB0aW9ucwpVbmJvdW5kTG9jYWxFcnJvcgpxAVU6bG9jYWwgdmFyaWFibGUgJ2NhbGxiYWNrX3VybCcgcmVmZXJlbmNlZCBiZWZvcmUgYXNzaWdubWVudHEChXEDUnEELg==', '2017-03-08 16:14:07', 'Traceback (most recent call last):\n  File \"/usr/local/lib/python2.7/dist-packages/celery/app/trace.py\", line 240, in trace_task\n    R = retval = fun(*args, **kwargs)\n  File \"/usr/local/lib/python2.7/dist-packages/celery/app/trace.py\", line 438, in __protected_call__\n    return self.run(*args, **kwargs)\n  File \"/home/spider/www/featurefactory/apps/async/tasks.py\", line 58, in audit_task\n    logger.info(\'Result call back url : %s\' % callback_url)\nUnboundLocalError: local variable \'callback_url\' referenced before assignment\n', '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('4', '9983d878-4899-4ad8-a663-5614764fc0e8', 'FAILURE', 'gAJjZXhjZXB0aW9ucwpVbmJvdW5kTG9jYWxFcnJvcgpxAVU6bG9jYWwgdmFyaWFibGUgJ2NhbGxiYWNrX3VybCcgcmVmZXJlbmNlZCBiZWZvcmUgYXNzaWdubWVudHEChXEDUnEELg==', '2017-03-08 16:18:27', 'Traceback (most recent call last):\n  File \"/usr/local/lib/python2.7/dist-packages/celery/app/trace.py\", line 240, in trace_task\n    R = retval = fun(*args, **kwargs)\n  File \"/usr/local/lib/python2.7/dist-packages/celery/app/trace.py\", line 438, in __protected_call__\n    return self.run(*args, **kwargs)\n  File \"/home/spider/www/featurefactory/apps/async/tasks.py\", line 58, in audit_task\n    logger.info(\'Result call back url : %s\' % callback_url)\nUnboundLocalError: local variable \'callback_url\' referenced before assignment\n', '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('5', '7142457d-4a78-4337-b4b7-f58150345010', 'FAILURE', 'gAJjZXhjZXB0aW9ucwpVbmJvdW5kTG9jYWxFcnJvcgpxAVU6bG9jYWwgdmFyaWFibGUgJ2NhbGxiYWNrX3VybCcgcmVmZXJlbmNlZCBiZWZvcmUgYXNzaWdubWVudHEChXEDUnEELg==', '2017-03-08 16:18:43', 'Traceback (most recent call last):\n  File \"/usr/local/lib/python2.7/dist-packages/celery/app/trace.py\", line 240, in trace_task\n    R = retval = fun(*args, **kwargs)\n  File \"/usr/local/lib/python2.7/dist-packages/celery/app/trace.py\", line 438, in __protected_call__\n    return self.run(*args, **kwargs)\n  File \"/home/spider/www/featurefactory/apps/async/tasks.py\", line 58, in audit_task\n    logger.info(\'Result call back url : %s\' % callback_url)\nUnboundLocalError: local variable \'callback_url\' referenced before assignment\n', '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('6', 'a1c1dcae-f8d4-4fe4-8c9a-46f3f81de8a3', 'SUCCESS', null, '2017-03-08 16:25:23', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('7', '26422aff-4e3f-4d44-9c10-375fe623b458', 'SUCCESS', null, '2017-03-08 16:30:46', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('8', '484c981f-a9f7-4972-926c-c22ee6753d4a', 'SUCCESS', null, '2017-03-08 16:40:55', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('9', 'eaa85b0c-d367-4437-a5c7-eb7b81749763', 'SUCCESS', null, '2017-03-08 17:09:02', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('10', 'cb672840-c0c3-4d3e-b428-c85d1f3402a4', 'SUCCESS', null, '2017-03-08 17:09:05', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('11', '008861dd-b9d3-440c-9227-c9776d62725f', 'SUCCESS', null, '2017-03-08 17:23:10', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('12', 'bd7c8123-da81-42bc-9327-dcf5259025e6', 'SUCCESS', null, '2017-03-08 17:23:13', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('13', '07379283-1296-43a3-b3b1-98895f9b2082', 'SUCCESS', null, '2017-03-08 17:34:38', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('14', 'a846115e-6736-4171-ac3d-ebd6078386d3', 'SUCCESS', null, '2017-03-08 17:34:41', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('15', '684791ff-10be-4586-95e4-82601459162d', 'SUCCESS', null, '2017-03-08 17:45:06', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('16', 'b99766cb-bd0a-46a8-a180-36be100ade4e', 'SUCCESS', null, '2017-03-08 17:45:08', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('17', '3707417b-09db-4705-9033-1325d8567914', 'SUCCESS', null, '2017-03-08 17:45:12', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('18', 'fc0cdf25-1b1e-406a-a05e-2bbd694f75ce', 'SUCCESS', null, '2017-03-08 18:05:18', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('19', 'a63f471f-e354-455f-9316-d9c9a44be79c', 'SUCCESS', null, '2017-03-08 18:05:21', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('20', '221c04f5-2a82-42e8-b95c-4baf267afc41', 'SUCCESS', null, '2017-03-08 18:05:24', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('21', '956f0361-f078-49b8-ba26-46e446cc4962', 'SUCCESS', null, '2017-03-08 18:09:14', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('22', 'bf563b0d-5ccd-4663-a711-892b0ea543c3', 'SUCCESS', null, '2017-03-08 18:09:16', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('23', '1eb15694-eb4f-40c4-88f2-7609002ec36b', 'SUCCESS', null, '2017-03-08 18:09:20', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('24', 'd901a3cc-43b6-4146-9c5d-746f70073b4b', 'SUCCESS', null, '2017-03-08 18:16:01', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('25', '59eb6921-bb34-46ad-99a5-59aa9cdd63f1', 'SUCCESS', null, '2017-03-08 18:16:03', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('26', 'd3f69414-5910-4bb0-8888-989dca222a8c', 'SUCCESS', null, '2017-03-08 18:16:07', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('27', '2209e7cb-a647-401c-8846-7bc7b719a321', 'SUCCESS', null, '2017-03-08 18:24:21', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('28', '05b8e54b-c348-4e51-b243-023b91e059ed', 'SUCCESS', null, '2017-03-08 18:24:24', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('29', '859d05d7-c8bb-4c15-8cbe-9d3f97a0167d', 'SUCCESS', null, '2017-03-08 18:24:27', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('30', '66394d24-e4d1-439b-9ec0-b6e8c774aae0', 'SUCCESS', null, '2017-03-09 10:42:04', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('31', 'a628bab7-f995-47e6-88cd-167f17913df6', 'SUCCESS', null, '2017-03-09 10:42:06', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('32', '01a56c94-4bca-4a27-89e9-0bf486eb21e5', 'SUCCESS', null, '2017-03-09 10:42:10', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('33', 'cc85d09a-e33e-40cc-9be5-d35903d81b3e', 'SUCCESS', null, '2017-03-09 10:47:11', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('34', '55463919-9302-4993-83e3-dd31b29f6206', 'SUCCESS', null, '2017-03-09 10:47:13', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('35', '0615d5d9-2adc-4d76-96bb-a1e77624b389', 'SUCCESS', null, '2017-03-09 10:47:17', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('36', 'ab107244-bb48-4b29-b0a6-b43aa5e6e5d4', 'SUCCESS', null, '2017-03-09 18:27:41', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('37', '6c472414-2315-4c10-be79-3f7be2ca9202', 'SUCCESS', null, '2017-03-09 18:27:43', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('38', '3970f2d7-d004-4d01-84a1-56e0ffd1b8ec', 'SUCCESS', null, '2017-03-09 18:27:46', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('39', '5946e864-698e-4a4d-86e3-ed1f706ecc53', 'SUCCESS', null, '2017-04-11 13:57:37', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('40', 'e8a4f4b7-7274-4576-9cc1-8c1bd7bc2b42', 'SUCCESS', null, '2017-04-11 13:58:22', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('41', '8749b71c-4125-4e6c-beb0-d230bfee17ee', 'SUCCESS', null, '2017-04-11 14:03:06', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('42', '3ac5313d-4861-4c80-a0b7-a52b2019029c', 'SUCCESS', null, '2017-04-12 17:58:04', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('43', '99b9c930-4b83-4fc7-b323-b3a2f05d2f70', 'SUCCESS', null, '2017-04-12 18:18:52', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('44', '0c5c27d7-d2ce-475f-acfd-75eb53c3e3b5', 'SUCCESS', null, '2017-04-13 09:48:49', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('45', '8311fd71-2c99-4269-ab86-252f9dec1b83', 'SUCCESS', null, '2017-04-13 09:49:26', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('46', '4a72636c-1ffa-43f8-b27b-222e78f80ebf', 'SUCCESS', null, '2017-04-13 09:50:53', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('47', '36b74e50-cea7-4387-b7a4-06e1fd8c9cef', 'SUCCESS', null, '2017-04-13 12:01:56', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('48', '93607ffe-8c81-4bbc-a90b-e37bd78221cd', 'SUCCESS', null, '2017-04-13 13:48:43', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('49', '83d907b5-311e-429c-80bf-b6b79544bff6', 'SUCCESS', null, '2017-04-13 13:55:36', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('50', '929cb5fc-0a10-4f9d-ab74-2ae3e5539275', 'SUCCESS', null, '2017-04-13 13:56:08', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('51', '1c752b91-a5d2-4f1e-abac-ec3ddaaebe7d', 'SUCCESS', null, '2017-04-13 13:58:10', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('52', '4a178507-c256-4762-b979-b48a4927d61d', 'SUCCESS', null, '2017-04-13 14:31:47', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('53', '5ff1a216-aa8c-4485-84af-653348acbe85', 'SUCCESS', null, '2017-04-13 14:57:28', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('54', '8e161c84-288b-4004-9096-ab9055955868', 'SUCCESS', null, '2017-04-13 15:07:30', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('55', '569c7502-9e8b-413a-ba99-8737495f1aac', 'SUCCESS', null, '2017-04-13 15:11:26', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('56', '9e9f6d9e-1802-4947-b3a7-4128cb0bb09a', 'SUCCESS', null, '2017-04-13 15:18:03', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('57', '308c90dd-c51a-49e4-843f-a9e241cd1aba', 'SUCCESS', null, '2017-04-13 15:38:30', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('58', '0213d078-5ba0-498c-b958-b75769c7eae9', 'SUCCESS', null, '2017-04-13 15:47:05', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('59', 'c19b8f71-d21a-41a8-9d2c-0066c72f4f38', 'SUCCESS', null, '2017-04-13 15:49:45', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('60', '952192aa-b2d6-4680-a791-8b0c3f7d4f87', 'SUCCESS', null, '2017-04-13 15:50:31', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('61', 'b922f7d4-c3e2-4abd-a3b5-c832de881b86', 'SUCCESS', null, '2017-04-13 15:53:16', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('62', '30695d7b-405b-448a-aa16-7c1989b9c139', 'SUCCESS', null, '2017-04-13 15:53:58', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('63', '65ae617e-6a73-4a69-b519-f43539e2bd65', 'SUCCESS', null, '2017-04-13 15:56:18', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('64', 'ab81e8f7-4750-400c-a831-1b87ec3464e7', 'SUCCESS', null, '2017-04-13 15:57:30', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('65', 'cdc0339d-5d71-4b16-bfca-f7e83bc0b2fe', 'SUCCESS', null, '2017-04-13 15:58:06', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('66', 'd9ef4b85-7de9-4325-9dba-fe5e8b8d3dbe', 'SUCCESS', null, '2017-04-13 16:09:02', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('67', '760f6946-8587-4a83-bff5-8158bec960a7', 'SUCCESS', null, '2017-04-13 16:18:22', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('68', '08bb1963-41a8-4fc4-88f0-f9fcc0c6ac8d', 'SUCCESS', null, '2017-04-13 17:50:48', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('69', '08c87f83-5416-4e5a-9828-93ff3366cb4b', 'SUCCESS', null, '2017-04-13 17:50:48', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('70', '3fe6e19b-9cb5-4413-8e8a-af512b77261c', 'SUCCESS', null, '2017-04-13 17:50:58', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('71', '5b6e8892-d4bb-40b9-8723-cb9f03e93cee', 'SUCCESS', null, '2017-04-13 17:50:58', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('72', '11c723fa-1962-41da-ac0f-27432fccc8b4', 'SUCCESS', null, '2017-04-13 17:51:15', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('73', 'c12964d1-88c3-424b-a1a0-2e7df9562171', 'SUCCESS', null, '2017-04-13 17:51:15', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('74', '5cb6b231-68cc-4956-8264-363504a721dc', 'SUCCESS', null, '2017-04-13 17:55:23', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('75', 'b972147f-3e87-4776-9d7f-0c189ad633de', 'SUCCESS', null, '2017-04-13 17:55:23', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('76', 'fb0a7323-2f60-42e7-a787-e2ed3b5e2f2f', 'SUCCESS', null, '2017-04-13 17:58:05', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('77', '56083840-8881-4c7f-873b-bb23ef69fc67', 'SUCCESS', null, '2017-04-13 17:58:05', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('78', '4675788a-5404-4209-be4f-9e935b38e36b', 'SUCCESS', null, '2017-04-13 18:16:20', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('79', '9b9fbb69-90c5-4c1c-ae13-5e766a25906f', 'SUCCESS', null, '2017-04-13 18:16:20', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('80', '82a54c80-3a81-475d-98a7-3a8ef8e795f6', 'SUCCESS', null, '2017-04-13 18:30:02', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('81', '275087f2-0861-44d8-b918-65cc8df10bb5', 'SUCCESS', null, '2017-04-13 18:30:02', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('82', '7e4abb47-8783-40f5-aa96-20dd4f3d2df3', 'SUCCESS', null, '2017-04-13 18:39:52', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('83', '0fa0a55c-c84d-49c3-bd85-fb356cc9db38', 'SUCCESS', null, '2017-04-13 18:46:42', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('84', '99f0c3e2-da8d-4419-9d74-aa6c18f37507', 'SUCCESS', null, '2017-04-13 18:46:42', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('85', '6b86c865-27e4-4b83-8e75-d836a4fa3eaa', 'SUCCESS', null, '2017-04-13 18:48:02', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('86', '948a0689-404f-4c5c-a0da-72cbdeb5f287', 'SUCCESS', null, '2017-04-13 18:48:02', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('87', '5e36b03f-0b46-44fe-9634-fac9e6a24463', 'SUCCESS', null, '2017-04-14 09:43:24', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('88', 'add0a341-337f-4dec-81bb-73fc52d3f7bb', 'SUCCESS', null, '2017-04-14 09:43:24', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('89', '07094d88-0fd6-494e-b69a-c84eadc7cf92', 'SUCCESS', null, '2017-04-14 09:43:24', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('90', '49d63347-09f7-4ac7-81dd-833a0c04c346', 'SUCCESS', null, '2017-04-14 09:44:55', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('91', '435f457e-5dea-4e2c-a154-42f2e53db083', 'SUCCESS', null, '2017-04-14 09:50:19', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('92', '029890d6-17ba-41f1-aa9a-fb39f62fbfdd', 'SUCCESS', null, '2017-04-14 09:51:19', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('93', '28d4d41e-562c-49e4-b8c6-43626d93201d', 'SUCCESS', null, '2017-04-14 09:58:31', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('94', 'f1e5d158-beaa-44bb-9a3e-d3e23a3415cb', 'SUCCESS', null, '2017-04-14 09:59:43', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('95', 'd3a0b600-0c57-4749-ab14-967257dae919', 'SUCCESS', null, '2017-04-14 10:03:02', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('96', '0a49fec0-3a0e-48a2-922c-93527d260256', 'SUCCESS', null, '2017-04-14 10:05:00', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('97', '7f15ff69-153b-4ed9-bbb1-19a888f0a2e1', 'SUCCESS', null, '2017-04-14 10:14:12', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('98', 'cd6a5226-4a33-4b4a-8a83-9b041e2e8438', 'SUCCESS', null, '2017-04-14 10:16:01', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('99', '51f7695b-0dfa-4cac-8a28-693925f17e0e', 'SUCCESS', null, '2017-04-14 10:16:01', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('100', 'f6a2d4a6-03b2-480b-925b-618bbf11d8a5', 'SUCCESS', null, '2017-04-14 10:17:16', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('101', 'e44d9178-79b3-4c74-8e6a-31b59080bc6e', 'SUCCESS', null, '2017-04-14 10:17:16', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('102', '6cbf6f72-0f7e-46f9-9664-448dec57967b', 'SUCCESS', null, '2017-04-14 10:17:16', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('103', '1e249302-d839-46e3-8b74-b3695e7fdc32', 'SUCCESS', null, '2017-04-14 10:32:33', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('104', 'b9ab8909-c3a1-4beb-9b2e-7e4679f4d858', 'SUCCESS', null, '2017-04-14 10:32:33', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('105', '2d6ce266-e5e1-4e79-b9a6-440cdbc0c83a', 'SUCCESS', null, '2017-04-14 10:32:33', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('106', '3a331d91-fd7c-4a7d-806d-dcc57ee2cddf', 'SUCCESS', null, '2017-04-14 10:36:05', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('107', 'fa91dbf8-68ed-4253-b864-c1c3ff1c9c2e', 'SUCCESS', null, '2017-04-14 10:36:05', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('108', 'b2e01af6-129a-4274-b36b-1d215170302d', 'SUCCESS', null, '2017-04-14 10:36:05', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('109', '4f7f6c9b-5e6c-496c-9103-07d21a77cfae', 'SUCCESS', null, '2017-04-14 10:42:00', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('110', '6801d0d4-703d-40a0-9a7d-feded47060f3', 'SUCCESS', null, '2017-04-14 10:42:01', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('111', 'a8cd43c2-0f0a-48b3-bfda-7e5be5847b55', 'SUCCESS', null, '2017-04-14 10:42:01', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('112', 'bb88d152-c63e-4b08-bef3-b91362ad2be2', 'SUCCESS', null, '2017-04-14 10:47:28', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('113', '541c3b0c-35ce-4fc4-b1bb-e67c2dabfe5b', 'SUCCESS', null, '2017-04-14 10:47:28', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('114', 'f175e4da-448f-4777-af64-69fac204b99a', 'SUCCESS', null, '2017-04-14 10:47:28', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('115', 'a5380392-f0dc-4658-b95e-0c6ec50c749a', 'SUCCESS', null, '2017-04-14 10:49:57', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('116', '4a1f92c9-ed4e-41d9-b080-f2e6dabe1829', 'SUCCESS', null, '2017-04-14 10:49:57', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('117', 'c506293e-d338-457e-b5de-22e8dbc4c24f', 'SUCCESS', null, '2017-04-14 10:51:00', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('118', '565e6126-6802-431f-a2dd-ab8d67d927fe', 'SUCCESS', null, '2017-04-14 10:51:00', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('119', 'fdd9fb97-0c26-4d1c-bc8c-2c7c5a626266', 'SUCCESS', null, '2017-04-14 10:51:00', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('120', '44ccf5e0-fb28-410c-99e3-46a2c241c13b', 'SUCCESS', null, '2017-04-14 11:10:44', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('121', 'bbebc7fb-15fe-477c-937f-848e4cd2cf2e', 'SUCCESS', null, '2017-04-14 11:10:44', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('122', 'c3be9d10-3aca-4a2b-af15-a9fa3fba0009', 'SUCCESS', null, '2017-04-14 11:10:44', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('123', '52f976a5-1b56-484f-8ec0-44d4c3687b0b', 'SUCCESS', null, '2017-04-14 11:12:07', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('124', '4b35df16-b2d0-43c6-a1c9-db0d7e7e6297', 'SUCCESS', null, '2017-04-14 11:12:07', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('125', 'dc882351-5b74-4ea7-bbda-072089ebfa80', 'SUCCESS', null, '2017-04-14 11:12:07', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('126', 'f725c0d2-af88-4683-bb5c-96a7aa04ab49', 'SUCCESS', null, '2017-04-14 11:15:35', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('127', '3927144d-e0d9-48a9-8e97-4fdfb12e850d', 'SUCCESS', null, '2017-04-14 11:15:54', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('128', 'b53cf18a-b7bd-4c38-af8a-68f3f8b54856', 'SUCCESS', null, '2017-04-14 11:16:30', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('129', 'f8a5b87b-9f20-499e-9fd7-dcb27454d4a2', 'SUCCESS', null, '2017-04-14 11:18:12', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('130', 'c621f564-6346-426c-abb3-50270e2eab7d', 'SUCCESS', null, '2017-04-14 11:19:47', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('131', 'b3ac4df5-dd06-43a8-a1fd-0f2d2c2336ca', 'SUCCESS', null, '2017-04-14 11:22:49', null, '0', 'eJwdyr0KwjAQAOBa/+p7dHA5uSTXy+UluhVcHJJcioII0Vlw6nML/ebv137r5to1TZPvj6e+y6u2t7o9T332JiInC1KSA7JDhkioECgqixjrNNTduIxL3U/9gDM7FAS2iYAkIAgrgw/GGU3C0fp6WPdx6oMTSl4VkskI5GwGmQcPjJ5m49jEpLVb96l8Ln/3lyub');
+INSERT INTO `celery_taskmeta` VALUES ('132', 'c71a06b2-8eb3-425c-a40d-94ad688123d9', 'SUCCESS', null, '2017-04-14 11:22:49', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('133', '50f63080-62b4-4890-86d6-79131db86a27', 'SUCCESS', null, '2017-04-14 11:22:49', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('134', '9384b7dd-b1c0-432c-8f57-6074f1361abd', 'SUCCESS', null, '2017-04-14 11:22:49', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('135', 'b7978422-9ba7-485b-a161-239ce750e077', 'SUCCESS', null, '2017-04-14 14:04:13', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('136', 'cb27f6ad-5d42-4430-ad48-67bc6c09b46d', 'SUCCESS', null, '2017-04-14 14:06:03', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('137', 'b48b186c-e074-44d7-9f08-c11f8e52651f', 'SUCCESS', null, '2017-04-14 14:29:19', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('138', '1adaf5ef-f1aa-451f-aaee-902c7e721414', 'SUCCESS', null, '2017-04-14 14:32:20', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('139', 'ba17a796-3830-409a-8b48-553c8918a71f', 'SUCCESS', null, '2017-04-14 14:32:40', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('140', '3bca636e-1e06-4629-91f9-1db5398fd088', 'SUCCESS', null, '2017-04-14 14:32:51', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('141', '1f3e2f65-29c2-498b-a3d0-ebb728b8ed9b', 'SUCCESS', null, '2017-04-14 14:34:29', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('142', '34e6f271-2b0b-459a-819c-620c1315c4d9', 'SUCCESS', null, '2017-04-14 14:37:19', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('143', 'ff686016-7aab-4a15-995d-8ada3d3f2007', 'SUCCESS', null, '2017-04-14 14:37:57', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('144', 'b4fbf690-edb9-48d9-95ae-122b86d90230', 'SUCCESS', null, '2017-04-14 14:38:40', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('145', '2fb9a59b-b436-4911-96d5-072ce7185a07', 'SUCCESS', null, '2017-04-14 14:38:50', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('146', '6aced8b3-4f03-4982-89a4-512fd4e76e3b', 'SUCCESS', null, '2017-04-14 14:39:01', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('147', 'd918f8e1-64f5-4ccb-bc7e-793a1f88a900', 'SUCCESS', null, '2017-04-14 14:40:22', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('148', '6e6da6ff-df8d-49b7-9a48-d3e8bebf10f8', 'SUCCESS', null, '2017-04-14 14:40:32', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('149', '958d6f9f-3b8a-48c1-9a88-2fdb9d94db74', 'SUCCESS', null, '2017-04-14 14:40:42', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('150', 'af007f94-8f64-444b-8ef3-48d3c33ba6a5', 'SUCCESS', null, '2017-04-14 14:43:10', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('151', '63558a28-dc04-45c8-be97-1cb915520672', 'SUCCESS', null, '2017-04-14 14:43:41', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('152', 'dcb94758-5501-4d98-98c1-add1bf6c243f', 'SUCCESS', null, '2017-04-14 14:49:20', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('153', 'beeecea9-fdd7-462b-9e83-20c836386bde', 'SUCCESS', null, '2017-04-14 14:51:15', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('154', '0ba42f95-8b1f-4d70-9978-e7c533dd3499', 'SUCCESS', null, '2017-04-14 14:58:48', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('155', '03bc0091-fdef-4f61-ad63-35b78b639037', 'SUCCESS', null, '2017-04-14 16:11:10', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('156', '12120f79-0b5a-4401-be29-2ae90a81c676', 'SUCCESS', null, '2017-04-14 16:11:41', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('157', 'bad75147-b06e-412d-9d1d-6b443ed4b7fe', 'SUCCESS', null, '2017-04-14 16:11:51', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('158', '5a37039d-3b61-493e-b320-efde18f2dfc5', 'SUCCESS', null, '2017-04-14 16:12:42', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('159', 'a862e236-2a79-4613-a1e4-31130f871fd8', 'SUCCESS', null, '2017-04-14 16:12:59', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('160', '669bac47-b50a-4301-8976-8e454513e7f2', 'SUCCESS', null, '2017-04-14 16:13:09', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('161', 'fb58e1b1-af38-456d-9cfd-a9954072357b', 'SUCCESS', null, '2017-04-14 16:13:30', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('162', '5892ad0b-f65e-4d73-9cb7-f4e4b48e679b', 'SUCCESS', null, '2017-04-14 16:28:39', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('163', '0080294a-5c13-4775-a1ac-3469fa38c479', 'SUCCESS', null, '2017-04-14 16:28:49', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('164', '9a0dd808-4007-4427-9a5c-ff5f734e8396', 'SUCCESS', null, '2017-04-14 16:30:39', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('165', 'cf79d227-f46c-4e44-ba39-07d9b23ea847', 'SUCCESS', null, '2017-04-14 16:40:06', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('166', 'd2f2c359-df3f-469f-ac9b-69ebb802718a', 'SUCCESS', null, '2017-04-14 16:40:47', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('167', '7197a5c8-11ab-4970-8cf6-4a62ec46dbaa', 'SUCCESS', null, '2017-04-14 16:40:57', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('168', 'ededf382-9b8d-4a83-a03a-4b20149031b3', 'SUCCESS', null, '2017-04-14 16:42:00', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('169', '7aafe313-d7af-497f-8d50-333727dd9c91', 'SUCCESS', null, '2017-04-14 16:42:20', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('170', 'b3208007-bb6a-4338-bb51-a8b6c1bc8813', 'SUCCESS', null, '2017-04-14 16:42:30', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('171', 'bc571734-2d88-41f9-b684-e7f0f037afa5', 'SUCCESS', null, '2017-04-14 16:44:21', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('172', 'a894745d-292f-4483-b040-c2c4c00fb11e', 'SUCCESS', null, '2017-04-14 16:45:05', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('173', 'ed27c9fb-1221-47bf-8f0e-8fa2d1507632', 'SUCCESS', null, '2017-04-14 16:45:15', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('174', 'fd7e2fd4-8539-48ee-9960-e5eedec484d5', 'SUCCESS', null, '2017-04-14 16:51:44', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('175', '30916b27-ee89-4512-92c4-68881c977169', 'SUCCESS', null, '2017-04-14 16:52:04', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('176', '324156d9-3ad5-478b-a93c-17bca7314fa4', 'SUCCESS', null, '2017-04-14 17:09:42', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('177', 'd50d310f-bd74-4b26-8c40-f2f98b73c656', 'SUCCESS', null, '2017-04-14 17:10:13', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('178', 'ea27f57b-b1ca-416d-8ff3-f5f668821c60', 'SUCCESS', null, '2017-04-14 17:10:53', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('179', 'f914a01c-62bc-4487-9996-eceb7cdc6daf', 'SUCCESS', null, '2017-04-14 17:14:49', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('180', '873d83c6-d73a-4c3c-8929-218e0115b7a0', 'SUCCESS', null, '2017-04-14 17:15:09', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('181', 'd2547e62-c12a-4b17-a646-59dda9e85aea', 'SUCCESS', null, '2017-04-14 17:16:31', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('182', '9a751118-59eb-4c7a-947b-c51755d0e808', 'SUCCESS', null, '2017-04-14 17:16:41', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('183', '8f20ac41-c69f-4654-813b-642f39a813c3', 'SUCCESS', null, '2017-04-14 17:19:06', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('184', 'bfac435e-b7cd-4b2b-9cea-1664c9fafee6', 'SUCCESS', null, '2017-04-14 17:19:07', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('185', '2e8a9a8b-e39a-4323-82fe-be70a9d2f19c', 'SUCCESS', null, '2017-04-14 17:37:58', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('186', '19b9b927-5ad2-4f86-a9a2-49eaec3e8f07', 'SUCCESS', null, '2017-04-14 17:37:58', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('187', 'a6c943bf-0eea-4121-86d5-8736d6af8563', 'SUCCESS', null, '2017-04-14 17:38:19', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('188', '66147888-a737-4c48-b092-578144dcec2c', 'SUCCESS', null, '2017-04-14 17:44:59', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('189', '89099645-5b65-4866-bfce-b65073a86d1e', 'SUCCESS', null, '2017-04-14 17:44:59', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('190', 'c7d8a65f-51d6-48e3-964c-6cadbbe43a52', 'SUCCESS', null, '2017-04-14 18:09:06', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('191', '1a619492-5b2d-46e7-bdb7-87b6d94173d7', 'SUCCESS', null, '2017-04-14 18:09:06', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('192', 'fce0d37d-d82d-40fa-b6f5-5334483e0a95', 'SUCCESS', null, '2017-04-14 18:13:29', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('193', '5fa77d26-c159-41ae-b0a7-45b64ed0aebe', 'SUCCESS', null, '2017-04-14 18:42:06', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('194', '6d44235a-2604-456c-9d14-2197451d63f0', 'SUCCESS', null, '2017-04-14 18:44:30', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('195', '6698f1cd-2ce5-4c6b-bef4-fbf94990618e', 'SUCCESS', null, '2017-04-14 18:44:30', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('196', '7fcdc10c-05ce-452a-9aba-a67c516730a6', 'SUCCESS', null, '2017-04-14 18:45:18', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('197', '17faf7fc-adc2-44d1-8658-7154b7ca67dc', 'SUCCESS', null, '2017-04-14 18:45:19', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('198', '819158ec-b6dc-4a1a-84a6-942f67aa1739', 'SUCCESS', null, '2017-04-14 18:46:53', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('199', '2e1c92f8-a83a-431c-9bfe-0ca453e2496d', 'SUCCESS', null, '2017-04-14 18:46:53', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('200', '45382f5b-cf19-40b9-b5ef-5c62f0ca4213', 'SUCCESS', null, '2017-04-14 18:55:48', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('201', 'bb6e860b-6c0d-4830-8fbf-41d5cac921bd', 'SUCCESS', null, '2017-04-14 18:55:48', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('202', 'fe4f6485-4c4a-4dd9-a92c-edce789691f1', 'SUCCESS', null, '2017-04-14 18:56:59', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('203', 'eda0af6d-9fa5-49b9-a7c2-10cad4580464', 'SUCCESS', null, '2017-04-14 18:57:19', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('204', 'd5aebace-ef81-4d4a-9fd7-ac0f8fc41872', 'SUCCESS', null, '2017-04-14 19:00:37', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('205', 'bfba281d-d82a-4db5-add3-afb245b46215', 'SUCCESS', null, '2017-04-14 19:00:37', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('206', '29f47d71-1851-444c-869f-812aabb5a97e', 'SUCCESS', null, '2017-04-14 19:01:39', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('207', 'a8632eaf-9cb3-41df-8490-c28ca222a7b2', 'SUCCESS', null, '2017-04-17 10:45:30', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('208', '606ac191-4742-465b-abe4-12f6fe519ba9', 'SUCCESS', null, '2017-04-17 10:45:32', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('209', '01f3e640-abf1-45f5-a73d-ca14048da49a', 'SUCCESS', null, '2017-04-17 10:47:55', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('210', '3bf3ffca-aafc-4472-ad51-621bbe75a704', 'SUCCESS', null, '2017-04-17 11:53:08', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('211', 'b73eb0dc-a829-49fb-9706-7151b506bb6e', 'SUCCESS', null, '2017-04-17 11:56:08', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
+INSERT INTO `celery_taskmeta` VALUES ('212', '72ae9d9e-b1fe-4064-8fa7-c5c1a3a593db', 'SUCCESS', null, '2017-04-17 11:56:08', null, '0', 'eJxrYKotZIzgYGBgSM7IzEkpSs0rZIotZC7WAwBWuwcA');
 
 -- ----------------------------
--- Table structure for `celery_tasksetmeta`
+-- Table structure for celery_tasksetmeta
 -- ----------------------------
 DROP TABLE IF EXISTS `celery_tasksetmeta`;
 CREATE TABLE `celery_tasksetmeta` (
@@ -253,7 +493,55 @@ CREATE TABLE `celery_tasksetmeta` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `django_admin_log`
+-- Table structure for credit_card_config
+-- ----------------------------
+DROP TABLE IF EXISTS `credit_card_config`;
+CREATE TABLE `credit_card_config` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `collection_id` int(11) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `delete_status` int(11) DEFAULT NULL,
+  `feature_name` varchar(255) DEFAULT NULL,
+  `feature_name_cn` varchar(255) DEFAULT NULL,
+  `feature_weight` int(11) DEFAULT NULL,
+  `model_name` varchar(255) DEFAULT NULL,
+  `model_name_cn` varchar(255) DEFAULT NULL,
+  `model_weight` int(11) DEFAULT NULL,
+  `option_value` varchar(255) DEFAULT NULL,
+  `option_weight` int(11) DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `credit_card_drl` longtext,
+  `package_uuid` varchar(255) DEFAULT NULL,
+  `policy_set_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKf5981gigq8lbkw24iev11cmje` (`policy_set_id`),
+  CONSTRAINT `FKf5981gigq8lbkw24iev11cmje` FOREIGN KEY (`policy_set_id`) REFERENCES `policy_set` (`policy_set_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of credit_card_config
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for customer_drl
+-- ----------------------------
+DROP TABLE IF EXISTS `customer_drl`;
+CREATE TABLE `customer_drl` (
+  `customer_drl_id` int(11) NOT NULL AUTO_INCREMENT,
+  `drl_value` longtext,
+  `fearture_type` varchar(255) DEFAULT NULL,
+  `policy_set_id` int(11) DEFAULT NULL,
+  `rule_set_name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`customer_drl_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of customer_drl
+-- ----------------------------
+INSERT INTO `customer_drl` VALUES ('1', 'rule \"年龄判别44\"\r\nruleflow-group \"1\"\r\nwhen\r\n	$applicant: Applicant(((age > 11)&&(age < 66)), accountStatus == Applicant.Status.PASS)\r\nthen\r\n	System.out.println( \"=========================================44444444444444444444444444444444\" );\r\n	insert(new Rejection($applicant, \"非主流\"));\r\n	modify($applicant){setAccountStatus(Applicant.Status.REJECT)};\r\nend', 'age', '2', '1');
+
+-- ----------------------------
+-- Table structure for django_admin_log
 -- ----------------------------
 DROP TABLE IF EXISTS `django_admin_log`;
 CREATE TABLE `django_admin_log` (
@@ -277,7 +565,7 @@ CREATE TABLE `django_admin_log` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `django_content_type`
+-- Table structure for django_content_type
 -- ----------------------------
 DROP TABLE IF EXISTS `django_content_type`;
 CREATE TABLE `django_content_type` (
@@ -287,7 +575,7 @@ CREATE TABLE `django_content_type` (
   `model` varchar(100) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `django_content_type_app_label_3ec8c61c_uniq` (`app_label`,`model`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of django_content_type
@@ -318,9 +606,13 @@ INSERT INTO `django_content_type` VALUES ('23', '授信模型系数配置表', '
 INSERT INTO `django_content_type` VALUES ('24', '授信模型字段权重表', 'pregranting', 'modelfieldoptionweight');
 INSERT INTO `django_content_type` VALUES ('25', '预处理字段表', 'etl', 'prefieldinfo');
 INSERT INTO `django_content_type` VALUES ('26', '特征计算方式配置表', 'etl', 'featureprocess');
+INSERT INTO `django_content_type` VALUES ('27', '特征类型配置表', 'etl', 'featuretype');
+INSERT INTO `django_content_type` VALUES ('28', '特征评分卡类型配置表', 'etl', 'featurecardtype');
+INSERT INTO `django_content_type` VALUES ('29', '特征规则类型配置表', 'etl', 'featureruletype');
+INSERT INTO `django_content_type` VALUES ('30', '函数库配置表', 'etl', 'funclibsource');
 
 -- ----------------------------
--- Table structure for `django_migrations`
+-- Table structure for django_migrations
 -- ----------------------------
 DROP TABLE IF EXISTS `django_migrations`;
 CREATE TABLE `django_migrations` (
@@ -329,7 +621,7 @@ CREATE TABLE `django_migrations` (
   `name` varchar(255) NOT NULL,
   `applied` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of django_migrations
@@ -343,13 +635,42 @@ INSERT INTO `django_migrations` VALUES ('6', 'common', '0001_initial', '2017-02-
 INSERT INTO `django_migrations` VALUES ('7', 'datasource', '0001_initial', '2017-02-22 17:34:46');
 INSERT INTO `django_migrations` VALUES ('9', 'featureapi', '0001_initial', '2017-02-22 17:34:46');
 INSERT INTO `django_migrations` VALUES ('13', 'datasource', '0002_dsinterfaceinfo_data_origin_type', '2017-02-23 10:30:23');
-INSERT INTO `django_migrations` VALUES ('15', 'etl', '0001_initial', '2017-02-28 14:39:38');
 INSERT INTO `django_migrations` VALUES ('16', 'common', '0002_auto_20170301_1455', '2017-03-01 14:56:08');
 INSERT INTO `django_migrations` VALUES ('17', 'common', '0003_auto_20170301_1605', '2017-03-01 16:05:55');
 INSERT INTO `django_migrations` VALUES ('18', 'common', '0004_auto_20170301_1608', '2017-03-01 16:08:09');
+INSERT INTO `django_migrations` VALUES ('19', 'etl', '0001_initial', '2017-03-13 11:39:48');
+INSERT INTO `django_migrations` VALUES ('20', 'etl', '0002_auto_20170313_1140', '2017-03-13 11:40:06');
+INSERT INTO `django_migrations` VALUES ('21', 'etl', '0003_auto_20170320_1107', '2017-03-20 11:07:14');
+INSERT INTO `django_migrations` VALUES ('22', 'etl', '0004_auto_20170324_1106', '2017-03-24 11:06:25');
+INSERT INTO `django_migrations` VALUES ('23', 'etl', '0005_auto_20170324_1110', '2017-03-24 11:11:35');
+INSERT INTO `django_migrations` VALUES ('24', 'etl', '0006_remove_featureconf_data_identity', '2017-03-24 11:14:59');
+INSERT INTO `django_migrations` VALUES ('25', 'etl', '0007_auto_20170324_1115', '2017-03-24 11:15:29');
+INSERT INTO `django_migrations` VALUES ('26', 'etl', '0008_funclibsource', '2017-03-28 15:02:01');
+INSERT INTO `django_migrations` VALUES ('27', 'etl', '0009_auto_20170324_1521', '2017-03-28 15:02:02');
+INSERT INTO `django_migrations` VALUES ('28', 'etl', '0010_auto_20170324_1526', '2017-03-28 15:02:02');
+INSERT INTO `django_migrations` VALUES ('29', 'etl', '0011_remove_funclibsource_func_type', '2017-03-28 15:02:02');
+INSERT INTO `django_migrations` VALUES ('30', 'etl', '0012_funclibsource_func_type', '2017-03-28 15:02:03');
+INSERT INTO `django_migrations` VALUES ('31', 'etl', '0013_auto_20170324_1537', '2017-03-28 15:02:03');
+INSERT INTO `django_migrations` VALUES ('32', 'etl', '0014_auto_20170324_1701', '2017-03-28 15:02:04');
+INSERT INTO `django_migrations` VALUES ('33', 'etl', '0015_auto_20170327_1012', '2017-03-28 15:02:04');
+INSERT INTO `django_migrations` VALUES ('34', 'etl', '0016_remove_featurerelevanceconf_depend_di', '2017-03-28 15:02:05');
+INSERT INTO `django_migrations` VALUES ('35', 'etl', '0017_auto_20170328_1501', '2017-03-28 15:02:06');
+INSERT INTO `django_migrations` VALUES ('36', 'etl', '0018_auto_20170328_1508', '2017-03-28 15:08:30');
+INSERT INTO `django_migrations` VALUES ('37', 'etl', '0019_auto_20170328_1519', '2017-03-28 15:19:42');
+INSERT INTO `django_migrations` VALUES ('38', 'etl', '0020_auto_20170328_1521', '2017-03-28 15:21:18');
+INSERT INTO `django_migrations` VALUES ('39', 'etl', '0021_auto_20170328_1542', '2017-03-28 15:42:34');
+INSERT INTO `django_migrations` VALUES ('40', 'datasource', '0003_auto_20170328_1742', '2017-03-28 18:00:35');
+INSERT INTO `django_migrations` VALUES ('43', 'etl', '0022_auto_20170329_1419', '2017-03-29 14:19:53');
+INSERT INTO `django_migrations` VALUES ('44', 'etl', '0023_auto_20170329_1610', '2017-03-29 16:10:38');
+INSERT INTO `django_migrations` VALUES ('45', 'etl', '0024_auto_20170410_1348', '2017-04-10 13:48:45');
+INSERT INTO `django_migrations` VALUES ('46', 'etl', '0025_auto_20170410_1446', '2017-04-10 14:46:34');
+INSERT INTO `django_migrations` VALUES ('47', 'etl', '0026_featuretype_created_on', '2017-04-10 14:49:36');
+INSERT INTO `django_migrations` VALUES ('48', 'etl', '0027_remove_featuretype_created_on', '2017-04-10 14:49:51');
+INSERT INTO `django_migrations` VALUES ('49', 'datasource', '0004_remove_dsinterfaceinfo_encrypt_type', '2017-04-11 11:59:01');
+INSERT INTO `django_migrations` VALUES ('50', 'datasource', '0005_dsinterfaceinfo_encrypt_type', '2017-04-11 11:59:59');
 
 -- ----------------------------
--- Table structure for `django_session`
+-- Table structure for django_session
 -- ----------------------------
 DROP TABLE IF EXISTS `django_session`;
 CREATE TABLE `django_session` (
@@ -365,7 +686,7 @@ CREATE TABLE `django_session` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `djcelery_crontabschedule`
+-- Table structure for djcelery_crontabschedule
 -- ----------------------------
 DROP TABLE IF EXISTS `djcelery_crontabschedule`;
 CREATE TABLE `djcelery_crontabschedule` (
@@ -383,7 +704,7 @@ CREATE TABLE `djcelery_crontabschedule` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `djcelery_intervalschedule`
+-- Table structure for djcelery_intervalschedule
 -- ----------------------------
 DROP TABLE IF EXISTS `djcelery_intervalschedule`;
 CREATE TABLE `djcelery_intervalschedule` (
@@ -398,7 +719,7 @@ CREATE TABLE `djcelery_intervalschedule` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `djcelery_periodictask`
+-- Table structure for djcelery_periodictask
 -- ----------------------------
 DROP TABLE IF EXISTS `djcelery_periodictask`;
 CREATE TABLE `djcelery_periodictask` (
@@ -431,7 +752,7 @@ CREATE TABLE `djcelery_periodictask` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `djcelery_periodictasks`
+-- Table structure for djcelery_periodictasks
 -- ----------------------------
 DROP TABLE IF EXISTS `djcelery_periodictasks`;
 CREATE TABLE `djcelery_periodictasks` (
@@ -445,7 +766,7 @@ CREATE TABLE `djcelery_periodictasks` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `djcelery_taskstate`
+-- Table structure for djcelery_taskstate
 -- ----------------------------
 DROP TABLE IF EXISTS `djcelery_taskstate`;
 CREATE TABLE `djcelery_taskstate` (
@@ -463,7 +784,7 @@ CREATE TABLE `djcelery_taskstate` (
   `runtime` double DEFAULT NULL,
   `retries` int(11) NOT NULL,
   `hidden` tinyint(1) NOT NULL,
-  `worker_id` int(11),
+  `worker_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `task_id` (`task_id`),
   KEY `djcelery_taskstate_9ed39e2e` (`state`),
@@ -479,7 +800,7 @@ CREATE TABLE `djcelery_taskstate` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `djcelery_workerstate`
+-- Table structure for djcelery_workerstate
 -- ----------------------------
 DROP TABLE IF EXISTS `djcelery_workerstate`;
 CREATE TABLE `djcelery_workerstate` (
@@ -496,7 +817,7 @@ CREATE TABLE `djcelery_workerstate` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `fic_city_code_field`
+-- Table structure for fic_city_code_field
 -- ----------------------------
 DROP TABLE IF EXISTS `fic_city_code_field`;
 CREATE TABLE `fic_city_code_field` (
@@ -2129,7 +2450,7 @@ INSERT INTO `fic_city_code_field` VALUES ('0', '2017-02-17 09:32:20', '2017-02-1
 INSERT INTO `fic_city_code_field` VALUES ('0', '2017-02-17 09:32:20', '2017-02-17 09:32:20', '1609', '', ' Yukon ', '1', '360020', '430130', '  ', '', null);
 
 -- ----------------------------
--- Table structure for `fic_client_overview`
+-- Table structure for fic_client_overview
 -- ----------------------------
 DROP TABLE IF EXISTS `fic_client_overview`;
 CREATE TABLE `fic_client_overview` (
@@ -2152,7 +2473,7 @@ INSERT INTO `fic_client_overview` VALUES ('1', '0', '2017-01-20 14:47:38', '2017
 INSERT INTO `fic_client_overview` VALUES ('2', '0', '2017-01-20 14:47:38', '2017-01-20 14:47:38', 'lp_test', '', '', '', 'procuratorate.lp_judger.Judger');
 
 -- ----------------------------
--- Table structure for `fic_data_source_info`
+-- Table structure for fic_data_source_info
 -- ----------------------------
 DROP TABLE IF EXISTS `fic_data_source_info`;
 CREATE TABLE `fic_data_source_info` (
@@ -2174,10 +2495,27 @@ CREATE TABLE `fic_data_source_info` (
 -- ----------------------------
 INSERT INTO `fic_data_source_info` VALUES ('0', '2017-01-20 18:13:45', '2017-01-20 18:13:45', '1', 'data_ocean测试接口', 'data_ocean_test', 'data_ocean测试接口', 'HTTP', 'http://apitest.digcredit.com', '');
 INSERT INTO `fic_data_source_info` VALUES ('0', '2017-01-20 18:13:45', '2017-01-20 18:13:45', '2', 'data_ocean生产接口', 'data_ocean_prod', 'data_ocean生产接口', 'HTTP', 'http://api.digcredit.com', '');
-INSERT INTO `fic_data_source_info` VALUES ('0', '2017-01-20 18:13:45', '2017-01-20 18:13:45', '3', 'lp集成接口', 'lp_integration', '猎聘集成接口', 'HTTP', 'http://127.0.0.1:8070', '');
+INSERT INTO `fic_data_source_info` VALUES ('0', '2017-01-20 18:13:45', '2017-01-20 18:13:45', '3', 'lp集成接口', 'lp_integration', '猎聘集成接口', 'HTTP', 'http://127.0.0.1:8987', '');
 
 -- ----------------------------
--- Table structure for `fic_feature_code_mapping`
+-- Table structure for fic_feature_card_type
+-- ----------------------------
+DROP TABLE IF EXISTS `fic_feature_card_type`;
+CREATE TABLE `fic_feature_card_type` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `feature_type_desc` varchar(2048) NOT NULL,
+  `is_delete` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of fic_feature_card_type
+-- ----------------------------
+INSERT INTO `fic_feature_card_type` VALUES ('1', '范围型', '0');
+INSERT INTO `fic_feature_card_type` VALUES ('2', '枚举型', '0');
+
+-- ----------------------------
+-- Table structure for fic_feature_code_mapping
 -- ----------------------------
 DROP TABLE IF EXISTS `fic_feature_code_mapping`;
 CREATE TABLE `fic_feature_code_mapping` (
@@ -2191,285 +2529,257 @@ CREATE TABLE `fic_feature_code_mapping` (
   `dual_value` varchar(64) DEFAULT NULL,
   `mapped_value` int(11) NOT NULL,
   `value_type` varchar(20) NOT NULL,
-  `arithmetic_type` varchar(16),
+  `arithmetic_type` varchar(16) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=338 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=336 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of fic_feature_code_mapping
 -- ----------------------------
-INSERT INTO `fic_feature_code_mapping` VALUES ('1', '0', '2017-03-01 16:08:25', '2017-03-01 16:08:25', 'airfare_sum_12', '一年内乘机总票价', '0.0', '5000.0', '0', 'float', '[)');
-INSERT INTO `fic_feature_code_mapping` VALUES ('2', '0', '2017-03-01 16:08:25', '2017-03-01 16:08:25', 'airfare_sum_12', '一年内乘机总票价', '5000.0', '10000.0', '1', 'float', '[)');
-INSERT INTO `fic_feature_code_mapping` VALUES ('3', '0', '2017-03-01 16:08:25', '2017-03-01 16:08:25', 'airfare_sum_12', '一年内乘机总票价', '10000.0', '20000.0', '2', 'float', '[)');
-INSERT INTO `fic_feature_code_mapping` VALUES ('4', '0', '2017-03-01 16:08:25', '2017-03-01 16:08:25', 'airfare_sum_12', '一年内乘机总票价', '20000.0', '50000.0', '3', 'float', '[)');
-INSERT INTO `fic_feature_code_mapping` VALUES ('5', '0', '2017-03-01 16:08:25', '2017-03-01 16:08:25', 'airfare_sum_12', '一年内乘机总票价', '50000.0', '100000.0', '4', 'float', '[)');
-INSERT INTO `fic_feature_code_mapping` VALUES ('6', '0', '2017-03-01 16:08:25', '2017-03-01 16:08:25', 'airfare_sum_12', '一年内乘机总票价', '100000.0', '1000000000.0', '5', 'float', '[)');
-INSERT INTO `fic_feature_code_mapping` VALUES ('7', '0', '2017-03-01 16:08:25', '2017-03-01 16:08:25', 'cur_corp_years', '经营年限', '-1.0', '1.0', '1', 'float', '(]');
-INSERT INTO `fic_feature_code_mapping` VALUES ('8', '0', '2017-03-01 16:08:25', '2017-03-01 16:08:25', 'cur_corp_years', '经营年限', '1.0', '2.0', '2', 'float', '(]');
-INSERT INTO `fic_feature_code_mapping` VALUES ('9', '0', '2017-03-01 16:08:25', '2017-03-01 16:08:25', 'cur_corp_years', '经营年限', '2.0', '3.0', '3', 'float', '(]');
-INSERT INTO `fic_feature_code_mapping` VALUES ('10', '0', '2017-03-01 16:08:25', '2017-03-01 16:08:25', 'cur_corp_years', '经营年限', '3.0', '4.0', '4', 'float', '(]');
-INSERT INTO `fic_feature_code_mapping` VALUES ('11', '0', '2017-03-01 16:08:25', '2017-03-01 16:08:25', 'cur_corp_years', '经营年限', '4.0', '5.0', '5', 'float', '(]');
-INSERT INTO `fic_feature_code_mapping` VALUES ('12', '0', '2017-03-01 16:08:25', '2017-03-01 16:08:25', 'cur_corp_years', '经营年限', '5.0', '8.0', '6', 'float', '(]');
-INSERT INTO `fic_feature_code_mapping` VALUES ('13', '0', '2017-03-01 16:08:25', '2017-03-01 16:08:25', 'cur_corp_years', '经营年限', '8.0', '10.0', '7', 'float', '(]');
-INSERT INTO `fic_feature_code_mapping` VALUES ('14', '0', '2017-03-01 16:08:26', '2017-03-01 16:08:26', 'cur_corp_years', '经营年限', '10.0', '10000.0', '8', 'float', '(]');
-INSERT INTO `fic_feature_code_mapping` VALUES ('15', '0', '2017-03-01 16:08:26', '2017-03-01 16:08:26', 'cur_employee_number', '现工作单位规模（人数）', '0.0', '20.0', '1', 'string', '[)');
-INSERT INTO `fic_feature_code_mapping` VALUES ('16', '0', '2017-03-01 16:08:26', '2017-03-01 16:08:26', 'cur_employee_number', '现工作单位规模（人数）', '20.0', '100.0', '2', 'string', '[)');
-INSERT INTO `fic_feature_code_mapping` VALUES ('17', '0', '2017-03-01 16:08:26', '2017-03-01 16:08:26', 'cur_employee_number', '现工作单位规模（人数）', '100.0', '500.0', '3', 'string', '[)');
-INSERT INTO `fic_feature_code_mapping` VALUES ('18', '0', '2017-03-01 16:08:26', '2017-03-01 16:08:26', 'cur_employee_number', '现工作单位规模（人数）', '500.0', '1000.0', '4', 'string', '[)');
-INSERT INTO `fic_feature_code_mapping` VALUES ('19', '0', '2017-03-01 16:08:26', '2017-03-01 16:08:26', 'cur_employee_number', '现工作单位规模（人数）', '1000.0', '10000.0', '5', 'string', '[)');
-INSERT INTO `fic_feature_code_mapping` VALUES ('20', '0', '2017-03-01 16:08:26', '2017-03-01 16:08:26', 'cur_employee_number', '现工作单位规模（人数）', '10000.0', '10000000.0', '6', 'string', '[)');
-INSERT INTO `fic_feature_code_mapping` VALUES ('21', '0', '2017-03-01 16:08:26', '2017-03-01 16:08:26', 'cur_work_status', '在职，看看新机会', '在职，看看新机会', '', '0', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('22', '0', '2017-03-01 16:08:26', '2017-03-01 16:08:26', 'cur_work_status', '离职，正在找工作', '离职，正在找工作', '', '1', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('23', '0', '2017-03-01 16:08:26', '2017-03-01 16:08:26', 'cur_work_status', '在职，急寻新工作', '在职，急寻新工作', '', '2', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('24', '0', '2017-03-01 16:08:26', '2017-03-01 16:08:26', 'cur_work_status', '在职，暂无跳槽打算', '在职，暂无跳槽打算', '', '3', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('25', '0', '2017-03-01 16:08:26', '2017-03-01 16:08:26', 'education_degree_check', '博士', '博士研究生', '', '1', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('26', '0', '2017-03-01 16:08:26', '2017-03-01 16:08:26', 'education_degree_check', '硕士', '硕士研究生', '', '2', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('27', '0', '2017-03-01 16:08:26', '2017-03-01 16:08:26', 'education_degree_check', '本科', '本科', '', '3', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('28', '0', '2017-03-01 16:08:26', '2017-03-01 16:08:26', 'education_degree_check', '专科', '专科', '', '4', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('30', '0', '2017-03-01 16:08:27', '2017-03-01 16:08:27', 'education_degree_check', '其他', 'N/A', '', '5', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('31', '0', '2017-03-01 16:08:27', '2017-03-01 16:08:27', 'education_degree_code', '博士', '5.0', '', '1', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('33', '0', '2017-03-01 16:08:27', '2017-03-01 16:08:27', 'education_degree_code', '硕士', '20.0', '', '2', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('35', '0', '2017-03-01 16:08:27', '2017-03-01 16:08:27', 'education_degree_code', '本科', '40.0', '', '3', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('36', '0', '2017-03-01 16:08:27', '2017-03-01 16:08:27', 'education_degree_code', '专科', '50.0', '', '4', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('37', '0', '2017-03-01 16:08:27', '2017-03-01 16:08:27', 'education_degree_code', '其他', '60.0', '', '5', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('42', '0', '2017-03-01 16:08:27', '2017-03-01 16:08:27', 'education_tz', '统招', '1.0', '', '1', 'int', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('43', '0', '2017-03-01 16:08:27', '2017-03-01 16:08:27', 'education_tz', '非统招', '0.0', '', '0', 'int', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('44', '0', '2017-03-01 16:08:27', '2017-03-01 16:08:27', 'income_level', '年入账', '0.0', '10000.0', '0', 'int', '[)');
-INSERT INTO `fic_feature_code_mapping` VALUES ('45', '0', '2017-03-01 16:08:27', '2017-03-01 16:08:27', 'income_level', '年入账', '10000.0', '50000.0', '1', 'int', '[)');
-INSERT INTO `fic_feature_code_mapping` VALUES ('46', '0', '2017-03-01 16:08:27', '2017-03-01 16:08:27', 'income_level', '年入账', '50000.0', '100000.0', '2', 'int', '[)');
-INSERT INTO `fic_feature_code_mapping` VALUES ('47', '0', '2017-03-01 16:08:27', '2017-03-01 16:08:27', 'income_level', '年入账', '100000.0', '500000.0', '3', 'int', '[)');
-INSERT INTO `fic_feature_code_mapping` VALUES ('48', '0', '2017-03-01 16:08:27', '2017-03-01 16:08:27', 'income_level', '年入账', '500000.0', '1000000.0', '4', 'int', '[)');
-INSERT INTO `fic_feature_code_mapping` VALUES ('49', '0', '2017-03-01 16:08:28', '2017-03-01 16:08:28', 'income_level', '年入账', '1000000.0', '1000000000.0', '5', 'int', '[)');
-INSERT INTO `fic_feature_code_mapping` VALUES ('50', '0', '2017-03-01 16:08:28', '2017-03-01 16:08:28', 'income_level', '年入账(联通)', '0.0', '', '500', 'int', '[)');
-INSERT INTO `fic_feature_code_mapping` VALUES ('51', '0', '2017-03-01 16:08:28', '2017-03-01 16:08:28', 'income_level', '年入账(联通)', '1.0', '', '1500', 'int', '[)');
-INSERT INTO `fic_feature_code_mapping` VALUES ('52', '0', '2017-03-01 16:08:28', '2017-03-01 16:08:28', 'income_level', '年入账(联通)', '2.0', '', '2500', 'int', '[)');
-INSERT INTO `fic_feature_code_mapping` VALUES ('53', '0', '2017-03-01 16:08:28', '2017-03-01 16:08:28', 'income_level', '年入账(联通)', '3.0', '', '3500', 'int', '[)');
-INSERT INTO `fic_feature_code_mapping` VALUES ('54', '0', '2017-03-01 16:08:28', '2017-03-01 16:08:28', 'income_level', '年入账(联通)', '4.0', '', '4500', 'int', '[)');
-INSERT INTO `fic_feature_code_mapping` VALUES ('55', '0', '2017-03-01 16:08:28', '2017-03-01 16:08:28', 'income_level', '年入账(联通)', '5.0', '', '5500', 'int', '[)');
-INSERT INTO `fic_feature_code_mapping` VALUES ('56', '0', '2017-03-01 16:08:28', '2017-03-01 16:08:28', 'income_level', '年入账(联通)', '6.0', '', '6500', 'int', '[)');
-INSERT INTO `fic_feature_code_mapping` VALUES ('57', '0', '2017-03-01 16:08:28', '2017-03-01 16:08:28', 'income_level', '年入账(联通)', '7.0', '', '7500', 'int', '[)');
-INSERT INTO `fic_feature_code_mapping` VALUES ('58', '0', '2017-03-01 16:08:28', '2017-03-01 16:08:28', 'income_level', '年入账(联通)', '8.0', '', '8500', 'int', '[)');
-INSERT INTO `fic_feature_code_mapping` VALUES ('59', '0', '2017-03-01 16:08:28', '2017-03-01 16:08:28', 'income_level', '年入账(联通)', '9.0', '', '9500', 'int', '[)');
-INSERT INTO `fic_feature_code_mapping` VALUES ('60', '0', '2017-03-01 16:08:28', '2017-03-01 16:08:28', 'income_level', '年入账(联通)', 'a', '', '15000', 'int', '[)');
-INSERT INTO `fic_feature_code_mapping` VALUES ('61', '0', '2017-03-01 16:08:28', '2017-03-01 16:08:28', 'income_level', '年入账(联通)', 'b', '', '25000', 'int', '[)');
-INSERT INTO `fic_feature_code_mapping` VALUES ('62', '0', '2017-03-01 16:08:28', '2017-03-01 16:08:28', 'income_level', '年入账(联通)', 'c', '', '35000', 'int', '[)');
-INSERT INTO `fic_feature_code_mapping` VALUES ('63', '0', '2017-03-01 16:08:28', '2017-03-01 16:08:28', 'income_level', '年入账(联通)', 'd', '', '45000', 'int', '[)');
-INSERT INTO `fic_feature_code_mapping` VALUES ('64', '0', '2017-03-01 16:08:28', '2017-03-01 16:08:28', 'income_level', '年入账(联通)', 'e', '', '55000', 'int', '[)');
-INSERT INTO `fic_feature_code_mapping` VALUES ('65', '0', '2017-03-01 16:08:29', '2017-03-01 16:08:29', 'income_level', '年入账(联通)', 'f', '', '65000', 'int', '[)');
-INSERT INTO `fic_feature_code_mapping` VALUES ('66', '0', '2017-03-01 16:08:29', '2017-03-01 16:08:29', 'income_level', '年入账(联通)', '10.0', '', '75000', 'int', '[)');
-INSERT INTO `fic_feature_code_mapping` VALUES ('67', '0', '2017-03-01 16:08:29', '2017-03-01 16:08:29', 'income_level', '年入账(联通)', '11.0', '', '85000', 'int', '[)');
-INSERT INTO `fic_feature_code_mapping` VALUES ('68', '0', '2017-03-01 16:08:29', '2017-03-01 16:08:29', 'income_level', '年入账(联通)', '12.0', '', '95000', 'int', '[)');
-INSERT INTO `fic_feature_code_mapping` VALUES ('69', '0', '2017-03-01 16:08:29', '2017-03-01 16:08:29', 'income_level', '年入账(联通)', '13.0', '', '150000', 'int', '[)');
-INSERT INTO `fic_feature_code_mapping` VALUES ('70', '0', '2017-03-01 16:08:29', '2017-03-01 16:08:29', 'income_level', '年入账(联通)', '14.0', '', '250000', 'int', '[)');
-INSERT INTO `fic_feature_code_mapping` VALUES ('71', '0', '2017-03-01 16:08:29', '2017-03-01 16:08:29', 'income_level', '年入账(联通)', '15.0', '', '350000', 'int', '[)');
-INSERT INTO `fic_feature_code_mapping` VALUES ('72', '0', '2017-03-01 16:08:29', '2017-03-01 16:08:29', 'income_level', '年入账(联通)', '16.0', '', '450000', 'int', '[)');
-INSERT INTO `fic_feature_code_mapping` VALUES ('73', '0', '2017-03-01 16:08:29', '2017-03-01 16:08:29', 'income_level', '年入账(联通)', '17.0', '', '550000', 'int', '[)');
-INSERT INTO `fic_feature_code_mapping` VALUES ('74', '0', '2017-03-01 16:08:29', '2017-03-01 16:08:29', 'income_level', '年入账(联通)', '18.0', '', '650000', 'int', '[)');
-INSERT INTO `fic_feature_code_mapping` VALUES ('75', '0', '2017-03-01 16:08:29', '2017-03-01 16:08:29', 'income_level', '年入账(联通)', '19.0', '', '750000', 'int', '[)');
-INSERT INTO `fic_feature_code_mapping` VALUES ('76', '0', '2017-03-01 16:08:29', '2017-03-01 16:08:29', 'income_level', '年入账(联通)', '1a', '', '850000', 'int', '[)');
-INSERT INTO `fic_feature_code_mapping` VALUES ('77', '0', '2017-03-01 16:08:29', '2017-03-01 16:08:29', 'income_level', '年入账(联通)', '1b', '', '950000', 'int', '[)');
-INSERT INTO `fic_feature_code_mapping` VALUES ('78', '0', '2017-03-01 16:08:30', '2017-03-01 16:08:30', 'income_level', '年入账(联通)', '1c', '', '1500000', 'int', '[)');
-INSERT INTO `fic_feature_code_mapping` VALUES ('79', '0', '2017-03-01 16:08:30', '2017-03-01 16:08:30', 'income_level', '年入账(联通)', '1d', '', '2500000', 'int', '[)');
-INSERT INTO `fic_feature_code_mapping` VALUES ('80', '0', '2017-03-01 16:08:30', '2017-03-01 16:08:30', 'income_level', '年入账(联通)', '1e', '', '3500000', 'int', '[)');
-INSERT INTO `fic_feature_code_mapping` VALUES ('81', '0', '2017-03-01 16:08:30', '2017-03-01 16:08:30', 'income_level', '年入账(联通)', '1f', '', '4500000', 'int', '[)');
-INSERT INTO `fic_feature_code_mapping` VALUES ('82', '0', '2017-03-01 16:08:30', '2017-03-01 16:08:30', 'income_level', '年入账(联通)', '20.0', '', '5500000', 'int', '[)');
-INSERT INTO `fic_feature_code_mapping` VALUES ('83', '0', '2017-03-01 16:08:30', '2017-03-01 16:08:30', 'income_level', '年入账(联通)', '21.0', '', '6500000', 'int', '[)');
-INSERT INTO `fic_feature_code_mapping` VALUES ('84', '0', '2017-03-01 16:08:30', '2017-03-01 16:08:30', 'income_level', '年入账(联通)', '22.0', '', '7500000', 'int', '[)');
-INSERT INTO `fic_feature_code_mapping` VALUES ('85', '0', '2017-03-01 16:08:30', '2017-03-01 16:08:30', 'income_level', '年入账(联通)', '23.0', '', '8500000', 'int', '[)');
-INSERT INTO `fic_feature_code_mapping` VALUES ('86', '0', '2017-03-01 16:08:30', '2017-03-01 16:08:30', 'income_level', '年入账(联通)', '24.0', '', '9500000', 'int', '[)');
-INSERT INTO `fic_feature_code_mapping` VALUES ('87', '0', '2017-03-01 16:08:30', '2017-03-01 16:08:30', 'income_level', '年入账(联通)', '25.0', '', '10000000', 'int', '[)');
-INSERT INTO `fic_feature_code_mapping` VALUES ('126', '0', '2017-03-01 16:08:31', '2017-03-01 16:08:31', 'is_cur_corp_shixin', '未命中', '11.0', '', '0', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('128', '0', '2017-03-01 16:08:31', '2017-03-01 16:08:31', 'is_cur_corp_shixin', '命中', '0.0', '', '1', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('129', '0', '2017-03-01 16:08:31', '2017-03-01 16:08:31', 'is_jiuyao_multi_loan', '命中91多头借贷名单', '', '', '1', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('130', '0', '2017-03-01 16:08:31', '2017-03-01 16:08:31', 'is_jiuyao_multi_loan', '未命中91多头借贷名单', '', '', '0', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('131', '0', '2017-03-01 16:08:31', '2017-03-01 16:08:31', 'is_mobile_black', '申请人手机号有染黑记录', '0.0', '', '1', 'int', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('132', '0', '2017-03-01 16:08:31', '2017-03-01 16:08:31', 'is_mobile_black', '申请人手机号无染黑记录', '2.0', '', '0', 'int', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('133', '0', '2017-03-01 16:08:31', '2017-03-01 16:08:31', 'is_pingan_other_loan', '未命中', '2.0', '', '0', 'int', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('134', '0', '2017-03-01 16:08:31', '2017-03-01 16:08:31', 'is_pingan_other_loan', '命中', '0.0', '', '1', 'int', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('135', '0', '2017-03-01 16:08:31', '2017-03-01 16:08:31', 'is_pingan_overdue_loan', '未命中', '2.0', '', '0', 'int', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('136', '0', '2017-03-01 16:08:31', '2017-03-01 16:08:31', 'is_pingan_overdue_loan', '命中', '0.0', '', '1', 'int', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('137', '0', '2017-03-01 16:08:31', '2017-03-01 16:08:31', 'is_recruitment', '非统招', '函授', '', '0', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('143', '0', '2017-03-01 16:08:31', '2017-03-01 16:08:31', 'is_recruitment', '统招', '全日制', '', '1', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('144', '0', '2017-03-01 16:08:31', '2017-03-01 16:08:31', 'is_unclear_loan', '没有未结清贷款', '0.0', '', '0', 'int', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('145', '0', '2017-03-01 16:08:32', '2017-03-01 16:08:32', 'is_unclear_loan', '有未结清贷款', '1.0', '', '1', 'int', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('146', '0', '2017-03-01 16:08:32', '2017-03-01 16:08:32', 'max_flight_area', '国内', '', '', '1', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('147', '0', '2017-03-01 16:08:32', '2017-03-01 16:08:32', 'max_flight_area', '国外', '', '', '2', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('148', '0', '2017-03-01 16:08:32', '2017-03-01 16:08:32', 'max_flight_area', '乘机次数为零', '', '', '3', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('149', '0', '2017-03-01 16:08:32', '2017-03-01 16:08:32', 'max_flight_area', '无记录', '', '', '4', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('150', '0', '2017-03-01 16:08:32', '2017-03-01 16:08:32', 'max_flight_class', '商务舱', '', '', '1', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('151', '0', '2017-03-01 16:08:32', '2017-03-01 16:08:32', 'max_flight_class', '公务舱', '', '', '2', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('152', '0', '2017-03-01 16:08:32', '2017-03-01 16:08:32', 'max_flight_class', '经济舱', '', '', '3', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('153', '0', '2017-03-01 16:08:32', '2017-03-01 16:08:32', 'max_flight_class', '乘机次数为零', '', '', '4', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('154', '0', '2017-03-01 16:08:32', '2017-03-01 16:08:32', 'mobile_identity', '身份验证一致', '00', '', '1', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('155', '0', '2017-03-01 16:08:32', '2017-03-01 16:08:32', 'mobile_identity', '其他', '11.0', '', '0', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('157', '0', '2017-03-01 16:08:32', '2017-03-01 16:08:32', 'now_industry_code', '全部行业', '', '', '0', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('158', '0', '2017-03-01 16:08:32', '2017-03-01 16:08:32', 'now_industry_code', '计算机软件', '', '', '10', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('159', '0', '2017-03-01 16:08:33', '2017-03-01 16:08:33', 'now_industry_code', '计算机硬件/网络设备', '', '', '20', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('160', '0', '2017-03-01 16:08:33', '2017-03-01 16:08:33', 'now_industry_code', 'IT服务/系统集成', '', '', '30', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('161', '0', '2017-03-01 16:08:33', '2017-03-01 16:08:33', 'now_industry_code', '互联网/移动互联网/电子商务', '', '', '40', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('162', '0', '2017-03-01 16:08:33', '2017-03-01 16:08:33', 'now_industry_code', '电子技术/半导体/集成电路', '', '', '50', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('163', '0', '2017-03-01 16:08:33', '2017-03-01 16:08:33', 'now_industry_code', '通信(设备/运营/增值)', '', '', '60', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('164', '0', '2017-03-01 16:08:33', '2017-03-01 16:08:33', 'now_industry_code', '广告/公关/市场推广/会展', '', '', '70', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('165', '0', '2017-03-01 16:08:33', '2017-03-01 16:08:33', 'now_industry_code', '房地产开发/建筑/建材/工程', '', '', '80', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('166', '0', '2017-03-01 16:08:33', '2017-03-01 16:08:33', 'now_industry_code', '房地产服务(物业管理/地产经纪)', '', '', '90', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('167', '0', '2017-03-01 16:08:33', '2017-03-01 16:08:33', 'now_industry_code', '规划/设计/装潢', '', '', '100', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('168', '0', '2017-03-01 16:08:33', '2017-03-01 16:08:33', 'now_industry_code', '中介服务', '', '', '110', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('169', '0', '2017-03-01 16:08:33', '2017-03-01 16:08:33', 'now_industry_code', '专业服务(咨询/财会/法律/翻译等)', '', '', '120', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('170', '0', '2017-03-01 16:08:33', '2017-03-01 16:08:33', 'now_industry_code', '银行', '', '', '130', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('171', '0', '2017-03-01 16:08:33', '2017-03-01 16:08:33', 'now_industry_code', '保险', '', '', '140', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('172', '0', '2017-03-01 16:08:33', '2017-03-01 16:08:33', 'now_industry_code', '基金/证券/期货/投资', '', '', '150', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('173', '0', '2017-03-01 16:08:33', '2017-03-01 16:08:33', 'now_industry_code', '贸易/进出口', '', '', '160', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('174', '0', '2017-03-01 16:08:34', '2017-03-01 16:08:34', 'now_industry_code', '影视/媒体/艺术/文化/出版', '', '', '170', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('175', '0', '2017-03-01 16:08:34', '2017-03-01 16:08:34', 'now_industry_code', '印刷/包装/造纸', '', '', '180', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('176', '0', '2017-03-01 16:08:34', '2017-03-01 16:08:34', 'now_industry_code', '食品/饮料/烟酒/日化', '', '', '190', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('177', '0', '2017-03-01 16:08:34', '2017-03-01 16:08:34', 'now_industry_code', '服装服饰/纺织/皮革', '', '', '200', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('178', '0', '2017-03-01 16:08:34', '2017-03-01 16:08:34', 'now_industry_code', '家具/家电', '', '', '210', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('179', '0', '2017-03-01 16:08:34', '2017-03-01 16:08:34', 'now_industry_code', '办公用品及设备', '', '', '220', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('180', '0', '2017-03-01 16:08:34', '2017-03-01 16:08:34', 'now_industry_code', '旅游/酒店/餐饮服务/生活服务', '', '', '230', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('181', '0', '2017-03-01 16:08:34', '2017-03-01 16:08:34', 'now_industry_code', '百货/批发/零售', '', '', '240', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('182', '0', '2017-03-01 16:08:34', '2017-03-01 16:08:34', 'now_industry_code', '交通/物流/运输', '', '', '250', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('183', '0', '2017-03-01 16:08:34', '2017-03-01 16:08:34', 'now_industry_code', '娱乐/休闲/体育', '', '', '260', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('184', '0', '2017-03-01 16:08:34', '2017-03-01 16:08:34', 'now_industry_code', '制药/生物工程', '', '', '270', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('185', '0', '2017-03-01 16:08:34', '2017-03-01 16:08:34', 'now_industry_code', '医疗/保健/美容/卫生服务', '', '', '280', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('186', '0', '2017-03-01 16:08:34', '2017-03-01 16:08:34', 'now_industry_code', '医疗设备/器械', '', '', '290', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('187', '0', '2017-03-01 16:08:35', '2017-03-01 16:08:35', 'now_industry_code', '环保', '', '', '300', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('188', '0', '2017-03-01 16:08:35', '2017-03-01 16:08:35', 'now_industry_code', '石油/石化/化工', '', '', '310', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('189', '0', '2017-03-01 16:08:35', '2017-03-01 16:08:35', 'now_industry_code', '采掘/冶炼/矿产', '', '', '320', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('190', '0', '2017-03-01 16:08:35', '2017-03-01 16:08:35', 'now_industry_code', '能源(电力/水利)', '', '', '330', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('191', '0', '2017-03-01 16:08:35', '2017-03-01 16:08:35', 'now_industry_code', '仪器/仪表/工业自动化/电气', '', '', '340', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('192', '0', '2017-03-01 16:08:35', '2017-03-01 16:08:35', 'now_industry_code', '汽车/摩托车', '', '', '350', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('193', '0', '2017-03-01 16:08:35', '2017-03-01 16:08:35', 'now_industry_code', '机械制造/机电/重工', '', '', '360', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('194', '0', '2017-03-01 16:08:35', '2017-03-01 16:08:35', 'now_industry_code', '原材料及加工', '', '', '370', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('195', '0', '2017-03-01 16:08:35', '2017-03-01 16:08:35', 'now_industry_code', '教育/培训/学术/科研/院校', '', '', '380', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('196', '0', '2017-03-01 16:08:35', '2017-03-01 16:08:35', 'now_industry_code', '政府/公共事业/非营利机构', '', '', '390', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('197', '0', '2017-03-01 16:08:35', '2017-03-01 16:08:35', 'now_industry_code', '其他', '', '', '400', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('198', '0', '2017-03-01 16:08:35', '2017-03-01 16:08:35', 'now_industry_code', '农/林/牧/渔', '', '', '410', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('199', '0', '2017-03-01 16:08:36', '2017-03-01 16:08:36', 'now_industry_code', '网络游戏', '', '', '420', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('200', '0', '2017-03-01 16:08:36', '2017-03-01 16:08:36', 'now_industry_code', '会计/审计', '', '', '430', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('201', '0', '2017-03-01 16:08:36', '2017-03-01 16:08:36', 'now_industry_code', '外包服务', '', '', '440', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('202', '0', '2017-03-01 16:08:36', '2017-03-01 16:08:36', 'now_industry_code', '检测/认证', '', '', '450', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('203', '0', '2017-03-01 16:08:36', '2017-03-01 16:08:36', 'now_industry_code', '奢侈品/收藏品', '', '', '460', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('204', '0', '2017-03-01 16:08:36', '2017-03-01 16:08:36', 'now_industry_code', '工艺品/珠宝/玩具', '', '', '470', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('205', '0', '2017-03-01 16:08:36', '2017-03-01 16:08:36', 'now_industry_code', '航空/航天', '', '', '480', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('206', '0', '2017-03-01 16:08:36', '2017-03-01 16:08:36', 'now_industry_code', '新能源', '', '', '490', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('207', '0', '2017-03-01 16:08:36', '2017-03-01 16:08:36', 'now_industry_code', '信托/担保/拍卖/典当', '', '', '500', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('208', '0', '2017-03-01 16:08:36', '2017-03-01 16:08:36', 'now_industry_code', '租赁服务', '', '', '510', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('209', '0', '2017-03-01 16:08:36', '2017-03-01 16:08:36', 'last_industry_code', '全部行业', '', '', '0', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('210', '0', '2017-03-01 16:08:36', '2017-03-01 16:08:36', 'last_industry_code', '计算机软件', '', '', '10', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('211', '0', '2017-03-01 16:08:37', '2017-03-01 16:08:37', 'last_industry_code', '计算机硬件/网络设备', '', '', '20', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('212', '0', '2017-03-01 16:08:37', '2017-03-01 16:08:37', 'last_industry_code', 'IT服务/系统集成', '', '', '30', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('213', '0', '2017-03-01 16:08:37', '2017-03-01 16:08:37', 'last_industry_code', '互联网/移动互联网/电子商务', '', '', '40', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('214', '0', '2017-03-01 16:08:37', '2017-03-01 16:08:37', 'last_industry_code', '电子技术/半导体/集成电路', '', '', '50', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('215', '0', '2017-03-01 16:08:37', '2017-03-01 16:08:37', 'last_industry_code', '通信(设备/运营/增值)', '', '', '60', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('216', '0', '2017-03-01 16:08:37', '2017-03-01 16:08:37', 'last_industry_code', '广告/公关/市场推广/会展', '', '', '70', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('217', '0', '2017-03-01 16:08:37', '2017-03-01 16:08:37', 'last_industry_code', '房地产开发/建筑/建材/工程', '', '', '80', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('218', '0', '2017-03-01 16:08:37', '2017-03-01 16:08:37', 'last_industry_code', '房地产服务(物业管理/地产经纪)', '', '', '90', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('219', '0', '2017-03-01 16:08:37', '2017-03-01 16:08:37', 'last_industry_code', '规划/设计/装潢', '', '', '100', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('220', '0', '2017-03-01 16:08:37', '2017-03-01 16:08:37', 'last_industry_code', '中介服务', '', '', '110', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('221', '0', '2017-03-01 16:08:37', '2017-03-01 16:08:37', 'last_industry_code', '专业服务(咨询/财会/法律/翻译等)', '', '', '120', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('222', '0', '2017-03-01 16:08:37', '2017-03-01 16:08:37', 'last_industry_code', '银行', '', '', '130', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('223', '0', '2017-03-01 16:08:37', '2017-03-01 16:08:37', 'last_industry_code', '保险', '', '', '140', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('224', '0', '2017-03-01 16:08:37', '2017-03-01 16:08:37', 'last_industry_code', '基金/证券/期货/投资', '', '', '150', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('225', '0', '2017-03-01 16:08:38', '2017-03-01 16:08:38', 'last_industry_code', '贸易/进出口', '', '', '160', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('226', '0', '2017-03-01 16:08:38', '2017-03-01 16:08:38', 'last_industry_code', '影视/媒体/艺术/文化/出版', '', '', '170', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('227', '0', '2017-03-01 16:08:38', '2017-03-01 16:08:38', 'last_industry_code', '印刷/包装/造纸', '', '', '180', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('228', '0', '2017-03-01 16:08:38', '2017-03-01 16:08:38', 'last_industry_code', '食品/饮料/烟酒/日化', '', '', '190', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('229', '0', '2017-03-01 16:08:38', '2017-03-01 16:08:38', 'last_industry_code', '服装服饰/纺织/皮革', '', '', '200', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('230', '0', '2017-03-01 16:08:38', '2017-03-01 16:08:38', 'last_industry_code', '家具/家电', '', '', '210', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('231', '0', '2017-03-01 16:08:38', '2017-03-01 16:08:38', 'last_industry_code', '办公用品及设备', '', '', '220', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('232', '0', '2017-03-01 16:08:38', '2017-03-01 16:08:38', 'last_industry_code', '旅游/酒店/餐饮服务/生活服务', '', '', '230', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('233', '0', '2017-03-01 16:08:38', '2017-03-01 16:08:38', 'last_industry_code', '百货/批发/零售', '', '', '240', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('234', '0', '2017-03-01 16:08:38', '2017-03-01 16:08:38', 'last_industry_code', '交通/物流/运输', '', '', '250', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('235', '0', '2017-03-01 16:08:38', '2017-03-01 16:08:38', 'last_industry_code', '娱乐/休闲/体育', '', '', '260', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('236', '0', '2017-03-01 16:08:38', '2017-03-01 16:08:38', 'last_industry_code', '制药/生物工程', '', '', '270', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('237', '0', '2017-03-01 16:08:38', '2017-03-01 16:08:38', 'last_industry_code', '医疗/保健/美容/卫生服务', '', '', '280', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('238', '0', '2017-03-01 16:08:38', '2017-03-01 16:08:38', 'last_industry_code', '医疗设备/器械', '', '', '290', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('239', '0', '2017-03-01 16:08:38', '2017-03-01 16:08:38', 'last_industry_code', '环保', '', '', '300', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('240', '0', '2017-03-01 16:08:39', '2017-03-01 16:08:39', 'last_industry_code', '石油/石化/化工', '', '', '310', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('241', '0', '2017-03-01 16:08:39', '2017-03-01 16:08:39', 'last_industry_code', '采掘/冶炼/矿产', '', '', '320', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('242', '0', '2017-03-01 16:08:39', '2017-03-01 16:08:39', 'last_industry_code', '能源(电力/水利)', '', '', '330', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('243', '0', '2017-03-01 16:08:39', '2017-03-01 16:08:39', 'last_industry_code', '仪器/仪表/工业自动化/电气', '', '', '340', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('244', '0', '2017-03-01 16:08:39', '2017-03-01 16:08:39', 'last_industry_code', '汽车/摩托车', '', '', '350', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('245', '0', '2017-03-01 16:08:39', '2017-03-01 16:08:39', 'last_industry_code', '机械制造/机电/重工', '', '', '360', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('246', '0', '2017-03-01 16:08:39', '2017-03-01 16:08:39', 'last_industry_code', '原材料及加工', '', '', '370', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('247', '0', '2017-03-01 16:08:39', '2017-03-01 16:08:39', 'last_industry_code', '教育/培训/学术/科研/院校', '', '', '380', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('248', '0', '2017-03-01 16:08:39', '2017-03-01 16:08:39', 'last_industry_code', '政府/公共事业/非营利机构', '', '', '390', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('249', '0', '2017-03-01 16:08:39', '2017-03-01 16:08:39', 'last_industry_code', '其他', '', '', '400', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('250', '0', '2017-03-01 16:08:39', '2017-03-01 16:08:39', 'last_industry_code', '农/林/牧/渔', '', '', '410', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('251', '0', '2017-03-01 16:08:39', '2017-03-01 16:08:39', 'last_industry_code', '网络游戏', '', '', '420', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('252', '0', '2017-03-01 16:08:39', '2017-03-01 16:08:39', 'last_industry_code', '会计/审计', '', '', '430', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('253', '0', '2017-03-01 16:08:39', '2017-03-01 16:08:39', 'last_industry_code', '外包服务', '', '', '440', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('254', '0', '2017-03-01 16:08:39', '2017-03-01 16:08:39', 'last_industry_code', '检测/认证', '', '', '450', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('255', '0', '2017-03-01 16:08:40', '2017-03-01 16:08:40', 'last_industry_code', '奢侈品/收藏品', '', '', '460', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('256', '0', '2017-03-01 16:08:40', '2017-03-01 16:08:40', 'last_industry_code', '工艺品/珠宝/玩具', '', '', '470', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('257', '0', '2017-03-01 16:08:40', '2017-03-01 16:08:40', 'last_industry_code', '航空/航天', '', '', '480', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('258', '0', '2017-03-01 16:08:40', '2017-03-01 16:08:40', 'last_industry_code', '新能源', '', '', '490', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('259', '0', '2017-03-01 16:08:40', '2017-03-01 16:08:40', 'last_industry_code', '信托/担保/拍卖/典当', '', '', '500', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('260', '0', '2017-03-01 16:08:40', '2017-03-01 16:08:40', 'last_industry_code', '租赁服务', '', '', '510', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('262', '0', '2017-03-01 16:08:40', '2017-03-01 16:08:40', 'income_expense_comparison', '入账远大于支出', '', '', '1', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('263', '0', '2017-03-01 16:08:40', '2017-03-01 16:08:40', 'income_expense_comparison', '入账大于支出', '', '', '2', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('264', '0', '2017-03-01 16:08:40', '2017-03-01 16:08:40', 'income_expense_comparison', '入账接进出账', '', '', '3', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('265', '0', '2017-03-01 16:08:40', '2017-03-01 16:08:40', 'income_expense_comparison', '入账小于出账', '', '', '4', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('266', '0', '2017-03-01 16:08:40', '2017-03-01 16:08:40', 'income_expense_comparison', '入账远小于支出', '', '', '5', '', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('267', '0', '2017-03-01 16:08:40', '2017-03-01 16:08:40', 'college_type', '专科', '专科', '', '1', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('269', '0', '2017-03-01 16:08:40', '2017-03-01 16:08:40', 'college_type', '普本', '本科', '', '2', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('272', '0', '2017-03-01 16:08:41', '2017-03-01 16:08:41', 'college_type', '211院校', '211工程院校', '', '3', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('273', '0', '2017-03-01 16:08:41', '2017-03-01 16:08:41', 'college_type', '985院校', '985、211工程院校', '', '4', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('274', '0', '2017-03-01 16:08:41', '2017-03-01 16:08:41', 'is_loan_agency', '命中', '00', '', '1', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('275', '0', '2017-03-01 16:08:41', '2017-03-01 16:08:41', 'is_loan_agency', '其他', '11', '', '0', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('277', '0', '2017-03-01 16:08:41', '2017-03-01 16:08:41', 'is_organization_g_black', '命中', '00', '', '1', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('278', '0', '2017-03-01 16:08:41', '2017-03-01 16:08:41', 'is_organization_g_black', '其他', '11.0', '', '0', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('280', '0', '2017-03-01 16:08:41', '2017-03-01 16:08:41', 'is_netsky_black', '命中', '00', '', '1', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('281', '0', '2017-03-01 16:08:41', '2017-03-01 16:08:41', 'is_netsky_black', '其他', '11', '', '0', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('283', '0', '2017-03-01 16:08:41', '2017-03-01 16:08:41', 'is_netsky_multi_loan', '命中', '00', '', '1', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('284', '0', '2017-03-01 16:08:41', '2017-03-01 16:08:41', 'is_netsky_multi_loan', '其他', '11', '', '0', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('286', '0', '2017-03-01 16:08:41', '2017-03-01 16:08:41', 'is_skyeye_black', '命中', '00', '', '1', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('287', '0', '2017-03-01 16:08:41', '2017-03-01 16:08:41', 'is_skyeye_black', '其他', '11', '', '0', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('289', '0', '2017-03-01 16:08:42', '2017-03-01 16:08:42', 'is_court_shixin', '命中', '00', '', '1', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('290', '0', '2017-03-01 16:08:42', '2017-03-01 16:08:42', 'is_court_shixin', '其他', '11', '', '0', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('292', '0', '2017-03-01 16:08:42', '2017-03-01 16:08:42', 'is_net_black', '命中', '00', '', '1', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('293', '0', '2017-03-01 16:08:42', '2017-03-01 16:08:42', 'is_net_black', '其他', '11', '', '0', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('295', '0', '2017-03-01 16:08:42', '2017-03-01 16:08:42', 'has_negative_info', '命中', '00', '', '1', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('296', '0', '2017-03-01 16:08:42', '2017-03-01 16:08:42', 'has_negative_info', '其他', '11', '', '0', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('298', '0', '2017-03-01 16:08:42', '2017-03-01 16:08:42', 'is_netsky_grey', '命中', '00', '', '1', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('299', '0', '2017-03-01 16:08:42', '2017-03-01 16:08:42', 'is_netsky_grey', '其他', '11', '', '0', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('301', '0', '2017-03-01 16:08:42', '2017-03-01 16:08:42', 'is_court_zhixing', '命中', '00', '', '1', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('302', '0', '2017-03-01 16:08:42', '2017-03-01 16:08:42', 'is_court_zhixing', '其他', '11', '', '0', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('304', '0', '2017-03-01 16:08:42', '2017-03-01 16:08:42', 'online_time', '(0,6)', '', '', '0', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('305', '0', '2017-03-01 16:08:42', '2017-03-01 16:08:42', 'online_time', '[6,12)', '', '', '11', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('306', '0', '2017-03-01 16:08:42', '2017-03-01 16:08:42', 'online_time', '[12,24)', '', '', '22', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('307', '0', '2017-03-01 16:08:43', '2017-03-01 16:08:43', 'online_time', '[24,+)', '', '', '33', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('308', '0', '2017-03-01 16:08:43', '2017-03-01 16:08:43', 'is_pingan_financial_shixin', '命中', '0.0', '', '1', 'int', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('309', '0', '2017-03-01 16:08:43', '2017-03-01 16:08:43', 'is_pingan_financial_shixin', '其他', '2.0', '', '0', 'int', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('310', '0', '2017-03-01 16:08:43', '2017-03-01 16:08:43', 'is_pingan_multi_loan', '命中', '0.0', '', '1', 'int', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('311', '0', '2017-03-01 16:08:43', '2017-03-01 16:08:43', 'is_pingan_multi_loan', '其他', '2.0', '', '0', 'int', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('312', '0', '2017-03-01 16:08:43', '2017-03-01 16:08:43', 'register_city_level', '一线', '地域表', '', '1', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('313', '0', '2017-03-01 16:08:43', '2017-03-01 16:08:43', 'register_city_level', '二线', '地域表', '', '2', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('314', '0', '2017-03-01 16:08:43', '2017-03-01 16:08:43', 'register_city_level', '三线', '地域表', '', '3', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('315', '0', '2017-03-01 16:08:43', '2017-03-01 16:08:43', 'register_city_level', '四线', '地域表', '', '4', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('316', '0', '2017-03-01 16:08:43', '2017-03-01 16:08:43', 'register_city_level', '其他', '地域表', '', '5', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('317', '0', '2017-03-01 16:08:43', '2017-03-01 16:08:43', 'mobile_area_city_level', '一线', '地域表', '', '1', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('318', '0', '2017-03-01 16:08:43', '2017-03-01 16:08:43', 'mobile_area_city_level', '二线', '地域表', '', '2', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('319', '0', '2017-03-01 16:08:43', '2017-03-01 16:08:43', 'mobile_area_city_level', '三线', '地域表', '', '3', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('320', '0', '2017-03-01 16:08:44', '2017-03-01 16:08:44', 'mobile_area_city_level', '四线', '地域表', '', '4', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('321', '0', '2017-03-01 16:08:44', '2017-03-01 16:08:44', 'mobile_area_city_level', '其他', '地域表', '', '5', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('322', '0', '2017-03-01 16:08:44', '2017-03-01 16:08:44', 'company_addr_city_level', '一线', '地域表', '', '1', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('323', '0', '2017-03-01 16:08:44', '2017-03-01 16:08:44', 'company_addr_city_level', '二线', '地域表', '', '2', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('324', '0', '2017-03-01 16:08:44', '2017-03-01 16:08:44', 'company_addr_city_level', '三线', '地域表', '', '3', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('325', '0', '2017-03-01 16:08:44', '2017-03-01 16:08:44', 'company_addr_city_level', '四线', '地域表', '', '4', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('326', '0', '2017-03-01 16:08:44', '2017-03-01 16:08:44', 'company_addr_city_level', '其他', '地域表', '', '5', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('327', '0', '2017-03-01 16:08:44', '2017-03-01 16:08:44', 'gender', '男', '男', '', '0', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('328', '0', '2017-03-01 16:08:44', '2017-03-01 16:08:44', 'gender', '女', '女', '', '1', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('331', '0', '2017-03-01 16:08:44', '2017-03-01 16:08:44', 'marital_status', '未婚', '未婚', '', '10', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('332', '0', '2017-03-01 16:08:44', '2017-03-01 16:08:44', 'marital_status', '已婚', '已婚', '', '20', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('333', '0', '2017-03-01 16:08:44', '2017-03-01 16:08:44', 'marital_status', '已婚', '初婚', '', '21', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('334', '0', '2017-03-01 16:08:44', '2017-03-01 16:08:44', 'marital_status', '已婚', '再婚', '', '22', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('335', '0', '2017-03-01 16:08:44', '2017-03-01 16:08:44', 'marital_status', '已婚', '复婚', '', '23', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('336', '0', '2017-03-01 16:08:45', '2017-03-01 16:08:45', 'marital_status', '丧偶', '丧偶', '', '30', 'string', '');
-INSERT INTO `fic_feature_code_mapping` VALUES ('337', '0', '2017-03-01 16:08:45', '2017-03-01 16:08:45', 'marital_status', '离异', '离异', '', '40', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('1', '1', '2017-03-03 16:03:09', '2017-03-03 16:03:09', 'airfare_sum12', '一年内乘机总票价', '0.0', '5000.0', '0', 'float', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('2', '1', '2017-03-03 16:03:09', '2017-03-03 16:03:09', 'airfare_sum12', '一年内乘机总票价', '5000.0', '10000.0', '1', 'float', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('3', '1', '2017-03-03 16:03:09', '2017-03-03 16:03:09', 'airfare_sum12', '一年内乘机总票价', '10000.0', '20000.0', '2', 'float', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('4', '1', '2017-03-03 16:03:09', '2017-03-03 16:03:09', 'airfare_sum12', '一年内乘机总票价', '20000.0', '50000.0', '3', 'float', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('5', '1', '2017-03-03 16:03:09', '2017-03-03 16:03:09', 'airfare_sum12', '一年内乘机总票价', '50000.0', '100000.0', '4', 'float', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('6', '1', '2017-03-03 16:03:09', '2017-03-03 16:03:09', 'airfare_sum12', '一年内乘机总票价', '100000.0', '1000000000.0', '5', 'float', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('7', '0', '2017-03-03 16:03:09', '2017-03-03 16:03:09', 'cur_corp_years', '经营年限', '-1.0', '1.0', '1', 'float', '(]');
+INSERT INTO `fic_feature_code_mapping` VALUES ('8', '0', '2017-03-03 16:03:09', '2017-03-03 16:03:09', 'cur_corp_years', '经营年限', '1.0', '2.0', '2', 'float', '(]');
+INSERT INTO `fic_feature_code_mapping` VALUES ('9', '0', '2017-03-03 16:03:09', '2017-03-03 16:03:09', 'cur_corp_years', '经营年限', '2.0', '3.0', '3', 'float', '(]');
+INSERT INTO `fic_feature_code_mapping` VALUES ('10', '0', '2017-03-03 16:03:09', '2017-03-03 16:03:09', 'cur_corp_years', '经营年限', '3.0', '4.0', '4', 'float', '(]');
+INSERT INTO `fic_feature_code_mapping` VALUES ('11', '0', '2017-03-03 16:03:09', '2017-03-03 16:03:09', 'cur_corp_years', '经营年限', '4.0', '5.0', '5', 'float', '(]');
+INSERT INTO `fic_feature_code_mapping` VALUES ('12', '0', '2017-03-03 16:03:09', '2017-03-03 16:03:09', 'cur_corp_years', '经营年限', '5.0', '8.0', '6', 'float', '(]');
+INSERT INTO `fic_feature_code_mapping` VALUES ('13', '0', '2017-03-03 16:03:10', '2017-03-03 16:03:10', 'cur_corp_years', '经营年限', '8.0', '10.0', '7', 'float', '(]');
+INSERT INTO `fic_feature_code_mapping` VALUES ('14', '0', '2017-03-03 16:03:10', '2017-03-03 16:03:10', 'cur_corp_years', '经营年限', '10.0', '10000.0', '8', 'float', '(]');
+INSERT INTO `fic_feature_code_mapping` VALUES ('15', '0', '2017-03-03 16:03:10', '2017-03-03 16:03:10', 'cur_employee_number', '现工作单位规模(人数)', '0.0', '20.0', '1', 'string', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('16', '0', '2017-03-03 16:03:10', '2017-03-03 16:03:10', 'cur_employee_number', '现工作单位规模(人数)', '20.0', '100.0', '2', 'string', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('17', '0', '2017-03-03 16:03:10', '2017-03-03 16:03:10', 'cur_employee_number', '现工作单位规模(人数)', '100.0', '500.0', '3', 'string', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('18', '0', '2017-03-03 16:03:10', '2017-03-03 16:03:10', 'cur_employee_number', '现工作单位规模(人数)', '500.0', '1000.0', '4', 'string', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('19', '0', '2017-03-03 16:03:10', '2017-03-03 16:03:10', 'cur_employee_number', '现工作单位规模(人数)', '1000.0', '10000.0', '5', 'string', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('20', '0', '2017-03-03 16:03:10', '2017-03-03 16:03:10', 'cur_employee_number', '现工作单位规模(人数)', '10000.0', '10000000.0', '6', 'string', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('21', '0', '2017-03-03 16:03:10', '2017-03-03 16:03:10', 'cur_work_status', '在职,看看新机会', '在职,看看新机会', '', '0', 'string', 'in');
+INSERT INTO `fic_feature_code_mapping` VALUES ('22', '0', '2017-03-03 16:03:10', '2017-03-03 16:03:10', 'cur_work_status', '离职,正在找工作', '离职,正在找工作', '', '1', 'string', 'in');
+INSERT INTO `fic_feature_code_mapping` VALUES ('23', '0', '2017-03-03 16:03:10', '2017-03-03 16:03:10', 'cur_work_status', '在职,急寻新工作', '在职,急寻新工作', '', '2', 'string', 'in');
+INSERT INTO `fic_feature_code_mapping` VALUES ('24', '0', '2017-03-03 16:03:10', '2017-03-03 16:03:10', 'cur_work_status', '在职,暂无跳槽打算', '在职,暂无跳槽打算', '', '3', 'string', 'in');
+INSERT INTO `fic_feature_code_mapping` VALUES ('25', '0', '2017-03-03 16:03:10', '2017-03-03 16:03:10', 'education_degree_check', '博士', '博士研究生', '', '1', 'string', '==');
+INSERT INTO `fic_feature_code_mapping` VALUES ('26', '0', '2017-03-03 16:03:10', '2017-03-03 16:03:10', 'education_degree_check', '硕士', '硕士研究生', '', '2', 'string', '==');
+INSERT INTO `fic_feature_code_mapping` VALUES ('27', '0', '2017-03-03 16:03:10', '2017-03-03 16:03:10', 'education_degree_check', '本科', '本科', '', '3', 'string', '==');
+INSERT INTO `fic_feature_code_mapping` VALUES ('28', '0', '2017-03-03 16:03:10', '2017-03-03 16:03:10', 'education_degree_check', '专科', '专科', '', '4', 'string', '==');
+INSERT INTO `fic_feature_code_mapping` VALUES ('30', '0', '2017-03-03 16:03:10', '2017-03-03 16:03:10', 'education_degree_check', '其他', 'N/A', '', '5', 'string', '==');
+INSERT INTO `fic_feature_code_mapping` VALUES ('31', '0', '2017-03-03 16:03:11', '2017-03-03 16:03:11', 'education_degree_code', '博士', '5', '', '1', 'string', '==');
+INSERT INTO `fic_feature_code_mapping` VALUES ('33', '0', '2017-03-03 16:03:11', '2017-03-03 16:03:11', 'education_degree_code', '硕士', '20', '', '2', 'string', '==');
+INSERT INTO `fic_feature_code_mapping` VALUES ('35', '0', '2017-03-03 16:03:11', '2017-03-03 16:03:11', 'education_degree_code', '本科', '40', '', '3', 'string', '==');
+INSERT INTO `fic_feature_code_mapping` VALUES ('36', '0', '2017-03-03 16:03:11', '2017-03-03 16:03:11', 'education_degree_code', '专科', '50', '', '4', 'string', '==');
+INSERT INTO `fic_feature_code_mapping` VALUES ('37', '0', '2017-03-03 16:03:11', '2017-03-03 16:03:11', 'education_degree_code', '其他', '60', '', '5', 'string', '==');
+INSERT INTO `fic_feature_code_mapping` VALUES ('42', '1', '2017-03-03 16:03:11', '2017-03-03 16:03:11', 'education_tz', '统招', '1', '', '1', 'int', '==');
+INSERT INTO `fic_feature_code_mapping` VALUES ('43', '1', '2017-03-03 16:03:11', '2017-03-03 16:03:11', 'education_tz', '非统招', '0', '', '0', 'int', '==');
+INSERT INTO `fic_feature_code_mapping` VALUES ('44', '0', '2017-03-03 16:03:11', '2017-03-03 16:03:11', 'income_level', '年入账', '0', '10000', '0', 'int', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('45', '0', '2017-03-03 16:03:11', '2017-03-03 16:03:11', 'income_level', '年入账', '10000', '50000', '1', 'int', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('46', '0', '2017-03-03 16:03:11', '2017-03-03 16:03:11', 'income_level', '年入账', '50000', '100000', '2', 'int', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('47', '0', '2017-03-03 16:03:11', '2017-03-03 16:03:11', 'income_level', '年入账', '100000', '500000', '3', 'int', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('48', '0', '2017-03-03 16:03:11', '2017-03-03 16:03:11', 'income_level', '年入账', '500000', '1000000', '4', 'int', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('49', '0', '2017-03-03 16:03:11', '2017-03-03 16:03:11', 'income_level', '年入账', '1000000', '1000000000', '5', 'int', '[)');
+INSERT INTO `fic_feature_code_mapping` VALUES ('50', '0', '2017-03-03 16:03:11', '2017-03-03 16:03:11', 'income_level_lt', '年入账(联通)', '0', '', '0', 'int', '==');
+INSERT INTO `fic_feature_code_mapping` VALUES ('60', '0', '2017-03-03 16:03:12', '2017-03-03 16:03:12', 'income_level_lt', '年入账(联通)', 'a', '', '1', 'int', '==');
+INSERT INTO `fic_feature_code_mapping` VALUES ('64', '0', '2017-03-03 16:03:12', '2017-03-03 16:03:12', 'income_level_lt', '年入账(联通)', 'e', '', '2', 'int', '==');
+INSERT INTO `fic_feature_code_mapping` VALUES ('69', '0', '2017-03-03 16:03:12', '2017-03-03 16:03:12', 'income_level_lt', '年入账(联通)', '13', '', '3', 'int', '==');
+INSERT INTO `fic_feature_code_mapping` VALUES ('73', '0', '2017-03-03 16:03:12', '2017-03-03 16:03:12', 'income_level_lt', '年入账(联通)', '17', '', '4', 'int', '==');
+INSERT INTO `fic_feature_code_mapping` VALUES ('78', '0', '2017-03-03 16:03:12', '2017-03-03 16:03:12', 'income_level_lt', '年入账(联通)', '1c', '', '5', 'int', '==');
+INSERT INTO `fic_feature_code_mapping` VALUES ('88', '0', '2017-03-03 16:03:12', '2017-03-03 16:03:12', 'income_level_yd', '年入账(移动)', '0', '', '0', 'int', '==');
+INSERT INTO `fic_feature_code_mapping` VALUES ('98', '0', '2017-03-03 16:03:12', '2017-03-03 16:03:12', 'income_level_yd', '年入账(移动)', '10', '', '1', 'int', '==');
+INSERT INTO `fic_feature_code_mapping` VALUES ('102', '0', '2017-03-03 16:03:12', '2017-03-03 16:03:12', 'income_level_yd', '年入账(移动)', '14', '', '2', 'int', '==');
+INSERT INTO `fic_feature_code_mapping` VALUES ('107', '0', '2017-03-03 16:03:12', '2017-03-03 16:03:12', 'income_level_yd', '年入账(移动)', '19', '', '3', 'int', '==');
+INSERT INTO `fic_feature_code_mapping` VALUES ('111', '0', '2017-03-03 16:03:12', '2017-03-03 16:03:12', 'income_level_yd', '年入账(移动)', '23', '', '4', 'int', '==');
+INSERT INTO `fic_feature_code_mapping` VALUES ('116', '0', '2017-03-03 16:03:12', '2017-03-03 16:03:12', 'income_level_yd', '年入账(移动)', '28', '', '5', 'int', '==');
+INSERT INTO `fic_feature_code_mapping` VALUES ('126', '1', '2017-03-03 16:03:12', '2017-03-03 16:03:12', 'is_cur_corp_shixin', '未命中', '11.0', '', '0', 'string', '==');
+INSERT INTO `fic_feature_code_mapping` VALUES ('128', '1', '2017-03-03 16:03:12', '2017-03-03 16:03:12', 'is_cur_corp_shixin', '命中', '0.0', '', '1', 'string', '==');
+INSERT INTO `fic_feature_code_mapping` VALUES ('129', '1', '2017-03-03 16:03:13', '2017-03-03 16:03:13', 'is_jiuyao_multi_loan', '命中91多头借贷名单', '', '', '1', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('130', '1', '2017-03-03 16:03:13', '2017-03-03 16:03:13', 'is_jiuyao_multi_loan', '未命中91多头借贷名单', '', '', '0', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('131', '1', '2017-03-03 16:03:13', '2017-03-03 16:03:13', 'is_mobile_black', '申请人手机号有染黑记录', '0.0', '', '1', 'int', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('132', '1', '2017-03-03 16:03:13', '2017-03-03 16:03:13', 'is_mobile_black', '申请人手机号无染黑记录', '2.0', '', '0', 'int', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('133', '1', '2017-03-03 16:03:13', '2017-03-03 16:03:13', 'is_pingan_other_loan', '未命中', '2.0', '', '0', 'int', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('134', '1', '2017-03-03 16:03:13', '2017-03-03 16:03:13', 'is_pingan_other_loan', '命中', '0.0', '', '1', 'int', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('135', '1', '2017-03-03 16:03:13', '2017-03-03 16:03:13', 'is_pingan_overdue_loan', '未命中', '2.0', '', '0', 'int', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('136', '1', '2017-03-03 16:03:13', '2017-03-03 16:03:13', 'is_pingan_overdue_loan', '命中', '0.0', '', '1', 'int', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('137', '1', '2017-03-03 16:03:13', '2017-03-03 16:03:13', 'is_recruitment', '非统招', '函授', '', '0', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('143', '1', '2017-03-03 16:03:13', '2017-03-03 16:03:13', 'is_recruitment', '统招', '全日制', '', '1', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('144', '1', '2017-03-03 16:03:13', '2017-03-03 16:03:13', 'is_unclear_loan', '没有未结清贷款', '0.0', '', '0', 'int', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('145', '1', '2017-03-03 16:03:13', '2017-03-03 16:03:13', 'is_unclear_loan', '有未结清贷款', '1.0', '', '1', 'int', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('146', '0', '2017-03-03 16:03:13', '2017-03-03 16:03:13', 'max_flight_area', '国内', 'inland', '', '1', '', '==');
+INSERT INTO `fic_feature_code_mapping` VALUES ('147', '0', '2017-03-03 16:03:14', '2017-03-03 16:03:14', 'max_flight_area', '国外', 'international', '', '2', '', '==');
+INSERT INTO `fic_feature_code_mapping` VALUES ('148', '0', '2017-03-03 16:03:14', '2017-03-03 16:03:14', 'max_flight_area', '乘机次数为零', '0', '', '3', '', '==');
+INSERT INTO `fic_feature_code_mapping` VALUES ('149', '0', '2017-03-03 16:03:14', '2017-03-03 16:03:14', 'max_flight_area', '无记录', 'unknow', '', '4', '', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('150', '0', '2017-03-03 16:03:14', '2017-03-03 16:03:14', 'max_flight_class', '商务舱', 'business_class', '', '1', '', '==');
+INSERT INTO `fic_feature_code_mapping` VALUES ('151', '0', '2017-03-03 16:03:14', '2017-03-03 16:03:14', 'max_flight_class', '公务舱', 'executive_class', '', '2', '', '==');
+INSERT INTO `fic_feature_code_mapping` VALUES ('152', '0', '2017-03-03 16:03:14', '2017-03-03 16:03:14', 'max_flight_class', '经济舱', 'tourist_class', '', '3', '', '==');
+INSERT INTO `fic_feature_code_mapping` VALUES ('153', '0', '2017-03-03 16:03:14', '2017-03-03 16:03:14', 'max_flight_class', '乘机次数为零', '0', '', '4', '', '==');
+INSERT INTO `fic_feature_code_mapping` VALUES ('154', '1', '2017-03-03 16:03:14', '2017-03-03 16:03:14', 'mobile_identity', '身份验证一致', '00', '', '1', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('155', '1', '2017-03-03 16:03:14', '2017-03-03 16:03:14', 'mobile_identity', '其他', '11.0', '', '0', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('157', '1', '2017-03-03 16:03:14', '2017-03-03 16:03:14', 'now_industry_code', '全部行业', '', '', '0', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('158', '1', '2017-03-03 16:03:14', '2017-03-03 16:03:14', 'now_industry_code', '计算机软件', '', '', '10', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('159', '1', '2017-03-03 16:03:14', '2017-03-03 16:03:14', 'now_industry_code', '计算机硬件/网络设备', '', '', '20', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('160', '1', '2017-03-03 16:03:14', '2017-03-03 16:03:14', 'now_industry_code', 'IT服务/系统集成', '', '', '30', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('161', '1', '2017-03-03 16:03:15', '2017-03-03 16:03:15', 'now_industry_code', '互联网/移动互联网/电子商务', '', '', '40', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('162', '1', '2017-03-03 16:03:15', '2017-03-03 16:03:15', 'now_industry_code', '电子技术/半导体/集成电路', '', '', '50', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('163', '1', '2017-03-03 16:03:15', '2017-03-03 16:03:15', 'now_industry_code', '通信(设备/运营/增值)', '', '', '60', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('164', '1', '2017-03-03 16:03:15', '2017-03-03 16:03:15', 'now_industry_code', '广告/公关/市场推广/会展', '', '', '70', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('165', '1', '2017-03-03 16:03:15', '2017-03-03 16:03:15', 'now_industry_code', '房地产开发/建筑/建材/工程', '', '', '80', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('166', '1', '2017-03-03 16:03:15', '2017-03-03 16:03:15', 'now_industry_code', '房地产服务(物业管理/地产经纪)', '', '', '90', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('167', '1', '2017-03-03 16:03:15', '2017-03-03 16:03:15', 'now_industry_code', '规划/设计/装潢', '', '', '100', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('168', '1', '2017-03-03 16:03:15', '2017-03-03 16:03:15', 'now_industry_code', '中介服务', '', '', '110', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('169', '1', '2017-03-03 16:03:15', '2017-03-03 16:03:15', 'now_industry_code', '专业服务(咨询/财会/法律/翻译等)', '', '', '120', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('170', '1', '2017-03-03 16:03:15', '2017-03-03 16:03:15', 'now_industry_code', '银行', '', '', '130', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('171', '1', '2017-03-03 16:03:15', '2017-03-03 16:03:15', 'now_industry_code', '保险', '', '', '140', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('172', '1', '2017-03-03 16:03:15', '2017-03-03 16:03:15', 'now_industry_code', '基金/证券/期货/投资', '', '', '150', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('173', '1', '2017-03-03 16:03:15', '2017-03-03 16:03:15', 'now_industry_code', '贸易/进出口', '', '', '160', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('174', '1', '2017-03-03 16:03:15', '2017-03-03 16:03:15', 'now_industry_code', '影视/媒体/艺术/文化/出版', '', '', '170', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('175', '1', '2017-03-03 16:03:15', '2017-03-03 16:03:15', 'now_industry_code', '印刷/包装/造纸', '', '', '180', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('176', '1', '2017-03-03 16:03:16', '2017-03-03 16:03:16', 'now_industry_code', '食品/饮料/烟酒/日化', '', '', '190', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('177', '1', '2017-03-03 16:03:16', '2017-03-03 16:03:16', 'now_industry_code', '服装服饰/纺织/皮革', '', '', '200', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('178', '1', '2017-03-03 16:03:16', '2017-03-03 16:03:16', 'now_industry_code', '家具/家电', '', '', '210', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('179', '1', '2017-03-03 16:03:16', '2017-03-03 16:03:16', 'now_industry_code', '办公用品及设备', '', '', '220', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('180', '1', '2017-03-03 16:03:16', '2017-03-03 16:03:16', 'now_industry_code', '旅游/酒店/餐饮服务/生活服务', '', '', '230', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('181', '1', '2017-03-03 16:03:16', '2017-03-03 16:03:16', 'now_industry_code', '百货/批发/零售', '', '', '240', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('182', '1', '2017-03-03 16:03:16', '2017-03-03 16:03:16', 'now_industry_code', '交通/物流/运输', '', '', '250', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('183', '1', '2017-03-03 16:03:16', '2017-03-03 16:03:16', 'now_industry_code', '娱乐/休闲/体育', '', '', '260', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('184', '1', '2017-03-03 16:03:16', '2017-03-03 16:03:16', 'now_industry_code', '制药/生物工程', '', '', '270', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('185', '1', '2017-03-03 16:03:16', '2017-03-03 16:03:16', 'now_industry_code', '医疗/保健/美容/卫生服务', '', '', '280', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('186', '1', '2017-03-03 16:03:16', '2017-03-03 16:03:16', 'now_industry_code', '医疗设备/器械', '', '', '290', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('187', '1', '2017-03-03 16:03:16', '2017-03-03 16:03:16', 'now_industry_code', '环保', '', '', '300', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('188', '1', '2017-03-03 16:03:16', '2017-03-03 16:03:16', 'now_industry_code', '石油/石化/化工', '', '', '310', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('189', '1', '2017-03-03 16:03:16', '2017-03-03 16:03:16', 'now_industry_code', '采掘/冶炼/矿产', '', '', '320', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('190', '1', '2017-03-03 16:03:16', '2017-03-03 16:03:16', 'now_industry_code', '能源(电力/水利)', '', '', '330', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('191', '1', '2017-03-03 16:03:17', '2017-03-03 16:03:17', 'now_industry_code', '仪器/仪表/工业自动化/电气', '', '', '340', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('192', '1', '2017-03-03 16:03:17', '2017-03-03 16:03:17', 'now_industry_code', '汽车/摩托车', '', '', '350', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('193', '1', '2017-03-03 16:03:17', '2017-03-03 16:03:17', 'now_industry_code', '机械制造/机电/重工', '', '', '360', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('194', '1', '2017-03-03 16:03:17', '2017-03-03 16:03:17', 'now_industry_code', '原材料及加工', '', '', '370', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('195', '1', '2017-03-03 16:03:17', '2017-03-03 16:03:17', 'now_industry_code', '教育/培训/学术/科研/院校', '', '', '380', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('196', '1', '2017-03-03 16:03:17', '2017-03-03 16:03:17', 'now_industry_code', '政府/公共事业/非营利机构', '', '', '390', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('197', '1', '2017-03-03 16:03:17', '2017-03-03 16:03:17', 'now_industry_code', '其他', '', '', '400', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('198', '1', '2017-03-03 16:03:17', '2017-03-03 16:03:17', 'now_industry_code', '农/林/牧/渔', '', '', '410', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('199', '1', '2017-03-03 16:03:17', '2017-03-03 16:03:17', 'now_industry_code', '网络游戏', '', '', '420', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('200', '1', '2017-03-03 16:03:17', '2017-03-03 16:03:17', 'now_industry_code', '会计/审计', '', '', '430', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('201', '1', '2017-03-03 16:03:17', '2017-03-03 16:03:17', 'now_industry_code', '外包服务', '', '', '440', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('202', '1', '2017-03-03 16:03:17', '2017-03-03 16:03:17', 'now_industry_code', '检测/认证', '', '', '450', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('203', '1', '2017-03-03 16:03:17', '2017-03-03 16:03:17', 'now_industry_code', '奢侈品/收藏品', '', '', '460', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('204', '1', '2017-03-03 16:03:17', '2017-03-03 16:03:17', 'now_industry_code', '工艺品/珠宝/玩具', '', '', '470', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('205', '1', '2017-03-03 16:03:17', '2017-03-03 16:03:17', 'now_industry_code', '航空/航天', '', '', '480', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('206', '1', '2017-03-03 16:03:18', '2017-03-03 16:03:18', 'now_industry_code', '新能源', '', '', '490', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('207', '1', '2017-03-03 16:03:18', '2017-03-03 16:03:18', 'now_industry_code', '信托/担保/拍卖/典当', '', '', '500', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('208', '1', '2017-03-03 16:03:18', '2017-03-03 16:03:18', 'now_industry_code', '租赁服务', '', '', '510', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('209', '1', '2017-03-03 16:03:18', '2017-03-03 16:03:18', 'last_industry_code', '全部行业', '', '', '0', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('210', '1', '2017-03-03 16:03:18', '2017-03-03 16:03:18', 'last_industry_code', '计算机软件', '', '', '10', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('211', '1', '2017-03-03 16:03:18', '2017-03-03 16:03:18', 'last_industry_code', '计算机硬件/网络设备', '', '', '20', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('212', '1', '2017-03-03 16:03:18', '2017-03-03 16:03:18', 'last_industry_code', 'IT服务/系统集成', '', '', '30', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('213', '1', '2017-03-03 16:03:18', '2017-03-03 16:03:18', 'last_industry_code', '互联网/移动互联网/电子商务', '', '', '40', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('214', '1', '2017-03-03 16:03:18', '2017-03-03 16:03:18', 'last_industry_code', '电子技术/半导体/集成电路', '', '', '50', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('215', '1', '2017-03-03 16:03:18', '2017-03-03 16:03:18', 'last_industry_code', '通信(设备/运营/增值)', '', '', '60', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('216', '1', '2017-03-03 16:03:18', '2017-03-03 16:03:18', 'last_industry_code', '广告/公关/市场推广/会展', '', '', '70', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('217', '1', '2017-03-03 16:03:18', '2017-03-03 16:03:18', 'last_industry_code', '房地产开发/建筑/建材/工程', '', '', '80', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('218', '1', '2017-03-03 16:03:18', '2017-03-03 16:03:18', 'last_industry_code', '房地产服务(物业管理/地产经纪)', '', '', '90', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('219', '1', '2017-03-03 16:03:19', '2017-03-03 16:03:19', 'last_industry_code', '规划/设计/装潢', '', '', '100', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('220', '1', '2017-03-03 16:03:19', '2017-03-03 16:03:19', 'last_industry_code', '中介服务', '', '', '110', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('221', '1', '2017-03-03 16:03:19', '2017-03-03 16:03:19', 'last_industry_code', '专业服务(咨询/财会/法律/翻译等)', '', '', '120', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('222', '1', '2017-03-03 16:03:19', '2017-03-03 16:03:19', 'last_industry_code', '银行', '', '', '130', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('223', '1', '2017-03-03 16:03:19', '2017-03-03 16:03:19', 'last_industry_code', '保险', '', '', '140', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('224', '1', '2017-03-03 16:03:19', '2017-03-03 16:03:19', 'last_industry_code', '基金/证券/期货/投资', '', '', '150', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('225', '1', '2017-03-03 16:03:19', '2017-03-03 16:03:19', 'last_industry_code', '贸易/进出口', '', '', '160', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('226', '1', '2017-03-03 16:03:19', '2017-03-03 16:03:19', 'last_industry_code', '影视/媒体/艺术/文化/出版', '', '', '170', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('227', '1', '2017-03-03 16:03:19', '2017-03-03 16:03:19', 'last_industry_code', '印刷/包装/造纸', '', '', '180', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('228', '1', '2017-03-03 16:03:19', '2017-03-03 16:03:19', 'last_industry_code', '食品/饮料/烟酒/日化', '', '', '190', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('229', '1', '2017-03-03 16:03:19', '2017-03-03 16:03:19', 'last_industry_code', '服装服饰/纺织/皮革', '', '', '200', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('230', '1', '2017-03-03 16:03:19', '2017-03-03 16:03:19', 'last_industry_code', '家具/家电', '', '', '210', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('231', '1', '2017-03-03 16:03:19', '2017-03-03 16:03:19', 'last_industry_code', '办公用品及设备', '', '', '220', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('232', '1', '2017-03-03 16:03:20', '2017-03-03 16:03:20', 'last_industry_code', '旅游/酒店/餐饮服务/生活服务', '', '', '230', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('233', '1', '2017-03-03 16:03:20', '2017-03-03 16:03:20', 'last_industry_code', '百货/批发/零售', '', '', '240', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('234', '1', '2017-03-03 16:03:20', '2017-03-03 16:03:20', 'last_industry_code', '交通/物流/运输', '', '', '250', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('235', '1', '2017-03-03 16:03:20', '2017-03-03 16:03:20', 'last_industry_code', '娱乐/休闲/体育', '', '', '260', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('236', '1', '2017-03-03 16:03:20', '2017-03-03 16:03:20', 'last_industry_code', '制药/生物工程', '', '', '270', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('237', '1', '2017-03-03 16:03:20', '2017-03-03 16:03:20', 'last_industry_code', '医疗/保健/美容/卫生服务', '', '', '280', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('238', '1', '2017-03-03 16:03:20', '2017-03-03 16:03:20', 'last_industry_code', '医疗设备/器械', '', '', '290', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('239', '1', '2017-03-03 16:03:20', '2017-03-03 16:03:20', 'last_industry_code', '环保', '', '', '300', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('240', '1', '2017-03-03 16:03:20', '2017-03-03 16:03:20', 'last_industry_code', '石油/石化/化工', '', '', '310', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('241', '1', '2017-03-03 16:03:20', '2017-03-03 16:03:20', 'last_industry_code', '采掘/冶炼/矿产', '', '', '320', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('242', '1', '2017-03-03 16:03:20', '2017-03-03 16:03:20', 'last_industry_code', '能源(电力/水利)', '', '', '330', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('243', '1', '2017-03-03 16:03:20', '2017-03-03 16:03:20', 'last_industry_code', '仪器/仪表/工业自动化/电气', '', '', '340', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('244', '1', '2017-03-03 16:03:20', '2017-03-03 16:03:20', 'last_industry_code', '汽车/摩托车', '', '', '350', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('245', '1', '2017-03-03 16:03:21', '2017-03-03 16:03:21', 'last_industry_code', '机械制造/机电/重工', '', '', '360', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('246', '1', '2017-03-03 16:03:21', '2017-03-03 16:03:21', 'last_industry_code', '原材料及加工', '', '', '370', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('247', '1', '2017-03-03 16:03:21', '2017-03-03 16:03:21', 'last_industry_code', '教育/培训/学术/科研/院校', '', '', '380', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('248', '1', '2017-03-03 16:03:21', '2017-03-03 16:03:21', 'last_industry_code', '政府/公共事业/非营利机构', '', '', '390', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('249', '1', '2017-03-03 16:03:21', '2017-03-03 16:03:21', 'last_industry_code', '其他', '', '', '400', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('250', '1', '2017-03-03 16:03:21', '2017-03-03 16:03:21', 'last_industry_code', '农/林/牧/渔', '', '', '410', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('251', '1', '2017-03-03 16:03:21', '2017-03-03 16:03:21', 'last_industry_code', '网络游戏', '', '', '420', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('252', '1', '2017-03-03 16:03:21', '2017-03-03 16:03:21', 'last_industry_code', '会计/审计', '', '', '430', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('253', '1', '2017-03-03 16:03:21', '2017-03-03 16:03:21', 'last_industry_code', '外包服务', '', '', '440', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('254', '1', '2017-03-03 16:03:21', '2017-03-03 16:03:21', 'last_industry_code', '检测/认证', '', '', '450', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('255', '1', '2017-03-03 16:03:21', '2017-03-03 16:03:21', 'last_industry_code', '奢侈品/收藏品', '', '', '460', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('256', '1', '2017-03-03 16:03:21', '2017-03-03 16:03:21', 'last_industry_code', '工艺品/珠宝/玩具', '', '', '470', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('257', '1', '2017-03-03 16:03:21', '2017-03-03 16:03:21', 'last_industry_code', '航空/航天', '', '', '480', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('258', '1', '2017-03-03 16:03:22', '2017-03-03 16:03:22', 'last_industry_code', '新能源', '', '', '490', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('259', '1', '2017-03-03 16:03:22', '2017-03-03 16:03:22', 'last_industry_code', '信托/担保/拍卖/典当', '', '', '500', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('260', '1', '2017-03-03 16:03:22', '2017-03-03 16:03:22', 'last_industry_code', '租赁服务', '', '', '510', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('261', '0', '2017-03-03 16:03:22', '2017-03-03 16:03:22', 'income_expense_comparison', '入账远大于支出', '10', '', '1', '', '>=');
+INSERT INTO `fic_feature_code_mapping` VALUES ('262', '0', '2017-03-03 16:03:22', '2017-03-03 16:03:22', 'income_expense_comparison', '入账大于支出', '1', '10', '2', '', '()');
+INSERT INTO `fic_feature_code_mapping` VALUES ('263', '0', '2017-03-03 16:03:22', '2017-03-03 16:03:22', 'income_expense_comparison', '入账接进出账', '1', '', '3', '', '==');
+INSERT INTO `fic_feature_code_mapping` VALUES ('264', '0', '2017-03-03 16:03:22', '2017-03-03 16:03:22', 'income_expense_comparison', '入账小于出账', '0.1', '1', '4', '', '()');
+INSERT INTO `fic_feature_code_mapping` VALUES ('265', '0', '2017-03-03 16:03:22', '2017-03-03 16:03:22', 'income_expense_comparison', '入账远小于支出', '0.1', '', '5', '', '<=');
+INSERT INTO `fic_feature_code_mapping` VALUES ('266', '0', '2017-03-03 16:03:22', '2017-03-03 16:03:22', 'college_type', '专科', '专科', '', '1', 'string', '==');
+INSERT INTO `fic_feature_code_mapping` VALUES ('268', '0', '2017-03-03 16:03:22', '2017-03-03 16:03:22', 'college_type', '普本', '本科', '', '2', 'string', '==');
+INSERT INTO `fic_feature_code_mapping` VALUES ('271', '0', '2017-03-03 16:03:22', '2017-03-03 16:03:22', 'college_type', '211院校', '211工程院校', '', '3', 'string', '==');
+INSERT INTO `fic_feature_code_mapping` VALUES ('272', '0', '2017-03-03 16:03:22', '2017-03-03 16:03:22', 'college_type', '985院校', '985,211工程院校', '', '4', 'string', '==');
+INSERT INTO `fic_feature_code_mapping` VALUES ('273', '1', '2017-03-03 16:03:22', '2017-03-03 16:03:22', 'is_loan_agency', '命中', '00', '', '1', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('274', '1', '2017-03-03 16:03:22', '2017-03-03 16:03:22', 'is_loan_agency', '其他', '11', '', '0', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('276', '1', '2017-03-03 16:03:22', '2017-03-03 16:03:22', 'is_organization_g_black', '命中', '00', '', '1', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('277', '1', '2017-03-03 16:03:23', '2017-03-03 16:03:23', 'is_organization_g_black', '其他', '11.0', '', '0', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('279', '1', '2017-03-03 16:03:23', '2017-03-03 16:03:23', 'is_netsky_black', '命中', '00', '', '1', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('280', '1', '2017-03-03 16:03:23', '2017-03-03 16:03:23', 'is_netsky_black', '其他', '11', '', '0', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('282', '1', '2017-03-03 16:03:23', '2017-03-03 16:03:23', 'is_netsky_multi_loan', '命中', '00', '', '1', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('283', '1', '2017-03-03 16:03:23', '2017-03-03 16:03:23', 'is_netsky_multi_loan', '其他', '11', '', '0', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('285', '1', '2017-03-03 16:03:23', '2017-03-03 16:03:23', 'is_skyeye_black', '命中', '00', '', '1', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('286', '1', '2017-03-03 16:03:23', '2017-03-03 16:03:23', 'is_skyeye_black', '其他', '11', '', '0', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('288', '1', '2017-03-03 16:03:23', '2017-03-03 16:03:23', 'is_court_shixin', '命中', '00', '', '1', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('289', '1', '2017-03-03 16:03:23', '2017-03-03 16:03:23', 'is_court_shixin', '其他', '11', '', '0', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('291', '1', '2017-03-03 16:03:23', '2017-03-03 16:03:23', 'is_net_black', '命中', '00', '', '1', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('292', '1', '2017-03-03 16:03:23', '2017-03-03 16:03:23', 'is_net_black', '其他', '11', '', '0', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('294', '1', '2017-03-03 16:03:23', '2017-03-03 16:03:23', 'has_negative_info', '命中', '00', '', '1', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('295', '1', '2017-03-03 16:03:23', '2017-03-03 16:03:23', 'has_negative_info', '其他', '11', '', '0', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('297', '1', '2017-03-03 16:03:23', '2017-03-03 16:03:23', 'is_netsky_grey', '命中', '00', '', '1', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('298', '1', '2017-03-03 16:03:23', '2017-03-03 16:03:23', 'is_netsky_grey', '其他', '11', '', '0', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('300', '1', '2017-03-03 16:03:23', '2017-03-03 16:03:23', 'is_court_zhixing', '命中', '00', '', '1', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('301', '1', '2017-03-03 16:03:24', '2017-03-03 16:03:24', 'is_court_zhixing', '其他', '11', '', '0', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('303', '1', '2017-03-03 16:03:24', '2017-03-03 16:03:24', 'online_time', '(0,6)', '', '', '1', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('304', '1', '2017-03-03 16:03:24', '2017-03-03 16:03:24', 'online_time', '[6,12)', '', '', '2', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('305', '1', '2017-03-03 16:03:24', '2017-03-03 16:03:24', 'online_time', '[12,24)', '', '', '3', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('306', '1', '2017-03-03 16:03:24', '2017-03-03 16:03:24', 'online_time', '[24,+)', '', '', '4', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('307', '1', '2017-03-03 16:03:24', '2017-03-03 16:03:24', 'is_pingan_financial_shixin', '命中', '0.0', '', '1', 'int', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('308', '1', '2017-03-03 16:03:24', '2017-03-03 16:03:24', 'is_pingan_financial_shixin', '其他', '2.0', '', '0', 'int', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('309', '1', '2017-03-03 16:03:24', '2017-03-03 16:03:24', 'is_pingan_multi_loan', '命中', '0.0', '', '1', 'int', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('310', '1', '2017-03-03 16:03:24', '2017-03-03 16:03:24', 'is_pingan_multi_loan', '其他', '2.0', '', '0', 'int', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('311', '1', '2017-03-03 16:03:24', '2017-03-03 16:03:24', 'register_city_level', '一线', '地域表', '', '1', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('312', '1', '2017-03-03 16:03:24', '2017-03-03 16:03:24', 'register_city_level', '二线', '地域表', '', '2', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('313', '1', '2017-03-03 16:03:24', '2017-03-03 16:03:24', 'register_city_level', '三线', '地域表', '', '3', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('314', '1', '2017-03-03 16:03:24', '2017-03-03 16:03:24', 'register_city_level', '四线', '地域表', '', '4', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('315', '1', '2017-03-03 16:03:24', '2017-03-03 16:03:24', 'register_city_level', '其他', '地域表', '', '5', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('316', '1', '2017-03-03 16:03:24', '2017-03-03 16:03:24', 'mobile_area_city_level', '一线', '地域表', '', '1', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('317', '1', '2017-03-03 16:03:25', '2017-03-03 16:03:25', 'mobile_area_city_level', '二线', '地域表', '', '2', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('318', '1', '2017-03-03 16:03:25', '2017-03-03 16:03:25', 'mobile_area_city_level', '三线', '地域表', '', '3', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('319', '1', '2017-03-03 16:03:25', '2017-03-03 16:03:25', 'mobile_area_city_level', '四线', '地域表', '', '4', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('320', '1', '2017-03-03 16:03:25', '2017-03-03 16:03:25', 'mobile_area_city_level', '其他', '地域表', '', '5', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('321', '1', '2017-03-03 16:03:25', '2017-03-03 16:03:25', 'company_addr_city_level', '一线', '地域表', '', '1', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('322', '1', '2017-03-03 16:03:25', '2017-03-03 16:03:25', 'company_addr_city_level', '二线', '地域表', '', '2', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('323', '1', '2017-03-03 16:03:25', '2017-03-03 16:03:25', 'company_addr_city_level', '三线', '地域表', '', '3', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('324', '1', '2017-03-03 16:03:25', '2017-03-03 16:03:25', 'company_addr_city_level', '四线', '地域表', '', '4', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('325', '1', '2017-03-03 16:03:25', '2017-03-03 16:03:25', 'company_addr_city_level', '其他', '地域表', '', '5', 'string', '');
+INSERT INTO `fic_feature_code_mapping` VALUES ('326', '0', '2017-03-03 16:03:25', '2017-03-03 16:03:25', 'gender', '男', '男', '', '0', 'string', '==');
+INSERT INTO `fic_feature_code_mapping` VALUES ('327', '0', '2017-03-03 16:03:25', '2017-03-03 16:03:25', 'gender', '女', '女', '', '1', 'string', '==');
+INSERT INTO `fic_feature_code_mapping` VALUES ('328', '0', '2017-03-03 16:03:25', '2017-03-03 16:03:25', 'marital_status', '未婚', '10', '', '10', 'string', '==');
+INSERT INTO `fic_feature_code_mapping` VALUES ('329', '0', '2017-03-03 16:03:25', '2017-03-03 16:03:25', 'marital_status', '已婚', '20', '', '20', 'string', '==');
+INSERT INTO `fic_feature_code_mapping` VALUES ('333', '0', '2017-03-03 16:03:26', '2017-03-03 16:03:26', 'marital_status', '丧偶', '30', '', '30', 'string', '==');
+INSERT INTO `fic_feature_code_mapping` VALUES ('334', '0', '2017-03-03 16:03:26', '2017-03-03 16:03:26', 'marital_status', '离异', '40', '', '40', 'string', '==');
+INSERT INTO `fic_feature_code_mapping` VALUES ('335', '0', '2017-03-03 16:03:26', '2017-03-03 16:03:26', 'marital_status', '其他', '90', '', '50', 'string', '==');
 
 -- ----------------------------
--- Table structure for `fic_feature_common_conf`
+-- Table structure for fic_feature_common_conf
 -- ----------------------------
 DROP TABLE IF EXISTS `fic_feature_common_conf`;
 CREATE TABLE `fic_feature_common_conf` (
@@ -2479,120 +2789,212 @@ CREATE TABLE `fic_feature_common_conf` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `feature_name` varchar(64) NOT NULL,
   `feature_name_cn` varchar(128) NOT NULL,
-  `data_identity` varchar(512) NOT NULL,
   `collect_type` varchar(64) DEFAULT NULL,
-  `raw_field_name` varchar(2048) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8;
+  `data_identity` varchar(2048) DEFAULT NULL,
+  `feature_type` int(11) DEFAULT NULL,
+  `feature_card_type` int(11) DEFAULT NULL,
+  `feature_rule_type` int(11) DEFAULT NULL,
+  `feature_select_value` varchar(2048) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fic_feature_common_conf_feature_card_type_26bad451_uniq` (`feature_card_type`),
+  KEY `fic_feature_common_conf_feature_rule_type_550eff7_uniq` (`feature_rule_type`),
+  KEY `fic_feature_common_conf_feature_type_12e00a3b_uniq` (`feature_type`),
+  CONSTRAINT `FK3ggn4weyxw0tmrfew8ejubhe5` FOREIGN KEY (`feature_type`) REFERENCES `fic_feature_type` (`id`),
+  CONSTRAINT `FK7x9yb9meu4rad7qn92us2evk2` FOREIGN KEY (`feature_rule_type`) REFERENCES `fic_feature_rule_type` (`id`),
+  CONSTRAINT `FKejmjpnhm8g5tx7qqkipmvtgak` FOREIGN KEY (`feature_card_type`) REFERENCES `fic_feature_card_type` (`id`),
+  CONSTRAINT `fic_featu_feature_card_type_26bad451_fk_fic_feature_card_type_id` FOREIGN KEY (`feature_card_type`) REFERENCES `fic_feature_card_type` (`id`),
+  CONSTRAINT `fic_featur_feature_rule_type_550eff7_fk_fic_feature_rule_type_id` FOREIGN KEY (`feature_rule_type`) REFERENCES `fic_feature_rule_type` (`id`),
+  CONSTRAINT `fic_feature_common__feature_type_12e00a3b_fk_fic_feature_type_id` FOREIGN KEY (`feature_type`) REFERENCES `fic_feature_type` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of fic_feature_common_conf
 -- ----------------------------
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:01', '2017-02-22 15:18:01', '1', 'age', '年龄', '[\'personal_info\']', 'Courier', '{\'personal_info\': [\'name\', \'card_id\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:01', '2017-02-22 15:18:01', '2', 'airfare_sum_12', '一年中乘机总票价', '[\'airline_passenger_info\']', 'Courier', '{\'airline_passenger_info\': [\'name\', \'card_id\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:01', '2017-02-22 15:18:01', '3', 'application_on', '申请提交时间', '[\'apply_data\']', 'Courier', '{\'apply_data\': [\'apply_id\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:01', '2017-02-22 15:18:01', '4', 'application_on_plus', '申请提交时间(增强版)', '[\'apply_data\']', 'Courier', '{\'apply_data\': [\'apply_id\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:01', '2017-02-22 15:18:01', '5', 'apply_register_duration', '注册时间长度（月数）', '[\'portrait_data\', \'apply_data\']', 'Courier', '{\'portrait_data\': [\'proposer_id\'], \'apply_data\': [\'apply_id\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:01', '2017-02-22 15:18:01', '6', 'car_count', '车辆个数', '[\'cc_car_credit\']', 'Courier', '{\'cc_car_credit\': [\'name\', \'card_id\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:02', '2017-02-22 15:18:02', '7', 'car_number', '车牌号', '[\'cc_car_credit\']', 'Courier', '{\'cc_car_credit\': [\'name\', \'card_id\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:02', '2017-02-22 15:18:02', '8', 'card_id', '身份证号', '[\'apply_data\']', 'Courier', '{\'apply_data\': [\'apply_id\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:02', '2017-02-22 15:18:02', '9', 'cc_bill_age', '贷记卡账龄（年数）', '[\'cc_credit\']', 'Courier', '{\'cc_credit\': [\'mobile\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:02', '2017-02-22 15:18:02', '10', 'college_type', '毕业/在读学校类型', '[\'education_review_s\']', 'Courier', '{\'education_review_s\': [\'name\', \'card_id\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:02', '2017-02-22 15:18:02', '11', 'company_addr_city_level', '企业城市等级', '[\'industrial_commercial_s\']', 'Courier', '{\'industrial_commercial_s\': [\'cur_company\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:02', '2017-02-22 15:18:02', '12', 'complete_degree', '简历完成度', '[\'portrait_data\']', 'Courier', '{\'portrait_data\': [\'proposer_id\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:02', '2017-02-22 15:18:02', '13', 'contacts', '通讯录个数', '[\'apply_data\']', 'Courier', '{\'apply_data\': [\'apply_id\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:02', '2017-02-22 15:18:02', '14', 'creditcard_count', '信用卡张数', '[\'cc_credit\']', 'Courier', '{\'cc_credit\': [\'mobile\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:02', '2017-02-22 15:18:02', '15', 'cur_company', '当前工作单位', '[\'portrait_data\']', 'Courier', '{\'portrait_data\': [\'proposer_id\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:02', '2017-02-22 15:18:02', '16', 'cur_corp_years', '现工作单位工作年限（年数）', '[\'industrial_commercial_s\']', 'Courier', '{\'industrial_commercial_s\': [\'cur_company\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:02', '2017-02-22 15:18:02', '17', 'cur_employee_number', '现工作单位规模（人数）', '[\'industrial_commercial_s\']', 'Courier', '{\'industrial_commercial_s\': [\'cur_company\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:02', '2017-02-22 15:18:02', '18', 'cur_work_status', '当前工作状态', '[\'portrait_data\']', 'Courier', '{\'portrait_data\': [\'proposer_id\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:02', '2017-02-22 15:18:02', '19', 'dc_bill_age', '借记卡账龄（年数）', '[\'cc_credit\']', 'Courier', '{\'cc_credit\': [\'mobile\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:03', '2017-02-22 15:18:03', '20', 'education_degree_check', '学信网学历', '[\'education_review_s\']', 'Courier', '{\'education_review_s\': [\'name\', \'card_id\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:03', '2017-02-22 15:18:03', '21', 'education_degree_code', '申请人填写学历', '[\'portrait_data\']', 'Courier', '{\'portrait_data\': [\'proposer_id\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:03', '2017-02-22 15:18:03', '22', 'education_tz', '最高学历是否统招', '[\'portrait_data\']', 'Courier', '{\'portrait_data\': [\'proposer_id\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:03', '2017-02-22 15:18:03', '23', 'folk', '是否为汉族', '[\'multi_id_card_info_s\']', 'Courier', '{\'multi_id_card_info_s\': [\'name\', \'card_id\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:03', '2017-02-22 15:18:03', '24', 'gender', '性别', '[\'personal_info\']', 'Courier', '{\'personal_info\': [\'name\', \'card_id\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:03', '2017-02-22 15:18:03', '25', 'gps_city_code', 'GPS定位城市', '[\'geo_location\']', 'Courier', '{\'geo_location\': [\'latitude\', \'longitudu\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:03', '2017-02-22 15:18:03', '26', 'graduate_college', '申请人输入院校', '[\'portrait_data\']', 'Courier', '{\'portrait_data\': [\'proposer_id\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:03', '2017-02-22 15:18:03', '27', 'graduate_college_check', '学信网查得院校', '[\'education_review_s\']', 'Courier', '{\'education_review_s\': [\'name\', \'card_id\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:03', '2017-02-22 15:18:03', '28', 'has_negative_info', '是否命中个人不良信息检测', '[\'negative_info_s\']', 'Courier', '{\'negative_info_s\': [\'name\', \'card_id\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:03', '2017-02-22 15:18:03', '29', 'income_expense_comparison', '入账与支出关系', '[\'cc_credit\', \'unicom_finance_portrait_s\']', 'ShuntCourier', '{\'cc_credit\': [\'mobile\'], \'unicom_finance_portrait_s\': [\'mobile\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:03', '2017-02-22 15:18:03', '30', 'income_level', '年入账', '[\'cc_credit\', \'portrait_data\', \'unicom_finance_portrait_s\']', 'ShuntCourier', '{\'cc_credit\': [\'mobile\'], \'portrait_data\': [\'proposer_id\'], \'unicom_finance_portrait_s\': [\'mobile\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:03', '2017-02-22 15:18:03', '31', 'industry_change_count', '转行次数', '[\'portrait_data\']', 'Courier', '{\'portrait_data\': [\'proposer_id\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:03', '2017-02-22 15:18:03', '32', 'is_court_shixin', '是否命中失信被执行人', '[\'court_shixin_a_s\']', 'Courier', '{\'court_shixin_a_s\': [\'name\', \'card_id\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:04', '2017-02-22 15:18:04', '33', 'is_court_zhixing', '是否命中被执行人', '[\'court_zhixing_a_s\']', 'Courier', '{\'court_zhixing_a_s\': [\'name\', \'card_id\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:04', '2017-02-22 15:18:04', '34', 'is_cur_corp_shixin', '现工作单位是否为失信被执行', '[\'court_shixin_a_s\']', 'Courier', '{\'court_shixin_a_s\': [\'name\', \'card_id\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:04', '2017-02-22 15:18:04', '35', 'is_jiuyao_multi_loan', '是否命中91多头借贷名单', '[\'multi_loan_91\']', 'Courier', '{\'multi_loan_91\': [\'name\', \'card_id\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:04', '2017-02-22 15:18:04', '36', 'is_loan_agency', '是否命中贷款中介', '[\'loan_agency\']', 'Courier', '{\'loan_agency\': [\'mobile\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:04', '2017-02-22 15:18:04', '37', 'is_mobile_black', '手机号是否染黑', '[\'trustutn_loan_phone\']', 'Courier', '{\'trustutn_loan_phone\': [\'name\', \'card_id\', \'mobile\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:04', '2017-02-22 15:18:04', '38', 'is_net_black', '是否命中网贷黑名单', '[\'net_black_a_s\']', 'Courier', '{\'net_black_a_s\': [\'name\', \'card_id\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:04', '2017-02-22 15:18:04', '39', 'is_netsky_black', '是否命中天网黑名单', '[\'tianwang_black\']', 'Courier', '{\'tianwang_black\': [\'mobile\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:04', '2017-02-22 15:18:04', '40', 'is_netsky_grey', '是否命中天网灰名单', '[\'tianwang_gray\']', 'Courier', '{\'tianwang_gray\': [\'mobile\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:04', '2017-02-22 15:18:04', '41', 'is_netsky_multi_loan', '是否命中天网多头贷款', '[\'tianwang_multi_loan\']', 'Courier', '{\'tianwang_multi_loan\': [\'mobile\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:04', '2017-02-22 15:18:04', '42', 'is_organization_g_black', '是否命中机构g黑名单', '[\'agentg_black\']', 'Courier', '{\'agentg_black\': [\'name\', \'card_id\', \'mobile\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:04', '2017-02-22 15:18:04', '43', 'is_pingan_financial_shixin', '是否命中金融失信黑名单', '[\'trustutn_loan_blacklist\']', 'Courier', '{\'trustutn_loan_blacklist\': [\'name\', \'card_id\', \'mobile\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:04', '2017-02-22 15:18:04', '44', 'is_pingan_multi_loan', '是否命中凭安多头借贷名单', '[\'trustutn_loan_loanmsg\']', 'Courier', '{\'trustutn_loan_loanmsg\': [\'name\', \'card_id\', \'mobile\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:04', '2017-02-22 15:18:04', '45', 'is_pingan_other_loan', '是否命中凭安其他机构借贷名单', '[\'trustutn_loan_otheragent\']', 'Courier', '{\'trustutn_loan_otheragent\': [\'name\', \'card_id\', \'mobile\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:05', '2017-02-22 15:18:05', '46', 'is_pingan_overdue_loan', '是否命中凭安逾期名单', '[\'trustutn_loan_overdue\']', 'Courier', '{\'trustutn_loan_overdue\': [\'name\', \'card_id\', \'mobile\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:05', '2017-02-22 15:18:05', '47', 'is_recruitment', '是否统招', '[\'education_review_s\']', 'Courier', '{\'education_review_s\': [\'name\', \'card_id\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:05', '2017-02-22 15:18:05', '48', 'is_skyeye_black', '是否命中天眼黑名单', '[\'tianyan_black\']', 'Courier', '{\'tianyan_black\': [\'card_id\', \'email\', \'mobile\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:05', '2017-02-22 15:18:05', '49', 'is_unclear_loan', '是否在未结清贷款申请记录中', '[\'loan_history\']', 'Courier', '{\'loan_history\': [\'card_id\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:05', '2017-02-22 15:18:05', '50', 'jiuyao_multi_loan_denied_count', '半年内拒贷次数', '[\'multi_loan_91\']', 'Courier', '{\'multi_loan_91\': [\'name\', \'card_id\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:05', '2017-02-22 15:18:05', '51', 'jiuyao_multi_loan_m2_count', 'M2及M2以上次数', '[\'multi_loan_91\']', 'Courier', '{\'multi_loan_91\': [\'name\', \'card_id\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:05', '2017-02-22 15:18:05', '52', 'last_industry_code', '上一份工作行业', '[\'portrait_data\']', 'Courier', '{\'portrait_data\': [\'proposer_id\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:05', '2017-02-22 15:18:05', '53', 'loan_infos', '91借贷信息', '[\'multi_loan_91\']', 'Courier', '{\'multi_loan_91\': [\'name\', \'card_id\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:05', '2017-02-22 15:18:05', '54', 'marital_status', '婚姻状况', '[\'multi_id_card_info_s\']', 'Courier', '{\'multi_id_card_info_s\': [\'name\', \'card_id\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:05', '2017-02-22 15:18:05', '55', 'max_flight_area', '一年内飞机出行中最多出行区域', '[\'airline_passenger_info\']', 'Courier', '{\'airline_passenger_info\': [\'name\', \'card_id\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:05', '2017-02-22 15:18:05', '56', 'max_flight_class', '一年内飞机出行中最多机舱类型', '[\'airline_passenger_info\']', 'Courier', '{\'airline_passenger_info\': [\'name\', \'card_id\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:05', '2017-02-22 15:18:05', '57', 'mobile', '手机号', '[\'apply_data\']', 'Courier', '{\'apply_data\': [\'apply_id\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:05', '2017-02-22 15:18:05', '58', 'mobile_activeness', '申请人手机号活跃度', '[\'trustutn_loan_phone\']', 'Courier', '{\'trustutn_loan_phone\': [\'name\', \'card_id\', \'mobile\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:05', '2017-02-22 15:18:05', '59', 'mobile_area_city_level', '归属地城市等级', '[\'mobile_locale\']', 'Courier', '{\'mobile_locale\': [\'mobile\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:06', '2017-02-22 15:18:06', '60', 'mobile_area_code', '手机号码归属地', '[\'mobile_locale\']', 'Courier', '{\'mobile_locale\': [\'mobile\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:06', '2017-02-22 15:18:06', '61', 'mobile_identity', '手机实名验证', '[\'telecom_mobile_identity_s\', \'unicom_mobile_identity_s\', \'yd_mobile_identity_s\']', 'ShuntCourier', '{\'telecom_mobile_identity_s\': [\'name\', \'card_id\', \'mobile\'], \'unicom_mobile_identity_s\': [\'name\', \'card_id\', \'mobile\'], \'yd_mobile_identity_s\': [\'name\', \'card_id\', \'mobile\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:06', '2017-02-22 15:18:06', '62', 'mobile_mark', '手机号标记信息', '[\'trustutn_loan_phone\']', 'Courier', '{\'trustutn_loan_phone\': [\'name\', \'card_id\', \'mobile\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:06', '2017-02-22 15:18:06', '63', 'mobile_stability', '申请人手机号稳定度', '[\'trustutn_loan_phone\']', 'Courier', '{\'trustutn_loan_phone\': [\'name\', \'card_id\', \'mobile\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:06', '2017-02-22 15:18:06', '64', 'name', '姓名', '[\'apply_data\']', 'Courier', '{\'apply_data\': [\'apply_id\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:06', '2017-02-22 15:18:06', '65', 'now_industry_code', '当前工作行业', '[\'portrait_data\']', 'Courier', '{\'portrait_data\': [\'proposer_id\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:06', '2017-02-22 15:18:06', '66', 'now_work_time', '本份工作工作时间', '[\'portrait_data\']', 'Courier', '{\'portrait_data\': [\'proposer_id\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:06', '2017-02-22 15:18:06', '67', 'now_workplace_code', '现在工作地点', '[\'portrait_data\']', 'Courier', '{\'portrait_data\': [\'proposer_id\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:06', '2017-02-22 15:18:06', '68', 'online_time', '在网时长', '[\'telecom_mobile_online_s\', \'unicome_mobile_online_time_s\', \'yd_mobile_online_time_s\']', 'ShuntCourier', '{\'telecom_mobile_online_time_s\': [\'mobile\'], \'unicome_mobile_online_time_s\': [\'mobile\'], \'yd_mobile_online_time_s\': [\'mobile\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:06', '2017-02-22 15:18:06', '69', 'overload_count', '超载次数', '[\'high_way_over_load\', \'cc_car_credit\']', 'RelevanceCourier', '{\'high_way_over_load\': [\'car_number\'], \'cc_car_credit\': [\'name\', \'card_id\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:06', '2017-02-22 15:18:06', '70', 'overspeed_count', '超速次数', '[\'high_way_over_speed\', \'cc_car_credit\']', 'RelevanceCourier', '{\'high_way_over_speed\': [\'car_number\'], \'cc_car_credit\': [\'name\', \'card_id\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:06', '2017-02-22 15:18:06', '71', 'pingan_max_overdue_days', '金融逾期名单最长逾期天数（近6个月）', '[\'trustutn_loan_overdue\']', 'Courier', '{\'trustutn_loan_overdue\': [\'name\', \'card_id\', \'mobile\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:06', '2017-02-22 15:18:06', '72', 'pingan_multi_loan_count', '多头借贷公司数量', '[\'trustutn_loan_loanmsg\']', 'Courier', '{\'trustutn_loan_loanmsg\': [\'name\', \'card_id\', \'mobile\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:06', '2017-02-22 15:18:06', '73', 'pingan_multi_loan_infos', '多头借贷信息', '[\'trustutn_loan_loanmsg\']', 'Courier', '{\'trustutn_loan_loanmsg\': [\'name\', \'card_id\', \'mobile\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:06', '2017-02-22 15:18:06', '74', 'pingan_other_loan_count', '其他信贷机构数量', '[\'trustutn_loan_otheragent\']', 'Courier', '{\'trustutn_loan_otheragent\': [\'name\', \'card_id\', \'mobile\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:07', '2017-02-22 15:18:07', '75', 'pingan_other_loan_infos', '其他机构借贷信息', '[\'trustutn_loan_otheragent\']', 'Courier', '{\'trustutn_loan_otheragent\': [\'name\', \'card_id\', \'mobile\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:07', '2017-02-22 15:18:07', '76', 'pingan_overdue_corp_count', '逾期公司数量', '[\'trustutn_loan_overdue\']', 'Courier', '{\'trustutn_loan_overdue\': [\'name\', \'card_id\', \'mobile\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:07', '2017-02-22 15:18:07', '77', 'pingan_overdue_count', '金融逾期名单逾期次数（近6个月）', '[\'trustutn_loan_overdue\']', 'Courier', '{\'trustutn_loan_overdue\': [\'name\', \'card_id\', \'mobile\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:07', '2017-02-22 15:18:07', '78', 'pingan_overdue_loan_infos', '逾期信息', '[\'trustutn_loan_overdue\']', 'Courier', '{\'trustutn_loan_overdue\': [\'name\', \'card_id\', \'mobile\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:07', '2017-02-22 15:18:07', '79', 'register_city_level', '户籍城市等级', '[\'personal_info\']', 'Courier', '{\'personal_info\': [\'name\', \'card_id\']}');
-INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:07', '2017-02-22 15:18:07', '80', 'work_time', '申请人工作时间', '[\'portrait_data\']', 'Courier', '{\'portrait_data\': [\'proposer_id\']}');
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:01', '2017-03-27 17:08:34', '1', 'age', '年龄', 'Courier', '{\'personal_info\': [\'name\', \'card_id\']}', '1', '1', '1', '0, 100');
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:01', '2017-02-22 15:18:01', '2', 'airfare_sum12', '一年中乘机总票价', 'Courier', '{\'airline_passenger_info\': [\'name\', \'card_id\']}', '2', '1', '2', '0, 100000');
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:01', '2017-03-27 17:08:29', '3', 'application_on', '申请提交时间', 'Courier', '{\'apply_data\': [\'apply_id\']}', '7', null, null, '');
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:01', '2017-03-27 16:45:59', '4', 'application_on_plus', '申请提交时间(增强版)', 'Courier', '{\'apply_data\': [\'apply_id\']}', '7', null, null, '');
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:01', '2017-02-22 15:18:01', '5', 'apply_register_duration', '注册时间长度（月数）', 'Courier', '{\'portrait_data\': [\'proposer_id\'], \'apply_data\': [\'apply_id\']}', '3', '1', '1', '0,100');
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:01', '2017-02-22 15:18:01', '6', 'car_count', '车辆个数', 'Courier', '{\'cc_car_credit\': [\'name\', \'card_id\']}', '2', '1', '1', '0,100');
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:02', '2017-02-22 15:18:02', '7', 'car_number', '车牌号', 'Courier', '{\'cc_car_credit\': [\'name\', \'card_id\']}', '2', null, null, '');
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:02', '2017-03-27 16:56:34', '8', 'card_id', '身份证号', 'Courier', '{\'apply_data\': [\'apply_id\']}', '1', null, null, null);
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:02', '2017-02-22 15:18:02', '9', 'cc_bill_age', '贷记卡账龄（年数）', 'Courier', '{\'cc_credit\': [\'mobile\']}', '8', '1', '1', '0,100');
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:02', '2017-02-22 15:18:02', '10', 'college_type', '毕业/在读学校类型', 'Courier', '{\'education_review_s\': [\'name\', \'card_id\']}', '5', null, null, '');
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:02', '2017-02-22 15:18:02', '11', 'company_addr_city_level', '企业城市等级', 'Courier', '{\'industrial_commercial_s\': [\'cur_company\']}', '3', '2', null, '一线,二线,三线,四线,其他');
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:02', '2017-02-22 15:18:02', '12', 'complete_degree', '简历完成度', 'Courier', '{\'portrait_data\': [\'proposer_id\']}', '3', '1', '5', '0,100');
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:02', '2017-02-22 15:18:02', '13', 'contacts', '通讯录个数', 'Courier', '{\'apply_data\': [\'apply_id\']}', '9', '1', '1', '0,10000');
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:02', '2017-02-22 15:18:02', '14', 'creditcard_count', '信用卡张数', 'Courier', '{\'cc_credit\': [\'mobile\']}', '8', '1', '1', '0,1000');
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:02', '2017-02-22 15:18:02', '15', 'cur_company', '当前工作单位', 'Courier', '{\'portrait_data\': [\'proposer_id\']}', '3', null, null, null);
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:02', '2017-02-22 15:18:02', '16', 'cur_corp_years', '现工作单位工作年限（年数）', 'Courier', '{\'industrial_commercial_s\': [\'cur_company\']}', '3', '1', '1', '0,100');
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:02', '2017-02-22 15:18:02', '17', 'cur_employee_number', '现工作单位规模（人数）', 'Courier', '{\'industrial_commercial_s\': [\'cur_company\']}', '3', '1', '1', '0,1000000');
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:02', '2017-02-22 15:18:02', '18', 'cur_work_status', '当前工作状态', 'Courier', '{\'portrait_data\': [\'proposer_id\']}', '3', '2', '3', '在职，看看新机会,离职，正在找工作,在职，急寻新工作,在职，暂无跳槽打算');
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:02', '2017-02-22 15:18:02', '19', 'dc_bill_age', '借记卡账龄（年数）', 'Courier', '{\'cc_credit\': [\'mobile\']}', '3', '1', '1', '0,100');
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:03', '2017-02-22 15:18:03', '20', 'education_degree_check', '学信网学历', 'Courier', '{\'education_review_s\': [\'name\', \'card_id\']}', '5', '2', '3', '统招,非统招');
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:03', '2017-02-22 15:18:03', '21', 'education_degree_code', '申请人填写学历', 'Courier', '{\'portrait_data\': [\'proposer_id\']}', '5', '1', null, null);
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:03', '2017-02-22 15:18:03', '22', 'education_tz', '最高学历是否统招', 'Courier', '{\'portrait_data\': [\'proposer_id\']}', '5', '1', null, null);
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:03', '2017-02-22 15:18:03', '23', 'folk', '是否为汉族', 'Courier', '{\'multi_id_card_info_s\': [\'name\', \'card_id\']}', '1', '2', '3', '汉族,少数民族');
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:03', '2017-02-22 15:18:03', '24', 'gender', '性别', 'Courier', '{\'personal_info\': [\'name\', \'card_id\']}', '1', '2', '3', '男,女');
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:03', '2017-02-22 15:18:03', '25', 'gps_city_code', 'GPS定位城市', 'Courier', '{\'geo_location\': [\'latitude\', \'longitudu\']}', '1', null, null, null);
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:03', '2017-02-22 15:18:03', '26', 'graduate_college', '申请人输入院校', 'Courier', '{\'portrait_data\': [\'proposer_id\']}', '5', null, null, null);
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:03', '2017-02-22 15:18:03', '27', 'graduate_college_check', '学信网查得院校', 'Courier', '{\'education_review_s\': [\'name\', \'card_id\']}', '5', null, null, null);
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:03', '2017-02-22 15:18:03', '28', 'has_negative_info', '是否命中个人不良信息检测', 'Courier', '{\'negative_info_s\': [\'name\', \'card_id\']}', '4', '2', '2', null);
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:03', '2017-02-22 15:18:03', '29', 'income_expense_comparison', '入账与支出关系', 'ShuntCourier', '{\'cc_credit\': [\'mobile\'], \'unicom_finance_portrait_s\': [\'mobile\']}', '8', '1', '1', '0,10000');
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:03', '2017-02-22 15:18:03', '30', 'income_level', '年入账', 'ShuntCourier', '{\'cc_credit\': [\'mobile\'], \'portrait_data\': [\'proposer_id\'], \'unicom_finance_portrait_s\': [\'mobile\']}', '8', '1', '1', '0,10000000');
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:03', '2017-02-22 15:18:03', '31', 'industry_change_count', '转行次数', 'Courier', '{\'portrait_data\': [\'proposer_id\']}', '3', '1', '1', '0,100');
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:03', '2017-02-22 15:18:03', '32', 'is_court_shixin', '是否命中失信被执行人', 'Courier', '{\'court_shixin_a_s\': [\'name\', \'card_id\']}', '4', '2', '2', null);
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:04', '2017-02-22 15:18:04', '33', 'is_court_zhixing', '是否命中被执行人', 'Courier', '{\'court_zhixing_a_s\': [\'name\', \'card_id\']}', '4', '2', '2', null);
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:04', '2017-02-22 15:18:04', '34', 'is_cur_corp_shixin', '现工作单位是否为失信被执行', 'Courier', '{\'court_shixin_a_s\': [\'name\', \'card_id\']}', '3', '2', '2', '');
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:04', '2017-02-22 15:18:04', '35', 'is_jiuyao_multi_loan', '是否命中91多头借贷名单', 'Courier', '{\'multi_loan_91\': [\'name\', \'card_id\']}', '6', '2', '2', null);
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:04', '2017-02-22 15:18:04', '36', 'is_loan_agency', '是否命中贷款中介', 'Courier', '{\'loan_agency\': [\'mobile\']}', '4', '2', '2', null);
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:04', '2017-02-22 15:18:04', '37', 'is_mobile_black', '手机号是否染黑', 'Courier', '{\'trustutn_loan_phone\': [\'name\', \'card_id\', \'mobile\']}', '6', null, null, null);
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:04', '2017-02-22 15:18:04', '38', 'is_net_black', '是否命中网贷黑名单', 'Courier', '{\'net_black_a_s\': [\'name\', \'card_id\']}', '4', '2', '2', null);
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:04', '2017-02-22 15:18:04', '39', 'is_netsky_black', '是否命中天网黑名单', 'Courier', '{\'tianwang_black\': [\'mobile\']}', '4', '2', '2', null);
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:04', '2017-02-22 15:18:04', '40', 'is_netsky_grey', '是否命中天网灰名单', 'Courier', '{\'tianwang_gray\': [\'mobile\']}', '4', '2', '2', null);
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:04', '2017-02-22 15:18:04', '41', 'is_netsky_multi_loan', '是否命中天网多头贷款', 'Courier', '{\'tianwang_multi_loan\': [\'mobile\']}', '4', '2', '2', null);
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:04', '2017-02-22 15:18:04', '42', 'is_organization_g_black', '是否命中机构g黑名单', 'Courier', '{\'agentg_black\': [\'name\', \'card_id\', \'mobile\']}', '4', '2', '2', null);
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:04', '2017-02-22 15:18:04', '43', 'is_pingan_financial_shixin', '是否命中金融失信黑名单', 'Courier', '{\'trustutn_loan_blacklist\': [\'name\', \'card_id\', \'mobile\']}', '6', '2', '2', null);
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:04', '2017-02-22 15:18:04', '44', 'is_pingan_multi_loan', '是否命中凭安多头借贷名单', 'Courier', '{\'trustutn_loan_loanmsg\': [\'name\', \'card_id\', \'mobile\']}', '6', '2', '2', null);
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:04', '2017-02-22 15:18:04', '45', 'is_pingan_other_loan', '是否命中凭安其他机构借贷名单', 'Courier', '{\'trustutn_loan_otheragent\': [\'name\', \'card_id\', \'mobile\']}', '6', '2', '2', null);
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:05', '2017-02-22 15:18:05', '46', 'is_pingan_overdue_loan', '是否命中凭安逾期名单', 'Courier', '{\'trustutn_loan_overdue\': [\'name\', \'card_id\', \'mobile\']}', '6', '2', '2', null);
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:05', '2017-02-22 15:18:05', '47', 'is_recruitment', '是否统招', 'Courier', '{\'education_review_s\': [\'name\', \'card_id\']}', '5', '2', '2', null);
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:05', '2017-02-22 15:18:05', '48', 'is_skyeye_black', '是否命中天眼黑名单', 'Courier', '{\'tianyan_black\': [\'card_id\', \'email\', \'mobile\']}', '4', '2', '2', null);
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:05', '2017-02-22 15:18:05', '49', 'is_unclear_loan', '是否在未结清贷款申请记录中', 'Courier', '{\'loan_history\': [\'card_id\']}', '6', '2', '2', null);
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:05', '2017-02-22 15:18:05', '50', 'jiuyao_multi_loan_denied_count', '半年内拒贷次数', 'Courier', '{\'multi_loan_91\': [\'name\', \'card_id\']}', '6', '1', '1', '0,1000');
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:05', '2017-02-22 15:18:05', '51', 'jiuyao_multi_loan_m2_count', 'M2及M2以上次数', 'Courier', '{\'multi_loan_91\': [\'name\', \'card_id\']}', '6', '1', '1', '0,1000');
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:05', '2017-02-22 15:18:05', '52', 'last_industry_code', '上一份工作行业', 'Courier', '{\'portrait_data\': [\'proposer_id\']}', '3', '2', '3', null);
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:05', '2017-02-22 15:18:05', '53', 'loan_infos', '91借贷信息', 'Courier', '{\'multi_loan_91\': [\'name\', \'card_id\']}', '6', null, null, null);
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:05', '2017-02-22 15:18:05', '54', 'marital_status', '婚姻状况', 'Courier', '{\'multi_id_card_info_s\': [\'name\', \'card_id\']}', '1', '2', '3', '未婚,已婚,丧偶,离异');
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:05', '2017-02-22 15:18:05', '55', 'max_flight_area', '一年内飞机出行中最多出行区域', 'Courier', '{\'airline_passenger_info\': [\'name\', \'card_id\']}', '2', '2', '3', '国外,国内');
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:05', '2017-02-22 15:18:05', '56', 'max_flight_class', '一年内飞机出行中最多机舱类型', 'Courier', '{\'airline_passenger_info\': [\'name\', \'card_id\']}', '2', '2', '3', '商务舱,公务舱,经济舱');
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:05', '2017-02-22 15:18:05', '57', 'mobile', '手机号', 'Courier', '{\'apply_data\': [\'apply_id\']}', '1', null, null, null);
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:05', '2017-02-22 15:18:05', '58', 'mobile_activeness', '申请人手机号活跃度', 'Courier', '{\'trustutn_loan_phone\': [\'name\', \'card_id\', \'mobile\'],\'apply_data\': [\'apply_id\']}', '6', '1', '1', '0,10000');
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:05', '2017-02-22 15:18:05', '59', 'mobile_area_city_level', '归属地城市等级', 'Courier', '{\'mobile_locale\': [\'mobile\']}', '9', '2', '3', '一线,二线,三线,四线,其他');
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:06', '2017-02-22 15:18:06', '60', 'mobile_area_code', '手机号码归属地', 'Courier', '{\'mobile_locale\': [\'mobile\']}', '9', null, null, null);
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:06', '2017-02-22 15:18:06', '61', 'mobile_identity', '手机实名验证', 'ShuntCourier', '{\'telecom_mobile_identity_s\': [\'name\', \'card_id\', \'mobile\'], \'unicom_mobile_identity_s\': [\'name\', \'card_id\', \'mobile\'], \'yd_mobile_identity_s\': [\'name\', \'card_id\', \'mobile\']}', '9', '2', '2', null);
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:06', '2017-02-22 15:18:06', '62', 'mobile_mark', '手机号标记信息', 'Courier', '{\'trustutn_loan_phone\': [\'name\', \'card_id\', \'mobile\']}', '6', '2', '3', '查询结果命中,查询结果未命中');
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:06', '2017-02-22 15:18:06', '63', 'mobile_stability', '申请人手机号稳定度', 'Courier', '{\'trustutn_loan_phone\': [\'name\', \'card_id\', \'mobile\'],\'apply_data\': [\'apply_id\']}', '6', '1', '1', '0,2');
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:06', '2017-02-22 15:18:06', '64', 'name', '姓名', 'Courier', '{\'apply_data\': [\'apply_id\']}', '1', null, null, null);
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:06', '2017-02-22 15:18:06', '65', 'now_industry_code', '当前工作行业', 'Courier', '{\'portrait_data\': [\'proposer_id\']}', '3', '2', '3', null);
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:06', '2017-02-22 15:18:06', '66', 'now_work_time', '本份工作工作时间', 'Courier', '{\'portrait_data\': [\'proposer_id\']}', '3', '1', '1', '1,1000');
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:06', '2017-02-22 15:18:06', '67', 'now_workplace_code', '现在工作地点', 'Courier', '{\'portrait_data\': [\'proposer_id\']}', '3', null, null, null);
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:06', '2017-02-22 15:18:06', '68', 'online_time', '在网时长', 'ShuntCourier', '{\'telecom_mobile_online_time_s\': [\'mobile\'], \'unicome_mobile_online_time_s\': [\'mobile\'], \'yd_mobile_online_time_s\': [\'mobile\']}', '9', '1', '1', '(0,6),[6,12),[12,24),[24,+)');
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:06', '2017-02-22 15:18:06', '69', 'overload_count', '超载次数', 'RelevanceCourier', '{\'high_way_over_load\': [\'car_number\'], \'cc_car_credit\': [\'name\', \'card_id\']}', '2', '1', '1', '0,10000');
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:06', '2017-02-22 15:18:06', '70', 'overspeed_count', '超速次数', 'RelevanceCourier', '{\'high_way_over_speed\': [\'car_number\'], \'cc_car_credit\': [\'name\', \'card_id\']}', '2', '1', '1', '0,10000');
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:06', '2017-02-22 15:18:06', '71', 'pingan_max_overdue_days', '金融逾期名单最长逾期天数（近6个月）', 'Courier', '{\'trustutn_loan_overdue\': [\'name\', \'card_id\', \'mobile\']}', '6', '1', '1', '0,1000');
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:06', '2017-02-22 15:18:06', '72', 'pingan_multi_loan_count', '多头借贷公司数量', 'Courier', '{\'trustutn_loan_loanmsg\': [\'name\', \'card_id\', \'mobile\']}', '6', '1', '1', '0,1000');
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:06', '2017-02-22 15:18:06', '73', 'pingan_multi_loan_infos', '多头借贷信息', 'Courier', '{\'trustutn_loan_loanmsg\': [\'name\', \'card_id\', \'mobile\']}', '6', null, null, null);
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:06', '2017-02-22 15:18:06', '74', 'pingan_other_loan_count', '其他信贷机构数量', 'Courier', '{\'trustutn_loan_otheragent\': [\'name\', \'card_id\', \'mobile\']}', '6', '1', '1', '0,1000');
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:07', '2017-02-22 15:18:07', '75', 'pingan_other_loan_infos', '其他机构借贷信息', 'Courier', '{\'trustutn_loan_otheragent\': [\'name\', \'card_id\', \'mobile\']}', '6', null, null, null);
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:07', '2017-02-22 15:18:07', '76', 'pingan_overdue_corp_count', '逾期公司数量', 'Courier', '{\'trustutn_loan_overdue\': [\'name\', \'card_id\', \'mobile\']}', '6', '1', '1', '0,1000');
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:07', '2017-02-22 15:18:07', '77', 'pingan_overdue_count', '金融逾期名单逾期次数（近6个月）', 'Courier', '{\'trustutn_loan_overdue\': [\'name\', \'card_id\', \'mobile\']}', '6', '1', '1', '0,1000');
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:07', '2017-02-22 15:18:07', '78', 'pingan_overdue_loan_infos', '逾期信息', 'Courier', '{\'trustutn_loan_overdue\': [\'name\', \'card_id\', \'mobile\']}', '6', null, null, null);
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:07', '2017-02-22 15:18:07', '79', 'register_city_level', '户籍城市等级', 'Courier', '{\'personal_info\': [\'name\', \'card_id\']}', '1', '2', '3', '一线,二线,三线,四线,其他');
+INSERT INTO `fic_feature_common_conf` VALUES ('0', '2017-02-22 15:18:07', '2017-02-22 15:18:07', '80', 'work_time', '申请人工作时间', 'Courier', '{\'portrait_data\': [\'proposer_id\']}', '3', '1', '1', '1,1000');
 
 -- ----------------------------
--- Table structure for `fic_feature_process_info`
+-- Table structure for fic_feature_process_info
 -- ----------------------------
 DROP TABLE IF EXISTS `fic_feature_process_info`;
 CREATE TABLE `fic_feature_process_info` (
-  `is_delete` tinyint(1) NOT NULL,
-  `created_on` datetime DEFAULT NULL,
-  `updated_on` datetime NOT NULL,
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `feature_name` varchar(64) NOT NULL,
-  `feature_data_type` varchar(64) NOT NULL,
-  `default_value` varchar(64) NOT NULL,
-  `json_path_list` varchar(2048) NOT NULL,
-  `map_and_filter_chain` varchar(1024) DEFAULT NULL,
-  `reduce_chain` varchar(1024) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `feature_name` varchar(100) NOT NULL,
+  `feature_data_type` varchar(50) NOT NULL,
+  `default_value` varchar(100) NOT NULL,
+  `json_path_list` longtext,
+  `reduce_chain` varchar(2048) DEFAULT NULL,
+  `f_map_and_filter_chain` varchar(2048) DEFAULT NULL,
+  `l_map_and_filter_chain` varchar(2048) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `fic_feature_process_info_feature_name_143f8c25_uniq` (`feature_name`)
+) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of fic_feature_process_info
 -- ----------------------------
+INSERT INTO `fic_feature_process_info` VALUES ('1', 'is_netsky_grey', 'int', 'BooleanTypeDefault', '[(\'result\', \'$..result\', \'f_assert_not_null->f_assert_must_basestring\')]', '', 'm_get_seq_index_value(0)->m_to_bool(\'00\')', '');
+INSERT INTO `fic_feature_process_info` VALUES ('2', 'max_flight_area', 'int', 'PositiveSignedTypeDefault', '[(\'flight_times\', \'$..content.flight_times\', \'f_assert_not_null->f_assert_must_digit_or_float\'), (\'inland_count\', \'$..content.inland_count\', \'f_assert_not_null->f_assert_must_digit_or_float\'), (\'international_count\', \'$..content.international_count\', \'f_assert_not_null->f_assert_must_digit_or_float\')]', '', 'm_max_flight_area->f_assert_not_null->m_to_code(\'max_flight_area\')', '');
+INSERT INTO `fic_feature_process_info` VALUES ('3', 'industry_change_count', 'int', 'PositiveSignedTypeDefault', '[(\'industry\', \'$..work_exp_form[*].industry\', \'f_assert_not_null\')]', '', 'm_list_to_distinct->m_to_len(1)', '');
+INSERT INTO `fic_feature_process_info` VALUES ('4', 'pingan_overdue_corp_count', 'int', 'PositiveSignedTypeDefault', '[(\'orgNums\', \'$..orgNums\', \'\')]', '', 'f_digit_or_float->m_to_int->m_to_sum', '');
+INSERT INTO `fic_feature_process_info` VALUES ('5', 'last_industry_code', 'string', 'StringTypeDefault', '[(\'work_exp_form\', \'$..work_exp_form[*]\', \'f_assert_not_null->f_assert_must_dict\')]', '', 'm_get_new_list(\'work_end\',\'industry\')->f_assert_not_null->m_seq_inx_to_int->m_seq_inx0_sort_in_list(True)->m_get_seq_index_value(0)->m_get_seq_index_value(1)', '');
+INSERT INTO `fic_feature_process_info` VALUES ('6', 'is_pingan_multi_loan', 'int', 'PositiveSignedTypeDefault', '[(\'is_pingan_multi_loan\', \'$..result\', \'f_assert_not_null->f_assert_must_int\')]', '', 'm_get_seq_index_value(0)->m_to_bool(0)', '');
+INSERT INTO `fic_feature_process_info` VALUES ('7', 'education_degree_code', 'int', 'PositiveSignedTypeDefault', '[(\'education_degree_code\', \'$..edu_exp_form[*].degree\', \'f_not_null->f_assert_must_digit\')]', '', 'm_to_int->r_min->m_to_str->m_to_code(\'education_degree_code\')', '');
+INSERT INTO `fic_feature_process_info` VALUES ('8', 'mobile_area_city_level', 'int', 'PositiveSignedTypeDefault', '[(\'mobile_area\', \'$..content.mobile_area\', \'f_assert_not_null->f_assert_must_basestring\')]', '', 'm_get_seq_index_value(0)->m_get_city_name->f_assert_not_null->m_city_name_to_level', '');
+INSERT INTO `fic_feature_process_info` VALUES ('9', 'cur_employee_number', 'int', 'PositiveSignedTypeDefault', '[(\'staff_count\', \'$..staff_count\', \'f_assert_not_null\')]', '', 'm_get_seq_index_value(0)->m_to_int->m_to_code(\'cur_employee_number\')', '');
+INSERT INTO `fic_feature_process_info` VALUES ('10', 'is_net_black', 'int', 'BooleanTypeDefault', '[(\'result\', \'$..result\', \'f_assert_not_null->f_assert_must_basestring\')]', '', 'm_get_seq_index_value(0)->m_to_bool(\'00\')', '');
+INSERT INTO `fic_feature_process_info` VALUES ('11', 'company_addr_city_level', 'int', 'PositiveSignedTypeDefault', '[(\'address\', \'$..content.address\', \'f_assert_not_null->f_assert_must_basestring\')]', '', 'm_get_seq_index_value(0)->m_get_city_name->f_assert_not_null->m_city_name_to_level', '');
+INSERT INTO `fic_feature_process_info` VALUES ('12', 'application_on_plus', 'string', 'StringTypeDefault', '[(\'application_on\', \'$..application_on\', \'f_assert_not_null->f_assert_must_basestring\')]', '', 'm_get_seq_index_value(0)->m_datetime_only_hour_minute', '');
+INSERT INTO `fic_feature_process_info` VALUES ('13', 'register_city_level', 'int', 'PositiveSignedTypeDefault', '[(\'home_address\', \'$..content.home_address\', \'f_assert_not_null->f_assert_must_basestring\')]', '', 'm_get_seq_index_value(0)->m_get_city_name->f_assert_not_null->m_city_name_to_level', '');
+INSERT INTO `fic_feature_process_info` VALUES ('14', 'pingan_other_loan_count', 'int', 'PositiveSignedTypeDefault', '[(\'orgNums\', \'$..orgNums\', \'\')]', '', 'f_digit_or_float->m_to_int->m_to_sum', '');
+INSERT INTO `fic_feature_process_info` VALUES ('15', 'education_degree_check', 'string', 'StringTypeDefault', '[(\'degree\', \'$..content.degree.degree\', \'f_assert_not_null\')]', '', 'm_get_seq_index_value(0)->m_to_code(\'education_degree_check\')', '');
+INSERT INTO `fic_feature_process_info` VALUES ('16', 'is_cur_corp_shixin', 'int', 'BooleanTypeDefault', '[(\'result\', \'$..result\', \'f_assert_not_null\')]', '', 'm_get_seq_index_value(0)->m_to_bool(\'00\')', '');
+INSERT INTO `fic_feature_process_info` VALUES ('17', 'is_skyeye_black', 'int', 'BooleanTypeDefault', '[(\'result\', \'$..result\', \'f_assert_not_null->f_assert_must_basestring\')]', '', 'm_get_seq_index_value(0)->m_to_bool(\'00\')', '');
+INSERT INTO `fic_feature_process_info` VALUES ('18', 'work_time', 'int', 'PositiveSignedTypeDefault', '[(\'work_start\', \'$..work_exp_form[*].work_start\', \'f_assert_must_basestring\')]', '', 'f_not_null->f_assert_not_null->m_get_max_month_to_now', '');
+INSERT INTO `fic_feature_process_info` VALUES ('19', 'now_industry_code', 'string', 'StringTypeDefault', '[(\'work_exp_form\', \'$..work_exp_form[*]\', \'f_assert_not_null->f_assert_must_dict\')]', '', 'm_get_new_list(\'work_end\',\'industry\')->f_assert_not_null->m_now_industry_code', '');
+INSERT INTO `fic_feature_process_info` VALUES ('20', 'is_court_zhixing', 'int', 'BooleanTypeDefault', '[(\'result\', \'$..result\', \'f_assert_not_null->f_assert_must_basestring\')]', '', 'm_get_seq_index_value(0)->m_to_bool(\'00\')', '');
+INSERT INTO `fic_feature_process_info` VALUES ('21', 'complete_degree', 'int', 'PositiveSignedTypeDefault', '[(\'complete_degree\', \'$..complete_degree\', \'f_assert_not_null->f_assert_must_int\')]', '', 'm_get_seq_index_value(0)', '');
+INSERT INTO `fic_feature_process_info` VALUES ('22', 'is_unclear_loan', 'int', 'BooleanTypeDefault', '[(\'is_unclear_loan\', \'$..res_data.is_unclear_loan\', \'f_assert_not_null->f_assert_must_digit\')]', '', 'm_to_int->m_get_seq_index_value(0)->m_to_bool', 'm_to_bool(1)');
+INSERT INTO `fic_feature_process_info` VALUES ('23', 'jiuyao_multi_loan_denied_count', 'int', 'PositiveSignedTypeDefault', '[(\'contract_date\', \'$..loanInfos[*].contractDate\', \'\')]', 'm_to_len', 'f_digit_or_float->f_days_greater_than_args(180)->f_assert_not_null', '');
+INSERT INTO `fic_feature_process_info` VALUES ('24', 'pingan_multi_loan_infos', 'list', 'ListTypeDefault', '[(\'record\', \'$..record\', \'f_assert_not_null\')]', '', 'm_del_invalid_value(6)', '');
+INSERT INTO `fic_feature_process_info` VALUES ('25', 'graduate_college_check', 'string', 'StringTypeDefault', '[(\'college\', \'$..content.degree.college\', \'f_assert_not_null->f_assert_must_basestring\')]', '', 'm_get_seq_index_value(0)', '');
+INSERT INTO `fic_feature_process_info` VALUES ('26', 'income_expense_comparison', 'int', 'PositiveSignedTypeDefault', '[(\'debit\', \'$.unicom_finance_portrait_s.content.last12.debit\', \"m_get_income_expense_comparison(\'unicome\')\"), (\'rrx_inc_12m\', \'$.cc_credit.result.rrx_inc_12m\', \"m_get_income_expense_comparison(\'cc_credit\')\")]', '', 'f_not_null->f_assert_not_null->m_get_seq_index_value(0)->m_to_code(\'income_expense_comparison\')', '');
+INSERT INTO `fic_feature_process_info` VALUES ('27', 'cur_work_status', 'int', 'PositiveSignedTypeDefault', '[(\'cur_work_status\', \'$..cur_work_status\', \'f_assert_not_null->f_assert_must_basestring\')]', '', 'm_get_seq_index_value(0)->m_to_code(\'cur_work_status\')', '');
+INSERT INTO `fic_feature_process_info` VALUES ('28', 'pingan_multi_loan_count', 'int', 'PositiveSignedTypeDefault', '[(\'pingan_multi_loan_count\', \'$..orgNums\', \'f_not_null->f_assert_must_digit\')]', '', 'm_to_int->m_to_sum', '');
+INSERT INTO `fic_feature_process_info` VALUES ('29', 'dc_bill_age', 'int', 'PositiveSignedTypeDefault', '[(\'dc_bill_age\', \'$..result.rrx_once_all.debit_card_account_age\', \'f_assert_not_null->f_assert_must_digit\')]', '', 'm_get_seq_index_value(0)', '');
+INSERT INTO `fic_feature_process_info` VALUES ('30', 'creditcard_count', 'int', 'PositiveSignedTypeDefault', '[(\'creditcard_count\', \'$..result.rrx_once_all.credit_cards_num\', \'f_assert_not_null->f_assert_must_digit\')]', '', 'm_get_seq_index_value(0)', '');
+INSERT INTO `fic_feature_process_info` VALUES ('31', 'car_count', 'int', 'PositiveSignedTypeDefault', '[(\'result\', \'$..result\', \'f_assert_jsonpath_true->f_assert_must_list\')]', '', 'f_not_null->m_to_len', '');
+INSERT INTO `fic_feature_process_info` VALUES ('32', 'is_organization_g_black', 'int', 'PositiveSignedTypeDefault', '[(\'is_organization_g_black\', \'$..result\', \'f_assert_not_null->f_assert_must_basestring\')]', '', 'm_get_seq_index_value(0)->m_to_bool(\'00\')', '');
+INSERT INTO `fic_feature_process_info` VALUES ('33', 'is_pingan_overdue_loan', 'int', 'BooleanTypeDefault', '[(\'result\', \'$..result\', \'f_assert_not_null->f_assert_must_digit\')]', '', 'm_get_seq_index_value(0)->m_to_bool(0)', '');
+INSERT INTO `fic_feature_process_info` VALUES ('34', 'is_mobile_black', 'bool', 'BooleanTypeDefault', '[(\'grayscale\', \'$..trustutn_loan_phone.data.grayscale\', \'f_assert_jsonpath_true->f_assert_must_dict\')]', '', 'm_get_seq_index_value(0)->m_to_bool', '');
+INSERT INTO `fic_feature_process_info` VALUES ('35', 'airfare_sum12', 'float', 'PositiveSignedFloatTypeDefault', '[(\'average_price\', \'$..content.average_price\', \'f_assert_not_null->f_assert_must_digit_or_float\'), (\'flight_times\', \'$..content.flight_times\', \'f_assert_not_null->f_assert_must_digit\')]', 'r_mul', 'm_str_to_int_float_in_list', '');
+INSERT INTO `fic_feature_process_info` VALUES ('36', 'pingan_other_loan_infos', 'list', 'ListTypeDefault', '[(\'data\', \'$..data\', \'f_assert_not_null\')]', '', 'm_del_invalid_value(2)', '');
+INSERT INTO `fic_feature_process_info` VALUES ('37', 'has_negative_info', 'int', 'BooleanTypeDefault', '[(\'result\', \'$..result\', \'f_assert_not_null->f_assert_must_basestring\')]', '', 'm_get_seq_index_value(0)->m_to_bool(\'00\')', '');
+INSERT INTO `fic_feature_process_info` VALUES ('38', 'cur_company', 'str', 'StringTypeDefault', '[(\'work_exp_form\', \'$..work_exp_form\', \'f_assert_not_null->f_assert_must_list\')]', '', 'm_get_new_list(\'work_end\',\'comp_name\')->m_seq_inx0_sort_in_list(True)->m_get_seq_index_value(0)->m_get_seq_index_value(1)->f_assert_not_null', '');
+INSERT INTO `fic_feature_process_info` VALUES ('39', 'mobile_identity', 'int', 'BooleanTypeDefault', '[(\'mobile_identity\', \'$.unicom_mobile_identity_s.result\', \'m_mobile_id_judge\'), (\'mobile_identity\', \'$.yd_mobile_identity_s.result\', \'m_mobile_id_judge\'), (\'mobile_identity\', \'$.telecom_mobile_identity_s.result\', \'m_mobile_id_judge\')]', '', 'm_to_sum->m_to_bool', '');
+INSERT INTO `fic_feature_process_info` VALUES ('40', 'is_court_shixin', 'int', 'BooleanTypeDefault', '[(\'result\', \'$..result\', \'f_assert_not_null->f_assert_must_basestring\')]', '', 'm_get_seq_index_value(0)->m_to_bool(\'00\')', '');
+INSERT INTO `fic_feature_process_info` VALUES ('41', 'now_work_time', 'int', 'PositiveSignedTypeDefault', '[(\'work_exp_form\', \'$..work_exp_form[*]\', \'f_assert_not_null->f_assert_must_dict\')]', '', 'm_get_new_list(\'work_end\',\'work_start\')->f_assert_not_null->m_seq_inx0_sort_in_list(True)->m_get_seq_index_value(0)->m_r_to_now_work_time', '');
+INSERT INTO `fic_feature_process_info` VALUES ('42', 'overspeed_count', 'int', 'PositiveSignedTypeDefault', '[(\'overspeed_count\', \'$..content.over_speed_list[*].month_times\', \'f_not_null->f_assert_not_null->f_assert_must_digit\')]', '', 'm_to_int->m_to_sum', '');
+INSERT INTO `fic_feature_process_info` VALUES ('43', 'contacts', 'int', 'PositiveSignedTypeDefault', '[(\'contacts\', \'$..contacts\', \'f_assert_not_null->f_assert_must_digit\')]', '', 'm_to_int->m_get_seq_index_value(0)', '');
+INSERT INTO `fic_feature_process_info` VALUES ('44', 'mobile_stability', 'float', 'PositiveSignedTypeDefault', '[(\'tags\', \'$..tags\', \'f_assert_not_null->f_assert_must_dict\'), (\'mobile\', \'$..apply_data.data.mobile\', \'f_assert_not_null\')]', '', 'f_mobile_m1_m5_sum_max_seq([\'callTimes\',\'calledTimes\'])->m_get_mobile_stability', '');
+INSERT INTO `fic_feature_process_info` VALUES ('45', 'is_recruitment', 'int', 'BooleanTypeDefault', '[(\'education_approach\', \'$..education_approach\', \'f_assert_not_null->f_assert_must_basestring\')]', '', 'm_get_seq_index_value(0)->m_to_bool(\'普通全日制\')', '');
+INSERT INTO `fic_feature_process_info` VALUES ('46', 'gender', 'int', 'PositiveSignedTypeDefault', '[(\'sex\', \'$..content.sex\', \'f_assert_not_null->f_assert_must_basestring\')]', '', 'm_get_seq_index_value(0)->m_sex_to_code->m_to_code(\'gender\')', '');
+INSERT INTO `fic_feature_process_info` VALUES ('47', 'is_pingan_other_loan', 'int', 'BooleanTypeDefault', '[(\'result\', \'$..result\', \'f_assert_not_null->f_assert_must_digit\')]', '', 'm_get_seq_index_value(0)->m_to_bool(0)', '');
+INSERT INTO `fic_feature_process_info` VALUES ('48', 'income_level', 'int', 'PositiveSignedTypeDefault', '[(\'portrait_data\', \'$.portrait_data.data.work_exp_form\', \"m_lp_income(0.56)->m_to_code(\'income_level\')\"), (\'cc_credit\', \'$..debit_card_12m_passentry_amount\', \"m_to_code(\'income_level_yd\')->m_single_to_list\"), (\'unicom_finance_portrait_s\', \'$..last12.debit.income_range\', \"m_to_code(\'income_level_lt\')->m_single_to_list\")]', '', 'f_assert_not_null->m_to_sum', '');
+INSERT INTO `fic_feature_process_info` VALUES ('49', 'mobile', 'string', 'StringTypeDefault', '[(\'mobile\', \'$..mobile\', \'f_assert_not_null\')]', '', 'm_get_seq_index_value(0)', '');
+INSERT INTO `fic_feature_process_info` VALUES ('50', 'application_on', 'string', 'StringTypeDefault', '[(\'application_on\', \'$..application_on\', \'f_assert_not_null->f_assert_must_basestring\')]', '', 'm_get_seq_index_value(0)', '');
+INSERT INTO `fic_feature_process_info` VALUES ('51', 'folk', 'int', 'PositiveSignedTypeDefault', '[(\'nation\', \'$..content.nation\', \'f_assert_not_null->f_assert_must_basestring\')]', '', 'm_get_seq_index_value(0)->m_check_x_in_y(\'汉\')', '');
+INSERT INTO `fic_feature_process_info` VALUES ('52', 'is_netsky_black', 'int', 'PositiveSignedTypeDefault', '[(\'is_netsky_black\', \'$..result\', \'f_assert_not_null->f_assert_must_basestring\')]', '', 'm_get_seq_index_value(0)->m_to_bool(\'00\')', '');
+INSERT INTO `fic_feature_process_info` VALUES ('53', 'is_pingan_financial_shixin', 'bool', 'BooleanTypeDefault', '[(\'others\', \'$..others\', \'f_assert_jsonpath_true->f_assert_must_list\')]', '', 'm_to_bool', '');
+INSERT INTO `fic_feature_process_info` VALUES ('54', 'now_workplace_code', 'string', 'StringTypeDefault', '[(\'work_exp_form\', \'$..work_exp_form[*]\', \'f_assert_not_null->f_assert_must_dict\')]', '', 'm_get_new_list(\'work_end\',\'dq\')->f_assert_not_null->m_seq_inx0_sort_in_list(True)->m_get_seq_index_value(0)->m_get_seq_index_value(1)', '');
+INSERT INTO `fic_feature_process_info` VALUES ('55', 'mobile_area_code', 'string', 'StringTypeDefault', '[(\'mobile_area\', \'$..mobile_area\', \'f_assert_not_null->f_assert_must_basestring\')]', '', 'm_get_seq_index_value(0)', '');
+INSERT INTO `fic_feature_process_info` VALUES ('56', 'online_time', 'int', 'PositiveSignedTypeDefault', '[(\'online_time\', \'$.yd_mobile_online_time_s.content.online_time\', \'m_yd_online_time\'), (\'online_time\', \'$.unicome_mobile_online_time_s.content.online_time\', \'m_unicom_online_time\'), (\'online_time\', \'$.telecom_mobile_online_time_s.content.online_time\', \'m_telecom_online_time\')]', '', 'f_assert_not_null->m_to_sum', '');
+INSERT INTO `fic_feature_process_info` VALUES ('57', 'pingan_overdue_count', 'int', 'PositiveSignedTypeDefault', '[(\'recordNums\', \'$..recordNums\', \'\')]', '', 'f_digit_or_float->m_to_int->m_to_sum', '');
+INSERT INTO `fic_feature_process_info` VALUES ('58', 'mobile_mark', 'string', 'StringTypeDefault', '[(\'mobile_mark\', \'$..tags.contactMain_IMSI1_IMEI1.label\', \'f_assert_not_null->f_assert_must_basestring\')]', '', 'm_get_seq_index_value(0)', '');
+INSERT INTO `fic_feature_process_info` VALUES ('59', 'graduate_college', 'string', 'StringTypeDefault', '[(\'school\', \'$..school\', \'f_assert_not_null->f_assert_must_basestring\')]', '', 'm_get_seq_index_value(0)', '');
+INSERT INTO `fic_feature_process_info` VALUES ('60', 'is_jiuyao_multi_loan', 'bool', 'BooleanTypeDefault', '[(\'loanInfos\', \'$..loanInfos\', \'f_assert_jsonpath_true->f_assert_must_list\')]', '', 'm_to_bool', '');
+INSERT INTO `fic_feature_process_info` VALUES ('61', 'cur_corp_years', 'int', 'PositiveSignedTypeDefault', '[(\'start_business_date\', \'$..start_business_date\', \'f_assert_not_null\')]', '', 'm_get_seq_index_value(0)->m_get_date_to_now_years(2)->m_to_code(\'cur_corp_years\')', '');
+INSERT INTO `fic_feature_process_info` VALUES ('62', 'is_loan_agency', 'int', 'PositiveSignedTypeDefault', '[(\'is_loan_agency\', \'$..result\', \'f_assert_not_null->f_assert_must_basestring\')]', '', 'm_get_seq_index_value(0)->m_to_bool(\'00\')', '');
+INSERT INTO `fic_feature_process_info` VALUES ('63', 'card_id', 'string', 'StringTypeDefault', '[(\'card_id\', \'$..card_id\', \'f_assert_not_null\')]', '', 'm_get_seq_index_value(0)', '');
+INSERT INTO `fic_feature_process_info` VALUES ('64', 'car_number', 'list', 'ListTypeDefault', '[(\'license_no\', \'$..license_no\', \'\')]', '', 'f_not_null->f_plate_number->f_assert_not_null', '');
+INSERT INTO `fic_feature_process_info` VALUES ('65', 'apply_register_duration', 'float', 'PositiveSignedFloatTypeDefault', '[(\'application_on\', \'$.apply_data.data.application_on\', \'f_assert_not_null->f_assert_must_basestring\'), (\'registration_on\', \'$.portrait_data.data.registration_on\', \'f_assert_not_null->f_assert_must_basestring\')]', '', 'm_to_slice(0,10)->f_assert_seq0_gte_seq1->m_get_mon_sub(2)', '');
+INSERT INTO `fic_feature_process_info` VALUES ('66', 'mobile_activeness', 'float', 'PositiveSignedTypeDefault', '[(\'tags\', \'$..tags\', \'f_assert_not_null->f_assert_must_dict\'), (\'mobile\', \'$..apply_data.data.mobile\', \'f_assert_not_null\')]', '', 'f_mobile_m1_m5_sum_max_seq([\'contactAmount\'])->m_seq_to_agv(2)', '');
+INSERT INTO `fic_feature_process_info` VALUES ('67', 'loan_infos', 'list', 'ListTypeDefault', '[(\'loanInfos\', \'$..loanInfos\', \'f_assert_not_null->f_assert_must_list\')]', '', '', '');
+INSERT INTO `fic_feature_process_info` VALUES ('68', 'name', 'string', 'StringTypeDefault', '[(\'name\', \'$..apply_data.data.name\', \'f_assert_not_null->f_assert_must_basestring\')]', '', 'm_get_seq_index_value(0)', '');
+INSERT INTO `fic_feature_process_info` VALUES ('69', 'overload_count', 'int', 'PositiveSignedTypeDefault', '[(\'overload_count\', \'$..content.over_load_list[*].month_times\', \'f_not_null->f_assert_not_null->f_assert_must_digit\')]', '', 'm_to_int->m_to_sum', '');
+INSERT INTO `fic_feature_process_info` VALUES ('70', 'mobile_area_city_code', 'string', 'StringTypeDefault', '[(\'mobile_area\', \'$..content.mobile_area\', \'f_assert_not_null->f_assert_must_basestring\')]', '', 'm_get_seq_index_value(0)->m_get_city_name->f_assert_not_null->m_city_name_to_code', '');
+INSERT INTO `fic_feature_process_info` VALUES ('71', 'max_flight_class', 'int', 'PositiveSignedTypeDefault', '[(\'business_class_count\', \'$..content.business_class_count\', \'f_assert_not_null->f_assert_must_digit\'), (\'executive_class_count\', \'$..content.executive_class_count\', \'f_assert_not_null->f_assert_must_digit\'), (\'tourist_class_count\', \'$..content.tourist_class_count\', \'f_assert_not_null->f_assert_must_digit\')]', '', 'm_to_int->m_max_flight_class->m_to_code(\'max_flight_class\')', '');
+INSERT INTO `fic_feature_process_info` VALUES ('72', 'marital_status', 'int', 'PositiveSignedTypeDefault', '[(\'marital_status\', \'$..content.marital_status\', \'f_assert_not_null->f_assert_must_digit\')]', '', 'm_get_seq_index_value(0)->m_marital_status->m_to_code(\'marital_status\')', '');
+INSERT INTO `fic_feature_process_info` VALUES ('73', 'pingan_max_overdue_days', 'int', 'PositiveSignedTypeDefault', '[(\'longestDays\', \'$..longestDays\', \'\')]', '', 'f_digit_or_float->m_to_int->m_to_sum', '');
+INSERT INTO `fic_feature_process_info` VALUES ('74', 'gps_city_code', 'string', 'StringTypeDefault', '[(\'mobile_area\', \'$..addressComponent.city\', \'f_assert_not_null->f_assert_must_basestring\')]', '', 'm_get_seq_index_value(0)->m_get_city_name->f_assert_not_null->m_city_name_to_code', '');
+INSERT INTO `fic_feature_process_info` VALUES ('75', 'pingan_overdue_loan_infos', 'list', 'ListTypeDefault', '[(\'record\', \'$..record\', \'f_assert_not_null\')]', '', 'm_del_invalid_value(6)', '');
+INSERT INTO `fic_feature_process_info` VALUES ('76', 'cc_bill_age', 'int', 'PositiveSignedTypeDefault', '[(\'cc_bill_age\', \'$..result.rrx_once_all.credit_card_account_age\', \'f_assert_not_null->f_assert_must_digit\')]', '', 'm_get_seq_index_value(0)', '');
+INSERT INTO `fic_feature_process_info` VALUES ('77', 'age', 'int', 'PositiveSignedTypeDefault', '[(\'age\', \'$..content.age\', \'f_assert_not_null->f_assert_must_digit_or_float\')]', '', 'm_get_seq_index_value(0)', '');
+INSERT INTO `fic_feature_process_info` VALUES ('78', 'college_type', 'string', 'StringTypeDefault', '[(\'school_nature\', \'$..content.college.school_nature\', \'f_assert_not_null->f_assert_must_basestring\'), (\'degree\', \'$..content.degree.degree\', \'f_assert_not_null->f_assert_must_basestring\')]', '', 'm_college_type->m_to_code(\'college_type\')', '');
+INSERT INTO `fic_feature_process_info` VALUES ('79', 'education_tz', 'int', 'PositiveSignedTypeDefault', '[(\'edu_exp_form\', \'$..edu_exp_form[*]\', \'f_assert_not_null->f_assert_must_dict\')]', '', 'm_get_new_list(\'degree\',\'tz\')->m_seq_inx_to_int->m_seq_inx0_sort_in_list->m_get_seq_index_value(0)->m_get_seq_index_value(1)->f_assert_not_null', '');
+INSERT INTO `fic_feature_process_info` VALUES ('80', 'is_netsky_multi_loan', 'int', 'BooleanTypeDefault', '[(\'result\', \'$..result\', \'f_assert_not_null->f_assert_must_basestring\')]', '', 'm_get_seq_index_value(0)->m_to_bool(\'00\')', '');
+INSERT INTO `fic_feature_process_info` VALUES ('81', 'jiuyao_multi_loan_m2_count', 'int', 'PositiveSignedTypeDefault', '[(\'repay_state\', \'$..loanInfos[*].repayState\', \'f_assert_not_null->f_digit_or_float\')]', 'm_to_len', 'f_inside_stipulate_scope([3, 4, 5, 6, 7, 8])', '');
 
 -- ----------------------------
--- Table structure for `fic_feature_relevance_conf`
+-- Table structure for fic_feature_relevance_conf
 -- ----------------------------
 DROP TABLE IF EXISTS `fic_feature_relevance_conf`;
 CREATE TABLE `fic_feature_relevance_conf` (
@@ -2603,19 +3005,38 @@ CREATE TABLE `fic_feature_relevance_conf` (
   `feature_name` varchar(64) NOT NULL,
   `depend_feature` varchar(64) DEFAULT NULL,
   `data_identity` varchar(64) NOT NULL,
-  `depend_di` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of fic_feature_relevance_conf
 -- ----------------------------
-INSERT INTO `fic_feature_relevance_conf` VALUES ('0', '2017-02-28 14:39:58', '2017-02-28 14:40:10', '1', 'overload_count', 'car_number', 'high_way_over_load', 'cc_car_credit');
-INSERT INTO `fic_feature_relevance_conf` VALUES ('0', '2017-02-28 14:40:01', '2017-02-28 14:40:13', '2', 'overspeed_count', 'car_number', 'high_way_over_speed', 'cc_car_credit');
-INSERT INTO `fic_feature_relevance_conf` VALUES ('0', '2017-02-28 14:40:04', '2017-02-28 14:40:15', '3', 'car_number', null, 'cc_car_credit', null);
+INSERT INTO `fic_feature_relevance_conf` VALUES ('0', '2017-02-28 14:39:58', '2017-03-27 15:17:30', '1', 'overload_count', 'car_number', 'high_way_over_load');
+INSERT INTO `fic_feature_relevance_conf` VALUES ('0', '2017-02-28 14:40:01', '2017-03-14 16:34:53', '2', 'overspeed_count', 'car_number', 'high_way_over_speed');
+INSERT INTO `fic_feature_relevance_conf` VALUES ('0', '2017-02-28 14:40:04', '2017-02-28 14:40:15', '3', 'car_number', '', 'cc_car_credit');
 
 -- ----------------------------
--- Table structure for `fic_feature_shunt_conf`
+-- Table structure for fic_feature_rule_type
+-- ----------------------------
+DROP TABLE IF EXISTS `fic_feature_rule_type`;
+CREATE TABLE `fic_feature_rule_type` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `feature_type_desc` varchar(2048) NOT NULL,
+  `is_delete` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of fic_feature_rule_type
+-- ----------------------------
+INSERT INTO `fic_feature_rule_type` VALUES ('1', '数值型', '0');
+INSERT INTO `fic_feature_rule_type` VALUES ('2', '是否型', '0');
+INSERT INTO `fic_feature_rule_type` VALUES ('3', '枚举型', '0');
+INSERT INTO `fic_feature_rule_type` VALUES ('4', '其他', '0');
+INSERT INTO `fic_feature_rule_type` VALUES ('5', '百分比类型', '0');
+
+-- ----------------------------
+-- Table structure for fic_feature_shunt_conf
 -- ----------------------------
 DROP TABLE IF EXISTS `fic_feature_shunt_conf`;
 CREATE TABLE `fic_feature_shunt_conf` (
@@ -2629,12 +3050,12 @@ CREATE TABLE `fic_feature_shunt_conf` (
   `shunt_value` varchar(256) NOT NULL,
   `data_identity` varchar(64) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of fic_feature_shunt_conf
 -- ----------------------------
-INSERT INTO `fic_feature_shunt_conf` VALUES ('0', '2017-02-16 14:21:13', '2017-02-16 14:21:13', '1', 'online_time', 'mobile', 'PhoneOperator', '(\'TMN\', )', 'telecom_mobile_online_time_s');
+INSERT INTO `fic_feature_shunt_conf` VALUES ('0', '2017-02-16 14:21:13', '2017-03-27 11:36:19', '1', 'online_time', 'mobile', 'PhoneOperator', '(\'TMN\', )', 'telecom_mobile_online_time_s');
 INSERT INTO `fic_feature_shunt_conf` VALUES ('0', '2017-02-16 14:21:13', '2017-02-16 14:21:13', '2', 'online_time', 'mobile', 'PhoneOperator', '(\'UMN\', )', 'unicome_mobile_online_time_s');
 INSERT INTO `fic_feature_shunt_conf` VALUES ('0', '2017-02-16 14:21:13', '2017-02-16 14:21:13', '3', 'online_time', 'mobile', 'PhoneOperator', '(\'YMN\', )', 'yd_mobile_online_time_s');
 INSERT INTO `fic_feature_shunt_conf` VALUES ('0', '2017-02-16 14:21:13', '2017-02-16 14:21:13', '4', 'mobile_identity', 'mobile', 'PhoneOperator', '(\'TMN\', )', 'telecom_mobile_identity_s');
@@ -2642,13 +3063,124 @@ INSERT INTO `fic_feature_shunt_conf` VALUES ('0', '2017-02-16 14:21:13', '2017-0
 INSERT INTO `fic_feature_shunt_conf` VALUES ('0', '2017-02-16 14:21:14', '2017-02-16 14:21:14', '6', 'mobile_identity', 'mobile', 'PhoneOperator', '(\'YMN\', )', 'yd_mobile_identity_s');
 INSERT INTO `fic_feature_shunt_conf` VALUES ('0', '2017-02-16 14:21:14', '2017-02-16 14:21:14', '7', 'income_level', 'mobile', 'PhoneOperator', '(\'UMN\', )', 'unicom_finance_portrait_s');
 INSERT INTO `fic_feature_shunt_conf` VALUES ('0', '2017-02-16 14:21:14', '2017-02-16 14:21:14', '8', 'income_level', 'mobile', 'PhoneOperator', '(\'TMN\', \'UMN\', \'YMN\')', 'cc_credit');
-INSERT INTO `fic_feature_shunt_conf` VALUES ('0', '2017-02-16 14:21:14', '2017-02-16 14:21:14', '9', 'income_level', 'mobile', 'PhoneOperator', '(\'TMN\', \'UMN\', \'YMN\')', 'portrait_data');
+INSERT INTO `fic_feature_shunt_conf` VALUES ('0', '2017-02-16 14:21:14', '2017-03-14 16:03:26', '9', 'income_level', 'mobile', 'PhoneOperator', '(\'TMN\', \'UMN\', \'YMN\')', 'portrait_data');
 INSERT INTO `fic_feature_shunt_conf` VALUES ('0', '2017-02-16 14:21:14', '2017-02-16 14:21:14', '12', 'income_expense_comparison', 'mobile', 'PhoneOperator', '(\'UMN\', )', 'unicom_finance_portrait_s');
 INSERT INTO `fic_feature_shunt_conf` VALUES ('0', '2017-02-16 14:21:14', '2017-02-16 14:21:14', '13', 'income_expense_comparison', 'mobile', 'PhoneOperator', '(\'TMN\', \'UMN\', \'YMN\')', 'cc_credit');
-INSERT INTO `fic_feature_shunt_conf` VALUES ('0', '2017-02-16 14:21:14', '2017-02-16 14:21:14', '14', 'income_expense_comparison', 'mobile', 'PhoneOperator', '(\'TMN\', \'UMN\', \'TMN\')', 'portrait_data');
+INSERT INTO `fic_feature_shunt_conf` VALUES ('1', '2017-02-16 14:21:14', '2017-02-16 14:21:14', '14', 'income_expense_comparison', 'mobile', 'PhoneOperator', '(\'TMN\', \'UMN\', \'TMN\')', 'portrait_data');
 
 -- ----------------------------
--- Table structure for `fic_interface_info`
+-- Table structure for fic_feature_type
+-- ----------------------------
+DROP TABLE IF EXISTS `fic_feature_type`;
+CREATE TABLE `fic_feature_type` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `feature_type_desc` varchar(2048) NOT NULL,
+  `is_delete` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of fic_feature_type
+-- ----------------------------
+INSERT INTO `fic_feature_type` VALUES ('1', '个人基本信息', '0');
+INSERT INTO `fic_feature_type` VALUES ('2', '出行信息', '0');
+INSERT INTO `fic_feature_type` VALUES ('3', '工作信息', '0');
+INSERT INTO `fic_feature_type` VALUES ('4', '公开黑名单信息', '0');
+INSERT INTO `fic_feature_type` VALUES ('5', '教育信息', '0');
+INSERT INTO `fic_feature_type` VALUES ('6', '历史借贷信息', '0');
+INSERT INTO `fic_feature_type` VALUES ('7', '埋点信息', '0');
+INSERT INTO `fic_feature_type` VALUES ('8', '银行卡信息', '0');
+INSERT INTO `fic_feature_type` VALUES ('9', '运营商信息', '0');
+
+-- ----------------------------
+-- Table structure for fic_func_lib
+-- ----------------------------
+DROP TABLE IF EXISTS `fic_func_lib`;
+CREATE TABLE `fic_func_lib` (
+  `func_name` varchar(80) NOT NULL,
+  `func_desc` longtext,
+  `func_type` varchar(10) NOT NULL,
+  PRIMARY KEY (`func_name`),
+  KEY `fic_func_lib_a7ed5312` (`func_type`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of fic_func_lib
+-- ----------------------------
+INSERT INTO `fic_func_lib` VALUES ('f_assert_jsonpath_true(seq)', '假设jsonpath查询到的为true seq为[]空列表时代表没查到字段', 'A');
+INSERT INTO `fic_func_lib` VALUES ('f_assert_must_basestring(value_list)', '检测列表中的元素是否为字符串', 'A');
+INSERT INTO `fic_func_lib` VALUES ('f_assert_must_between(value_list, args)', '\n    检测列表中的元素是否为数字或浮点数且在args的范围内\n\n    :param value_list: 待检测列表\n    :param args:        范围列表\n    :return:            异常或原值\n\n    example：\n                :value_list  [2, 2, 3]\n                :args  [1,3]\n\n                :value_list  [\'-2\', \'-3\', 3]\n                :args  [\'-5\',3]\n    ', 'A');
+INSERT INTO `fic_func_lib` VALUES ('f_assert_must_dict(value_list)', '检测列表中的元素是否为dict类型', 'A');
+INSERT INTO `fic_func_lib` VALUES ('f_assert_must_digit(value_list, args=False)', '\n        检测列表中的元素是否为数字\n        :param value_list: 待检测列表\n        :param args:        负数是否通过 false 不通过报异常 True 负数通过\n        :return:            异常或原值\n\n        example：\n                    :value_list  [-2,\'-2\', 3]\n                    :args  false\n                    ：return 异常\n\n                    :value_list  [-2,\'-2\', 3]\n                    :args  True\n                    ：return [-2,\'-2\', 3]\n\n    ', 'A');
+INSERT INTO `fic_func_lib` VALUES ('f_assert_must_digit_or_float(value_list, args=False)', '\n        检测列表中的元素是否为数字或float, args=false 负数报异常 True 负数通过\n\n        :param value_list: 待检测列表\n        :param args:        负数是否通过 false 不通过报异常 True 负数通过\n        :return:            异常或原值\n\n        example：\n                    :value_list  [-2.0,\'-2\', 3]\n                    :args  false\n                    ：return 异常\n\n                    :value_list  [-2.0,\'-2\', 3]\n                    :args  True\n                    ：return [-2.0,\'-2\', 3]\n    ', 'A');
+INSERT INTO `fic_func_lib` VALUES ('f_assert_must_int(value_list)', '检测列表中的元素是否为int类型', 'A');
+INSERT INTO `fic_func_lib` VALUES ('f_assert_must_list(value_list)', '检测列表中的元素是否为list类型', 'A');
+INSERT INTO `fic_func_lib` VALUES ('f_assert_not_null(seq)', '检测值是否非空或值得列表是否存在非空元素', 'A');
+INSERT INTO `fic_func_lib` VALUES ('f_assert_seq0_gte_seq1(value_list)', '检测列表中的第一个元素是否大于等于第二个元素', 'A');
+INSERT INTO `fic_func_lib` VALUES ('f_days_greater_than_args(seq, args)', '\n    过滤掉时间距离现在大于指定天数的元素\n    :param seq: 时间戳列表\n    :param args: 指定天数\n    :return: 时间戳列表\n    ', 'F');
+INSERT INTO `fic_func_lib` VALUES ('f_digit_or_float(seq)', '过滤出数字或float的值', 'F');
+INSERT INTO `fic_func_lib` VALUES ('f_get_workplace_now(seq)', '取当前工作地点', 'F');
+INSERT INTO `fic_func_lib` VALUES ('f_inside_stipulate_scope(seq, args)', '\n    过滤不在指定范围内的列表元素\n    :param seq: 原始列表\n    :param args: 指定元素范围值  (列表)\n    :return: 过滤后列表\n    ', 'F');
+INSERT INTO `fic_func_lib` VALUES ('f_mobile_m1_m5_sum_max_seq(seq, args)', '获取 mobile字符串在 tags字典中 1月到5月 某些key值sum最大的序列', 'F');
+INSERT INTO `fic_func_lib` VALUES ('f_not_null(seq)', '过滤非空值', 'F');
+INSERT INTO `fic_func_lib` VALUES ('f_plate_number(seq)', '\n        过滤列表中合法的车牌号\n\n        :param seq: 车牌号列表\n        :return:    合法的车牌号列表\n\n        example：\n                :seq  [\'冀BF876R\', u\'京BF688R\', \'京123456\']\n\n                :return  [\'冀BF876R\', \'京BF688R\']\n    ', 'F');
+INSERT INTO `fic_func_lib` VALUES ('m_check_code(seq, args=None)', '\n    将数值转化成对应的code\n    :param seq:  上一步得到的数据\n    :param args:  [feature_name,操作符]\n    :return:  对应code\n\n    example：\n                :data:         20\n                :args         [\'education_degree_code\',\'gte_lt\']\n                :return         2\n    ', 'M');
+INSERT INTO `fic_func_lib` VALUES ('m_check_x_in_y(seq, args)', '\n        判断x是否在y中 返回0/1\n        :param seq: 字符串、元组、字典、列表\n        :param args: 判断元素\n        :return:    0/1\n        example：\n                :seq  \'汉族\'\n                :args   \'汉\'\n                :return  1\n    ', 'M');
+INSERT INTO `fic_func_lib` VALUES ('m_city_name_to_code(city_name)', '\n       获取城市名所对应的Code\n        :param city_name: 城市\n        :return:    code\n        example：\n                :address  \'北京\'\n                :return  1\n    ', 'M');
+INSERT INTO `fic_func_lib` VALUES ('m_city_name_to_level(city_name)', '\n       获取城市名所对应的level\n        :param city_name: 城市\n        :return:    code\n        example：\n                :address  \'北京\'\n                :return  1\n    ', 'M');
+INSERT INTO `fic_func_lib` VALUES ('m_college_type(seq)', '\n    获取学校的类型信息\n    当学校的类型是985,211工程院校时：\n        :param seq:【“985,211工程院校”，“本科”】\n        :return:“985工程院校”\n    当学校的类型是211工程院校时：\n        :param seq:【“211工程院校”，“硕士”】\n        :return:“211工程院校”\n    当学校的类型是普通本科或者专科时：\n       如果获取的某人的学历信息是博士、硕士和本科时\n       输出的学校类型为普通本科\n       :param seq:【“****”，“硕士”】\n       :return:“普通本科”\n       如果获取的某个人的学历信息时专科时：\n       输出的学校类型为专科\n       :param seq:【“****”，“专科”】\n       :return:“专科”\n\n    ', 'M');
+INSERT INTO `fic_func_lib` VALUES ('m_datetime_only_hour_minute(seq)', '\n        时间字符串只保留时分\n\n        :param seq: 日期字符串 或 日期字符串组成的列表\n        :return:    日期字符串只保留时分\n\n        example：\n                :seq  [\'2017-01-01 12:20:00\', \'2017-02-28 09:10:30\']\n                :return  [\'12:20\', \'09:10\']\n\n    ', 'M');
+INSERT INTO `fic_func_lib` VALUES ('m_del_dict_invalid_value(seq, args=1)', '\n    删除列表中的无效值 None \'\' {} [] 0 False\n    :param seq: 原始字典\n    :param args: 字典深度即循环的次数\n    :return: 转换后的字典\n    example：\n                :seq  data = {\n                                \"matchType\": \"\",\n                                \"matchValue\": \"\",\n                                \"matchId\": \"\",\n                                \"classification\": [\n                                    {\n                                        \"M3\": {\n                                            \"bankCredit\": 0,\n                                            \"otherLoan\": {\n                                                \"longestDays\": \'\'\n                                            },\n                                            \"otherCredit\": None,\n                                            \"bankLoan\": None\n                                        }\n                                    },\n                                    {}\n                                ]\n                            }\n                :args   5\n                :return  {}\n    ', 'M');
+INSERT INTO `fic_func_lib` VALUES ('m_del_invalid_value(seq, args=1)', '\n        删除列表中的无效值 None \'\' {} [] 0 False\n        :param seq: 原始序列 list\n        :param args: seq深度即循环的次数\n        :return:    转换后的列表\n        example：\n                :seq  data = [{\n                                \"matchType\": \"\",\n                                \"matchValue\": \"\",\n                                \"matchId\": \"\",\n                                \"classification\": [\n                                    {\n                                        \"M3\": {\n                                            \"bankCredit\": 0,\n                                            \"otherLoan\": {\n                                                \"longestDays\": \'\'\n                                            },\n                                            \"otherCredit\": None,\n                                            \"bankLoan\": None\n                                        }\n                                    },\n                                    {}\n                                ]\n                            }]\n                :args   6\n                :return  []\n    ', 'M');
+INSERT INTO `fic_func_lib` VALUES ('m_dict_key_sort_in_list(seq, args=False)', '\n        对列表中字典按key排序，返回新的列表\n        :param seq: 字典形成的列表\n        :param args: 是否倒序 True or False\n        :return:    排序后的列表\n        example：\n                :seq  [{\'20160708\': \'gyf\'}, {\'20180505\': \'zme\'}, {\'20170101\': \'zkp\'}]\n                :args   True\n                :return  [{\'20180505\': \'zme\'}, {\'20170101\': \'zkp\'}, {\'20160708\': \'gyf\'}]\n    ', 'M');
+INSERT INTO `fic_func_lib` VALUES ('m_digit_to_floor(seq)', '\n        向下取整\n        :param seq: 整数、浮点数后他们的字符串\n        :return:    小于seq的最大整数\n        example：\n                :seq  \'-23.4\'\n                :return  -24\n    ', 'M');
+INSERT INTO `fic_func_lib` VALUES ('m_education_degree_check(seq, feature_name)', '\n       获取单值匹配(不是区间)所对应的Code\n\n        :param feature_name: 特征名称\n        :param seq: 特征对应的返回值\n        :return:    code\n\n        example：\n                :feature_name education_degree_check\n                :data: 30\n                :return  2\n    ', 'M');
+INSERT INTO `fic_func_lib` VALUES ('m_get_city_name(address)', '\n        提取公司所在地址的城市名称\n        :param address: 地址\n        :return:    城市\n        example：\n                :address  \'日照市黄海一路兴业国际商城001号楼01单元903号\'\n                :return  \'日照\'\n                :address  \'广州\'\n                :return  \'广州\'\n    ', 'M');
+INSERT INTO `fic_func_lib` VALUES ('m_get_date_to_now_years(seq, args=None)', '\n        返回传进来的时间字符串距离现在的年数 args保留小数点位数\n        :param seq: 日期字符串\n        :param args: 保留小数点位数\n        :return:    距离现在的年数\n        example：\n                :seq  \'2016-01-01\'\n                :args   2\n                :return  0.16\n    ', 'M');
+INSERT INTO `fic_func_lib` VALUES ('m_get_dict_value_in_list(seq, args)', '\n        获取列表中字典某个元素的值 返回值得列表\n        :param seq: 字典形成的列表\n        :param args: 获取的元素\n        :return:    获取的元素的值得列表\n        example：\n                :seq  [{\"work_end\": \"20170605\",\"industry\": \"string\",\"comp_name\": c,},\n                        {\"comp_name\": \"腾讯\",\"work_end\": \"20180809\",\"industry\": \"string\",}]\n                :args   \'comp_name\'\n                :return  [\'百度\'， \'腾讯\']\n    ', 'M');
+INSERT INTO `fic_func_lib` VALUES ('m_get_income_expense_comparison(seq, args=None)', '\n       获取用户的入账与支出关系\n\n        :param seq: 入账和支出信息\n\n        :return:  入账/支出的比率或空列表\n\n\n    ', 'M');
+INSERT INTO `fic_func_lib` VALUES ('m_get_max_month_to_now(seq)', '\n    计算时间字符串列表中时间距离今天的最长月数\n    计算逻辑为天数除以30\n    时间字符串\'999999\'代表当前  做去除处理\n    :param seq: 时间列表\n    :return: 传入列表中距离当前时间最长的月数\n    ', 'M');
+INSERT INTO `fic_func_lib` VALUES ('m_get_mobile_m1_m5_key_seq(seq)', '\n        获取 mobile字符串在 tags字典中 1月到5月存在的key_list中key值的和的列表\n\n        :param seq: 查询的手机字符串\n        :param tags:      含多种手机信息的字典\n        :param key_list:   查询的字段\n        :return:        该手机号1月到5月 在key_list中值的和 形成的列表\n        example：\n                :mobilestr  18920019796_8a404758b8f8b87c70006b8e9f4614db_\n                :targs {\n                        \'18920019796_8a404758b8f8b87c70006b8e9f4614db_\': {\n                        \'M5\': {\'callTimes\': 3,\'calledTimes\': 2},\n                        \'M4\': {\'callTimes\': 8,\'calledTimes\': 20},\n                        \'M3\': {\'month\': \'201610\'}},}}\n                :args   [\'callTimes\', \'calledTimes\']\n                :return  [28, 5]\n    ', 'M');
+INSERT INTO `fic_func_lib` VALUES ('m_get_mobile_m1_m5_key_seq1(mobilestr)', '\n        获取 mobile字符串在 tags字典中 1月到5月存在的key_list中key值的和的列表\n\n        :param mobilestr: 查询的手机字符串\n        :param tags:      含多种手机信息的字典\n        :param key_list:   查询的字段\n        :return:        该手机号1月到5月 在key_list中值的和 形成的列表\n\n        example：\n                :mobilestr  18920019796_8a404758b8f8b87c70006b8e9f4614db_\n                :targs {\n                        \'18920019796_8a404758b8f8b87c70006b8e9f4614db_\': {\n                        \'M5\': {\'callTimes\': 3,\'calledTimes\': 2},\n                        \'M4\': {\'callTimes\': 8,\'calledTimes\': 20},\n                        \'M3\': {\'month\': \'201610\'}},}}\n\n                :args   [\'callTimes\', \'calledTimes\']\n                :return  [28, 5]\n    ', 'M');
+INSERT INTO `fic_func_lib` VALUES ('m_get_mobile_stability(seq)', '获取手机号的稳定度', 'M');
+INSERT INTO `fic_func_lib` VALUES ('m_get_mon_sub(seq, args=None)', '\n        比较传进来的由两个日期字符串组成的seq之间相差的月数 args保留小数点位数\n        :param seq: 日期字符串\n        :param args: 保留小数点位数\n        :return:    相差的月数\n        example：\n                :seq  [\'2017-01-01\', \'2016-01-01\']\n                :args   2\n                :return  12.2\n    ', 'M');
+INSERT INTO `fic_func_lib` VALUES ('m_get_new_dict(seq, args)', '\n        对列表中的字典map成 args对应的字典列表\n        :param seq: 字典形成的列表\n        :param args: 获取的元素列表，只能是两个元素\n        :return:    得到的新的字典列表\n        example：\n                :seq  [{\"work_end\": \"20170605\",\"industry\": \"string\",\"comp_name\": \"百度\",},\n                        {\"comp_name\": \"腾讯\",\"work_end\": \"20180809\",\"industry\": \"string\",}]\n                :args   [\'work_end\',\'comp_name\']\n                :return  [{\"20170605\":\"百度\"},{\"20180809\":\"腾讯\"}]\n    ', 'M');
+INSERT INTO `fic_func_lib` VALUES ('m_get_new_list(seq, args)', '\n            对列表中的字典map成 args对应的列表的列表\n            :param seq: 字典形成的列表\n            :param args: 获取的元素列表，只能是两个元素\n            :return:    得到的新的 列表形成的列表\n            example：\n                    :seq  [{\"work_end\": \"20170605\",\"industry\": \"string\",\"comp_name\": \"百度\",},\n                            {\"comp_name\": \"腾讯\",\"work_end\": \"20180809\",\"industry\": \"string\",}]\n                    :args   [\'work_end\',\'comp_name\']\n                    :return  [[\"20170605\",\"百度\"],[\"20180809\",\"腾讯\"]]\n    ', 'M');
+INSERT INTO `fic_func_lib` VALUES ('m_get_seq_index_value(seq, args)', '\n        获取序列中指定索引的值\n        :param seq: 可以为字符串、列表\n        :param args: 索引\n        :return:    索引值\n        example：\n                :seq  [1, -2]\n                :args   0\n                :return  1\n    ', 'M');
+INSERT INTO `fic_func_lib` VALUES ('m_get_work_status_map(seq, feature_name)', '\n    对seq数据针对工作状态匹配相应code码\n    :param seq: 工作状态(汉子字符串)\n    :param feature_name: 特征名称分\n    :return: 工作状态code码\n    ', 'M');
+INSERT INTO `fic_func_lib` VALUES ('m_list_to_distinct(seq)', '\n        序列去除重复的值\n        :param seq: 可以为字符串、列表\n        :return:    去重后的字符串、列表\n        example：\n                :seq： [1, -2， 1]\n                :return： [1, -2]\n    ', 'M');
+INSERT INTO `fic_func_lib` VALUES ('m_lp_income(seq, discount)', '\n       获取猎聘返回的用户年收入,即最近一份工作的月薪个数与月薪的乘积,乘以折扣比率,保留两位小数\n\n        :param seq: 职业信息列表\n        :param discount: 年薪的折扣比率\n\n        :return:  年收入\n\n        example：\n                :seq: [\"work_exp_form\": [{\n                        \"months\": 13,\n                        \"salary\": 6000,\n                        \"work_end\": \"201006\",\n                    },\n                    {\n                        \"months\": 12,\n                        \"salary\": 12000,\n                        \"work_end\": \"200806\",\n                    },\n                    {\n                        \"months\": 12,\n                        \"salary\": 5000,\n                        \"work_end\": \"999999\",}]]\n\n                :discount: 0.56\n                :return  33600\n    ', 'M');
+INSERT INTO `fic_func_lib` VALUES ('m_marital_status(seq)', '\n        结婚状态\n        :param seq: 整数\n        :return:    小于seq的最大10的倍数\n        example：\n                :seq  \'23\'\n                :return  20\n    ', 'M');
+INSERT INTO `fic_func_lib` VALUES ('m_max_flight_area(seq)', '\n       一年内飞机出行中最多出行区域\n        :param seq: 飞行次数、国内次数、国外次数\n        :return:    飞行次数==0 返回0    国内次数>国外次数 返回inland 国外次数>国内次数 返回international\n        example：\n                :seq  [2, 2, 3]\n                :return  international\n    ', 'M');
+INSERT INTO `fic_func_lib` VALUES ('m_max_flight_class(seq)', '\n       一年内飞机出行中最多机舱类型\n        :param seq: [商务舱乘机次数、公务舱乘机次数、经济舱乘机次数]\n        :return:    乘机次数==0 返回0    乘坐商务舱最多 返回business_class 乘坐公务舱最多 executive_class 乘坐经济舱最多 返回tourist_class\n        example：\n                :seq  [2, 2, 3]\n                :return  tourist_class\n    ', 'M');
+INSERT INTO `fic_func_lib` VALUES ('m_mobile_id_judge(seq)', '\n    对手机号码三元素认证进行结果输出\n    分流逻辑特殊处理\n    :param seq: 传入数据\n    :return: 判断结果 列表\n    ', 'M');
+INSERT INTO `fic_func_lib` VALUES ('m_now_industry_code(seq)', '\n        获取当前工作行业\n        :param seq: 历史工作列表 行业结束时间为999999时代表当前从事行业\n        :return:    当前工作行业 当前没有工作返回空\n        example：\n                :seq  [[\'30\', 0], [\'5\', 1],[\'999999\', 1]]\n                :return  1\n    ', 'M');
+INSERT INTO `fic_func_lib` VALUES ('m_r_to_now_work_time(seq)', '\n    计算传入参数两个时间点距离当前时间的月数\n    计算逻辑:\n        距离今天的天数除以30得到月数, 时间\'999999\' 也代表今天\n    :param seq: 时间列表\n    :param args: 列表元素标记 标记比较接近当前时间的元素下标\n    :return:\n    ', 'M');
+INSERT INTO `fic_func_lib` VALUES ('m_seq_inx0_sort_in_list(seq, args=False)', '\n        对列表中单个列表按第一个元素排序，返回新的列表\n        :param seq: 列表形成的列表\n        :param args: 是否倒序 True or False\n        :return:    排序后的列表\n        example：\n                :seq  [[\'20160708\', \'gyf\'], [\'20180505\', \'zme\'], [\'20170101\', \'zkp\']]\n                :args   True\n                :return  [[\'20180505\', \'zme\'], [\'20170101\', \'zkp\'], [\'20160708\', \'gyf\']]\n    ', 'M');
+INSERT INTO `fic_func_lib` VALUES ('m_seq_inx_to_int(seq, args=0)', '\n        将列表中单个列表中元素转成int，返回新的列表\n        :param seq: 列表形成的列表\n        :param args: 列表的次序\n        :return:    转换后的列表\n        example：\n                :seq  [[\'30\', 0], [\'5\', 1]]\n                :args   0\n                :return  [[30, 0], [5, 1]]\n    ', 'M');
+INSERT INTO `fic_func_lib` VALUES ('m_seq_to_agv(seq, args=None)', '\n        返回列表中值的平均值 args保留小数点位数\n        :param seq: 整数、浮点数组成的列表\n        :param args: 保留小数点位数\n        :return:    平均值\n        example：\n                :seq  [1,2,1.2]\n                :args   2\n                :return  1.4\n    ', 'M');
+INSERT INTO `fic_func_lib` VALUES ('m_sex_to_code(seq)', '\n        返回性别的code值\n        :param seq: 包含性别的字符串\n        :return:    code\n        example：\n                :seq  \'男生\'\n                :return  \'男\'\n    ', 'M');
+INSERT INTO `fic_func_lib` VALUES ('m_single_check_code(seq, feature_name)', '\n       获取单值匹配(不是区间)所对应的Code\n\n        :param feature_name: 特征名称\n        :param seq: 特征对应的返回值\n        :return:    code\n\n        example：\n                :feature_name education_degree_code\n                :seq: 20\n                :return  2\n    ', 'M');
+INSERT INTO `fic_func_lib` VALUES ('m_single_to_list(seq)', '\n    转换单值为列表\n    :param seq: 5\n    :return:[5]\n    ', 'M');
+INSERT INTO `fic_func_lib` VALUES ('m_string_to_datetime(seq)', '\n        时间字符串转化为datetime对象\n        :param seq: 日期字符串 或 日期字符串组成的列表\n        :return:    datetime对象 或它的列表\n        example：\n                :seq  [\'2017-01-01\', \'2017-02-28\']\n                :return  [datetime.datetime(2017, 1, 1, 0, 0), datetime.datetime(2017, 2, 28, 0, 0)]\n    ', 'M');
+INSERT INTO `fic_func_lib` VALUES ('m_str_to_int_float_in_list(seq)', '\n    转换类表中的数字或浮点数 字符串为 int、float,别的元素不变\n    :param seq: 可以为任意值组成的列表\n    :return:转换后的列表\n    example：\n            :seq： [1, 2.1, \'2.1\', \'-2\', \'-8.8\' [] ,\'gyf\']\n            :return： [1, 2.1, 2.1, -2,-8.8, [], \'gyf\']\n    ', 'M');
+INSERT INTO `fic_func_lib` VALUES ('m_telecom_online_time(seq)', '\n       获取电信手机在网时长所对应的code\n\n        :param seq: 电信在网时长区间\n        :return:    code\n\n        example：\n                :seq: [0-6)\n                :return  1\n    ', 'M');
+INSERT INTO `fic_func_lib` VALUES ('m_to_bool(seq, args=None)', '\n        返回bool值0/1\n        :param seq: 任意值\n        :param args: 可不传 传时seq==args为1\n        :return:    0/1\n        example：\n                :seq  \'11\'\n                :args   \'00\'\n                :return  0\n    ', 'M');
+INSERT INTO `fic_func_lib` VALUES ('m_to_code(seq, args=None)', '\n    将数值转化成对应的code\n    :param seq:  上一步得到的数据\n    :param args:  feature_name\n    :return:  对应code\n\n    example：\n                :data:         20\n                :args         \'education_degree_code\'\n                :return         2\n    ', 'M');
+INSERT INTO `fic_func_lib` VALUES ('m_to_int(seq)', '\n    转换数字或序列为int类型\n    :param seq: 可以为int,float的数字或字符串 或 他们组成的列表\n    :return:int或int的列表\n    example：\n            :seq： [1, 2.1, \'2.1\', \'-2\']\n            :return： [1, 2, 2, -2]\n    ', 'M');
+INSERT INTO `fic_func_lib` VALUES ('m_to_len(seq, args=0)', '\n        求序列的长度\n        :param seq: 可以为字符串、列表\n        :param args: 减数\n        :return:    字符串、列表的长度\n        example：\n                :seq： [1, -2]\n                :args  0\n                :return： 2\n    ', 'M');
+INSERT INTO `fic_func_lib` VALUES ('m_to_power(seq)', '\n        转换为值的2次方\n        :param seq: 可以为int,float的数字组成的列表\n        :return:    列表中对应元素的2次方\n        example：\n                :seq： [1, -2]\n                :return： [1, -4]\n    ', 'M');
+INSERT INTO `fic_func_lib` VALUES ('m_to_slice(seq, args)', '\n        分片函数\n        :param seq: 分片序列 字符串 列表\n        :param args: 截取的范围\n        :return:    分片结果\n        example：\n                :seq  [\'abcd\',\'1234556\']\n                :args   [0,3]\n                :return  [\'abc\',\'123\']\n    ', 'M');
+INSERT INTO `fic_func_lib` VALUES ('m_to_str(seq)', '\n\n    :param seq:\n    :return:\n    ', 'M');
+INSERT INTO `fic_func_lib` VALUES ('m_to_sum(seq)', '\n        求序列中值得和\n        :param seq: 可以为整数、浮点数组成的列表\n        :return:    列表值得和\n        example：\n                :seq： [1, -2]\n                :return： -1\n    ', 'M');
+INSERT INTO `fic_func_lib` VALUES ('m_unicom_online_time(seq)', '\n       获取联通手机在网时长所对应的code\n\n        :param seq: 联通在网时长区间\n        :return:    code\n\n        example：\n                :seq: [0-1]\n                :return  1\n    ', 'M');
+INSERT INTO `fic_func_lib` VALUES ('m_yd_online_time(seq)', '\n       获取移动手机在网时长所对应的code\n\n        :param seq: 移动在网时长区间\n        :return:    code\n\n        example：\n                :seq: (0,3)\n                :return  1\n    ', 'M');
+INSERT INTO `fic_func_lib` VALUES ('r_min(seq)', '\n\n    :param seq:\n    :return:\n    ', 'R');
+INSERT INTO `fic_func_lib` VALUES ('r_mul(seq)', '\n        乘法\n\n        :param seq: 数字列表\n\n        example：\n                :seq  [1,2,1.2]\n                :return  2.4\n    ', 'R');
+INSERT INTO `fic_func_lib` VALUES ('r_sub(seq)', '\n        减法\n\n        :param seq: 数字列表\n\n        example：\n                :seq  [1,2,1.2]\n                :return  -2.2\n    ', 'R');
+
+-- ----------------------------
+-- Table structure for fic_interface_info
 -- ----------------------------
 DROP TABLE IF EXISTS `fic_interface_info`;
 CREATE TABLE `fic_interface_info` (
@@ -2660,15 +3192,13 @@ CREATE TABLE `fic_interface_info` (
   `data_identity` varchar(64) NOT NULL,
   `route` varchar(128) NOT NULL,
   `method` varchar(32) NOT NULL,
-  `comment` varchar(512) DEFAULT NULL,
-  `common_data` varchar(1024) DEFAULT NULL,
   `must_data` varchar(1024) NOT NULL,
   `is_need_token` tinyint(1) NOT NULL,
   `is_need_encrypt` tinyint(1) NOT NULL,
   `is_async` tinyint(1) NOT NULL,
-  `encrypt_type` varchar(32) DEFAULT NULL,
   `data_source_id` int(11) NOT NULL,
-  `data_origin_type` int(11),
+  `data_origin_type` int(11) DEFAULT NULL,
+  `encrypt_type` varchar(32),
   PRIMARY KEY (`id`),
   KEY `fic_interface_info_15a32e4a` (`data_source_id`),
   CONSTRAINT `fic_interface__data_source_id_28f7006_fk_fic_data_source_info_id` FOREIGN KEY (`data_source_id`) REFERENCES `fic_data_source_info` (`id`)
@@ -2677,46 +3207,46 @@ CREATE TABLE `fic_interface_info` (
 -- ----------------------------
 -- Records of fic_interface_info
 -- ----------------------------
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:36', '2017-02-15 10:45:36', '1', '贷款中介查询', 'loan_agency', '', 'REMOTE', '', '', '{\'mobile\': \'%(mobile)s\'}', '0', '0', '0', '', '3', '1');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:36', '2017-02-15 10:45:36', '2', '机构G黑名单查询', 'agentg_black', '', 'REMOTE', '', '', '{\'id_card_name\': \'%(name)s\', \'id_card_code\': \'%(card_id)s\', \'mobile\': \'%(mobile)s\'}', '0', '0', '0', '', '3', '1');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:36', '2017-02-15 10:45:36', '3', '天网黑名单查询', 'tianwang_black', '', 'REMOTE', '', '', '{\'mobile\': \'%(mobile)s\'}', '0', '0', '0', '', '3', '1');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:36', '2017-02-15 10:45:36', '4', '天网多头贷款查询', 'tianwang_multi_loan', '', 'REMOTE', '', '', '{\'mobile\': \'%(mobile)s\'}', '0', '0', '0', '', '3', '1');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:36', '2017-02-15 10:45:36', '5', '天眼黑名单查询', 'tianyan_black', '', 'REMOTE', '', '', '{\'email\': \'%(email)s\', \'id_card_code\': \'%(card_id)s\', \'mobile\': \'%(mobile)s\'}', '0', '0', '0', '', '3', '1');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:36', '2017-02-15 10:45:36', '6', '法院失信被执行人查询', 'court_shixin_a_s', '', 'REMOTE', '', '', '{\'entity_name\': \'%(name)s\', \'entity_id\': \'%(card_id)s\'}', '0', '0', '0', '', '3', '1');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:36', '2017-02-15 10:45:36', '7', '网贷黑名单查询', 'net_black_a_s', '', 'REMOTE', '', '', '{\'id_card_name\': \'%(name)s\', \'id_card_code\': \'%(card_id)s\'}', '0', '0', '0', '', '3', '1');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:36', '2017-02-15 10:45:36', '8', '个人不良信息查询', 'negative_info_s', '', 'REMOTE', '', '', '{\'id_card_name\': \'%(name)s\', \'id_card_code\': \'%(card_id)s\'}', '0', '0', '0', '', '3', '1');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:36', '2017-02-15 10:45:36', '9', '天网灰名单查询', 'tianwang_gray', '', 'REMOTE', '', '', '{\'mobile\': \'%(mobile)s\'}', '0', '0', '0', '', '3', '1');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:36', '2017-02-15 10:45:36', '10', '法院被执行人查询', 'court_zhixing_a_s', '', 'REMOTE', '', '', '{\'entity_name\': \'%(name)s\', \'entity_id\': \'%(card_id)s\'}', '0', '0', '0', '', '3', '1');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:36', '2017-02-15 10:45:36', '11', '电信手机在网时长', 'telecom_mobile_online_time_s', '', 'REMOTE', 'TMN', '', '{\'mobile\': \'%(mobile)s\'}', '0', '0', '0', '', '3', '1');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:36', '2017-02-15 10:45:36', '12', '联通手机在网时长', 'unicome_mobile_online_time_s', '', 'REMOTE', 'UMN', '', '{\'mobile\': \'%(mobile)s\'}', '0', '0', '0', '', '3', '1');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:37', '2017-02-15 10:45:37', '13', '移动手机在网时长', 'yd_mobile_online_time_s', '', 'REMOTE', 'YMN', '', '{\'mobile\': \'%(mobile)s\'}', '0', '0', '0', '', '3', '1');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:37', '2017-02-15 10:45:37', '14', '凭安贷款逾期信息', 'trustutn_loan_overdue', '', 'REMOTE', '', '', '{\'phone\': \'%(mobile)s\', \'id_card\': \'%(card_id)s\', \'name\': \'%(name)s\'}', '0', '0', '0', '', '3', '4');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:37', '2017-02-15 10:45:37', '15', '凭安贷款黑名单信息', 'trustutn_loan_blacklist', '', 'REMOTE', '', '', '{\'phone\': \'%(mobile)s\', \'id_card\': \'%(card_id)s\', \'name\': \'%(name)s\'}', '0', '0', '0', '', '3', '4');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:37', '2017-02-15 10:45:37', '16', '91征信查询', 'multi_loan_91', '', 'REMOTE', '', '', '{\'real_name\': \'%(name)s\', \'id_card\': \'%(card_id)s\'}', '0', '0', '0', '', '3', '2');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:37', '2017-02-15 10:45:37', '17', '申请数据查询', 'apply_data', '', 'LOCALE', '', '', '{\'apply_id\': \'%(apply_id)s\'}', '0', '0', '0', '', '3', '0');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:37', '2017-02-15 10:45:37', '18', '个人基本信息查询', 'personal_info', '', 'REMOTE', '', '', '{\'id_card_name\': \'%(name)s\', \'id_card_code\': \'%(card_id)s\'}', '0', '0', '0', '', '3', '1');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:37', '2017-02-15 10:45:37', '19', '未结清贷款记录查询', 'loan_history', '', 'REMOTE', '', '', '{\'card_id\': \'%(card_id)s\'}', '0', '0', '0', '', '3', '1');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:37', '2017-02-15 10:45:37', '20', '预授信信息查询', 'portrait_data', '', 'LOCALE', '', '', '{\'proposer_id\': \'%(proposer_id)s\'}', '0', '0', '0', '', '3', '0');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:37', '2017-02-15 10:45:37', '21', 'GPS地址查询', 'geo_location', '', 'REMOTE', '', '', '{\'gps_longitude\': \'%(longitudu)s\', \'gps_latitude\': \'%(latitude)s\'}', '0', '0', '0', '', '3', '1');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:37', '2017-02-15 10:45:37', '22', '手机号码归属地查询', 'mobile_locale', '', 'REMOTE', '', '', '{\'mobile\': \'%(mobile)s\'}', '0', '0', '0', '', '3', '1');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:37', '2017-02-15 10:45:37', '23', '凭安多头贷款查询', 'trustutn_loan_loanmsg', '', 'REMOTE', '', '', '{\'phone\': \'%(mobile)s\', \'id_card\': \'%(card_id)s\', \'name\': \'%(name)s\'}', '0', '0', '0', '', '3', '4');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:37', '2017-02-15 10:45:37', '24', '凭安电话号码查询', 'trustutn_loan_phone', '', 'REMOTE', '', '', '{\'phone\': \'%(mobile)s\', \'id_card\': \'%(card_id)s\', \'name\': \'%(name)s\'}', '0', '0', '0', '', '3', '4');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:37', '2017-02-15 10:45:37', '25', '电信手机身份验证', 'telecom_mobile_identity_s', '', 'REMOTE', 'TMN', '', '{\'id_card_name\': \'%(name)s\', \'id_card_code\': \'%(card_id)s\', \'mobile\': \'%(mobile)s\'}', '0', '0', '0', '', '3', '1');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:37', '2017-02-15 10:45:37', '26', '联通手机身份验证', 'unicom_mobile_identity_s', '', 'REMOTE', 'UMN', '', '{\'id_card_name\': \'%(name)s\', \'id_card_code\': \'%(card_id)s\', \'mobile\': \'%(mobile)s\'}', '0', '0', '0', '', '3', '1');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:38', '2017-02-15 10:45:38', '27', '移动手机身份验证', 'yd_mobile_identity_s', '', 'REMOTE', 'YMN', '', '{\'id_card_name\': \'%(name)s\', \'id_card_code\': \'%(card_id)s\', \'mobile\': \'%(mobile)s\'}', '0', '0', '0', '', '3', '1');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:38', '2017-02-15 10:45:38', '28', '人人信', 'cc_credit', '', 'REMOTE', '', '', '{\'mobile\': \'%(mobile)s\'}', '0', '0', '0', '', '3', '8');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:38', '2017-02-15 10:45:38', '29', '人人信车辆信息查询', 'cc_car_credit', '', 'REMOTE', '', '', '{\'user_name\': \'%(name)s\', \'id_no\': \'%(card_id)s\'}', '0', '0', '0', '', '3', '16');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:38', '2017-02-15 10:45:38', '30', '高速超速信息查询', 'high_way_over_speed', '', 'REMOTE', '', '', '{\'license_plate\': \'%(license_plate)s\'}', '0', '0', '0', '', '3', '1');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:38', '2017-02-15 10:45:38', '31', '高速超载信息查询', 'high_way_over_load', '', 'REMOTE', '', '', '{\'license_plate\': \'%(license_plate)s\'}', '0', '0', '0', '', '3', '1');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:38', '2017-02-15 10:45:38', '32', '凭安贷款其他机构查询', 'trustutn_loan_otheragent', '', 'REMOTE', '', '', '{\'phone\': \'%(mobile)s\', \'id_card\': \'%(card_id)s\', \'name\': \'%(name)s\'}', '0', '0', '0', '', '3', '4');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:38', '2017-02-15 10:45:38', '33', '乘机人信息查询', 'airline_passenger_info', '', 'REMOTE', '', '', '{\'id_card_name\': \'%(name)s\', \'id_card_code\': \'%(card_id)s\'}', '0', '0', '0', '', '3', '1');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:38', '2017-02-15 10:45:38', '34', '联通金融画像查询', 'unicom_finance_portrait_s', '', 'REMOTE', 'UMN', '', '{\'mobile\': \'%(mobile)s\'}', '0', '0', '0', '', '3', '1');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:38', '2017-02-15 10:45:38', '35', '多项身份信息查询', 'multi_id_card_info_s', '', 'REMOTE', '', '', '{\'id_card_name\': \'%(name)s\', \'id_card_code\': \'%(card_id)s\'}', '0', '0', '0', '', '3', '1');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:38', '2017-02-15 10:45:38', '36', '企业工商信息查询', 'industrial_commercial_s', '', 'REMOTE', '', '', '{\'enterprise_name\': \'%(cur_company)s\'}', '0', '0', '0', '', '3', '1');
-INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-27 17:11:16', '2017-02-27 17:11:19', '37', '学历信息查询', 'education_review_s', '', 'REMOTE', null, null, '{\'id_card_name\': \'%(name)s\', \'id_card_code\': \'%(card_id)s\'}', '0', '0', '0', null, '3', '1');
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:36', '2017-03-13 17:41:54', '1', '贷款中介查询', 'loan_agency', '/api/rule/gateway/', 'REMOTE', '{\'mobile\': \'%(mobile)s\'}', '0', '0', '0', '3', '1', null);
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:36', '2017-02-15 10:45:36', '2', '机构G黑名单查询', 'agentg_black', '/api/rule/gateway/', 'REMOTE', '{\'id_card_name\': \'%(name)s\', \'id_card_code\': \'%(card_id)s\', \'mobile\': \'%(mobile)s\'}', '0', '0', '0', '3', '1', null);
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:36', '2017-02-15 10:45:36', '3', '天网黑名单查询', 'tianwang_black', '/api/rule/gateway/', 'REMOTE', '{\'mobile\': \'%(mobile)s\'}', '0', '0', '0', '3', '1', null);
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:36', '2017-02-15 10:45:36', '4', '天网多头贷款查询', 'tianwang_multi_loan', '/api/rule/gateway/', 'REMOTE', '{\'mobile\': \'%(mobile)s\'}', '0', '0', '0', '3', '1', null);
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:36', '2017-02-15 10:45:36', '5', '天眼黑名单查询', 'tianyan_black', '/api/rule/gateway/', 'REMOTE', '{\'email\': \'%(email)s\', \'id_card_code\': \'%(card_id)s\', \'mobile\': \'%(mobile)s\'}', '0', '0', '0', '3', '1', null);
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:36', '2017-02-15 10:45:36', '6', '法院失信被执行人查询', 'court_shixin_a_s', '/api/rule/gateway/', 'REMOTE', '{\'entity_name\': \'%(name)s\', \'entity_id\': \'%(card_id)s\'}', '0', '0', '0', '3', '1', null);
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:36', '2017-02-15 10:45:36', '7', '网贷黑名单查询', 'net_black_a_s', '/api/rule/gateway/', 'REMOTE', '{\'id_card_name\': \'%(name)s\', \'id_card_code\': \'%(card_id)s\'}', '0', '0', '0', '3', '1', null);
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:36', '2017-02-15 10:45:36', '8', '个人不良信息查询', 'negative_info_s', '/api/rule/gateway/', 'REMOTE', '{\'id_card_name\': \'%(name)s\', \'id_card_code\': \'%(card_id)s\'}', '0', '0', '0', '3', '1', null);
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:36', '2017-02-15 10:45:36', '9', '天网灰名单查询', 'tianwang_gray', '/api/rule/gateway/', 'REMOTE', '{\'mobile\': \'%(mobile)s\'}', '0', '0', '0', '3', '1', null);
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:36', '2017-02-15 10:45:36', '10', '法院被执行人查询', 'court_zhixing_a_s', '/api/rule/gateway/', 'REMOTE', '{\'entity_name\': \'%(name)s\', \'entity_id\': \'%(card_id)s\'}', '0', '0', '0', '3', '1', null);
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:36', '2017-02-15 10:45:36', '11', '电信手机在网时长', 'telecom_mobile_online_time_s', '/api/rule/gateway/', 'REMOTE', '{\'mobile\': \'%(mobile)s\'}', '0', '0', '0', '3', '1', null);
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:36', '2017-02-15 10:45:36', '12', '联通手机在网时长', 'unicome_mobile_online_time_s', '/api/rule/gateway/', 'REMOTE', '{\'mobile\': \'%(mobile)s\'}', '0', '0', '0', '3', '1', null);
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:37', '2017-02-15 10:45:37', '13', '移动手机在网时长', 'yd_mobile_online_time_s', '/api/rule/gateway/', 'REMOTE', '{\'mobile\': \'%(mobile)s\'}', '0', '0', '0', '3', '1', null);
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:37', '2017-02-15 10:45:37', '14', '凭安贷款逾期信息', 'trustutn_loan_overdue', '/api/rule/gateway/', 'REMOTE', '{\'phone\': \'%(mobile)s\', \'id_card\': \'%(card_id)s\', \'name\': \'%(name)s\'}', '0', '0', '0', '3', '4', null);
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:37', '2017-02-15 10:45:37', '15', '凭安贷款黑名单信息', 'trustutn_loan_blacklist', '/api/rule/gateway/', 'REMOTE', '{\'phone\': \'%(mobile)s\', \'id_card\': \'%(card_id)s\', \'name\': \'%(name)s\'}', '0', '0', '0', '3', '4', null);
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:37', '2017-02-15 10:45:37', '16', '91征信查询', 'multi_loan_91', '/api/rule/gateway/', 'REMOTE', '{\'real_name\': \'%(name)s\', \'id_card\': \'%(card_id)s\'}', '0', '0', '0', '3', '2', null);
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:37', '2017-02-15 10:45:37', '17', '申请数据查询', 'apply_data', '/api/rule/gateway/', 'LOCALE', '{\'apply_id\': \'%(apply_id)s\'}', '0', '0', '0', '3', '0', null);
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:37', '2017-02-15 10:45:37', '18', '个人基本信息查询', 'personal_info', '/api/rule/gateway/', 'REMOTE', '{\'id_card_name\': \'%(name)s\', \'id_card_code\': \'%(card_id)s\'}', '0', '0', '0', '3', '1', null);
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:37', '2017-02-15 10:45:37', '19', '未结清贷款记录查询', 'loan_history', '/api/rule/gateway/', 'REMOTE', '{\'card_id\': \'%(card_id)s\'}', '0', '0', '0', '3', '1', null);
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:37', '2017-02-15 10:45:37', '20', '预授信信息查询', 'portrait_data', '/api/rule/gateway/', 'LOCALE', '{\'proposer_id\': \'%(proposer_id)s\'}', '0', '0', '0', '3', '0', null);
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:37', '2017-02-15 10:45:37', '21', 'GPS地址查询', 'geo_location', '/api/rule/gateway/', 'REMOTE', '{\'gps_longitude\': \'%(longitudu)s\', \'gps_latitude\': \'%(latitude)s\'}', '0', '0', '0', '3', '1', null);
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:37', '2017-02-15 10:45:37', '22', '手机号码归属地查询', 'mobile_locale', '/api/rule/gateway/', 'REMOTE', '{\'mobile\': \'%(mobile)s\'}', '0', '0', '0', '3', '1', null);
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:37', '2017-02-15 10:45:37', '23', '凭安多头贷款查询', 'trustutn_loan_loanmsg', '/api/rule/gateway/', 'REMOTE', '{\'phone\': \'%(mobile)s\', \'id_card\': \'%(card_id)s\', \'name\': \'%(name)s\'}', '0', '0', '0', '3', '4', null);
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:37', '2017-02-15 10:45:37', '24', '凭安电话号码查询', 'trustutn_loan_phone', '/api/rule/gateway/', 'REMOTE', '{\'phone\': \'%(mobile)s\', \'id_card\': \'%(card_id)s\', \'name\': \'%(name)s\'}', '0', '0', '0', '3', '4', null);
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:37', '2017-02-15 10:45:37', '25', '电信手机身份验证', 'telecom_mobile_identity_s', '/api/rule/gateway/', 'REMOTE', '{\'id_card_name\': \'%(name)s\', \'id_card_code\': \'%(card_id)s\', \'mobile\': \'%(mobile)s\'}', '0', '0', '0', '3', '1', null);
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:37', '2017-02-15 10:45:37', '26', '联通手机身份验证', 'unicom_mobile_identity_s', '/api/rule/gateway/', 'REMOTE', '{\'id_card_name\': \'%(name)s\', \'id_card_code\': \'%(card_id)s\', \'mobile\': \'%(mobile)s\'}', '0', '0', '0', '3', '1', null);
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:38', '2017-02-15 10:45:38', '27', '移动手机身份验证', 'yd_mobile_identity_s', '/api/rule/gateway/', 'REMOTE', '{\'id_card_name\': \'%(name)s\', \'id_card_code\': \'%(card_id)s\', \'mobile\': \'%(mobile)s\'}', '0', '0', '0', '3', '1', null);
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:38', '2017-02-15 10:45:38', '28', '人人信', 'cc_credit', '/api/rule/gateway/', 'REMOTE', '{\'mobile\': \'%(mobile)s\'}', '0', '0', '0', '3', '8', null);
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:38', '2017-02-15 10:45:38', '29', '人人信车辆信息查询', 'cc_car_credit', '/api/rule/gateway/', 'REMOTE', '{\'user_name\': \'%(name)s\', \'id_card_code\': \'%(card_id)s\'}', '0', '0', '0', '3', '16', null);
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:38', '2017-02-15 10:45:38', '30', '高速超速信息查询', 'high_way_over_speed', '/api/rule/gateway/', 'REMOTE', '{\'license_plate\': \'%(car_number)s\', \'high_way_period\': \'4\', \'start_time\': \'\', \'end_time\': \'\'}', '0', '0', '0', '3', '1', null);
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:38', '2017-02-15 10:45:38', '31', '高速超载信息查询', 'high_way_over_load', '/api/rule/gateway/', 'REMOTE', '{\'license_plate\': \'%(car_number)s\', \'high_way_period\': \'4\', \'start_time\': \'\', \'end_time\': \'\'}', '0', '0', '0', '3', '1', null);
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:38', '2017-02-15 10:45:38', '32', '凭安贷款其他机构查询', 'trustutn_loan_otheragent', '/api/rule/gateway/', 'REMOTE', '{\'phone\': \'%(mobile)s\', \'id_card\': \'%(card_id)s\', \'name\': \'%(name)s\'}', '0', '0', '0', '3', '4', null);
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:38', '2017-02-15 10:45:38', '33', '乘机人信息查询', 'airline_passenger_info', '/api/rule/gateway/', 'REMOTE', '{\'id_card_name\': \'%(name)s\', \'id_card_code\': \'%(card_id)s\',\'timestamp\':\'int(time.time())\'}', '0', '0', '0', '3', '1', null);
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:38', '2017-02-15 10:45:38', '34', '联通金融画像查询', 'unicom_finance_portrait_s', '/api/rule/gateway/', 'REMOTE', '{\'mobile\': \'%(mobile)s\'}', '0', '0', '0', '3', '1', null);
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:38', '2017-02-15 10:45:38', '35', '多项身份信息查询', 'multi_id_card_info_s', '/api/rule/gateway/', 'REMOTE', '{\'id_card_name\': \'%(name)s\', \'id_card_code\': \'%(card_id)s\'}', '0', '0', '0', '3', '1', null);
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-15 10:45:38', '2017-02-15 10:45:38', '36', '企业工商信息查询', 'industrial_commercial_s', '/api/rule/gateway/', 'REMOTE', '{\'enterprise_name\': \'%(cur_company)s\', \'register_code\': \'\'}', '0', '0', '0', '3', '1', null);
+INSERT INTO `fic_interface_info` VALUES ('0', '2017-02-27 17:11:16', '2017-02-27 17:11:19', '37', '学历信息查询', 'education_review_s', '/api/rule/gateway/', 'REMOTE', '{\'id_card_name\': \'%(name)s\', \'id_card_code\': \'%(card_id)s\',\'timestamp\':\'int(time.time())\'}', '0', '0', '0', '3', '1', null);
 
 -- ----------------------------
--- Table structure for `fic_pre_field_info`
+-- Table structure for fic_pre_field_info
 -- ----------------------------
 DROP TABLE IF EXISTS `fic_pre_field_info`;
 CREATE TABLE `fic_pre_field_info` (
@@ -2726,8 +3256,8 @@ CREATE TABLE `fic_pre_field_info` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `field_name` varchar(64) NOT NULL,
   `field_name_cn` varchar(64) NOT NULL,
-  `source` varchar(64) NOT NULL,
-  `path` varchar(256) NOT NULL,
+  `source` varchar(64) DEFAULT NULL,
+  `path` varchar(256) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
@@ -2744,7 +3274,20 @@ INSERT INTO `fic_pre_field_info` VALUES ('0', '2017-02-22 18:23:41', '2017-02-22
 INSERT INTO `fic_pre_field_info` VALUES ('0', '2017-02-23 10:52:05', '2017-02-23 10:52:09', '8', 'proposer_id', '申请人id', 'portrait_data', '$.proposer_id');
 
 -- ----------------------------
--- Table structure for `pgc_model_coefficient_conf`
+-- Table structure for hibernate_sequence
+-- ----------------------------
+DROP TABLE IF EXISTS `hibernate_sequence`;
+CREATE TABLE `hibernate_sequence` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of hibernate_sequence
+-- ----------------------------
+INSERT INTO `hibernate_sequence` VALUES ('1');
+
+-- ----------------------------
+-- Table structure for pgc_model_coefficient_conf
 -- ----------------------------
 DROP TABLE IF EXISTS `pgc_model_coefficient_conf`;
 CREATE TABLE `pgc_model_coefficient_conf` (
@@ -2765,7 +3308,7 @@ CREATE TABLE `pgc_model_coefficient_conf` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `pgc_model_field_option_weight`
+-- Table structure for pgc_model_field_option_weight
 -- ----------------------------
 DROP TABLE IF EXISTS `pgc_model_field_option_weight`;
 CREATE TABLE `pgc_model_field_option_weight` (
@@ -2784,3 +3327,1253 @@ CREATE TABLE `pgc_model_field_option_weight` (
 -- ----------------------------
 -- Records of pgc_model_field_option_weight
 -- ----------------------------
+
+-- ----------------------------
+-- Table structure for policy_set
+-- ----------------------------
+DROP TABLE IF EXISTS `policy_set`;
+CREATE TABLE `policy_set` (
+  `policy_set_id` int(11) NOT NULL AUTO_INCREMENT,
+  `create_time` datetime DEFAULT NULL,
+  `package_uuid` varchar(255) DEFAULT NULL,
+  `package_value` longtext,
+  `policy_set_name` varchar(255) DEFAULT NULL,
+  `package_card_value` longtext,
+  PRIMARY KEY (`policy_set_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of policy_set
+-- ----------------------------
+INSERT INTO `policy_set` VALUES ('1', '2017-04-12 11:42:10', 'com1491968529697585313868750', 'package com.sample\r\n \r\nimport com.digcredit.brms.model.*;\r\nimport com.digcredit.brms.service.*\r\n\r\nglobal ReportService reportService;\r\n \r\nrule \"Hello World-a安利文\"\r\n    when\r\n        eval(true)\r\n    then\r\n        System.out.println(\"-----------0000000000\");\r\nend', '策略集2', 'package com.sample\r\n \r\nimport com.digcredit.brms.model.*;\r\nimport com.digcredit.brms.service.*\r\n\r\nglobal ReportService reportService;\r\n \r\nrule \"Hello World-a安利文\"\r\n    when\r\n        eval(true)\r\n    then\r\n        System.out.println(\"-----------333333333333333333\");\r\nend');
+INSERT INTO `policy_set` VALUES ('2', '2017-04-12 11:44:27', 'com1491968666614762730118514', 'package com1491968666614762730118514\r\nimport com.digcredit.brms.model.*\r\nrule \"年龄1111122222211112\"\r\nruleflow-group \"2\"\r\nwhen\r\n$applicant: Applicant(((airfareSum12 >= 11)&&(airfareSum12 <= 26)), accountStatus == Applicant.Status.PASS)\r\nthen\r\ninsert(new Rejection($applicant, \"null\"));\r\nmodify($applicant){setAccountStatus(Applicant.Status.REJECT)};\r\nend\r\nrule \"年龄判别44\"\r\nruleflow-group \"1\"\r\nwhen\r\n	$applicant: Applicant(((age > 11)&&(age < 66)), accountStatus == Applicant.Status.PASS)\r\nthen\r\n	System.out.println( \"=========================================44444444444444444444444444444444\" );\r\n	insert(new Rejection($applicant, \"非主流\"));\r\n	modify($applicant){setAccountStatus(Applicant.Status.REJECT)};\r\nend', '策略集2', 'package cardcom1491968666614762730118514\r\nimport com.digcredit.brms.model.*\r\n\r\nrule \"age18-22\"\r\n	ruleflow-group \"身份特征\"\r\n	when\r\n		$applicant: Applicant(age >= 18 && age <= 22)\r\n	then\r\n		modify($applicant){$applicant.addCardOption(new CreditCardSingleOption(\"身份特征\", 25, \"age\", 40, \"18-22\", 60))};\r\nend\r\n\r\nrule \"age23-30\"\r\n	ruleflow-group \"身份特征\"\r\n	when\r\n		$applicant: Applicant(age >= 23 && age <= 30)\r\n	then\r\n		modify($applicant){$applicant.addCardOption(new CreditCardSingleOption(\"身份特征\", 25, \"age\", 40, \"23-30\", 99))};\r\nend\r\n\r\nrule \"age31-45\"\r\n	ruleflow-group \"身份特征\"\r\n	when\r\n		$applicant: Applicant(age >= 31 && age <= 45)\r\n	then\r\n		modify($applicant){$applicant.addCardOption(new CreditCardSingleOption(\"身份特征\", 25, \"age\", 40, \"31-45\", 80))};\r\nend\r\n\r\nrule \"airfareSum12天津\"\r\n	ruleflow-group \"身份特征\"\r\n	when\r\n		$applicant: Applicant(airfareSum12 == \"天津\")\r\n	then\r\n		modify($applicant){$applicant.addCardOption(new CreditCardSingleOption(\"身份特征\", 25, \"airfareSum12\", 60, \"天津\", 60))};\r\nend\r\n\r\nrule \"airfareSum12河北\"\r\n	ruleflow-group \"身份特征\"\r\n	when\r\n		$applicant: Applicant(airfareSum12 == \"河北\")\r\n	then\r\n		modify($applicant){$applicant.addCardOption(new CreditCardSingleOption(\"身份特征\", 25, \"airfareSum12\", 60, \"河北\", 100))};\r\nend\r\n\r\nrule \"airfareSum12唐山\"\r\n	ruleflow-group \"身份特征\"\r\n	when\r\n		$applicant: Applicant(airfareSum12 == \"唐山\")\r\n	then\r\n		modify($applicant){$applicant.addCardOption(new CreditCardSingleOption(\"身份特征\", 25, \"airfareSum12\", 60, \"唐山\", 80))};\r\nend\r\n\r\nrule \"overspeedCount0-10000\"\r\n	ruleflow-group \"身份特征\"\r\n	when\r\n		$applicant: Applicant(overspeedCount >= 0 && overspeedCount <= 10000)\r\n	then\r\n		modify($applicant){$applicant.addCardOption(new CreditCardSingleOption(\"身份特征\", 25, \"overspeedCount\", 50, \"0-10000\", 99))};\r\nend\r\n\r\nrule \"applyRegisterDuration18-22\"\r\n	ruleflow-group \"信用历史\"\r\n	when\r\n		$applicant: Applicant(applyRegisterDuration >= 18 && applyRegisterDuration <= 22)\r\n	then\r\n		modify($applicant){$applicant.addCardOption(new CreditCardSingleOption(\"信用历史\", 15, \"applyRegisterDuration\", 50, \"18-22\", 60))};\r\nend\r\n\r\nrule \"applyRegisterDuration23-30\"\r\n	ruleflow-group \"信用历史\"\r\n	when\r\n		$applicant: Applicant(applyRegisterDuration >= 23 && applyRegisterDuration <= 30)\r\n	then\r\n		modify($applicant){$applicant.addCardOption(new CreditCardSingleOption(\"信用历史\", 15, \"applyRegisterDuration\", 50, \"23-30\", 100))};\r\nend\r\n\r\nrule \"applyRegisterDuration31-45\"\r\n	ruleflow-group \"信用历史\"\r\n	when\r\n		$applicant: Applicant(applyRegisterDuration >= 31 && applyRegisterDuration <= 45)\r\n	then\r\n		modify($applicant){$applicant.addCardOption(new CreditCardSingleOption(\"信用历史\", 15, \"applyRegisterDuration\", 50, \"31-45\", 80))};\r\nend\r\n\r\nrule \"carCount18-22\"\r\n	ruleflow-group \"信用历史\"\r\n	when\r\n		$applicant: Applicant(carCount >= 18 && carCount <= 22)\r\n	then\r\n		modify($applicant){$applicant.addCardOption(new CreditCardSingleOption(\"信用历史\", 15, \"carCount\", 40, \"18-22\", 60))};\r\nend\r\n\r\nrule \"carCount23-30\"\r\n	ruleflow-group \"信用历史\"\r\n	when\r\n		$applicant: Applicant(carCount >= 23 && carCount <= 30)\r\n	then\r\n		modify($applicant){$applicant.addCardOption(new CreditCardSingleOption(\"信用历史\", 15, \"carCount\", 40, \"23-30\", 100))};\r\nend\r\n\r\nrule \"carCount31-45\"\r\n	ruleflow-group \"信用历史\"\r\n	when\r\n		$applicant: Applicant(carCount >= 31 && carCount <= 45)\r\n	then\r\n		modify($applicant){$applicant.addCardOption(new CreditCardSingleOption(\"信用历史\", 15, \"carCount\", 40, \"31-45\", 80))};\r\nend\r\n\r\nrule \"creditcardCount18-22\"\r\n	ruleflow-group \"信用历史\"\r\n	when\r\n		$applicant: Applicant(creditcardCount >= 18 && creditcardCount <= 22)\r\n	then\r\n		modify($applicant){$applicant.addCardOption(new CreditCardSingleOption(\"信用历史\", 15, \"creditcardCount\", 10, \"18-22\", 60))};\r\nend\r\n\r\nrule \"creditcardCount23-30\"\r\n	ruleflow-group \"信用历史\"\r\n	when\r\n		$applicant: Applicant(creditcardCount >= 23 && creditcardCount <= 30)\r\n	then\r\n		modify($applicant){$applicant.addCardOption(new CreditCardSingleOption(\"信用历史\", 15, \"creditcardCount\", 10, \"23-30\", 100))};\r\nend\r\n\r\nrule \"creditcardCount31-45\"\r\n	ruleflow-group \"信用历史\"\r\n	when\r\n		$applicant: Applicant(creditcardCount >= 31 && creditcardCount <= 45)\r\n	then\r\n		modify($applicant){$applicant.addCardOption(new CreditCardSingleOption(\"信用历史\", 15, \"creditcardCount\", 10, \"31-45\", 80))};\r\nend\r\n\r\nrule \"curWorkStatus18-22\"\r\n	ruleflow-group \"履约能力\"\r\n	when\r\n		$applicant: Applicant(curWorkStatus >= 18 && curWorkStatus <= 22)\r\n	then\r\n		modify($applicant){$applicant.addCardOption(new CreditCardSingleOption(\"履约能力\", 30, \"curWorkStatus\", 30, \"18-22\", 60))};\r\nend\r\n\r\nrule \"curWorkStatus23-30\"\r\n	ruleflow-group \"履约能力\"\r\n	when\r\n		$applicant: Applicant(curWorkStatus >= 23 && curWorkStatus <= 30)\r\n	then\r\n		modify($applicant){$applicant.addCardOption(new CreditCardSingleOption(\"履约能力\", 30, \"curWorkStatus\", 30, \"23-30\", 100))};\r\nend\r\n\r\nrule \"curWorkStatus31-45\"\r\n	ruleflow-group \"履约能力\"\r\n	when\r\n		$applicant: Applicant(curWorkStatus >= 31 && curWorkStatus <= 45)\r\n	then\r\n		modify($applicant){$applicant.addCardOption(new CreditCardSingleOption(\"履约能力\", 30, \"curWorkStatus\", 30, \"31-45\", 80))};\r\nend\r\n\r\nrule \"ccBillAge18-22\"\r\n	ruleflow-group \"履约能力\"\r\n	when\r\n		$applicant: Applicant(ccBillAge >= 18 && ccBillAge <= 22)\r\n	then\r\n		modify($applicant){$applicant.addCardOption(new CreditCardSingleOption(\"履约能力\", 30, \"ccBillAge\", 70, \"18-22\", 60))};\r\nend\r\n\r\nrule \"ccBillAge23-30\"\r\n	ruleflow-group \"履约能力\"\r\n	when\r\n		$applicant: Applicant(ccBillAge >= 23 && ccBillAge <= 30)\r\n	then\r\n		modify($applicant){$applicant.addCardOption(new CreditCardSingleOption(\"履约能力\", 30, \"ccBillAge\", 70, \"23-30\", 100))};\r\nend\r\n\r\nrule \"ccBillAge31-45\"\r\n	ruleflow-group \"履约能力\"\r\n	when\r\n		$applicant: Applicant(ccBillAge >= 31 && ccBillAge <= 45)\r\n	then\r\n		modify($applicant){$applicant.addCardOption(new CreditCardSingleOption(\"履约能力\", 30, \"ccBillAge\", 70, \"31-45\", 80))};\r\nend\r\n\r\nrule \"folk汉族\"\r\n	ruleflow-group \"人脉关系\"\r\n	when\r\n		$applicant: Applicant(folk == \"汉族\")\r\n	then\r\n		modify($applicant){$applicant.addCardOption(new CreditCardSingleOption(\"人脉关系\", 10, \"folk\", 55, \"汉族\", 100))};\r\nend\r\n\r\nrule \"folk少数民族\"\r\n	ruleflow-group \"人脉关系\"\r\n	when\r\n		$applicant: Applicant(folk == \"少数民族\")\r\n	then\r\n		modify($applicant){$applicant.addCardOption(new CreditCardSingleOption(\"人脉关系\", 10, \"folk\", 55, \"少数民族\", 60))};\r\nend\r\n\r\nrule \"companyAddrCityLevel一线\"\r\n	ruleflow-group \"人脉关系\"\r\n	when\r\n		$applicant: Applicant(companyAddrCityLevel == \"一线\")\r\n	then\r\n		modify($applicant){$applicant.addCardOption(new CreditCardSingleOption(\"人脉关系\", 10, \"companyAddrCityLevel\", 45, \"一线\", 100))};\r\nend\r\n\r\nrule \"companyAddrCityLevel二线\"\r\n	ruleflow-group \"人脉关系\"\r\n	when\r\n		$applicant: Applicant(companyAddrCityLevel == \"二线\")\r\n	then\r\n		modify($applicant){$applicant.addCardOption(new CreditCardSingleOption(\"人脉关系\", 10, \"companyAddrCityLevel\", 45, \"二线\", 90))};\r\nend\r\n\r\nrule \"companyAddrCityLevel三线\"\r\n	ruleflow-group \"人脉关系\"\r\n	when\r\n		$applicant: Applicant(companyAddrCityLevel == \"三线\")\r\n	then\r\n		modify($applicant){$applicant.addCardOption(new CreditCardSingleOption(\"人脉关系\", 10, \"companyAddrCityLevel\", 45, \"三线\", 80))};\r\nend\r\n\r\nrule \"companyAddrCityLevel四线\"\r\n	ruleflow-group \"人脉关系\"\r\n	when\r\n		$applicant: Applicant(companyAddrCityLevel == \"四线\")\r\n	then\r\n		modify($applicant){$applicant.addCardOption(new CreditCardSingleOption(\"人脉关系\", 10, \"companyAddrCityLevel\", 45, \"四线\", 70))};\r\nend\r\n\r\nrule \"companyAddrCityLevel其他\"\r\n	ruleflow-group \"人脉关系\"\r\n	when\r\n		$applicant: Applicant(companyAddrCityLevel == \"其他\")\r\n	then\r\n		modify($applicant){$applicant.addCardOption(new CreditCardSingleOption(\"人脉关系\", 10, \"companyAddrCityLevel\", 45, \"其他\", 60))};\r\nend\r\n\r\nrule \"completeDegree0-30\"\r\n	ruleflow-group \"行为偏好\"\r\n	when\r\n		$applicant: Applicant(completeDegree >= 0 && completeDegree <= 30)\r\n	then\r\n		modify($applicant){$applicant.addCardOption(new CreditCardSingleOption(\"行为偏好\", 20, \"completeDegree\", 65, \"0-30\", 60))};\r\nend\r\n\r\nrule \"completeDegree31-60\"\r\n	ruleflow-group \"行为偏好\"\r\n	when\r\n		$applicant: Applicant(completeDegree >= 31 && completeDegree <= 60)\r\n	then\r\n		modify($applicant){$applicant.addCardOption(new CreditCardSingleOption(\"行为偏好\", 20, \"completeDegree\", 65, \"31-60\", 80))};\r\nend\r\n\r\nrule \"completeDegree61-100\"\r\n	ruleflow-group \"行为偏好\"\r\n	when\r\n		$applicant: Applicant(completeDegree >= 61 && completeDegree <= 100)\r\n	then\r\n		modify($applicant){$applicant.addCardOption(new CreditCardSingleOption(\"行为偏好\", 20, \"completeDegree\", 65, \"61-100\", 100))};\r\nend\r\n\r\nrule \"contacts0-100\"\r\n	ruleflow-group \"行为偏好\"\r\n	when\r\n		$applicant: Applicant(contacts >= 0 && contacts <= 100)\r\n	then\r\n		modify($applicant){$applicant.addCardOption(new CreditCardSingleOption(\"行为偏好\", 20, \"contacts\", 35, \"0-100\", 80))};\r\nend\r\n\r\nrule \"contacts100-500\"\r\n	ruleflow-group \"行为偏好\"\r\n	when\r\n		$applicant: Applicant(contacts >= 100 && contacts <= 500)\r\n	then\r\n		modify($applicant){$applicant.addCardOption(new CreditCardSingleOption(\"行为偏好\", 20, \"contacts\", 35, \"100-500\", 100))};\r\nend\r\n\r\nrule \"curCorpYears0-100\"\r\n	ruleflow-group \"审核模块1\"\r\n	when\r\n		$applicant: Applicant(curCorpYears >= 0 && curCorpYears <= 100)\r\n	then\r\n		modify($applicant){$applicant.addCardOption(new CreditCardSingleOption(\"审核模块1\", 25, \"curCorpYears\", 50, \"0-100\", 100))};\r\nend\r\n\r\nrule \"curCorpYears0-0\"\r\n	ruleflow-group \"审核模块1\"\r\n	when\r\n		$applicant: Applicant(curCorpYears >= 0 && curCorpYears <= 0)\r\n	then\r\n		modify($applicant){$applicant.addCardOption(new CreditCardSingleOption(\"审核模块1\", 25, \"curCorpYears\", 50, \"0-0\", 100))};\r\nend\r\n\r\nrule \"educationDegreeCheck统招\"\r\n	ruleflow-group \"审核模块1\"\r\n	when\r\n		$applicant: Applicant(educationDegreeCheck == \"统招\")\r\n	then\r\n		modify($applicant){$applicant.addCardOption(new CreditCardSingleOption(\"审核模块1\", 25, \"educationDegreeCheck\", 50, \"统招\", 100))};\r\nend\r\n\r\nrule \"educationDegreeCheck非统招\"\r\n	ruleflow-group \"审核模块1\"\r\n	when\r\n		$applicant: Applicant(educationDegreeCheck == \"非统招\")\r\n	then\r\n		modify($applicant){$applicant.addCardOption(new CreditCardSingleOption(\"审核模块1\", 25, \"educationDegreeCheck\", 50, \"非统招\", 100))};\r\nend\r\n');
+
+-- ----------------------------
+-- Table structure for policy_set1
+-- ----------------------------
+DROP TABLE IF EXISTS `policy_set1`;
+CREATE TABLE `policy_set1` (
+  `policy_set_id` int(11) NOT NULL AUTO_INCREMENT,
+  `create_time` datetime DEFAULT NULL,
+  `policy_set_name` varchar(255) DEFAULT NULL,
+  `package_value` longtext,
+  `package_uuid` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`policy_set_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of policy_set1
+-- ----------------------------
+INSERT INTO `policy_set1` VALUES ('1', '2017-03-22 16:04:51', '策略集1', 'package com1490755719795582177210786\r\nimport com.digcredit.brms.model.*\r\nimport java.util.List;\r\nimport com.digcredit.brms.service.*\r\n\r\nglobal ReportService reportService;\r\n\r\nrule \"rejection\"\r\n    when\r\n        $r : Rejection($applicant : Applicant)\r\n    then\r\n    	System.out.println(\"44444444444444444444444\");\r\nend\r\n\r\nrule \"年龄判别1123\"\r\nruleflow-group \"1\"\r\nwhen\r\n	$applicant: Applicant(1==1)\r\nthen\r\n	System.out.println( \"==========================================11111111111111111111111111111\" );\r\nend\r\n\r\n\r\nrule \"年龄判别4422223\"\r\nruleflow-group \"1\"\r\nwhen\r\n	$applicant: Applicant(((age > 11)&&(age < 66)), accountStatus == Applicant.Status.PASS)\r\nthen\r\n	System.out.println( \"99999999999999999999999999999999999999999999999999999999999999999999999\" );\r\nend\r\n\r\nrule \"年龄判别44\"\r\nruleflow-group \"1\"\r\nwhen\r\n	$applicant: Applicant(((age > 11)&&(age < 66)), accountStatus == Applicant.Status.PASS)\r\nthen\r\n	System.out.println( \"=========================================44444444444444444444444444444444\" );\r\n	insert(new Rejection($applicant, \"非主流\"));\r\n	modify($applicant){setAccountStatus(Applicant.Status.REJECT)};\r\nend\r\n\r\n\r\n', 'com1490755719795582177210786');
+
+-- ----------------------------
+-- Table structure for result_code
+-- ----------------------------
+DROP TABLE IF EXISTS `result_code`;
+CREATE TABLE `result_code` (
+  `result_code_id` int(11) NOT NULL AUTO_INCREMENT,
+  `create_time` datetime DEFAULT NULL,
+  `result_code` varchar(255) DEFAULT NULL,
+  `result_reason` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`result_code_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of result_code
+-- ----------------------------
+INSERT INTO `result_code` VALUES ('1', '2017-03-22 13:49:26', 'D101', '申请人年龄不足');
+INSERT INTO `result_code` VALUES ('2', '2017-03-22 13:49:27', 'D102', '申请人有未还清贷款');
+INSERT INTO `result_code` VALUES ('3', '2017-03-22 13:49:28', 'D103', '申请人命中同业黑名单');
+
+-- ----------------------------
+-- Table structure for rn_credit_card_drl_config
+-- ----------------------------
+DROP TABLE IF EXISTS `rn_credit_card_drl_config`;
+CREATE TABLE `rn_credit_card_drl_config` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `credit_card_drl` longtext,
+  `package_uuid` varchar(255) DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `policy_set_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKl08p64us0qt8eftph8nrmbhgm` (`policy_set_id`),
+  CONSTRAINT `FKl08p64us0qt8eftph8nrmbhgm` FOREIGN KEY (`policy_set_id`) REFERENCES `policy_set` (`policy_set_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of rn_credit_card_drl_config
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for rn_credit_card_feature_config
+-- ----------------------------
+DROP TABLE IF EXISTS `rn_credit_card_feature_config`;
+CREATE TABLE `rn_credit_card_feature_config` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `feature_name` varchar(255) DEFAULT NULL,
+  `feature_weight` int(11) DEFAULT NULL,
+  `model_id` int(11) DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `feature_card_type` int(11) DEFAULT NULL,
+  `feature_name_desc` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK1jdar07ola0um20kwjb4j0s6e` (`model_id`),
+  CONSTRAINT `FK1jdar07ola0um20kwjb4j0s6e` FOREIGN KEY (`model_id`) REFERENCES `rn_credit_card_model_config` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=337 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of rn_credit_card_feature_config
+-- ----------------------------
+INSERT INTO `rn_credit_card_feature_config` VALUES ('1', 'age', '40', '1', '2017-04-10 11:49:53', '1', '年龄');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('2', 'airfareSum12', '55', '1', '2017-04-10 11:49:53', '2', '一年中乘机总票价');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('3', 'applyRegisterDuration', '50', '2', '2017-04-10 11:49:53', '1', '注册时间长度');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('4', 'carCount', '40', '2', '2017-04-10 11:49:53', '1', '车辆个数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('5', 'creditcardCount', '10', '2', '2017-04-10 11:49:53', '1', '信用卡张数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('6', 'curWorkStatus', '30', '3', '2017-04-10 11:49:53', '2', '当前工作状态');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('7', 'ccBillAge', '70', '3', '2017-04-10 11:49:53', '1', '贷记卡账龄');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('8', 'folk', '55', '4', '2017-04-10 11:49:53', '2', '是否为汉族');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('9', 'companyAddrCityLevel', '45', '4', '2017-04-10 11:49:53', '2', '企业城市等级');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('10', 'completeDegree', '65', '5', '2017-04-10 11:49:53', '1', '简历完成度');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('11', 'contacts', '35', '5', '2017-04-10 11:49:53', '1', '通讯录个数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('96', 'curCorpYears', '50', '45', '2017-04-07 15:47:59', '1', '现工作单位工作年限（年数）');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('97', 'educationDegreeCheck', '50', '45', '2017-04-07 15:47:59', '2', '学信网学历');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('98', 'overspeedCount', '5', '1', '2017-04-10 11:49:53', '1', '超速次数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('99', 'age', '40', '46', '2017-04-07 18:34:14', '1', '年龄');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('100', 'airfareSum12', '60', '46', '2017-04-07 18:34:18', '2', '一年中乘机总票价');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('101', 'overspeedCount', '50', '46', '2017-04-07 18:34:19', '1', '超速次数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('102', 'applyRegisterDuration', '50', '47', '2017-04-07 18:34:19', '1', '注册时间长度');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('103', 'carCount', '40', '47', '2017-04-07 18:34:20', '1', '车辆个数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('104', 'creditcardCount', '10', '47', '2017-04-07 18:34:20', '1', '信用卡张数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('105', 'curWorkStatus', '30', '48', '2017-04-07 18:34:20', '2', '当前工作状态');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('106', 'ccBillAge', '70', '48', '2017-04-07 18:34:21', '1', '贷记卡账龄');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('107', 'folk', '55', '49', '2017-04-07 18:34:22', '2', '是否为汉族');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('108', 'companyAddrCityLevel', '45', '49', '2017-04-07 18:34:24', '2', '企业城市等级');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('109', 'completeDegree', '65', '50', '2017-04-07 18:34:25', '1', '简历完成度');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('110', 'contacts', '35', '50', '2017-04-07 18:34:26', '1', '通讯录个数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('111', 'curCorpYears', '50', '51', '2017-04-07 18:34:26', '1', '现工作单位工作年限（年数）');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('112', 'educationDegreeCheck', '50', '51', '2017-04-07 18:34:26', '2', '学信网学历');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('113', 'age', '40', '52', '2017-04-10 17:06:30', '1', '年龄');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('114', 'airfareSum12', '55', '52', '2017-04-10 17:06:30', '2', '一年中乘机总票价');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('115', 'overspeedCount', '5', '52', '2017-04-10 17:06:30', '1', '超速次数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('116', 'applyRegisterDuration', '50', '53', '2017-04-10 17:06:30', '1', '注册时间长度');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('117', 'carCount', '40', '53', '2017-04-10 17:06:30', '1', '车辆个数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('118', 'creditcardCount', '10', '53', '2017-04-10 17:06:30', '1', '信用卡张数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('119', 'curWorkStatus', '30', '54', '2017-04-10 17:06:30', '2', '当前工作状态');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('120', 'ccBillAge', '70', '54', '2017-04-10 17:06:30', '1', '贷记卡账龄');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('121', 'folk', '55', '55', '2017-04-10 17:06:30', '2', '是否为汉族');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('122', 'companyAddrCityLevel', '45', '55', '2017-04-10 17:06:30', '2', '企业城市等级');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('123', 'completeDegree', '65', '56', '2017-04-10 17:06:30', '1', '简历完成度');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('124', 'contacts', '35', '56', '2017-04-10 17:06:30', '1', '通讯录个数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('125', 'curCorpYears', '50', '57', '2017-04-10 17:06:30', '1', '现工作单位工作年限（年数）');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('126', 'educationDegreeCheck', '50', '57', '2017-04-10 17:06:30', '2', '学信网学历');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('127', 'age', '40', '58', '2017-04-10 16:16:22', '1', '年龄');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('128', 'airfareSum12', '60', '58', '2017-04-10 16:16:22', '2', '一年中乘机总票价');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('129', 'overspeedCount', '50', '58', '2017-04-10 16:16:22', '1', '超速次数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('130', 'applyRegisterDuration', '50', '59', '2017-04-10 16:16:22', '1', '注册时间长度');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('131', 'carCount', '40', '59', '2017-04-10 16:16:22', '1', '车辆个数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('132', 'creditcardCount', '10', '59', '2017-04-10 16:16:22', '1', '信用卡张数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('133', 'curWorkStatus', '30', '60', '2017-04-10 16:16:22', '2', '当前工作状态');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('134', 'ccBillAge', '70', '60', '2017-04-10 16:16:22', '1', '贷记卡账龄');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('135', 'folk', '55', '61', '2017-04-10 16:16:22', '2', '是否为汉族');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('136', 'companyAddrCityLevel', '45', '61', '2017-04-10 16:16:22', '2', '企业城市等级');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('137', 'completeDegree', '65', '62', '2017-04-10 16:16:22', '1', '简历完成度');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('138', 'contacts', '35', '62', '2017-04-10 16:16:22', '1', '通讯录个数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('139', 'curCorpYears', '50', '63', '2017-04-10 16:16:22', '1', '现工作单位工作年限（年数）');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('140', 'educationDegreeCheck', '50', '63', '2017-04-10 16:16:22', '2', '学信网学历');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('141', 'age', '40', '64', '2017-04-10 17:07:42', '1', '年龄');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('142', 'airfareSum12', '55', '64', '2017-04-10 17:07:42', '2', '一年中乘机总票价');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('143', 'overspeedCount', '5', '64', '2017-04-10 17:07:42', '1', '超速次数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('144', 'applyRegisterDuration', '50', '65', '2017-04-10 17:07:42', '1', '注册时间长度');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('145', 'carCount', '40', '65', '2017-04-10 17:07:42', '1', '车辆个数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('146', 'creditcardCount', '10', '65', '2017-04-10 17:07:42', '1', '信用卡张数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('147', 'curWorkStatus', '30', '66', '2017-04-10 17:07:42', '2', '当前工作状态');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('148', 'ccBillAge', '70', '66', '2017-04-10 17:07:42', '1', '贷记卡账龄');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('149', 'folk', '55', '67', '2017-04-10 17:07:42', '2', '是否为汉族');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('150', 'companyAddrCityLevel', '45', '67', '2017-04-10 17:07:42', '2', '企业城市等级');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('151', 'completeDegree', '65', '68', '2017-04-10 17:07:42', '1', '简历完成度');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('152', 'contacts', '35', '68', '2017-04-10 17:07:42', '1', '通讯录个数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('153', 'curCorpYears', '50', '69', '2017-04-10 17:07:42', '1', '现工作单位工作年限（年数）');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('154', 'educationDegreeCheck', '50', '69', '2017-04-10 17:07:42', '2', '学信网学历');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('155', 'age', '40', '70', '2017-04-11 12:01:03', '1', '年龄');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('156', 'airfareSum12', '60', '70', '2017-04-11 12:01:03', '2', '一年中乘机总票价');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('157', 'overspeedCount', '50', '70', '2017-04-11 12:01:03', '1', '超速次数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('158', 'applyRegisterDuration', '50', '71', '2017-04-11 12:01:03', '1', '注册时间长度');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('159', 'carCount', '40', '71', '2017-04-11 12:01:03', '1', '车辆个数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('160', 'creditcardCount', '10', '71', '2017-04-11 12:01:03', '1', '信用卡张数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('161', 'curWorkStatus', '30', '72', '2017-04-11 12:01:03', '2', '当前工作状态');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('162', 'ccBillAge', '70', '72', '2017-04-11 12:01:03', '1', '贷记卡账龄');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('163', 'folk', '55', '73', '2017-04-11 12:01:03', '2', '是否为汉族');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('164', 'companyAddrCityLevel', '45', '73', '2017-04-11 12:01:03', '2', '企业城市等级');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('165', 'completeDegree', '65', '74', '2017-04-11 12:01:03', '1', '简历完成度');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('166', 'contacts', '35', '74', '2017-04-11 12:01:03', '1', '通讯录个数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('167', 'curCorpYears', '50', '75', '2017-04-11 12:01:03', '1', '现工作单位工作年限（年数）');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('168', 'educationDegreeCheck', '50', '75', '2017-04-11 12:01:03', '2', '学信网学历');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('169', 'age', '40', '76', '2017-04-11 12:01:18', '1', '年龄');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('170', 'airfareSum12', '60', '76', '2017-04-11 12:01:18', '2', '一年中乘机总票价');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('171', 'overspeedCount', '50', '76', '2017-04-11 12:01:18', '1', '超速次数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('172', 'applyRegisterDuration', '50', '77', '2017-04-11 12:01:18', '1', '注册时间长度');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('173', 'carCount', '40', '77', '2017-04-11 12:01:18', '1', '车辆个数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('174', 'creditcardCount', '10', '77', '2017-04-11 12:01:18', '1', '信用卡张数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('175', 'curWorkStatus', '30', '78', '2017-04-11 12:01:18', '2', '当前工作状态');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('176', 'ccBillAge', '70', '78', '2017-04-11 12:01:18', '1', '贷记卡账龄');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('177', 'folk', '55', '79', '2017-04-11 12:01:18', '2', '是否为汉族');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('178', 'companyAddrCityLevel', '45', '79', '2017-04-11 12:01:18', '2', '企业城市等级');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('179', 'completeDegree', '65', '80', '2017-04-11 12:01:18', '1', '简历完成度');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('180', 'contacts', '35', '80', '2017-04-11 12:01:18', '1', '通讯录个数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('181', 'curCorpYears', '50', '81', '2017-04-11 12:01:18', '1', '现工作单位工作年限（年数）');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('182', 'educationDegreeCheck', '50', '81', '2017-04-11 12:01:18', '2', '学信网学历');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('183', 'age', '40', '82', '2017-04-11 12:01:20', '1', '年龄');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('184', 'airfareSum12', '60', '82', '2017-04-11 12:01:20', '2', '一年中乘机总票价');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('185', 'overspeedCount', '50', '82', '2017-04-11 12:01:20', '1', '超速次数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('186', 'applyRegisterDuration', '50', '83', '2017-04-11 12:01:20', '1', '注册时间长度');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('187', 'carCount', '40', '83', '2017-04-11 12:01:20', '1', '车辆个数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('188', 'creditcardCount', '10', '83', '2017-04-11 12:01:20', '1', '信用卡张数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('189', 'curWorkStatus', '30', '84', '2017-04-11 12:01:20', '2', '当前工作状态');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('190', 'ccBillAge', '70', '84', '2017-04-11 12:01:20', '1', '贷记卡账龄');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('191', 'folk', '55', '85', '2017-04-11 12:01:20', '2', '是否为汉族');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('192', 'companyAddrCityLevel', '45', '85', '2017-04-11 12:01:20', '2', '企业城市等级');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('193', 'completeDegree', '65', '86', '2017-04-11 12:01:20', '1', '简历完成度');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('194', 'contacts', '35', '86', '2017-04-11 12:01:20', '1', '通讯录个数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('195', 'curCorpYears', '50', '87', '2017-04-11 12:01:20', '1', '现工作单位工作年限（年数）');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('196', 'educationDegreeCheck', '50', '87', '2017-04-11 12:01:20', '2', '学信网学历');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('197', 'age', '40', '88', '2017-04-11 12:01:21', '1', '年龄');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('198', 'airfareSum12', '60', '88', '2017-04-11 12:01:21', '2', '一年中乘机总票价');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('199', 'overspeedCount', '50', '88', '2017-04-11 12:01:21', '1', '超速次数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('200', 'applyRegisterDuration', '50', '89', '2017-04-11 12:01:21', '1', '注册时间长度');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('201', 'carCount', '40', '89', '2017-04-11 12:01:21', '1', '车辆个数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('202', 'creditcardCount', '10', '89', '2017-04-11 12:01:21', '1', '信用卡张数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('203', 'curWorkStatus', '30', '90', '2017-04-11 12:01:21', '2', '当前工作状态');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('204', 'ccBillAge', '70', '90', '2017-04-11 12:01:21', '1', '贷记卡账龄');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('205', 'folk', '55', '91', '2017-04-11 12:01:21', '2', '是否为汉族');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('206', 'companyAddrCityLevel', '45', '91', '2017-04-11 12:01:21', '2', '企业城市等级');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('207', 'completeDegree', '65', '92', '2017-04-11 12:01:21', '1', '简历完成度');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('208', 'contacts', '35', '92', '2017-04-11 12:01:21', '1', '通讯录个数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('209', 'curCorpYears', '50', '93', '2017-04-11 12:01:21', '1', '现工作单位工作年限（年数）');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('210', 'educationDegreeCheck', '50', '93', '2017-04-11 12:01:21', '2', '学信网学历');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('211', 'age', '40', '94', '2017-04-11 18:04:18', '1', '年龄');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('212', 'airfareSum12', '60', '94', '2017-04-11 18:04:18', '2', '一年中乘机总票价');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('213', 'overspeedCount', '50', '94', '2017-04-11 18:04:18', '1', '超速次数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('214', 'applyRegisterDuration', '50', '95', '2017-04-11 18:04:18', '1', '注册时间长度');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('215', 'carCount', '40', '95', '2017-04-11 18:04:18', '1', '车辆个数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('216', 'creditcardCount', '10', '95', '2017-04-11 18:04:18', '1', '信用卡张数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('217', 'curWorkStatus', '30', '96', '2017-04-11 18:04:18', '2', '当前工作状态');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('218', 'ccBillAge', '70', '96', '2017-04-11 18:04:18', '1', '贷记卡账龄');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('219', 'folk', '55', '97', '2017-04-11 18:04:18', '2', '是否为汉族');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('220', 'companyAddrCityLevel', '45', '97', '2017-04-11 18:04:18', '2', '企业城市等级');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('221', 'completeDegree', '65', '98', '2017-04-11 18:04:18', '1', '简历完成度');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('222', 'contacts', '35', '98', '2017-04-11 18:04:18', '1', '通讯录个数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('223', 'curCorpYears', '50', '99', '2017-04-11 18:04:18', '1', '现工作单位工作年限（年数）');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('224', 'educationDegreeCheck', '50', '99', '2017-04-11 18:04:18', '2', '学信网学历');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('225', 'age', '40', '100', '2017-04-11 18:13:15', '1', '年龄');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('226', 'airfareSum12', '60', '100', '2017-04-11 18:13:15', '2', '一年中乘机总票价');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('227', 'overspeedCount', '50', '100', '2017-04-11 18:13:15', '1', '超速次数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('228', 'applyRegisterDuration', '50', '101', '2017-04-11 18:13:15', '1', '注册时间长度');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('229', 'carCount', '40', '101', '2017-04-11 18:13:15', '1', '车辆个数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('230', 'creditcardCount', '10', '101', '2017-04-11 18:13:15', '1', '信用卡张数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('231', 'curWorkStatus', '30', '102', '2017-04-11 18:13:15', '2', '当前工作状态');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('232', 'ccBillAge', '70', '102', '2017-04-11 18:13:15', '1', '贷记卡账龄');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('233', 'folk', '55', '103', '2017-04-11 18:13:15', '2', '是否为汉族');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('234', 'companyAddrCityLevel', '45', '103', '2017-04-11 18:13:15', '2', '企业城市等级');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('235', 'completeDegree', '65', '104', '2017-04-11 18:13:15', '1', '简历完成度');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('236', 'contacts', '35', '104', '2017-04-11 18:13:15', '1', '通讯录个数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('237', 'curCorpYears', '50', '105', '2017-04-11 18:13:15', '1', '现工作单位工作年限（年数）');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('238', 'educationDegreeCheck', '50', '105', '2017-04-11 18:13:15', '2', '学信网学历');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('253', 'age', '40', '112', '2017-04-12 10:14:24', '1', '年龄');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('254', 'airfareSum12', '60', '112', '2017-04-12 10:14:24', '2', '一年中乘机总票价');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('255', 'overspeedCount', '50', '112', '2017-04-12 10:14:24', '1', '超速次数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('256', 'applyRegisterDuration', '50', '113', '2017-04-12 10:14:24', '1', '注册时间长度');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('257', 'carCount', '40', '113', '2017-04-12 10:14:24', '1', '车辆个数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('258', 'creditcardCount', '10', '113', '2017-04-12 10:14:24', '1', '信用卡张数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('259', 'curWorkStatus', '30', '114', '2017-04-12 10:14:24', '2', '当前工作状态');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('260', 'ccBillAge', '70', '114', '2017-04-12 10:14:24', '1', '贷记卡账龄');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('261', 'folk', '55', '115', '2017-04-12 10:14:24', '2', '是否为汉族');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('262', 'companyAddrCityLevel', '45', '115', '2017-04-12 10:14:24', '2', '企业城市等级');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('263', 'completeDegree', '65', '116', '2017-04-12 10:14:24', '1', '简历完成度');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('264', 'contacts', '35', '116', '2017-04-12 10:14:24', '1', '通讯录个数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('265', 'curCorpYears', '50', '117', '2017-04-12 10:14:24', '1', '现工作单位工作年限（年数）');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('266', 'educationDegreeCheck', '50', '117', '2017-04-12 10:14:24', '2', '学信网学历');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('281', 'age', '40', '124', '2017-04-12 11:34:19', '1', '年龄');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('282', 'airfareSum12', '60', '124', '2017-04-12 11:34:19', '2', '一年中乘机总票价');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('283', 'overspeedCount', '50', '124', '2017-04-12 11:34:19', '1', '超速次数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('284', 'applyRegisterDuration', '50', '125', '2017-04-12 11:34:19', '1', '注册时间长度');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('285', 'carCount', '40', '125', '2017-04-12 11:34:19', '1', '车辆个数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('286', 'creditcardCount', '10', '125', '2017-04-12 11:34:19', '1', '信用卡张数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('287', 'curWorkStatus', '30', '126', '2017-04-12 11:34:19', '2', '当前工作状态');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('288', 'ccBillAge', '70', '126', '2017-04-12 11:34:19', '1', '贷记卡账龄');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('289', 'folk', '55', '127', '2017-04-12 11:34:19', '2', '是否为汉族');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('290', 'companyAddrCityLevel', '45', '127', '2017-04-12 11:34:19', '2', '企业城市等级');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('291', 'completeDegree', '65', '128', '2017-04-12 11:34:19', '1', '简历完成度');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('292', 'contacts', '35', '128', '2017-04-12 11:34:19', '1', '通讯录个数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('293', 'curCorpYears', '50', '129', '2017-04-12 11:34:19', '1', '现工作单位工作年限（年数）');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('294', 'educationDegreeCheck', '50', '129', '2017-04-12 11:34:19', '2', '学信网学历');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('295', 'age', '40', '130', '2017-04-12 11:38:31', '1', '年龄');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('296', 'airfareSum12', '60', '130', '2017-04-12 11:38:31', '2', '一年中乘机总票价');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('297', 'overspeedCount', '50', '130', '2017-04-12 11:38:31', '1', '超速次数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('298', 'applyRegisterDuration', '50', '131', '2017-04-12 11:38:31', '1', '注册时间长度');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('299', 'carCount', '40', '131', '2017-04-12 11:38:31', '1', '车辆个数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('300', 'creditcardCount', '10', '131', '2017-04-12 11:38:31', '1', '信用卡张数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('301', 'curWorkStatus', '30', '132', '2017-04-12 11:38:31', '2', '当前工作状态');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('302', 'ccBillAge', '70', '132', '2017-04-12 11:38:31', '1', '贷记卡账龄');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('303', 'folk', '55', '133', '2017-04-12 11:38:31', '2', '是否为汉族');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('304', 'companyAddrCityLevel', '45', '133', '2017-04-12 11:38:31', '2', '企业城市等级');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('305', 'completeDegree', '65', '134', '2017-04-12 11:38:31', '1', '简历完成度');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('306', 'contacts', '35', '134', '2017-04-12 11:38:31', '1', '通讯录个数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('307', 'curCorpYears', '50', '135', '2017-04-12 11:38:31', '1', '现工作单位工作年限（年数）');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('308', 'educationDegreeCheck', '50', '135', '2017-04-12 11:38:31', '2', '学信网学历');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('309', 'age', '40', '136', '2017-04-12 11:42:10', '1', '年龄');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('310', 'airfareSum12', '60', '136', '2017-04-12 11:42:10', '2', '一年中乘机总票价');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('311', 'overspeedCount', '50', '136', '2017-04-12 11:42:10', '1', '超速次数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('312', 'applyRegisterDuration', '50', '137', '2017-04-12 11:42:10', '1', '注册时间长度');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('313', 'carCount', '40', '137', '2017-04-12 11:42:10', '1', '车辆个数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('314', 'creditcardCount', '10', '137', '2017-04-12 11:42:10', '1', '信用卡张数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('315', 'curWorkStatus', '30', '138', '2017-04-12 11:42:10', '2', '当前工作状态');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('316', 'ccBillAge', '70', '138', '2017-04-12 11:42:10', '1', '贷记卡账龄');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('317', 'folk', '55', '139', '2017-04-12 11:42:10', '2', '是否为汉族');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('318', 'companyAddrCityLevel', '45', '139', '2017-04-12 11:42:10', '2', '企业城市等级');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('319', 'completeDegree', '65', '140', '2017-04-12 11:42:10', '1', '简历完成度');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('320', 'contacts', '35', '140', '2017-04-12 11:42:10', '1', '通讯录个数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('321', 'curCorpYears', '50', '141', '2017-04-12 11:42:10', '1', '现工作单位工作年限（年数）');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('322', 'educationDegreeCheck', '50', '141', '2017-04-12 11:42:10', '2', '学信网学历');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('323', 'age', '40', '142', '2017-04-12 11:44:27', '1', '年龄');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('324', 'airfareSum12', '60', '142', '2017-04-12 11:44:27', '2', '一年中乘机总票价');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('325', 'overspeedCount', '50', '142', '2017-04-12 11:44:27', '1', '超速次数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('326', 'applyRegisterDuration', '50', '143', '2017-04-12 11:44:27', '1', '注册时间长度');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('327', 'carCount', '40', '143', '2017-04-12 11:44:27', '1', '车辆个数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('328', 'creditcardCount', '10', '143', '2017-04-12 11:44:27', '1', '信用卡张数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('329', 'curWorkStatus', '30', '144', '2017-04-12 11:44:27', '2', '当前工作状态');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('330', 'ccBillAge', '70', '144', '2017-04-12 11:44:27', '1', '贷记卡账龄');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('331', 'folk', '55', '145', '2017-04-12 11:44:27', '2', '是否为汉族');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('332', 'companyAddrCityLevel', '45', '145', '2017-04-12 11:44:27', '2', '企业城市等级');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('333', 'completeDegree', '65', '146', '2017-04-12 11:44:27', '1', '简历完成度');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('334', 'contacts', '35', '146', '2017-04-12 11:44:27', '1', '通讯录个数');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('335', 'curCorpYears', '50', '147', '2017-04-12 11:44:27', '1', '现工作单位工作年限（年数）');
+INSERT INTO `rn_credit_card_feature_config` VALUES ('336', 'educationDegreeCheck', '50', '147', '2017-04-12 11:44:27', '2', '学信网学历');
+
+-- ----------------------------
+-- Table structure for rn_credit_card_model_config
+-- ----------------------------
+DROP TABLE IF EXISTS `rn_credit_card_model_config`;
+CREATE TABLE `rn_credit_card_model_config` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `delete_status` int(11) DEFAULT NULL,
+  `model_name` varchar(255) DEFAULT NULL,
+  `model_name_desc` varchar(255) DEFAULT NULL,
+  `model_weight` int(11) DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `policy_set_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=148 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of rn_credit_card_model_config
+-- ----------------------------
+INSERT INTO `rn_credit_card_model_config` VALUES ('1', '0', '身份特征', null, '25', '2017-04-10 11:49:53', '4');
+INSERT INTO `rn_credit_card_model_config` VALUES ('2', '0', '信用历史', null, '15', '2017-04-10 11:49:53', '4');
+INSERT INTO `rn_credit_card_model_config` VALUES ('3', '0', '履约能力', null, '30', '2017-04-10 11:49:53', '4');
+INSERT INTO `rn_credit_card_model_config` VALUES ('4', '0', '人脉关系', null, '10', '2017-04-10 11:49:53', '4');
+INSERT INTO `rn_credit_card_model_config` VALUES ('5', '0', '行为偏好', null, '20', '2017-04-10 11:49:53', '4');
+INSERT INTO `rn_credit_card_model_config` VALUES ('45', '0', '审核模块1', null, '25', '2017-04-07 15:47:59', '4');
+INSERT INTO `rn_credit_card_model_config` VALUES ('46', '0', '身份特征', null, '25', '2017-04-07 18:34:14', '15');
+INSERT INTO `rn_credit_card_model_config` VALUES ('47', '0', '信用历史', null, '15', '2017-04-07 18:34:19', '15');
+INSERT INTO `rn_credit_card_model_config` VALUES ('48', '0', '履约能力', null, '30', '2017-04-07 18:34:20', '15');
+INSERT INTO `rn_credit_card_model_config` VALUES ('49', '0', '人脉关系', null, '10', '2017-04-07 18:34:22', '15');
+INSERT INTO `rn_credit_card_model_config` VALUES ('50', '0', '行为偏好', null, '20', '2017-04-07 18:34:25', '15');
+INSERT INTO `rn_credit_card_model_config` VALUES ('51', '0', '审核模块1', null, '25', '2017-04-07 18:34:26', '15');
+INSERT INTO `rn_credit_card_model_config` VALUES ('52', '0', '身份特征', null, '5', '2017-04-10 17:06:30', '16');
+INSERT INTO `rn_credit_card_model_config` VALUES ('53', '0', '信用历史', null, '10', '2017-04-10 17:06:30', '16');
+INSERT INTO `rn_credit_card_model_config` VALUES ('54', '0', '履约能力', null, '30', '2017-04-10 17:06:30', '16');
+INSERT INTO `rn_credit_card_model_config` VALUES ('55', '0', '人脉关系', null, '10', '2017-04-10 17:06:30', '16');
+INSERT INTO `rn_credit_card_model_config` VALUES ('56', '0', '行为偏好', null, '20', '2017-04-10 17:06:30', '16');
+INSERT INTO `rn_credit_card_model_config` VALUES ('57', '0', '审核模块1', null, '25', '2017-04-10 17:06:30', '16');
+INSERT INTO `rn_credit_card_model_config` VALUES ('58', '0', '身份特征', null, '25', '2017-04-10 16:16:22', '17');
+INSERT INTO `rn_credit_card_model_config` VALUES ('59', '0', '信用历史', null, '15', '2017-04-10 16:16:22', '17');
+INSERT INTO `rn_credit_card_model_config` VALUES ('60', '0', '履约能力', null, '30', '2017-04-10 16:16:22', '17');
+INSERT INTO `rn_credit_card_model_config` VALUES ('61', '0', '人脉关系', null, '10', '2017-04-10 16:16:22', '17');
+INSERT INTO `rn_credit_card_model_config` VALUES ('62', '0', '行为偏好', null, '20', '2017-04-10 16:16:22', '17');
+INSERT INTO `rn_credit_card_model_config` VALUES ('63', '0', '审核模块1', null, '25', '2017-04-10 16:16:22', '17');
+INSERT INTO `rn_credit_card_model_config` VALUES ('64', '0', '身份特征', null, '5', '2017-04-10 17:07:42', '18');
+INSERT INTO `rn_credit_card_model_config` VALUES ('65', '0', '信用历史', null, '10', '2017-04-10 17:07:42', '18');
+INSERT INTO `rn_credit_card_model_config` VALUES ('66', '0', '履约能力', null, '30', '2017-04-10 17:07:42', '18');
+INSERT INTO `rn_credit_card_model_config` VALUES ('67', '0', '人脉关系', null, '10', '2017-04-10 17:07:42', '18');
+INSERT INTO `rn_credit_card_model_config` VALUES ('68', '0', '行为偏好', null, '20', '2017-04-10 17:07:42', '18');
+INSERT INTO `rn_credit_card_model_config` VALUES ('69', '0', '审核模块1', null, '25', '2017-04-10 17:07:42', '18');
+INSERT INTO `rn_credit_card_model_config` VALUES ('70', '0', '身份特征', null, '25', '2017-04-11 12:01:03', '19');
+INSERT INTO `rn_credit_card_model_config` VALUES ('71', '0', '信用历史', null, '15', '2017-04-11 12:01:03', '19');
+INSERT INTO `rn_credit_card_model_config` VALUES ('72', '0', '履约能力', null, '30', '2017-04-11 12:01:03', '19');
+INSERT INTO `rn_credit_card_model_config` VALUES ('73', '0', '人脉关系', null, '10', '2017-04-11 12:01:03', '19');
+INSERT INTO `rn_credit_card_model_config` VALUES ('74', '0', '行为偏好', null, '20', '2017-04-11 12:01:03', '19');
+INSERT INTO `rn_credit_card_model_config` VALUES ('75', '0', '审核模块1', null, '25', '2017-04-11 12:01:03', '19');
+INSERT INTO `rn_credit_card_model_config` VALUES ('76', '0', '身份特征', null, '25', '2017-04-11 12:01:18', '20');
+INSERT INTO `rn_credit_card_model_config` VALUES ('77', '0', '信用历史', null, '15', '2017-04-11 12:01:18', '20');
+INSERT INTO `rn_credit_card_model_config` VALUES ('78', '0', '履约能力', null, '30', '2017-04-11 12:01:18', '20');
+INSERT INTO `rn_credit_card_model_config` VALUES ('79', '0', '人脉关系', null, '10', '2017-04-11 12:01:18', '20');
+INSERT INTO `rn_credit_card_model_config` VALUES ('80', '0', '行为偏好', null, '20', '2017-04-11 12:01:18', '20');
+INSERT INTO `rn_credit_card_model_config` VALUES ('81', '0', '审核模块1', null, '25', '2017-04-11 12:01:18', '20');
+INSERT INTO `rn_credit_card_model_config` VALUES ('82', '0', '身份特征', null, '25', '2017-04-11 12:01:20', '21');
+INSERT INTO `rn_credit_card_model_config` VALUES ('83', '0', '信用历史', null, '15', '2017-04-11 12:01:20', '21');
+INSERT INTO `rn_credit_card_model_config` VALUES ('84', '0', '履约能力', null, '30', '2017-04-11 12:01:20', '21');
+INSERT INTO `rn_credit_card_model_config` VALUES ('85', '0', '人脉关系', null, '10', '2017-04-11 12:01:20', '21');
+INSERT INTO `rn_credit_card_model_config` VALUES ('86', '0', '行为偏好', null, '20', '2017-04-11 12:01:20', '21');
+INSERT INTO `rn_credit_card_model_config` VALUES ('87', '0', '审核模块1', null, '25', '2017-04-11 12:01:20', '21');
+INSERT INTO `rn_credit_card_model_config` VALUES ('88', '0', '身份特征', null, '25', '2017-04-11 12:01:21', '22');
+INSERT INTO `rn_credit_card_model_config` VALUES ('89', '0', '信用历史', null, '15', '2017-04-11 12:01:21', '22');
+INSERT INTO `rn_credit_card_model_config` VALUES ('90', '0', '履约能力', null, '30', '2017-04-11 12:01:21', '22');
+INSERT INTO `rn_credit_card_model_config` VALUES ('91', '0', '人脉关系', null, '10', '2017-04-11 12:01:21', '22');
+INSERT INTO `rn_credit_card_model_config` VALUES ('92', '0', '行为偏好', null, '20', '2017-04-11 12:01:21', '22');
+INSERT INTO `rn_credit_card_model_config` VALUES ('93', '0', '审核模块1', null, '25', '2017-04-11 12:01:21', '22');
+INSERT INTO `rn_credit_card_model_config` VALUES ('94', '0', '身份特征', null, '25', '2017-04-11 18:04:18', '23');
+INSERT INTO `rn_credit_card_model_config` VALUES ('95', '0', '信用历史', null, '15', '2017-04-11 18:04:18', '23');
+INSERT INTO `rn_credit_card_model_config` VALUES ('96', '0', '履约能力', null, '30', '2017-04-11 18:04:18', '23');
+INSERT INTO `rn_credit_card_model_config` VALUES ('97', '0', '人脉关系', null, '10', '2017-04-11 18:04:18', '23');
+INSERT INTO `rn_credit_card_model_config` VALUES ('98', '0', '行为偏好', null, '20', '2017-04-11 18:04:18', '23');
+INSERT INTO `rn_credit_card_model_config` VALUES ('99', '0', '审核模块1', null, '25', '2017-04-11 18:04:18', '23');
+INSERT INTO `rn_credit_card_model_config` VALUES ('100', '0', '身份特征', null, '25', '2017-04-11 18:13:15', '24');
+INSERT INTO `rn_credit_card_model_config` VALUES ('101', '0', '信用历史', null, '15', '2017-04-11 18:13:15', '24');
+INSERT INTO `rn_credit_card_model_config` VALUES ('102', '0', '履约能力', null, '30', '2017-04-11 18:13:15', '24');
+INSERT INTO `rn_credit_card_model_config` VALUES ('103', '0', '人脉关系', null, '10', '2017-04-11 18:13:15', '24');
+INSERT INTO `rn_credit_card_model_config` VALUES ('104', '0', '行为偏好', null, '20', '2017-04-11 18:13:15', '24');
+INSERT INTO `rn_credit_card_model_config` VALUES ('105', '0', '审核模块1', null, '25', '2017-04-11 18:13:15', '24');
+INSERT INTO `rn_credit_card_model_config` VALUES ('112', '0', '身份特征', null, '25', '2017-04-12 10:14:24', '2');
+INSERT INTO `rn_credit_card_model_config` VALUES ('113', '0', '信用历史', null, '15', '2017-04-12 10:14:24', '2');
+INSERT INTO `rn_credit_card_model_config` VALUES ('114', '0', '履约能力', null, '30', '2017-04-12 10:14:24', '2');
+INSERT INTO `rn_credit_card_model_config` VALUES ('115', '0', '人脉关系', null, '10', '2017-04-12 10:14:24', '2');
+INSERT INTO `rn_credit_card_model_config` VALUES ('116', '0', '行为偏好', null, '20', '2017-04-12 10:14:24', '2');
+INSERT INTO `rn_credit_card_model_config` VALUES ('117', '0', '审核模块1', null, '25', '2017-04-12 10:14:24', '2');
+INSERT INTO `rn_credit_card_model_config` VALUES ('124', '0', '身份特征', null, '25', '2017-04-12 11:34:19', '6');
+INSERT INTO `rn_credit_card_model_config` VALUES ('125', '0', '信用历史', null, '15', '2017-04-12 11:34:19', '6');
+INSERT INTO `rn_credit_card_model_config` VALUES ('126', '0', '履约能力', null, '30', '2017-04-12 11:34:19', '6');
+INSERT INTO `rn_credit_card_model_config` VALUES ('127', '0', '人脉关系', null, '10', '2017-04-12 11:34:19', '6');
+INSERT INTO `rn_credit_card_model_config` VALUES ('128', '0', '行为偏好', null, '20', '2017-04-12 11:34:19', '6');
+INSERT INTO `rn_credit_card_model_config` VALUES ('129', '0', '审核模块1', null, '25', '2017-04-12 11:34:19', '6');
+INSERT INTO `rn_credit_card_model_config` VALUES ('130', '0', '身份特征', null, '25', '2017-04-12 11:38:31', '1');
+INSERT INTO `rn_credit_card_model_config` VALUES ('131', '0', '信用历史', null, '15', '2017-04-12 11:38:31', '1');
+INSERT INTO `rn_credit_card_model_config` VALUES ('132', '0', '履约能力', null, '30', '2017-04-12 11:38:31', '1');
+INSERT INTO `rn_credit_card_model_config` VALUES ('133', '0', '人脉关系', null, '10', '2017-04-12 11:38:31', '1');
+INSERT INTO `rn_credit_card_model_config` VALUES ('134', '0', '行为偏好', null, '20', '2017-04-12 11:38:31', '1');
+INSERT INTO `rn_credit_card_model_config` VALUES ('135', '0', '审核模块1', null, '25', '2017-04-12 11:38:31', '1');
+INSERT INTO `rn_credit_card_model_config` VALUES ('136', '0', '身份特征', null, '25', '2017-04-12 11:42:10', '1');
+INSERT INTO `rn_credit_card_model_config` VALUES ('137', '0', '信用历史', null, '15', '2017-04-12 11:42:10', '1');
+INSERT INTO `rn_credit_card_model_config` VALUES ('138', '0', '履约能力', null, '30', '2017-04-12 11:42:10', '1');
+INSERT INTO `rn_credit_card_model_config` VALUES ('139', '0', '人脉关系', null, '10', '2017-04-12 11:42:10', '1');
+INSERT INTO `rn_credit_card_model_config` VALUES ('140', '0', '行为偏好', null, '20', '2017-04-12 11:42:10', '1');
+INSERT INTO `rn_credit_card_model_config` VALUES ('141', '0', '审核模块1', null, '25', '2017-04-12 11:42:10', '1');
+INSERT INTO `rn_credit_card_model_config` VALUES ('142', '0', '身份特征', null, '25', '2017-04-12 11:44:27', '2');
+INSERT INTO `rn_credit_card_model_config` VALUES ('143', '0', '信用历史', null, '15', '2017-04-12 11:44:27', '2');
+INSERT INTO `rn_credit_card_model_config` VALUES ('144', '0', '履约能力', null, '30', '2017-04-12 11:44:27', '2');
+INSERT INTO `rn_credit_card_model_config` VALUES ('145', '0', '人脉关系', null, '10', '2017-04-12 11:44:27', '2');
+INSERT INTO `rn_credit_card_model_config` VALUES ('146', '0', '行为偏好', null, '20', '2017-04-12 11:44:27', '2');
+INSERT INTO `rn_credit_card_model_config` VALUES ('147', '0', '审核模块1', null, '25', '2017-04-12 11:44:27', '2');
+
+-- ----------------------------
+-- Table structure for rn_credit_card_option_config
+-- ----------------------------
+DROP TABLE IF EXISTS `rn_credit_card_option_config`;
+CREATE TABLE `rn_credit_card_option_config` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `feature_id` int(11) DEFAULT NULL,
+  `option_value` varchar(255) DEFAULT NULL,
+  `option_weight` int(11) DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK4w19ny7f98w7kdl6ipd455u1h` (`feature_id`),
+  CONSTRAINT `FK4w19ny7f98w7kdl6ipd455u1h` FOREIGN KEY (`feature_id`) REFERENCES `rn_credit_card_feature_config` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=916 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of rn_credit_card_option_config
+-- ----------------------------
+INSERT INTO `rn_credit_card_option_config` VALUES ('1', '1', '18-22', '60', '2017-04-10 11:49:53');
+INSERT INTO `rn_credit_card_option_config` VALUES ('2', '1', '23-30', '99', '2017-04-10 11:49:53');
+INSERT INTO `rn_credit_card_option_config` VALUES ('3', '1', '31-45', '80', '2017-04-10 11:49:53');
+INSERT INTO `rn_credit_card_option_config` VALUES ('4', '2', '天津', '60', '2017-04-10 11:49:53');
+INSERT INTO `rn_credit_card_option_config` VALUES ('5', '2', '河北', '100', '2017-04-10 11:49:53');
+INSERT INTO `rn_credit_card_option_config` VALUES ('6', '2', '唐山', '80', '2017-04-10 11:49:53');
+INSERT INTO `rn_credit_card_option_config` VALUES ('7', '3', '18-22', '60', '2017-04-10 11:49:53');
+INSERT INTO `rn_credit_card_option_config` VALUES ('8', '3', '23-30', '100', '2017-04-10 11:49:53');
+INSERT INTO `rn_credit_card_option_config` VALUES ('9', '3', '31-45', '80', '2017-04-10 11:49:53');
+INSERT INTO `rn_credit_card_option_config` VALUES ('10', '4', '18-22', '60', '2017-04-10 11:49:53');
+INSERT INTO `rn_credit_card_option_config` VALUES ('11', '4', '23-30', '100', '2017-04-10 11:49:53');
+INSERT INTO `rn_credit_card_option_config` VALUES ('12', '4', '31-45', '80', '2017-04-10 11:49:53');
+INSERT INTO `rn_credit_card_option_config` VALUES ('13', '5', '18-22', '60', '2017-04-10 11:49:53');
+INSERT INTO `rn_credit_card_option_config` VALUES ('14', '5', '23-30', '100', '2017-04-10 11:49:53');
+INSERT INTO `rn_credit_card_option_config` VALUES ('15', '5', '31-45', '80', '2017-04-10 11:49:53');
+INSERT INTO `rn_credit_card_option_config` VALUES ('16', '6', '18-22', '60', '2017-04-10 11:49:53');
+INSERT INTO `rn_credit_card_option_config` VALUES ('17', '6', '23-30', '100', '2017-04-10 11:49:53');
+INSERT INTO `rn_credit_card_option_config` VALUES ('18', '6', '31-45', '80', '2017-04-10 11:49:53');
+INSERT INTO `rn_credit_card_option_config` VALUES ('19', '7', '18-22', '60', '2017-04-10 11:49:53');
+INSERT INTO `rn_credit_card_option_config` VALUES ('20', '7', '23-30', '100', '2017-04-10 11:49:53');
+INSERT INTO `rn_credit_card_option_config` VALUES ('21', '7', '31-45', '80', '2017-04-10 11:49:53');
+INSERT INTO `rn_credit_card_option_config` VALUES ('22', '8', '汉族-undefined', '100', '2017-04-10 11:49:53');
+INSERT INTO `rn_credit_card_option_config` VALUES ('23', '8', '少数民族-undefined', '60', '2017-04-10 11:49:53');
+INSERT INTO `rn_credit_card_option_config` VALUES ('24', '9', '一线', '100', '2017-04-10 11:49:53');
+INSERT INTO `rn_credit_card_option_config` VALUES ('25', '9', '二线', '90', '2017-04-10 11:49:53');
+INSERT INTO `rn_credit_card_option_config` VALUES ('26', '9', '三线', '80', '2017-04-10 11:49:53');
+INSERT INTO `rn_credit_card_option_config` VALUES ('27', '9', '四线', '70', '2017-04-10 11:49:53');
+INSERT INTO `rn_credit_card_option_config` VALUES ('28', '9', '其他', '60', '2017-04-10 11:49:53');
+INSERT INTO `rn_credit_card_option_config` VALUES ('29', '10', '0-30', '60', '2017-04-10 11:49:53');
+INSERT INTO `rn_credit_card_option_config` VALUES ('30', '10', '31-60', '80', '2017-04-10 11:49:53');
+INSERT INTO `rn_credit_card_option_config` VALUES ('31', '10', '61-100', '100', '2017-04-10 11:49:53');
+INSERT INTO `rn_credit_card_option_config` VALUES ('32', '11', '0-100', '80', '2017-04-10 11:49:53');
+INSERT INTO `rn_credit_card_option_config` VALUES ('33', '11', '100-500', '100', '2017-04-10 11:49:53');
+INSERT INTO `rn_credit_card_option_config` VALUES ('256', '96', '0-100', '100', '2017-04-07 15:47:59');
+INSERT INTO `rn_credit_card_option_config` VALUES ('258', '96', '0-0', '100', '2017-04-07 15:47:59');
+INSERT INTO `rn_credit_card_option_config` VALUES ('259', '97', '统招', '100', '2017-04-07 15:47:59');
+INSERT INTO `rn_credit_card_option_config` VALUES ('260', '97', '非统招', '100', '2017-04-07 15:47:59');
+INSERT INTO `rn_credit_card_option_config` VALUES ('261', '98', '0-10000', '99', '2017-04-10 11:49:53');
+INSERT INTO `rn_credit_card_option_config` VALUES ('262', '99', '18-22', '60', '2017-04-07 18:34:14');
+INSERT INTO `rn_credit_card_option_config` VALUES ('263', '99', '23-30', '99', '2017-04-07 18:34:17');
+INSERT INTO `rn_credit_card_option_config` VALUES ('264', '99', '31-45', '80', '2017-04-07 18:34:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('265', '100', '天津', '60', '2017-04-07 18:34:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('266', '100', '河北', '100', '2017-04-07 18:34:19');
+INSERT INTO `rn_credit_card_option_config` VALUES ('267', '100', '唐山', '80', '2017-04-07 18:34:19');
+INSERT INTO `rn_credit_card_option_config` VALUES ('268', '101', '0-10000', '99', '2017-04-07 18:34:19');
+INSERT INTO `rn_credit_card_option_config` VALUES ('269', '102', '18-22', '60', '2017-04-07 18:34:19');
+INSERT INTO `rn_credit_card_option_config` VALUES ('270', '102', '23-30', '100', '2017-04-07 18:34:19');
+INSERT INTO `rn_credit_card_option_config` VALUES ('271', '102', '31-45', '80', '2017-04-07 18:34:19');
+INSERT INTO `rn_credit_card_option_config` VALUES ('272', '103', '18-22', '60', '2017-04-07 18:34:20');
+INSERT INTO `rn_credit_card_option_config` VALUES ('273', '103', '23-30', '100', '2017-04-07 18:34:20');
+INSERT INTO `rn_credit_card_option_config` VALUES ('274', '103', '31-45', '80', '2017-04-07 18:34:20');
+INSERT INTO `rn_credit_card_option_config` VALUES ('275', '104', '18-22', '60', '2017-04-07 18:34:20');
+INSERT INTO `rn_credit_card_option_config` VALUES ('276', '104', '23-30', '100', '2017-04-07 18:34:20');
+INSERT INTO `rn_credit_card_option_config` VALUES ('277', '104', '31-45', '80', '2017-04-07 18:34:20');
+INSERT INTO `rn_credit_card_option_config` VALUES ('278', '105', '18-22', '60', '2017-04-07 18:34:20');
+INSERT INTO `rn_credit_card_option_config` VALUES ('279', '105', '23-30', '100', '2017-04-07 18:34:21');
+INSERT INTO `rn_credit_card_option_config` VALUES ('280', '105', '31-45', '80', '2017-04-07 18:34:21');
+INSERT INTO `rn_credit_card_option_config` VALUES ('281', '106', '18-22', '60', '2017-04-07 18:34:21');
+INSERT INTO `rn_credit_card_option_config` VALUES ('282', '106', '23-30', '100', '2017-04-07 18:34:21');
+INSERT INTO `rn_credit_card_option_config` VALUES ('283', '106', '31-45', '80', '2017-04-07 18:34:21');
+INSERT INTO `rn_credit_card_option_config` VALUES ('284', '107', '汉族', '100', '2017-04-07 18:34:23');
+INSERT INTO `rn_credit_card_option_config` VALUES ('285', '107', '少数民族', '60', '2017-04-07 18:34:24');
+INSERT INTO `rn_credit_card_option_config` VALUES ('286', '108', '一线', '100', '2017-04-07 18:34:24');
+INSERT INTO `rn_credit_card_option_config` VALUES ('287', '108', '二线', '90', '2017-04-07 18:34:24');
+INSERT INTO `rn_credit_card_option_config` VALUES ('288', '108', '三线', '80', '2017-04-07 18:34:24');
+INSERT INTO `rn_credit_card_option_config` VALUES ('289', '108', '四线', '70', '2017-04-07 18:34:24');
+INSERT INTO `rn_credit_card_option_config` VALUES ('290', '108', '其他', '60', '2017-04-07 18:34:25');
+INSERT INTO `rn_credit_card_option_config` VALUES ('291', '109', '0-30', '60', '2017-04-07 18:34:25');
+INSERT INTO `rn_credit_card_option_config` VALUES ('292', '109', '31-60', '80', '2017-04-07 18:34:25');
+INSERT INTO `rn_credit_card_option_config` VALUES ('293', '109', '61-100', '100', '2017-04-07 18:34:25');
+INSERT INTO `rn_credit_card_option_config` VALUES ('294', '110', '0-100', '80', '2017-04-07 18:34:26');
+INSERT INTO `rn_credit_card_option_config` VALUES ('295', '110', '100-500', '100', '2017-04-07 18:34:26');
+INSERT INTO `rn_credit_card_option_config` VALUES ('296', '111', '0-100', '100', '2017-04-07 18:34:26');
+INSERT INTO `rn_credit_card_option_config` VALUES ('297', '111', '0-0', '100', '2017-04-07 18:34:26');
+INSERT INTO `rn_credit_card_option_config` VALUES ('299', '112', '统招', '100', '2017-04-07 18:34:26');
+INSERT INTO `rn_credit_card_option_config` VALUES ('300', '112', '非统招', '100', '2017-04-07 18:34:26');
+INSERT INTO `rn_credit_card_option_config` VALUES ('301', '113', '18-22', '60', '2017-04-10 17:06:30');
+INSERT INTO `rn_credit_card_option_config` VALUES ('302', '113', '23-30', '99', '2017-04-10 17:06:30');
+INSERT INTO `rn_credit_card_option_config` VALUES ('303', '113', '31-45', '80', '2017-04-10 17:06:30');
+INSERT INTO `rn_credit_card_option_config` VALUES ('304', '114', '天津', '60', '2017-04-10 17:06:30');
+INSERT INTO `rn_credit_card_option_config` VALUES ('305', '114', '河北', '100', '2017-04-10 17:06:30');
+INSERT INTO `rn_credit_card_option_config` VALUES ('306', '114', '唐山', '80', '2017-04-10 17:06:30');
+INSERT INTO `rn_credit_card_option_config` VALUES ('307', '115', '0-10000', '99', '2017-04-10 17:06:30');
+INSERT INTO `rn_credit_card_option_config` VALUES ('308', '116', '18-22', '60', '2017-04-10 17:06:30');
+INSERT INTO `rn_credit_card_option_config` VALUES ('309', '116', '23-30', '100', '2017-04-10 17:06:30');
+INSERT INTO `rn_credit_card_option_config` VALUES ('310', '116', '31-45', '80', '2017-04-10 17:06:30');
+INSERT INTO `rn_credit_card_option_config` VALUES ('311', '117', '18-22', '60', '2017-04-10 17:06:30');
+INSERT INTO `rn_credit_card_option_config` VALUES ('312', '117', '23-30', '100', '2017-04-10 17:06:30');
+INSERT INTO `rn_credit_card_option_config` VALUES ('313', '117', '31-45', '80', '2017-04-10 17:06:30');
+INSERT INTO `rn_credit_card_option_config` VALUES ('314', '118', '18-22', '60', '2017-04-10 17:06:30');
+INSERT INTO `rn_credit_card_option_config` VALUES ('315', '118', '23-30', '100', '2017-04-10 17:06:30');
+INSERT INTO `rn_credit_card_option_config` VALUES ('316', '118', '31-45', '80', '2017-04-10 17:06:30');
+INSERT INTO `rn_credit_card_option_config` VALUES ('317', '119', '18-22', '60', '2017-04-10 17:06:30');
+INSERT INTO `rn_credit_card_option_config` VALUES ('318', '119', '23-30', '100', '2017-04-10 17:06:30');
+INSERT INTO `rn_credit_card_option_config` VALUES ('319', '119', '31-45', '80', '2017-04-10 17:06:30');
+INSERT INTO `rn_credit_card_option_config` VALUES ('320', '120', '18-22', '60', '2017-04-10 17:06:30');
+INSERT INTO `rn_credit_card_option_config` VALUES ('321', '120', '23-30', '100', '2017-04-10 17:06:30');
+INSERT INTO `rn_credit_card_option_config` VALUES ('322', '120', '31-45', '80', '2017-04-10 17:06:30');
+INSERT INTO `rn_credit_card_option_config` VALUES ('323', '121', '汉族-undefined', '100', '2017-04-10 17:06:30');
+INSERT INTO `rn_credit_card_option_config` VALUES ('324', '121', '少数民族-undefined', '60', '2017-04-10 17:06:30');
+INSERT INTO `rn_credit_card_option_config` VALUES ('325', '122', '一线', '100', '2017-04-10 17:06:30');
+INSERT INTO `rn_credit_card_option_config` VALUES ('326', '122', '二线', '90', '2017-04-10 17:06:30');
+INSERT INTO `rn_credit_card_option_config` VALUES ('327', '122', '三线', '80', '2017-04-10 17:06:30');
+INSERT INTO `rn_credit_card_option_config` VALUES ('328', '122', '四线', '70', '2017-04-10 17:06:30');
+INSERT INTO `rn_credit_card_option_config` VALUES ('329', '122', '其他', '60', '2017-04-10 17:06:30');
+INSERT INTO `rn_credit_card_option_config` VALUES ('330', '123', '0-30', '60', '2017-04-10 17:06:30');
+INSERT INTO `rn_credit_card_option_config` VALUES ('331', '123', '31-60', '80', '2017-04-10 17:06:30');
+INSERT INTO `rn_credit_card_option_config` VALUES ('332', '123', '61-100', '100', '2017-04-10 17:06:30');
+INSERT INTO `rn_credit_card_option_config` VALUES ('333', '124', '0-100', '80', '2017-04-10 17:06:30');
+INSERT INTO `rn_credit_card_option_config` VALUES ('334', '124', '100-500', '100', '2017-04-10 17:06:30');
+INSERT INTO `rn_credit_card_option_config` VALUES ('335', '125', '0-100', '100', '2017-04-10 17:06:30');
+INSERT INTO `rn_credit_card_option_config` VALUES ('337', '125', '0-0', '100', '2017-04-10 17:06:30');
+INSERT INTO `rn_credit_card_option_config` VALUES ('338', '126', '统招', '100', '2017-04-10 17:06:30');
+INSERT INTO `rn_credit_card_option_config` VALUES ('339', '126', '非统招', '100', '2017-04-10 17:06:30');
+INSERT INTO `rn_credit_card_option_config` VALUES ('340', '127', '18-22', '60', '2017-04-10 16:16:22');
+INSERT INTO `rn_credit_card_option_config` VALUES ('341', '127', '23-30', '99', '2017-04-10 16:16:22');
+INSERT INTO `rn_credit_card_option_config` VALUES ('342', '127', '31-45', '80', '2017-04-10 16:16:22');
+INSERT INTO `rn_credit_card_option_config` VALUES ('343', '128', '天津', '60', '2017-04-10 16:16:22');
+INSERT INTO `rn_credit_card_option_config` VALUES ('344', '128', '河北', '100', '2017-04-10 16:16:22');
+INSERT INTO `rn_credit_card_option_config` VALUES ('345', '128', '唐山', '80', '2017-04-10 16:16:22');
+INSERT INTO `rn_credit_card_option_config` VALUES ('346', '129', '0-10000', '99', '2017-04-10 16:16:22');
+INSERT INTO `rn_credit_card_option_config` VALUES ('347', '130', '18-22', '60', '2017-04-10 16:16:22');
+INSERT INTO `rn_credit_card_option_config` VALUES ('348', '130', '23-30', '100', '2017-04-10 16:16:22');
+INSERT INTO `rn_credit_card_option_config` VALUES ('349', '130', '31-45', '80', '2017-04-10 16:16:22');
+INSERT INTO `rn_credit_card_option_config` VALUES ('350', '131', '18-22', '60', '2017-04-10 16:16:22');
+INSERT INTO `rn_credit_card_option_config` VALUES ('351', '131', '23-30', '100', '2017-04-10 16:16:22');
+INSERT INTO `rn_credit_card_option_config` VALUES ('352', '131', '31-45', '80', '2017-04-10 16:16:22');
+INSERT INTO `rn_credit_card_option_config` VALUES ('353', '132', '18-22', '60', '2017-04-10 16:16:22');
+INSERT INTO `rn_credit_card_option_config` VALUES ('354', '132', '23-30', '100', '2017-04-10 16:16:22');
+INSERT INTO `rn_credit_card_option_config` VALUES ('355', '132', '31-45', '80', '2017-04-10 16:16:22');
+INSERT INTO `rn_credit_card_option_config` VALUES ('356', '133', '18-22', '60', '2017-04-10 16:16:22');
+INSERT INTO `rn_credit_card_option_config` VALUES ('357', '133', '23-30', '100', '2017-04-10 16:16:22');
+INSERT INTO `rn_credit_card_option_config` VALUES ('358', '133', '31-45', '80', '2017-04-10 16:16:22');
+INSERT INTO `rn_credit_card_option_config` VALUES ('359', '134', '18-22', '60', '2017-04-10 16:16:22');
+INSERT INTO `rn_credit_card_option_config` VALUES ('360', '134', '23-30', '100', '2017-04-10 16:16:22');
+INSERT INTO `rn_credit_card_option_config` VALUES ('361', '134', '31-45', '80', '2017-04-10 16:16:22');
+INSERT INTO `rn_credit_card_option_config` VALUES ('362', '135', '汉族', '100', '2017-04-10 16:16:22');
+INSERT INTO `rn_credit_card_option_config` VALUES ('363', '135', '少数民族', '60', '2017-04-10 16:16:22');
+INSERT INTO `rn_credit_card_option_config` VALUES ('364', '136', '一线', '100', '2017-04-10 16:16:22');
+INSERT INTO `rn_credit_card_option_config` VALUES ('365', '136', '二线', '90', '2017-04-10 16:16:22');
+INSERT INTO `rn_credit_card_option_config` VALUES ('366', '136', '三线', '80', '2017-04-10 16:16:22');
+INSERT INTO `rn_credit_card_option_config` VALUES ('367', '136', '四线', '70', '2017-04-10 16:16:22');
+INSERT INTO `rn_credit_card_option_config` VALUES ('368', '136', '其他', '60', '2017-04-10 16:16:22');
+INSERT INTO `rn_credit_card_option_config` VALUES ('369', '137', '0-30', '60', '2017-04-10 16:16:22');
+INSERT INTO `rn_credit_card_option_config` VALUES ('370', '137', '31-60', '80', '2017-04-10 16:16:22');
+INSERT INTO `rn_credit_card_option_config` VALUES ('371', '137', '61-100', '100', '2017-04-10 16:16:22');
+INSERT INTO `rn_credit_card_option_config` VALUES ('372', '138', '0-100', '80', '2017-04-10 16:16:22');
+INSERT INTO `rn_credit_card_option_config` VALUES ('373', '138', '100-500', '100', '2017-04-10 16:16:22');
+INSERT INTO `rn_credit_card_option_config` VALUES ('374', '139', '0-100', '100', '2017-04-10 16:16:22');
+INSERT INTO `rn_credit_card_option_config` VALUES ('376', '139', '0-0', '100', '2017-04-10 16:16:22');
+INSERT INTO `rn_credit_card_option_config` VALUES ('377', '140', '统招', '100', '2017-04-10 16:16:22');
+INSERT INTO `rn_credit_card_option_config` VALUES ('378', '140', '非统招', '100', '2017-04-10 16:16:22');
+INSERT INTO `rn_credit_card_option_config` VALUES ('379', '141', '18-22', '60', '2017-04-10 17:07:42');
+INSERT INTO `rn_credit_card_option_config` VALUES ('380', '141', '23-30', '99', '2017-04-10 17:07:42');
+INSERT INTO `rn_credit_card_option_config` VALUES ('381', '141', '31-45', '80', '2017-04-10 17:07:42');
+INSERT INTO `rn_credit_card_option_config` VALUES ('382', '142', '天津', '60', '2017-04-10 17:07:42');
+INSERT INTO `rn_credit_card_option_config` VALUES ('383', '142', '河北', '100', '2017-04-10 17:07:42');
+INSERT INTO `rn_credit_card_option_config` VALUES ('384', '142', '唐山', '80', '2017-04-10 17:07:42');
+INSERT INTO `rn_credit_card_option_config` VALUES ('385', '143', '0-10000', '99', '2017-04-10 17:07:42');
+INSERT INTO `rn_credit_card_option_config` VALUES ('386', '144', '18-22', '60', '2017-04-10 17:07:42');
+INSERT INTO `rn_credit_card_option_config` VALUES ('387', '144', '23-30', '100', '2017-04-10 17:07:42');
+INSERT INTO `rn_credit_card_option_config` VALUES ('388', '144', '31-45', '80', '2017-04-10 17:07:42');
+INSERT INTO `rn_credit_card_option_config` VALUES ('389', '145', '18-22', '60', '2017-04-10 17:07:42');
+INSERT INTO `rn_credit_card_option_config` VALUES ('390', '145', '23-30', '100', '2017-04-10 17:07:42');
+INSERT INTO `rn_credit_card_option_config` VALUES ('391', '145', '31-45', '80', '2017-04-10 17:07:42');
+INSERT INTO `rn_credit_card_option_config` VALUES ('392', '146', '18-22', '60', '2017-04-10 17:07:42');
+INSERT INTO `rn_credit_card_option_config` VALUES ('393', '146', '23-30', '100', '2017-04-10 17:07:42');
+INSERT INTO `rn_credit_card_option_config` VALUES ('394', '146', '31-45', '80', '2017-04-10 17:07:42');
+INSERT INTO `rn_credit_card_option_config` VALUES ('395', '147', '18-22', '60', '2017-04-10 17:07:42');
+INSERT INTO `rn_credit_card_option_config` VALUES ('396', '147', '23-30', '100', '2017-04-10 17:07:42');
+INSERT INTO `rn_credit_card_option_config` VALUES ('397', '147', '31-45', '80', '2017-04-10 17:07:42');
+INSERT INTO `rn_credit_card_option_config` VALUES ('398', '148', '18-22', '60', '2017-04-10 17:07:42');
+INSERT INTO `rn_credit_card_option_config` VALUES ('399', '148', '23-30', '100', '2017-04-10 17:07:42');
+INSERT INTO `rn_credit_card_option_config` VALUES ('400', '148', '31-45', '80', '2017-04-10 17:07:42');
+INSERT INTO `rn_credit_card_option_config` VALUES ('401', '149', '汉族-undefined', '100', '2017-04-10 17:07:42');
+INSERT INTO `rn_credit_card_option_config` VALUES ('402', '149', '少数民族-undefined', '60', '2017-04-10 17:07:42');
+INSERT INTO `rn_credit_card_option_config` VALUES ('403', '150', '一线', '100', '2017-04-10 17:07:42');
+INSERT INTO `rn_credit_card_option_config` VALUES ('404', '150', '二线', '90', '2017-04-10 17:07:42');
+INSERT INTO `rn_credit_card_option_config` VALUES ('405', '150', '三线', '80', '2017-04-10 17:07:42');
+INSERT INTO `rn_credit_card_option_config` VALUES ('406', '150', '四线', '70', '2017-04-10 17:07:42');
+INSERT INTO `rn_credit_card_option_config` VALUES ('407', '150', '其他', '60', '2017-04-10 17:07:42');
+INSERT INTO `rn_credit_card_option_config` VALUES ('408', '151', '0-30', '60', '2017-04-10 17:07:42');
+INSERT INTO `rn_credit_card_option_config` VALUES ('409', '151', '31-60', '80', '2017-04-10 17:07:42');
+INSERT INTO `rn_credit_card_option_config` VALUES ('410', '151', '61-100', '100', '2017-04-10 17:07:42');
+INSERT INTO `rn_credit_card_option_config` VALUES ('411', '152', '0-100', '80', '2017-04-10 17:07:42');
+INSERT INTO `rn_credit_card_option_config` VALUES ('412', '152', '100-500', '100', '2017-04-10 17:07:42');
+INSERT INTO `rn_credit_card_option_config` VALUES ('413', '153', '0-100', '100', '2017-04-10 17:07:42');
+INSERT INTO `rn_credit_card_option_config` VALUES ('415', '153', '0-0', '100', '2017-04-10 17:07:42');
+INSERT INTO `rn_credit_card_option_config` VALUES ('416', '154', '统招', '100', '2017-04-10 17:07:42');
+INSERT INTO `rn_credit_card_option_config` VALUES ('417', '154', '非统招', '100', '2017-04-10 17:07:42');
+INSERT INTO `rn_credit_card_option_config` VALUES ('418', '155', '18-22', '60', '2017-04-11 12:01:03');
+INSERT INTO `rn_credit_card_option_config` VALUES ('419', '155', '23-30', '99', '2017-04-11 12:01:03');
+INSERT INTO `rn_credit_card_option_config` VALUES ('420', '155', '31-45', '80', '2017-04-11 12:01:03');
+INSERT INTO `rn_credit_card_option_config` VALUES ('421', '156', '天津', '60', '2017-04-11 12:01:03');
+INSERT INTO `rn_credit_card_option_config` VALUES ('422', '156', '河北', '100', '2017-04-11 12:01:03');
+INSERT INTO `rn_credit_card_option_config` VALUES ('423', '156', '唐山', '80', '2017-04-11 12:01:03');
+INSERT INTO `rn_credit_card_option_config` VALUES ('424', '157', '0-10000', '99', '2017-04-11 12:01:03');
+INSERT INTO `rn_credit_card_option_config` VALUES ('425', '158', '18-22', '60', '2017-04-11 12:01:03');
+INSERT INTO `rn_credit_card_option_config` VALUES ('426', '158', '23-30', '100', '2017-04-11 12:01:03');
+INSERT INTO `rn_credit_card_option_config` VALUES ('427', '158', '31-45', '80', '2017-04-11 12:01:03');
+INSERT INTO `rn_credit_card_option_config` VALUES ('428', '159', '18-22', '60', '2017-04-11 12:01:03');
+INSERT INTO `rn_credit_card_option_config` VALUES ('429', '159', '23-30', '100', '2017-04-11 12:01:03');
+INSERT INTO `rn_credit_card_option_config` VALUES ('430', '159', '31-45', '80', '2017-04-11 12:01:03');
+INSERT INTO `rn_credit_card_option_config` VALUES ('431', '160', '18-22', '60', '2017-04-11 12:01:03');
+INSERT INTO `rn_credit_card_option_config` VALUES ('432', '160', '23-30', '100', '2017-04-11 12:01:03');
+INSERT INTO `rn_credit_card_option_config` VALUES ('433', '160', '31-45', '80', '2017-04-11 12:01:03');
+INSERT INTO `rn_credit_card_option_config` VALUES ('434', '161', '18-22', '60', '2017-04-11 12:01:03');
+INSERT INTO `rn_credit_card_option_config` VALUES ('435', '161', '23-30', '100', '2017-04-11 12:01:03');
+INSERT INTO `rn_credit_card_option_config` VALUES ('436', '161', '31-45', '80', '2017-04-11 12:01:03');
+INSERT INTO `rn_credit_card_option_config` VALUES ('437', '162', '18-22', '60', '2017-04-11 12:01:03');
+INSERT INTO `rn_credit_card_option_config` VALUES ('438', '162', '23-30', '100', '2017-04-11 12:01:03');
+INSERT INTO `rn_credit_card_option_config` VALUES ('439', '162', '31-45', '80', '2017-04-11 12:01:03');
+INSERT INTO `rn_credit_card_option_config` VALUES ('440', '163', '汉族', '100', '2017-04-11 12:01:03');
+INSERT INTO `rn_credit_card_option_config` VALUES ('441', '163', '少数民族', '60', '2017-04-11 12:01:03');
+INSERT INTO `rn_credit_card_option_config` VALUES ('442', '164', '一线', '100', '2017-04-11 12:01:03');
+INSERT INTO `rn_credit_card_option_config` VALUES ('443', '164', '二线', '90', '2017-04-11 12:01:03');
+INSERT INTO `rn_credit_card_option_config` VALUES ('444', '164', '三线', '80', '2017-04-11 12:01:03');
+INSERT INTO `rn_credit_card_option_config` VALUES ('445', '164', '四线', '70', '2017-04-11 12:01:03');
+INSERT INTO `rn_credit_card_option_config` VALUES ('446', '164', '其他', '60', '2017-04-11 12:01:03');
+INSERT INTO `rn_credit_card_option_config` VALUES ('447', '165', '0-30', '60', '2017-04-11 12:01:03');
+INSERT INTO `rn_credit_card_option_config` VALUES ('448', '165', '31-60', '80', '2017-04-11 12:01:03');
+INSERT INTO `rn_credit_card_option_config` VALUES ('449', '165', '61-100', '100', '2017-04-11 12:01:03');
+INSERT INTO `rn_credit_card_option_config` VALUES ('450', '166', '0-100', '80', '2017-04-11 12:01:03');
+INSERT INTO `rn_credit_card_option_config` VALUES ('451', '166', '100-500', '100', '2017-04-11 12:01:03');
+INSERT INTO `rn_credit_card_option_config` VALUES ('452', '167', '0-100', '100', '2017-04-11 12:01:03');
+INSERT INTO `rn_credit_card_option_config` VALUES ('454', '167', '0-0', '100', '2017-04-11 12:01:03');
+INSERT INTO `rn_credit_card_option_config` VALUES ('455', '168', '统招', '100', '2017-04-11 12:01:03');
+INSERT INTO `rn_credit_card_option_config` VALUES ('456', '168', '非统招', '100', '2017-04-11 12:01:03');
+INSERT INTO `rn_credit_card_option_config` VALUES ('457', '169', '18-22', '60', '2017-04-11 12:01:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('458', '169', '23-30', '99', '2017-04-11 12:01:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('459', '169', '31-45', '80', '2017-04-11 12:01:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('460', '170', '天津', '60', '2017-04-11 12:01:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('461', '170', '河北', '100', '2017-04-11 12:01:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('462', '170', '唐山', '80', '2017-04-11 12:01:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('463', '171', '0-10000', '99', '2017-04-11 12:01:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('464', '172', '18-22', '60', '2017-04-11 12:01:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('465', '172', '23-30', '100', '2017-04-11 12:01:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('466', '172', '31-45', '80', '2017-04-11 12:01:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('467', '173', '18-22', '60', '2017-04-11 12:01:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('468', '173', '23-30', '100', '2017-04-11 12:01:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('469', '173', '31-45', '80', '2017-04-11 12:01:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('470', '174', '18-22', '60', '2017-04-11 12:01:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('471', '174', '23-30', '100', '2017-04-11 12:01:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('472', '174', '31-45', '80', '2017-04-11 12:01:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('473', '175', '18-22', '60', '2017-04-11 12:01:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('474', '175', '23-30', '100', '2017-04-11 12:01:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('475', '175', '31-45', '80', '2017-04-11 12:01:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('476', '176', '18-22', '60', '2017-04-11 12:01:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('477', '176', '23-30', '100', '2017-04-11 12:01:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('478', '176', '31-45', '80', '2017-04-11 12:01:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('479', '177', '汉族', '100', '2017-04-11 12:01:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('480', '177', '少数民族', '60', '2017-04-11 12:01:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('481', '178', '一线', '100', '2017-04-11 12:01:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('482', '178', '二线', '90', '2017-04-11 12:01:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('483', '178', '三线', '80', '2017-04-11 12:01:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('484', '178', '四线', '70', '2017-04-11 12:01:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('485', '178', '其他', '60', '2017-04-11 12:01:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('486', '179', '0-30', '60', '2017-04-11 12:01:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('487', '179', '31-60', '80', '2017-04-11 12:01:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('488', '179', '61-100', '100', '2017-04-11 12:01:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('489', '180', '0-100', '80', '2017-04-11 12:01:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('490', '180', '100-500', '100', '2017-04-11 12:01:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('491', '181', '0-100', '100', '2017-04-11 12:01:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('493', '181', '0-0', '100', '2017-04-11 12:01:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('494', '182', '统招', '100', '2017-04-11 12:01:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('495', '182', '非统招', '100', '2017-04-11 12:01:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('496', '183', '18-22', '60', '2017-04-11 12:01:20');
+INSERT INTO `rn_credit_card_option_config` VALUES ('497', '183', '23-30', '99', '2017-04-11 12:01:20');
+INSERT INTO `rn_credit_card_option_config` VALUES ('498', '183', '31-45', '80', '2017-04-11 12:01:20');
+INSERT INTO `rn_credit_card_option_config` VALUES ('499', '184', '天津', '60', '2017-04-11 12:01:20');
+INSERT INTO `rn_credit_card_option_config` VALUES ('500', '184', '河北', '100', '2017-04-11 12:01:20');
+INSERT INTO `rn_credit_card_option_config` VALUES ('501', '184', '唐山', '80', '2017-04-11 12:01:20');
+INSERT INTO `rn_credit_card_option_config` VALUES ('502', '185', '0-10000', '99', '2017-04-11 12:01:20');
+INSERT INTO `rn_credit_card_option_config` VALUES ('503', '186', '18-22', '60', '2017-04-11 12:01:20');
+INSERT INTO `rn_credit_card_option_config` VALUES ('504', '186', '23-30', '100', '2017-04-11 12:01:20');
+INSERT INTO `rn_credit_card_option_config` VALUES ('505', '186', '31-45', '80', '2017-04-11 12:01:20');
+INSERT INTO `rn_credit_card_option_config` VALUES ('506', '187', '18-22', '60', '2017-04-11 12:01:20');
+INSERT INTO `rn_credit_card_option_config` VALUES ('507', '187', '23-30', '100', '2017-04-11 12:01:20');
+INSERT INTO `rn_credit_card_option_config` VALUES ('508', '187', '31-45', '80', '2017-04-11 12:01:20');
+INSERT INTO `rn_credit_card_option_config` VALUES ('509', '188', '18-22', '60', '2017-04-11 12:01:20');
+INSERT INTO `rn_credit_card_option_config` VALUES ('510', '188', '23-30', '100', '2017-04-11 12:01:20');
+INSERT INTO `rn_credit_card_option_config` VALUES ('511', '188', '31-45', '80', '2017-04-11 12:01:20');
+INSERT INTO `rn_credit_card_option_config` VALUES ('512', '189', '18-22', '60', '2017-04-11 12:01:20');
+INSERT INTO `rn_credit_card_option_config` VALUES ('513', '189', '23-30', '100', '2017-04-11 12:01:20');
+INSERT INTO `rn_credit_card_option_config` VALUES ('514', '189', '31-45', '80', '2017-04-11 12:01:20');
+INSERT INTO `rn_credit_card_option_config` VALUES ('515', '190', '18-22', '60', '2017-04-11 12:01:20');
+INSERT INTO `rn_credit_card_option_config` VALUES ('516', '190', '23-30', '100', '2017-04-11 12:01:20');
+INSERT INTO `rn_credit_card_option_config` VALUES ('517', '190', '31-45', '80', '2017-04-11 12:01:20');
+INSERT INTO `rn_credit_card_option_config` VALUES ('518', '191', '汉族', '100', '2017-04-11 12:01:20');
+INSERT INTO `rn_credit_card_option_config` VALUES ('519', '191', '少数民族', '60', '2017-04-11 12:01:20');
+INSERT INTO `rn_credit_card_option_config` VALUES ('520', '192', '一线', '100', '2017-04-11 12:01:20');
+INSERT INTO `rn_credit_card_option_config` VALUES ('521', '192', '二线', '90', '2017-04-11 12:01:20');
+INSERT INTO `rn_credit_card_option_config` VALUES ('522', '192', '三线', '80', '2017-04-11 12:01:20');
+INSERT INTO `rn_credit_card_option_config` VALUES ('523', '192', '四线', '70', '2017-04-11 12:01:20');
+INSERT INTO `rn_credit_card_option_config` VALUES ('524', '192', '其他', '60', '2017-04-11 12:01:20');
+INSERT INTO `rn_credit_card_option_config` VALUES ('525', '193', '0-30', '60', '2017-04-11 12:01:20');
+INSERT INTO `rn_credit_card_option_config` VALUES ('526', '193', '31-60', '80', '2017-04-11 12:01:20');
+INSERT INTO `rn_credit_card_option_config` VALUES ('527', '193', '61-100', '100', '2017-04-11 12:01:20');
+INSERT INTO `rn_credit_card_option_config` VALUES ('528', '194', '0-100', '80', '2017-04-11 12:01:20');
+INSERT INTO `rn_credit_card_option_config` VALUES ('529', '194', '100-500', '100', '2017-04-11 12:01:20');
+INSERT INTO `rn_credit_card_option_config` VALUES ('530', '195', '0-100', '100', '2017-04-11 12:01:20');
+INSERT INTO `rn_credit_card_option_config` VALUES ('532', '195', '0-0', '100', '2017-04-11 12:01:20');
+INSERT INTO `rn_credit_card_option_config` VALUES ('533', '196', '统招', '100', '2017-04-11 12:01:20');
+INSERT INTO `rn_credit_card_option_config` VALUES ('534', '196', '非统招', '100', '2017-04-11 12:01:20');
+INSERT INTO `rn_credit_card_option_config` VALUES ('535', '197', '18-22', '60', '2017-04-11 12:01:21');
+INSERT INTO `rn_credit_card_option_config` VALUES ('536', '197', '23-30', '99', '2017-04-11 12:01:21');
+INSERT INTO `rn_credit_card_option_config` VALUES ('537', '197', '31-45', '80', '2017-04-11 12:01:21');
+INSERT INTO `rn_credit_card_option_config` VALUES ('538', '198', '天津', '60', '2017-04-11 12:01:21');
+INSERT INTO `rn_credit_card_option_config` VALUES ('539', '198', '河北', '100', '2017-04-11 12:01:21');
+INSERT INTO `rn_credit_card_option_config` VALUES ('540', '198', '唐山', '80', '2017-04-11 12:01:21');
+INSERT INTO `rn_credit_card_option_config` VALUES ('541', '199', '0-10000', '99', '2017-04-11 12:01:21');
+INSERT INTO `rn_credit_card_option_config` VALUES ('542', '200', '18-22', '60', '2017-04-11 12:01:21');
+INSERT INTO `rn_credit_card_option_config` VALUES ('543', '200', '23-30', '100', '2017-04-11 12:01:21');
+INSERT INTO `rn_credit_card_option_config` VALUES ('544', '200', '31-45', '80', '2017-04-11 12:01:21');
+INSERT INTO `rn_credit_card_option_config` VALUES ('545', '201', '18-22', '60', '2017-04-11 12:01:21');
+INSERT INTO `rn_credit_card_option_config` VALUES ('546', '201', '23-30', '100', '2017-04-11 12:01:21');
+INSERT INTO `rn_credit_card_option_config` VALUES ('547', '201', '31-45', '80', '2017-04-11 12:01:21');
+INSERT INTO `rn_credit_card_option_config` VALUES ('548', '202', '18-22', '60', '2017-04-11 12:01:21');
+INSERT INTO `rn_credit_card_option_config` VALUES ('549', '202', '23-30', '100', '2017-04-11 12:01:21');
+INSERT INTO `rn_credit_card_option_config` VALUES ('550', '202', '31-45', '80', '2017-04-11 12:01:21');
+INSERT INTO `rn_credit_card_option_config` VALUES ('551', '203', '18-22', '60', '2017-04-11 12:01:21');
+INSERT INTO `rn_credit_card_option_config` VALUES ('552', '203', '23-30', '100', '2017-04-11 12:01:21');
+INSERT INTO `rn_credit_card_option_config` VALUES ('553', '203', '31-45', '80', '2017-04-11 12:01:21');
+INSERT INTO `rn_credit_card_option_config` VALUES ('554', '204', '18-22', '60', '2017-04-11 12:01:21');
+INSERT INTO `rn_credit_card_option_config` VALUES ('555', '204', '23-30', '100', '2017-04-11 12:01:21');
+INSERT INTO `rn_credit_card_option_config` VALUES ('556', '204', '31-45', '80', '2017-04-11 12:01:21');
+INSERT INTO `rn_credit_card_option_config` VALUES ('557', '205', '汉族', '100', '2017-04-11 12:01:21');
+INSERT INTO `rn_credit_card_option_config` VALUES ('558', '205', '少数民族', '60', '2017-04-11 12:01:21');
+INSERT INTO `rn_credit_card_option_config` VALUES ('559', '206', '一线', '100', '2017-04-11 12:01:21');
+INSERT INTO `rn_credit_card_option_config` VALUES ('560', '206', '二线', '90', '2017-04-11 12:01:21');
+INSERT INTO `rn_credit_card_option_config` VALUES ('561', '206', '三线', '80', '2017-04-11 12:01:21');
+INSERT INTO `rn_credit_card_option_config` VALUES ('562', '206', '四线', '70', '2017-04-11 12:01:21');
+INSERT INTO `rn_credit_card_option_config` VALUES ('563', '206', '其他', '60', '2017-04-11 12:01:21');
+INSERT INTO `rn_credit_card_option_config` VALUES ('564', '207', '0-30', '60', '2017-04-11 12:01:21');
+INSERT INTO `rn_credit_card_option_config` VALUES ('565', '207', '31-60', '80', '2017-04-11 12:01:21');
+INSERT INTO `rn_credit_card_option_config` VALUES ('566', '207', '61-100', '100', '2017-04-11 12:01:21');
+INSERT INTO `rn_credit_card_option_config` VALUES ('567', '208', '0-100', '80', '2017-04-11 12:01:21');
+INSERT INTO `rn_credit_card_option_config` VALUES ('568', '208', '100-500', '100', '2017-04-11 12:01:21');
+INSERT INTO `rn_credit_card_option_config` VALUES ('569', '209', '0-100', '100', '2017-04-11 12:01:21');
+INSERT INTO `rn_credit_card_option_config` VALUES ('570', '209', '0-0', '100', '2017-04-11 12:01:21');
+INSERT INTO `rn_credit_card_option_config` VALUES ('572', '210', '统招', '100', '2017-04-11 12:01:21');
+INSERT INTO `rn_credit_card_option_config` VALUES ('573', '210', '非统招', '100', '2017-04-11 12:01:21');
+INSERT INTO `rn_credit_card_option_config` VALUES ('574', '211', '18-22', '60', '2017-04-11 18:04:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('575', '211', '23-30', '99', '2017-04-11 18:04:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('576', '211', '31-45', '80', '2017-04-11 18:04:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('577', '212', '天津', '60', '2017-04-11 18:04:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('578', '212', '河北', '100', '2017-04-11 18:04:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('579', '212', '唐山', '80', '2017-04-11 18:04:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('580', '213', '0-10000', '99', '2017-04-11 18:04:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('581', '214', '18-22', '60', '2017-04-11 18:04:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('582', '214', '23-30', '100', '2017-04-11 18:04:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('583', '214', '31-45', '80', '2017-04-11 18:04:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('584', '215', '18-22', '60', '2017-04-11 18:04:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('585', '215', '23-30', '100', '2017-04-11 18:04:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('586', '215', '31-45', '80', '2017-04-11 18:04:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('587', '216', '18-22', '60', '2017-04-11 18:04:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('588', '216', '23-30', '100', '2017-04-11 18:04:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('589', '216', '31-45', '80', '2017-04-11 18:04:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('590', '217', '18-22', '60', '2017-04-11 18:04:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('591', '217', '23-30', '100', '2017-04-11 18:04:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('592', '217', '31-45', '80', '2017-04-11 18:04:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('593', '218', '18-22', '60', '2017-04-11 18:04:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('594', '218', '23-30', '100', '2017-04-11 18:04:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('595', '218', '31-45', '80', '2017-04-11 18:04:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('596', '219', '汉族', '100', '2017-04-11 18:04:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('597', '219', '少数民族', '60', '2017-04-11 18:04:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('598', '220', '一线', '100', '2017-04-11 18:04:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('599', '220', '二线', '90', '2017-04-11 18:04:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('600', '220', '三线', '80', '2017-04-11 18:04:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('601', '220', '四线', '70', '2017-04-11 18:04:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('602', '220', '其他', '60', '2017-04-11 18:04:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('603', '221', '0-30', '60', '2017-04-11 18:04:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('604', '221', '31-60', '80', '2017-04-11 18:04:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('605', '221', '61-100', '100', '2017-04-11 18:04:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('606', '222', '0-100', '80', '2017-04-11 18:04:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('607', '222', '100-500', '100', '2017-04-11 18:04:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('608', '223', '0-100', '100', '2017-04-11 18:04:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('609', '223', '0-0', '100', '2017-04-11 18:04:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('610', '224', '统招', '100', '2017-04-11 18:04:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('611', '224', '非统招', '100', '2017-04-11 18:04:18');
+INSERT INTO `rn_credit_card_option_config` VALUES ('612', '225', '18-22', '60', '2017-04-11 18:13:15');
+INSERT INTO `rn_credit_card_option_config` VALUES ('613', '225', '23-30', '99', '2017-04-11 18:13:15');
+INSERT INTO `rn_credit_card_option_config` VALUES ('614', '225', '31-45', '80', '2017-04-11 18:13:15');
+INSERT INTO `rn_credit_card_option_config` VALUES ('615', '226', '天津', '60', '2017-04-11 18:13:15');
+INSERT INTO `rn_credit_card_option_config` VALUES ('616', '226', '河北', '100', '2017-04-11 18:13:15');
+INSERT INTO `rn_credit_card_option_config` VALUES ('617', '226', '唐山', '80', '2017-04-11 18:13:15');
+INSERT INTO `rn_credit_card_option_config` VALUES ('618', '227', '0-10000', '99', '2017-04-11 18:13:15');
+INSERT INTO `rn_credit_card_option_config` VALUES ('619', '228', '18-22', '60', '2017-04-11 18:13:15');
+INSERT INTO `rn_credit_card_option_config` VALUES ('620', '228', '23-30', '100', '2017-04-11 18:13:15');
+INSERT INTO `rn_credit_card_option_config` VALUES ('621', '228', '31-45', '80', '2017-04-11 18:13:15');
+INSERT INTO `rn_credit_card_option_config` VALUES ('622', '229', '18-22', '60', '2017-04-11 18:13:15');
+INSERT INTO `rn_credit_card_option_config` VALUES ('623', '229', '23-30', '100', '2017-04-11 18:13:15');
+INSERT INTO `rn_credit_card_option_config` VALUES ('624', '229', '31-45', '80', '2017-04-11 18:13:15');
+INSERT INTO `rn_credit_card_option_config` VALUES ('625', '230', '18-22', '60', '2017-04-11 18:13:15');
+INSERT INTO `rn_credit_card_option_config` VALUES ('626', '230', '23-30', '100', '2017-04-11 18:13:15');
+INSERT INTO `rn_credit_card_option_config` VALUES ('627', '230', '31-45', '80', '2017-04-11 18:13:15');
+INSERT INTO `rn_credit_card_option_config` VALUES ('628', '231', '18-22', '60', '2017-04-11 18:13:15');
+INSERT INTO `rn_credit_card_option_config` VALUES ('629', '231', '23-30', '100', '2017-04-11 18:13:15');
+INSERT INTO `rn_credit_card_option_config` VALUES ('630', '231', '31-45', '80', '2017-04-11 18:13:15');
+INSERT INTO `rn_credit_card_option_config` VALUES ('631', '232', '18-22', '60', '2017-04-11 18:13:15');
+INSERT INTO `rn_credit_card_option_config` VALUES ('632', '232', '23-30', '100', '2017-04-11 18:13:15');
+INSERT INTO `rn_credit_card_option_config` VALUES ('633', '232', '31-45', '80', '2017-04-11 18:13:15');
+INSERT INTO `rn_credit_card_option_config` VALUES ('634', '233', '汉族', '100', '2017-04-11 18:13:15');
+INSERT INTO `rn_credit_card_option_config` VALUES ('635', '233', '少数民族', '60', '2017-04-11 18:13:15');
+INSERT INTO `rn_credit_card_option_config` VALUES ('636', '234', '一线', '100', '2017-04-11 18:13:15');
+INSERT INTO `rn_credit_card_option_config` VALUES ('637', '234', '二线', '90', '2017-04-11 18:13:15');
+INSERT INTO `rn_credit_card_option_config` VALUES ('638', '234', '三线', '80', '2017-04-11 18:13:15');
+INSERT INTO `rn_credit_card_option_config` VALUES ('639', '234', '四线', '70', '2017-04-11 18:13:15');
+INSERT INTO `rn_credit_card_option_config` VALUES ('640', '234', '其他', '60', '2017-04-11 18:13:15');
+INSERT INTO `rn_credit_card_option_config` VALUES ('641', '235', '0-30', '60', '2017-04-11 18:13:15');
+INSERT INTO `rn_credit_card_option_config` VALUES ('642', '235', '31-60', '80', '2017-04-11 18:13:15');
+INSERT INTO `rn_credit_card_option_config` VALUES ('643', '235', '61-100', '100', '2017-04-11 18:13:15');
+INSERT INTO `rn_credit_card_option_config` VALUES ('644', '236', '0-100', '80', '2017-04-11 18:13:15');
+INSERT INTO `rn_credit_card_option_config` VALUES ('645', '236', '100-500', '100', '2017-04-11 18:13:15');
+INSERT INTO `rn_credit_card_option_config` VALUES ('646', '237', '0-100', '100', '2017-04-11 18:13:15');
+INSERT INTO `rn_credit_card_option_config` VALUES ('647', '237', '0-0', '100', '2017-04-11 18:13:15');
+INSERT INTO `rn_credit_card_option_config` VALUES ('648', '238', '统招', '100', '2017-04-11 18:13:15');
+INSERT INTO `rn_credit_card_option_config` VALUES ('649', '238', '非统招', '100', '2017-04-11 18:13:15');
+INSERT INTO `rn_credit_card_option_config` VALUES ('688', '253', '18-22', '60', '2017-04-12 10:14:24');
+INSERT INTO `rn_credit_card_option_config` VALUES ('689', '253', '23-30', '99', '2017-04-12 10:14:24');
+INSERT INTO `rn_credit_card_option_config` VALUES ('690', '253', '31-45', '80', '2017-04-12 10:14:24');
+INSERT INTO `rn_credit_card_option_config` VALUES ('691', '254', '天津', '60', '2017-04-12 10:14:24');
+INSERT INTO `rn_credit_card_option_config` VALUES ('692', '254', '河北', '100', '2017-04-12 10:14:24');
+INSERT INTO `rn_credit_card_option_config` VALUES ('693', '254', '唐山', '80', '2017-04-12 10:14:24');
+INSERT INTO `rn_credit_card_option_config` VALUES ('694', '255', '0-10000', '99', '2017-04-12 10:14:24');
+INSERT INTO `rn_credit_card_option_config` VALUES ('695', '256', '18-22', '60', '2017-04-12 10:14:24');
+INSERT INTO `rn_credit_card_option_config` VALUES ('696', '256', '23-30', '100', '2017-04-12 10:14:24');
+INSERT INTO `rn_credit_card_option_config` VALUES ('697', '256', '31-45', '80', '2017-04-12 10:14:24');
+INSERT INTO `rn_credit_card_option_config` VALUES ('698', '257', '18-22', '60', '2017-04-12 10:14:24');
+INSERT INTO `rn_credit_card_option_config` VALUES ('699', '257', '23-30', '100', '2017-04-12 10:14:24');
+INSERT INTO `rn_credit_card_option_config` VALUES ('700', '257', '31-45', '80', '2017-04-12 10:14:24');
+INSERT INTO `rn_credit_card_option_config` VALUES ('701', '258', '18-22', '60', '2017-04-12 10:14:24');
+INSERT INTO `rn_credit_card_option_config` VALUES ('702', '258', '23-30', '100', '2017-04-12 10:14:24');
+INSERT INTO `rn_credit_card_option_config` VALUES ('703', '258', '31-45', '80', '2017-04-12 10:14:24');
+INSERT INTO `rn_credit_card_option_config` VALUES ('704', '259', '18-22', '60', '2017-04-12 10:14:24');
+INSERT INTO `rn_credit_card_option_config` VALUES ('705', '259', '23-30', '100', '2017-04-12 10:14:24');
+INSERT INTO `rn_credit_card_option_config` VALUES ('706', '259', '31-45', '80', '2017-04-12 10:14:24');
+INSERT INTO `rn_credit_card_option_config` VALUES ('707', '260', '18-22', '60', '2017-04-12 10:14:24');
+INSERT INTO `rn_credit_card_option_config` VALUES ('708', '260', '23-30', '100', '2017-04-12 10:14:24');
+INSERT INTO `rn_credit_card_option_config` VALUES ('709', '260', '31-45', '80', '2017-04-12 10:14:24');
+INSERT INTO `rn_credit_card_option_config` VALUES ('710', '261', '汉族', '100', '2017-04-12 10:14:24');
+INSERT INTO `rn_credit_card_option_config` VALUES ('711', '261', '少数民族', '60', '2017-04-12 10:14:24');
+INSERT INTO `rn_credit_card_option_config` VALUES ('712', '262', '一线', '100', '2017-04-12 10:14:24');
+INSERT INTO `rn_credit_card_option_config` VALUES ('713', '262', '二线', '90', '2017-04-12 10:14:24');
+INSERT INTO `rn_credit_card_option_config` VALUES ('714', '262', '三线', '80', '2017-04-12 10:14:24');
+INSERT INTO `rn_credit_card_option_config` VALUES ('715', '262', '四线', '70', '2017-04-12 10:14:24');
+INSERT INTO `rn_credit_card_option_config` VALUES ('716', '262', '其他', '60', '2017-04-12 10:14:24');
+INSERT INTO `rn_credit_card_option_config` VALUES ('717', '263', '0-30', '60', '2017-04-12 10:14:24');
+INSERT INTO `rn_credit_card_option_config` VALUES ('718', '263', '31-60', '80', '2017-04-12 10:14:24');
+INSERT INTO `rn_credit_card_option_config` VALUES ('719', '263', '61-100', '100', '2017-04-12 10:14:24');
+INSERT INTO `rn_credit_card_option_config` VALUES ('720', '264', '0-100', '80', '2017-04-12 10:14:24');
+INSERT INTO `rn_credit_card_option_config` VALUES ('721', '264', '100-500', '100', '2017-04-12 10:14:24');
+INSERT INTO `rn_credit_card_option_config` VALUES ('722', '265', '0-100', '100', '2017-04-12 10:14:24');
+INSERT INTO `rn_credit_card_option_config` VALUES ('723', '265', '0-0', '100', '2017-04-12 10:14:24');
+INSERT INTO `rn_credit_card_option_config` VALUES ('724', '266', '统招', '100', '2017-04-12 10:14:24');
+INSERT INTO `rn_credit_card_option_config` VALUES ('725', '266', '非统招', '100', '2017-04-12 10:14:24');
+INSERT INTO `rn_credit_card_option_config` VALUES ('764', '281', '18-22', '60', '2017-04-12 11:34:19');
+INSERT INTO `rn_credit_card_option_config` VALUES ('765', '281', '23-30', '99', '2017-04-12 11:34:19');
+INSERT INTO `rn_credit_card_option_config` VALUES ('766', '281', '31-45', '80', '2017-04-12 11:34:19');
+INSERT INTO `rn_credit_card_option_config` VALUES ('767', '282', '天津', '60', '2017-04-12 11:34:19');
+INSERT INTO `rn_credit_card_option_config` VALUES ('768', '282', '河北', '100', '2017-04-12 11:34:19');
+INSERT INTO `rn_credit_card_option_config` VALUES ('769', '282', '唐山', '80', '2017-04-12 11:34:19');
+INSERT INTO `rn_credit_card_option_config` VALUES ('770', '283', '0-10000', '99', '2017-04-12 11:34:19');
+INSERT INTO `rn_credit_card_option_config` VALUES ('771', '284', '18-22', '60', '2017-04-12 11:34:19');
+INSERT INTO `rn_credit_card_option_config` VALUES ('772', '284', '23-30', '100', '2017-04-12 11:34:19');
+INSERT INTO `rn_credit_card_option_config` VALUES ('773', '284', '31-45', '80', '2017-04-12 11:34:19');
+INSERT INTO `rn_credit_card_option_config` VALUES ('774', '285', '18-22', '60', '2017-04-12 11:34:19');
+INSERT INTO `rn_credit_card_option_config` VALUES ('775', '285', '23-30', '100', '2017-04-12 11:34:19');
+INSERT INTO `rn_credit_card_option_config` VALUES ('776', '285', '31-45', '80', '2017-04-12 11:34:19');
+INSERT INTO `rn_credit_card_option_config` VALUES ('777', '286', '18-22', '60', '2017-04-12 11:34:19');
+INSERT INTO `rn_credit_card_option_config` VALUES ('778', '286', '23-30', '100', '2017-04-12 11:34:19');
+INSERT INTO `rn_credit_card_option_config` VALUES ('779', '286', '31-45', '80', '2017-04-12 11:34:19');
+INSERT INTO `rn_credit_card_option_config` VALUES ('780', '287', '18-22', '60', '2017-04-12 11:34:19');
+INSERT INTO `rn_credit_card_option_config` VALUES ('781', '287', '23-30', '100', '2017-04-12 11:34:19');
+INSERT INTO `rn_credit_card_option_config` VALUES ('782', '287', '31-45', '80', '2017-04-12 11:34:19');
+INSERT INTO `rn_credit_card_option_config` VALUES ('783', '288', '18-22', '60', '2017-04-12 11:34:19');
+INSERT INTO `rn_credit_card_option_config` VALUES ('784', '288', '23-30', '100', '2017-04-12 11:34:19');
+INSERT INTO `rn_credit_card_option_config` VALUES ('785', '288', '31-45', '80', '2017-04-12 11:34:19');
+INSERT INTO `rn_credit_card_option_config` VALUES ('786', '289', '汉族', '100', '2017-04-12 11:34:19');
+INSERT INTO `rn_credit_card_option_config` VALUES ('787', '289', '少数民族', '60', '2017-04-12 11:34:19');
+INSERT INTO `rn_credit_card_option_config` VALUES ('788', '290', '一线', '100', '2017-04-12 11:34:19');
+INSERT INTO `rn_credit_card_option_config` VALUES ('789', '290', '二线', '90', '2017-04-12 11:34:19');
+INSERT INTO `rn_credit_card_option_config` VALUES ('790', '290', '三线', '80', '2017-04-12 11:34:19');
+INSERT INTO `rn_credit_card_option_config` VALUES ('791', '290', '四线', '70', '2017-04-12 11:34:19');
+INSERT INTO `rn_credit_card_option_config` VALUES ('792', '290', '其他', '60', '2017-04-12 11:34:19');
+INSERT INTO `rn_credit_card_option_config` VALUES ('793', '291', '0-30', '60', '2017-04-12 11:34:19');
+INSERT INTO `rn_credit_card_option_config` VALUES ('794', '291', '31-60', '80', '2017-04-12 11:34:19');
+INSERT INTO `rn_credit_card_option_config` VALUES ('795', '291', '61-100', '100', '2017-04-12 11:34:19');
+INSERT INTO `rn_credit_card_option_config` VALUES ('796', '292', '0-100', '80', '2017-04-12 11:34:19');
+INSERT INTO `rn_credit_card_option_config` VALUES ('797', '292', '100-500', '100', '2017-04-12 11:34:19');
+INSERT INTO `rn_credit_card_option_config` VALUES ('798', '293', '0-100', '100', '2017-04-12 11:34:19');
+INSERT INTO `rn_credit_card_option_config` VALUES ('799', '293', '0-0', '100', '2017-04-12 11:34:19');
+INSERT INTO `rn_credit_card_option_config` VALUES ('800', '294', '统招', '100', '2017-04-12 11:34:19');
+INSERT INTO `rn_credit_card_option_config` VALUES ('801', '294', '非统招', '100', '2017-04-12 11:34:19');
+INSERT INTO `rn_credit_card_option_config` VALUES ('802', '295', '18-22', '60', '2017-04-12 11:38:31');
+INSERT INTO `rn_credit_card_option_config` VALUES ('803', '295', '23-30', '99', '2017-04-12 11:38:31');
+INSERT INTO `rn_credit_card_option_config` VALUES ('804', '295', '31-45', '80', '2017-04-12 11:38:31');
+INSERT INTO `rn_credit_card_option_config` VALUES ('805', '296', '天津', '60', '2017-04-12 11:38:31');
+INSERT INTO `rn_credit_card_option_config` VALUES ('806', '296', '河北', '100', '2017-04-12 11:38:31');
+INSERT INTO `rn_credit_card_option_config` VALUES ('807', '296', '唐山', '80', '2017-04-12 11:38:31');
+INSERT INTO `rn_credit_card_option_config` VALUES ('808', '297', '0-10000', '99', '2017-04-12 11:38:31');
+INSERT INTO `rn_credit_card_option_config` VALUES ('809', '298', '18-22', '60', '2017-04-12 11:38:31');
+INSERT INTO `rn_credit_card_option_config` VALUES ('810', '298', '23-30', '100', '2017-04-12 11:38:31');
+INSERT INTO `rn_credit_card_option_config` VALUES ('811', '298', '31-45', '80', '2017-04-12 11:38:31');
+INSERT INTO `rn_credit_card_option_config` VALUES ('812', '299', '18-22', '60', '2017-04-12 11:38:31');
+INSERT INTO `rn_credit_card_option_config` VALUES ('813', '299', '23-30', '100', '2017-04-12 11:38:31');
+INSERT INTO `rn_credit_card_option_config` VALUES ('814', '299', '31-45', '80', '2017-04-12 11:38:31');
+INSERT INTO `rn_credit_card_option_config` VALUES ('815', '300', '18-22', '60', '2017-04-12 11:38:31');
+INSERT INTO `rn_credit_card_option_config` VALUES ('816', '300', '23-30', '100', '2017-04-12 11:38:31');
+INSERT INTO `rn_credit_card_option_config` VALUES ('817', '300', '31-45', '80', '2017-04-12 11:38:31');
+INSERT INTO `rn_credit_card_option_config` VALUES ('818', '301', '18-22', '60', '2017-04-12 11:38:31');
+INSERT INTO `rn_credit_card_option_config` VALUES ('819', '301', '23-30', '100', '2017-04-12 11:38:31');
+INSERT INTO `rn_credit_card_option_config` VALUES ('820', '301', '31-45', '80', '2017-04-12 11:38:31');
+INSERT INTO `rn_credit_card_option_config` VALUES ('821', '302', '18-22', '60', '2017-04-12 11:38:31');
+INSERT INTO `rn_credit_card_option_config` VALUES ('822', '302', '23-30', '100', '2017-04-12 11:38:31');
+INSERT INTO `rn_credit_card_option_config` VALUES ('823', '302', '31-45', '80', '2017-04-12 11:38:31');
+INSERT INTO `rn_credit_card_option_config` VALUES ('824', '303', '汉族', '100', '2017-04-12 11:38:31');
+INSERT INTO `rn_credit_card_option_config` VALUES ('825', '303', '少数民族', '60', '2017-04-12 11:38:31');
+INSERT INTO `rn_credit_card_option_config` VALUES ('826', '304', '一线', '100', '2017-04-12 11:38:31');
+INSERT INTO `rn_credit_card_option_config` VALUES ('827', '304', '二线', '90', '2017-04-12 11:38:31');
+INSERT INTO `rn_credit_card_option_config` VALUES ('828', '304', '三线', '80', '2017-04-12 11:38:31');
+INSERT INTO `rn_credit_card_option_config` VALUES ('829', '304', '四线', '70', '2017-04-12 11:38:31');
+INSERT INTO `rn_credit_card_option_config` VALUES ('830', '304', '其他', '60', '2017-04-12 11:38:31');
+INSERT INTO `rn_credit_card_option_config` VALUES ('831', '305', '0-30', '60', '2017-04-12 11:38:31');
+INSERT INTO `rn_credit_card_option_config` VALUES ('832', '305', '31-60', '80', '2017-04-12 11:38:31');
+INSERT INTO `rn_credit_card_option_config` VALUES ('833', '305', '61-100', '100', '2017-04-12 11:38:31');
+INSERT INTO `rn_credit_card_option_config` VALUES ('834', '306', '0-100', '80', '2017-04-12 11:38:31');
+INSERT INTO `rn_credit_card_option_config` VALUES ('835', '306', '100-500', '100', '2017-04-12 11:38:31');
+INSERT INTO `rn_credit_card_option_config` VALUES ('836', '307', '0-100', '100', '2017-04-12 11:38:31');
+INSERT INTO `rn_credit_card_option_config` VALUES ('837', '307', '0-0', '100', '2017-04-12 11:38:31');
+INSERT INTO `rn_credit_card_option_config` VALUES ('838', '308', '统招', '100', '2017-04-12 11:38:31');
+INSERT INTO `rn_credit_card_option_config` VALUES ('839', '308', '非统招', '100', '2017-04-12 11:38:31');
+INSERT INTO `rn_credit_card_option_config` VALUES ('840', '309', '18-22', '60', '2017-04-12 11:42:10');
+INSERT INTO `rn_credit_card_option_config` VALUES ('841', '309', '23-30', '99', '2017-04-12 11:42:10');
+INSERT INTO `rn_credit_card_option_config` VALUES ('842', '309', '31-45', '80', '2017-04-12 11:42:10');
+INSERT INTO `rn_credit_card_option_config` VALUES ('843', '310', '天津', '60', '2017-04-12 11:42:10');
+INSERT INTO `rn_credit_card_option_config` VALUES ('844', '310', '河北', '100', '2017-04-12 11:42:10');
+INSERT INTO `rn_credit_card_option_config` VALUES ('845', '310', '唐山', '80', '2017-04-12 11:42:10');
+INSERT INTO `rn_credit_card_option_config` VALUES ('846', '311', '0-10000', '99', '2017-04-12 11:42:10');
+INSERT INTO `rn_credit_card_option_config` VALUES ('847', '312', '18-22', '60', '2017-04-12 11:42:10');
+INSERT INTO `rn_credit_card_option_config` VALUES ('848', '312', '23-30', '100', '2017-04-12 11:42:10');
+INSERT INTO `rn_credit_card_option_config` VALUES ('849', '312', '31-45', '80', '2017-04-12 11:42:10');
+INSERT INTO `rn_credit_card_option_config` VALUES ('850', '313', '18-22', '60', '2017-04-12 11:42:10');
+INSERT INTO `rn_credit_card_option_config` VALUES ('851', '313', '23-30', '100', '2017-04-12 11:42:10');
+INSERT INTO `rn_credit_card_option_config` VALUES ('852', '313', '31-45', '80', '2017-04-12 11:42:10');
+INSERT INTO `rn_credit_card_option_config` VALUES ('853', '314', '18-22', '60', '2017-04-12 11:42:10');
+INSERT INTO `rn_credit_card_option_config` VALUES ('854', '314', '23-30', '100', '2017-04-12 11:42:10');
+INSERT INTO `rn_credit_card_option_config` VALUES ('855', '314', '31-45', '80', '2017-04-12 11:42:10');
+INSERT INTO `rn_credit_card_option_config` VALUES ('856', '315', '18-22', '60', '2017-04-12 11:42:10');
+INSERT INTO `rn_credit_card_option_config` VALUES ('857', '315', '23-30', '100', '2017-04-12 11:42:10');
+INSERT INTO `rn_credit_card_option_config` VALUES ('858', '315', '31-45', '80', '2017-04-12 11:42:10');
+INSERT INTO `rn_credit_card_option_config` VALUES ('859', '316', '18-22', '60', '2017-04-12 11:42:10');
+INSERT INTO `rn_credit_card_option_config` VALUES ('860', '316', '23-30', '100', '2017-04-12 11:42:10');
+INSERT INTO `rn_credit_card_option_config` VALUES ('861', '316', '31-45', '80', '2017-04-12 11:42:10');
+INSERT INTO `rn_credit_card_option_config` VALUES ('862', '317', '汉族', '100', '2017-04-12 11:42:10');
+INSERT INTO `rn_credit_card_option_config` VALUES ('863', '317', '少数民族', '60', '2017-04-12 11:42:10');
+INSERT INTO `rn_credit_card_option_config` VALUES ('864', '318', '一线', '100', '2017-04-12 11:42:10');
+INSERT INTO `rn_credit_card_option_config` VALUES ('865', '318', '二线', '90', '2017-04-12 11:42:10');
+INSERT INTO `rn_credit_card_option_config` VALUES ('866', '318', '三线', '80', '2017-04-12 11:42:10');
+INSERT INTO `rn_credit_card_option_config` VALUES ('867', '318', '四线', '70', '2017-04-12 11:42:10');
+INSERT INTO `rn_credit_card_option_config` VALUES ('868', '318', '其他', '60', '2017-04-12 11:42:10');
+INSERT INTO `rn_credit_card_option_config` VALUES ('869', '319', '0-30', '60', '2017-04-12 11:42:10');
+INSERT INTO `rn_credit_card_option_config` VALUES ('870', '319', '31-60', '80', '2017-04-12 11:42:10');
+INSERT INTO `rn_credit_card_option_config` VALUES ('871', '319', '61-100', '100', '2017-04-12 11:42:10');
+INSERT INTO `rn_credit_card_option_config` VALUES ('872', '320', '0-100', '80', '2017-04-12 11:42:10');
+INSERT INTO `rn_credit_card_option_config` VALUES ('873', '320', '100-500', '100', '2017-04-12 11:42:10');
+INSERT INTO `rn_credit_card_option_config` VALUES ('874', '321', '0-100', '100', '2017-04-12 11:42:10');
+INSERT INTO `rn_credit_card_option_config` VALUES ('875', '321', '0-0', '100', '2017-04-12 11:42:10');
+INSERT INTO `rn_credit_card_option_config` VALUES ('876', '322', '统招', '100', '2017-04-12 11:42:10');
+INSERT INTO `rn_credit_card_option_config` VALUES ('877', '322', '非统招', '100', '2017-04-12 11:42:10');
+INSERT INTO `rn_credit_card_option_config` VALUES ('878', '323', '18-22', '60', '2017-04-12 11:44:27');
+INSERT INTO `rn_credit_card_option_config` VALUES ('879', '323', '23-30', '99', '2017-04-12 11:44:27');
+INSERT INTO `rn_credit_card_option_config` VALUES ('880', '323', '31-45', '80', '2017-04-12 11:44:27');
+INSERT INTO `rn_credit_card_option_config` VALUES ('881', '324', '天津', '60', '2017-04-12 11:44:27');
+INSERT INTO `rn_credit_card_option_config` VALUES ('882', '324', '河北', '100', '2017-04-12 11:44:27');
+INSERT INTO `rn_credit_card_option_config` VALUES ('883', '324', '唐山', '80', '2017-04-12 11:44:27');
+INSERT INTO `rn_credit_card_option_config` VALUES ('884', '325', '0-10000', '99', '2017-04-12 11:44:27');
+INSERT INTO `rn_credit_card_option_config` VALUES ('885', '326', '18-22', '60', '2017-04-12 11:44:27');
+INSERT INTO `rn_credit_card_option_config` VALUES ('886', '326', '23-30', '100', '2017-04-12 11:44:27');
+INSERT INTO `rn_credit_card_option_config` VALUES ('887', '326', '31-45', '80', '2017-04-12 11:44:27');
+INSERT INTO `rn_credit_card_option_config` VALUES ('888', '327', '18-22', '60', '2017-04-12 11:44:27');
+INSERT INTO `rn_credit_card_option_config` VALUES ('889', '327', '23-30', '100', '2017-04-12 11:44:27');
+INSERT INTO `rn_credit_card_option_config` VALUES ('890', '327', '31-45', '80', '2017-04-12 11:44:27');
+INSERT INTO `rn_credit_card_option_config` VALUES ('891', '328', '18-22', '60', '2017-04-12 11:44:27');
+INSERT INTO `rn_credit_card_option_config` VALUES ('892', '328', '23-30', '100', '2017-04-12 11:44:27');
+INSERT INTO `rn_credit_card_option_config` VALUES ('893', '328', '31-45', '80', '2017-04-12 11:44:27');
+INSERT INTO `rn_credit_card_option_config` VALUES ('894', '329', '18-22', '60', '2017-04-12 11:44:27');
+INSERT INTO `rn_credit_card_option_config` VALUES ('895', '329', '23-30', '100', '2017-04-12 11:44:27');
+INSERT INTO `rn_credit_card_option_config` VALUES ('896', '329', '31-45', '80', '2017-04-12 11:44:27');
+INSERT INTO `rn_credit_card_option_config` VALUES ('897', '330', '18-22', '60', '2017-04-12 11:44:27');
+INSERT INTO `rn_credit_card_option_config` VALUES ('898', '330', '23-30', '100', '2017-04-12 11:44:27');
+INSERT INTO `rn_credit_card_option_config` VALUES ('899', '330', '31-45', '80', '2017-04-12 11:44:27');
+INSERT INTO `rn_credit_card_option_config` VALUES ('900', '331', '汉族', '100', '2017-04-12 11:44:27');
+INSERT INTO `rn_credit_card_option_config` VALUES ('901', '331', '少数民族', '60', '2017-04-12 11:44:27');
+INSERT INTO `rn_credit_card_option_config` VALUES ('902', '332', '一线', '100', '2017-04-12 11:44:27');
+INSERT INTO `rn_credit_card_option_config` VALUES ('903', '332', '二线', '90', '2017-04-12 11:44:27');
+INSERT INTO `rn_credit_card_option_config` VALUES ('904', '332', '三线', '80', '2017-04-12 11:44:27');
+INSERT INTO `rn_credit_card_option_config` VALUES ('905', '332', '四线', '70', '2017-04-12 11:44:27');
+INSERT INTO `rn_credit_card_option_config` VALUES ('906', '332', '其他', '60', '2017-04-12 11:44:27');
+INSERT INTO `rn_credit_card_option_config` VALUES ('907', '333', '0-30', '60', '2017-04-12 11:44:27');
+INSERT INTO `rn_credit_card_option_config` VALUES ('908', '333', '31-60', '80', '2017-04-12 11:44:27');
+INSERT INTO `rn_credit_card_option_config` VALUES ('909', '333', '61-100', '100', '2017-04-12 11:44:27');
+INSERT INTO `rn_credit_card_option_config` VALUES ('910', '334', '0-100', '80', '2017-04-12 11:44:27');
+INSERT INTO `rn_credit_card_option_config` VALUES ('911', '334', '100-500', '100', '2017-04-12 11:44:27');
+INSERT INTO `rn_credit_card_option_config` VALUES ('912', '335', '0-100', '100', '2017-04-12 11:44:27');
+INSERT INTO `rn_credit_card_option_config` VALUES ('913', '335', '0-0', '100', '2017-04-12 11:44:27');
+INSERT INTO `rn_credit_card_option_config` VALUES ('914', '336', '统招', '100', '2017-04-12 11:44:27');
+INSERT INTO `rn_credit_card_option_config` VALUES ('915', '336', '非统招', '100', '2017-04-12 11:44:27');
+
+-- ----------------------------
+-- Table structure for rn_test_feature_data
+-- ----------------------------
+DROP TABLE IF EXISTS `rn_test_feature_data`;
+CREATE TABLE `rn_test_feature_data` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `age` int(11) DEFAULT NULL,
+  `airfare_sum12` float DEFAULT NULL,
+  `application_on` varchar(255) DEFAULT NULL,
+  `application_on_plus` float DEFAULT NULL,
+  `apply_register_duration` int(11) DEFAULT NULL,
+  `car_count` int(11) DEFAULT NULL,
+  `cc_bill_age` int(11) DEFAULT NULL,
+  `college_type` varchar(255) DEFAULT NULL,
+  `collection_id` int(11) DEFAULT NULL,
+  `company_addr_city_level` int(11) DEFAULT NULL,
+  `complete_degree` int(11) DEFAULT NULL,
+  `contacts` int(11) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `creditcard_count` int(11) DEFAULT NULL,
+  `cur_company` varchar(255) DEFAULT NULL,
+  `cur_corp_years` int(11) DEFAULT NULL,
+  `cur_employee_number` int(11) DEFAULT NULL,
+  `cur_work_status` varchar(255) DEFAULT NULL,
+  `dc_bill_age` int(11) DEFAULT NULL,
+  `education_degree_check` varchar(255) DEFAULT NULL,
+  `education_degree_code` varchar(255) DEFAULT NULL,
+  `education_tz` int(11) DEFAULT NULL,
+  `folk` int(11) DEFAULT NULL,
+  `gender` int(11) DEFAULT NULL,
+  `gps_city_code` varchar(255) DEFAULT NULL,
+  `graduate_college` varchar(255) DEFAULT NULL,
+  `graduate_college_check` varchar(255) DEFAULT NULL,
+  `has_negative_info` int(11) DEFAULT NULL,
+  `income_expense_comparison` int(11) DEFAULT NULL,
+  `income_level` varchar(255) DEFAULT NULL,
+  `industry_change_count` int(11) DEFAULT NULL,
+  `is_court_shixin` int(11) DEFAULT NULL,
+  `is_court_zhixing` int(11) DEFAULT NULL,
+  `is_cur_corp_shixin` int(11) DEFAULT NULL,
+  `is_jiuyao_multi_loan` int(11) DEFAULT NULL,
+  `is_loan_agency` int(11) DEFAULT NULL,
+  `is_mobile_black` int(11) DEFAULT NULL,
+  `is_net_black` int(11) DEFAULT NULL,
+  `is_netsky_black` int(11) DEFAULT NULL,
+  `is_netsky_grey` int(11) DEFAULT NULL,
+  `is_netsky_multi_loan` int(11) DEFAULT NULL,
+  `is_organization_g_black` int(11) DEFAULT NULL,
+  `is_pingan_financial_shixin` int(11) DEFAULT NULL,
+  `is_pingan_multi_loan` int(11) DEFAULT NULL,
+  `is_pingan_other_loan` int(11) DEFAULT NULL,
+  `is_pingan_overdue_loan` int(11) DEFAULT NULL,
+  `is_recruitment` int(11) DEFAULT NULL,
+  `is_skyeye_black` int(11) DEFAULT NULL,
+  `is_unclear_loan` int(11) DEFAULT NULL,
+  `jiuyao_multi_loan_denied_count` int(11) DEFAULT NULL,
+  `jiuyao_multi_loan_m2_count` int(11) DEFAULT NULL,
+  `last_industry_code` int(11) DEFAULT NULL,
+  `marital_status` int(11) DEFAULT NULL,
+  `max_flight_area` varchar(255) DEFAULT NULL,
+  `max_flight_class` varchar(255) DEFAULT NULL,
+  `mobile_activeness` float DEFAULT NULL,
+  `mobile_area_city_level` int(11) DEFAULT NULL,
+  `mobile_area_code` varchar(255) DEFAULT NULL,
+  `mobile_identity` int(11) DEFAULT NULL,
+  `mobile_mark` varchar(255) DEFAULT NULL,
+  `mobile_stability` float DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `now_industry_code` int(11) DEFAULT NULL,
+  `now_work_time` int(11) DEFAULT NULL,
+  `now_workplace_code` varchar(255) DEFAULT NULL,
+  `online_time` int(11) DEFAULT NULL,
+  `overload_count` int(11) DEFAULT NULL,
+  `overspeed_count` int(11) DEFAULT NULL,
+  `pingan_max_overdue_days` int(11) DEFAULT NULL,
+  `pingan_multi_loan_count` int(11) DEFAULT NULL,
+  `pingan_other_loan_count` int(11) DEFAULT NULL,
+  `pingan_overdue_corp_count` int(11) DEFAULT NULL,
+  `pingan_overdue_count` int(11) DEFAULT NULL,
+  `register_city_level` varchar(255) DEFAULT NULL,
+  `work_time` int(11) DEFAULT NULL,
+  `test_sample_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKqwgqaw78cpr6h4fr3seyhppr4` (`test_sample_id`),
+  CONSTRAINT `FKqwgqaw78cpr6h4fr3seyhppr4` FOREIGN KEY (`test_sample_id`) REFERENCES `rn_test_sample_attribute` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of rn_test_feature_data
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for rn_test_sample_attribute
+-- ----------------------------
+DROP TABLE IF EXISTS `rn_test_sample_attribute`;
+CREATE TABLE `rn_test_sample_attribute` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `label_name` varchar(255) DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of rn_test_sample_attribute
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for rule
+-- ----------------------------
+DROP TABLE IF EXISTS `rule`;
+CREATE TABLE `rule` (
+  `rule_id` int(11) NOT NULL AUTO_INCREMENT,
+  `create_time` datetime DEFAULT NULL,
+  `quota_count` decimal(12,2) DEFAULT NULL,
+  `quota_type` varchar(255) DEFAULT NULL,
+  `result_code` varchar(255) DEFAULT NULL,
+  `risk_level` varchar(255) DEFAULT NULL,
+  `risk_warning` varchar(255) DEFAULT NULL,
+  `rule_name` varchar(255) DEFAULT NULL,
+  `rule_text` longtext,
+  `rule_type` int(11) DEFAULT NULL,
+  `rule_set_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`rule_id`),
+  KEY `FKje5bsn54mw64jve8cixfl3xh3` (`rule_set_id`),
+  CONSTRAINT `FKje5bsn54mw64jve8cixfl3xh3` FOREIGN KEY (`rule_set_id`) REFERENCES `rule_set` (`rule_set_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of rule
+-- ----------------------------
+INSERT INTO `rule` VALUES ('1', '2017-04-12 11:42:10', '5555.23', '设置额度', null, null, null, '年龄111112222221111', '[{\"connectionType\":\"None\",\"joinType\":\"All\",\"conditions\":[{\"feature\":\"airfareSum12\",\"operator\":\"In\",\"arguments\":[\"11\",\"26\"]}]}]', '2', '1');
+INSERT INTO `rule` VALUES ('2', '2017-04-12 11:44:27', '5555.23', '设置额度', null, null, null, '年龄111112222221111', '[{\"connectionType\":\"None\",\"joinType\":\"All\",\"conditions\":[{\"feature\":\"airfareSum12\",\"operator\":\"In\",\"arguments\":[\"11\",\"26\"]}]}]', '2', '2');
+INSERT INTO `rule` VALUES ('3', '2017-04-12 15:23:08', null, null, null, null, null, null, null, '0', null);
+
+-- ----------------------------
+-- Table structure for rule_set
+-- ----------------------------
+DROP TABLE IF EXISTS `rule_set`;
+CREATE TABLE `rule_set` (
+  `rule_set_id` int(11) NOT NULL AUTO_INCREMENT,
+  `rule_set_distinction` int(11) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `rule_set_name` varchar(255) DEFAULT NULL,
+  `policy_set_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`rule_set_id`),
+  KEY `FKle4tld86x9ptp2tdjklb7gckb` (`policy_set_id`),
+  CONSTRAINT `FKle4tld86x9ptp2tdjklb7gckb` FOREIGN KEY (`policy_set_id`) REFERENCES `policy_set` (`policy_set_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of rule_set
+-- ----------------------------
+INSERT INTO `rule_set` VALUES ('1', '2', '2017-04-12 11:42:10', '规则集222', '1');
+INSERT INTO `rule_set` VALUES ('2', '2', '2017-04-12 11:44:27', '规则集222', '2');
+
+-- ----------------------------
+-- Table structure for work_flow_info
+-- ----------------------------
+DROP TABLE IF EXISTS `work_flow_info`;
+CREATE TABLE `work_flow_info` (
+  `work_flow_info_id` int(11) NOT NULL AUTO_INCREMENT,
+  `work_flow_info_xml` longtext,
+  `policy_set_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`work_flow_info_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of work_flow_info
+-- ----------------------------
+INSERT INTO `work_flow_info` VALUES ('1', '<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<definitions xmlns=\"http://www.omg.org/spec/BPMN/20100524/MODEL\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:g=\"http://www.jboss.org/drools/flow/gpd\" xmlns:bpmndi=\"http://www.omg.org/spec/BPMN/20100524/DI\" xmlns:dc=\"http://www.omg.org/spec/DD/20100524/DC\" xmlns:di=\"http://www.omg.org/spec/DD/20100524/DI\" xmlns:tns=\"http://www.jboss.org/drools\" id=\"Definition\" targetNamespace=\"http://www.jboss.org/drools\" typeLanguage=\"http://www.java.com/javaTypes\" expressionLanguage=\"http://www.mvel.org/2.0\" xsi:schemaLocation=\"http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd\">\n<process processType=\"Private\" isExecutable=\"true\" id=\"Audit\" name=\"决策引擎\" tns:packageName=\"com.digcredit.rules.credit\"><startEvent id=\"_jbpm-unique-0\" name=\"Start\" isInterrupting=\"false\"/><subProcess id=\"_jbpm-unique-1\" name=\"额度模块\"><sequenceFlow id=\"_jbpm-unique-2-_jbpm-unique-3\" sourceRef=\"_jbpm-unique-2\" targetRef=\"_jbpm-unique-3\"/><sequenceFlow id=\"_jbpm-unique-3-_jbpm-unique-4\" sourceRef=\"_jbpm-unique-3\" targetRef=\"_jbpm-unique-4\"/><sequenceFlow id=\"_jbpm-unique-4-_jbpm-unique-5\" sourceRef=\"_jbpm-unique-4\" targetRef=\"_jbpm-unique-5\"/><sequenceFlow id=\"_jbpm-unique-5-jbpm-unique-6\" sourceRef=\"_jbpm-unique-5\" targetRef=\"jbpm-unique-6\"/><sequenceFlow id=\"jbpm-unique-6-_jbpm-unique-7\" sourceRef=\"jbpm-unique-6\" targetRef=\"_jbpm-unique-7\"/><intermediateCatchEvent id=\"_jbpm-unique-4\" name=\"Signal\"><signalEventDefinition signalRef=\"FeaturesReady\"/></intermediateCatchEvent><startEvent id=\"_jbpm-unique-2\" name=\"Start\" isInterrupting=\"false\"/><endEvent id=\"_jbpm-unique-7\" name=\"End\"><terminateEventDefinition/></endEvent><businessRuleTask id=\"jbpm-unique-6\" name=\"规则\" g:ruleFlowGroup=\"规则集222\"><ioSpecification><inputSet/><outputSet/></ioSpecification></businessRuleTask><task id=\"_jbpm-unique-3\" name=\"获取特征\" tns:taskName=\"API\"><ioSpecification><dataInput id=\"_jbpm-unique-3_fieldsInput\" name=\"fields\"/><inputSet><dataInputRefs>_jbpm-unique-3_fieldsInput</dataInputRefs></inputSet><outputSet/></ioSpecification><dataInputAssociation><targetRef>_jbpm-unique-3_fieldsInput</targetRef><assignment><from xsi:type=\"tFormalExpression\">airfareSum12</from><to xsi:type=\"tFormalExpression\">_jbpm-unique-3_fieldsInput</to></assignment></dataInputAssociation></task><task id=\"_jbpm-unique-5\" name=\"构建申请人画像\" tns:taskName=\"Assembly\"><ioSpecification><dataInput id=\"_jbpm-unique-5_modelInput\" name=\"model\"/><inputSet><dataInputRefs>_jbpm-unique-5_modelInput</dataInputRefs></inputSet><outputSet/></ioSpecification><dataInputAssociation><targetRef>_jbpm-unique-5_modelInput</targetRef><assignment><from xsi:type=\"tFormalExpression\">com.digcredit.brms.model.Applicant</from><to xsi:type=\"tFormalExpression\">_jbpm-unique-5_modelInput</to></assignment></dataInputAssociation></task></subProcess><intermediateCatchEvent id=\"_jbpm-unique-10\" name=\"Signal\"><signalEventDefinition signalRef=\"ModuleContinue\"/></intermediateCatchEvent><subProcess id=\"_jbpm-unique-11\" name=\"评分卡模块\"><sequenceFlow id=\"_jbpm-unique-12-_jbpm-unique-13\" sourceRef=\"_jbpm-unique-12\" targetRef=\"_jbpm-unique-13\"/><sequenceFlow id=\"_jbpm-unique-13-_jbpm-unique-14\" sourceRef=\"_jbpm-unique-13\" targetRef=\"_jbpm-unique-14\"/><sequenceFlow id=\"_jbpm-unique-14-_jbpm-unique-15\" sourceRef=\"_jbpm-unique-14\" targetRef=\"_jbpm-unique-15\"/><sequenceFlow id=\"_jbpm-unique-15-jbpm-unique-16\" sourceRef=\"_jbpm-unique-15\" targetRef=\"jbpm-unique-16\"/><sequenceFlow id=\"jbpm-unique-16-_jbpm-unique-17\" sourceRef=\"jbpm-unique-16\" targetRef=\"_jbpm-unique-17\"/><intermediateCatchEvent id=\"_jbpm-unique-14\" name=\"Signal\"><signalEventDefinition signalRef=\"FeaturesReady\"/></intermediateCatchEvent><startEvent id=\"_jbpm-unique-12\" name=\"Start\" isInterrupting=\"false\"/><endEvent id=\"_jbpm-unique-17\" name=\"End\"><terminateEventDefinition/></endEvent><businessRuleTask id=\"jbpm-unique-16\" name=\"规则\" g:ruleFlowGroup=\"身份特征\"><ioSpecification><inputSet/><outputSet/></ioSpecification></businessRuleTask><task id=\"_jbpm-unique-13\" name=\"获取特征\" tns:taskName=\"API\"><ioSpecification><dataInput id=\"_jbpm-unique-13_fieldsInput\" name=\"fields\"/><inputSet><dataInputRefs>_jbpm-unique-13_fieldsInput</dataInputRefs></inputSet><outputSet/></ioSpecification><dataInputAssociation><targetRef>_jbpm-unique-13_fieldsInput</targetRef><assignment><from xsi:type=\"tFormalExpression\">age,airfareSum12,overspeedCount</from><to xsi:type=\"tFormalExpression\">_jbpm-unique-13_fieldsInput</to></assignment></dataInputAssociation></task><task id=\"_jbpm-unique-15\" name=\"构建申请人画像\" tns:taskName=\"Assembly\"><ioSpecification><dataInput id=\"_jbpm-unique-15_modelInput\" name=\"model\"/><inputSet><dataInputRefs>_jbpm-unique-15_modelInput</dataInputRefs></inputSet><outputSet/></ioSpecification><dataInputAssociation><targetRef>_jbpm-unique-15_modelInput</targetRef><assignment><from xsi:type=\"tFormalExpression\">com.digcredit.brms.model.Applicant</from><to xsi:type=\"tFormalExpression\">_jbpm-unique-15_modelInput</to></assignment></dataInputAssociation></task></subProcess><intermediateCatchEvent id=\"_jbpm-unique-20\" name=\"Signal\"><signalEventDefinition signalRef=\"ModuleContinue\"/></intermediateCatchEvent><subProcess id=\"_jbpm-unique-21\" name=\"评分卡模块\"><sequenceFlow id=\"_jbpm-unique-22-_jbpm-unique-23\" sourceRef=\"_jbpm-unique-22\" targetRef=\"_jbpm-unique-23\"/><sequenceFlow id=\"_jbpm-unique-23-_jbpm-unique-24\" sourceRef=\"_jbpm-unique-23\" targetRef=\"_jbpm-unique-24\"/><sequenceFlow id=\"_jbpm-unique-24-_jbpm-unique-25\" sourceRef=\"_jbpm-unique-24\" targetRef=\"_jbpm-unique-25\"/><sequenceFlow id=\"_jbpm-unique-25-jbpm-unique-26\" sourceRef=\"_jbpm-unique-25\" targetRef=\"jbpm-unique-26\"/><sequenceFlow id=\"jbpm-unique-26-_jbpm-unique-27\" sourceRef=\"jbpm-unique-26\" targetRef=\"_jbpm-unique-27\"/><intermediateCatchEvent id=\"_jbpm-unique-24\" name=\"Signal\"><signalEventDefinition signalRef=\"FeaturesReady\"/></intermediateCatchEvent><startEvent id=\"_jbpm-unique-22\" name=\"Start\" isInterrupting=\"false\"/><endEvent id=\"_jbpm-unique-27\" name=\"End\"><terminateEventDefinition/></endEvent><businessRuleTask id=\"jbpm-unique-26\" name=\"规则\" g:ruleFlowGroup=\"信用历史\"><ioSpecification><inputSet/><outputSet/></ioSpecification></businessRuleTask><task id=\"_jbpm-unique-23\" name=\"获取特征\" tns:taskName=\"API\"><ioSpecification><dataInput id=\"_jbpm-unique-23_fieldsInput\" name=\"fields\"/><inputSet><dataInputRefs>_jbpm-unique-23_fieldsInput</dataInputRefs></inputSet><outputSet/></ioSpecification><dataInputAssociation><targetRef>_jbpm-unique-23_fieldsInput</targetRef><assignment><from xsi:type=\"tFormalExpression\">applyRegisterDuration,carCount,creditcardCount</from><to xsi:type=\"tFormalExpression\">_jbpm-unique-23_fieldsInput</to></assignment></dataInputAssociation></task><task id=\"_jbpm-unique-25\" name=\"构建申请人画像\" tns:taskName=\"Assembly\"><ioSpecification><dataInput id=\"_jbpm-unique-25_modelInput\" name=\"model\"/><inputSet><dataInputRefs>_jbpm-unique-25_modelInput</dataInputRefs></inputSet><outputSet/></ioSpecification><dataInputAssociation><targetRef>_jbpm-unique-25_modelInput</targetRef><assignment><from xsi:type=\"tFormalExpression\">com.digcredit.brms.model.Applicant</from><to xsi:type=\"tFormalExpression\">_jbpm-unique-25_modelInput</to></assignment></dataInputAssociation></task></subProcess><intermediateCatchEvent id=\"_jbpm-unique-30\" name=\"Signal\"><signalEventDefinition signalRef=\"ModuleContinue\"/></intermediateCatchEvent><subProcess id=\"_jbpm-unique-31\" name=\"评分卡模块\"><sequenceFlow id=\"_jbpm-unique-32-_jbpm-unique-33\" sourceRef=\"_jbpm-unique-32\" targetRef=\"_jbpm-unique-33\"/><sequenceFlow id=\"_jbpm-unique-33-_jbpm-unique-34\" sourceRef=\"_jbpm-unique-33\" targetRef=\"_jbpm-unique-34\"/><sequenceFlow id=\"_jbpm-unique-34-_jbpm-unique-35\" sourceRef=\"_jbpm-unique-34\" targetRef=\"_jbpm-unique-35\"/><sequenceFlow id=\"_jbpm-unique-35-jbpm-unique-36\" sourceRef=\"_jbpm-unique-35\" targetRef=\"jbpm-unique-36\"/><sequenceFlow id=\"jbpm-unique-36-_jbpm-unique-37\" sourceRef=\"jbpm-unique-36\" targetRef=\"_jbpm-unique-37\"/><intermediateCatchEvent id=\"_jbpm-unique-34\" name=\"Signal\"><signalEventDefinition signalRef=\"FeaturesReady\"/></intermediateCatchEvent><startEvent id=\"_jbpm-unique-32\" name=\"Start\" isInterrupting=\"false\"/><endEvent id=\"_jbpm-unique-37\" name=\"End\"><terminateEventDefinition/></endEvent><businessRuleTask id=\"jbpm-unique-36\" name=\"规则\" g:ruleFlowGroup=\"履约能力\"><ioSpecification><inputSet/><outputSet/></ioSpecification></businessRuleTask><task id=\"_jbpm-unique-33\" name=\"获取特征\" tns:taskName=\"API\"><ioSpecification><dataInput id=\"_jbpm-unique-33_fieldsInput\" name=\"fields\"/><inputSet><dataInputRefs>_jbpm-unique-33_fieldsInput</dataInputRefs></inputSet><outputSet/></ioSpecification><dataInputAssociation><targetRef>_jbpm-unique-33_fieldsInput</targetRef><assignment><from xsi:type=\"tFormalExpression\">curWorkStatus,ccBillAge</from><to xsi:type=\"tFormalExpression\">_jbpm-unique-33_fieldsInput</to></assignment></dataInputAssociation></task><task id=\"_jbpm-unique-35\" name=\"构建申请人画像\" tns:taskName=\"Assembly\"><ioSpecification><dataInput id=\"_jbpm-unique-35_modelInput\" name=\"model\"/><inputSet><dataInputRefs>_jbpm-unique-35_modelInput</dataInputRefs></inputSet><outputSet/></ioSpecification><dataInputAssociation><targetRef>_jbpm-unique-35_modelInput</targetRef><assignment><from xsi:type=\"tFormalExpression\">com.digcredit.brms.model.Applicant</from><to xsi:type=\"tFormalExpression\">_jbpm-unique-35_modelInput</to></assignment></dataInputAssociation></task></subProcess><intermediateCatchEvent id=\"_jbpm-unique-40\" name=\"Signal\"><signalEventDefinition signalRef=\"ModuleContinue\"/></intermediateCatchEvent><subProcess id=\"_jbpm-unique-41\" name=\"评分卡模块\"><sequenceFlow id=\"_jbpm-unique-42-_jbpm-unique-43\" sourceRef=\"_jbpm-unique-42\" targetRef=\"_jbpm-unique-43\"/><sequenceFlow id=\"_jbpm-unique-43-_jbpm-unique-44\" sourceRef=\"_jbpm-unique-43\" targetRef=\"_jbpm-unique-44\"/><sequenceFlow id=\"_jbpm-unique-44-_jbpm-unique-45\" sourceRef=\"_jbpm-unique-44\" targetRef=\"_jbpm-unique-45\"/><sequenceFlow id=\"_jbpm-unique-45-jbpm-unique-46\" sourceRef=\"_jbpm-unique-45\" targetRef=\"jbpm-unique-46\"/><sequenceFlow id=\"jbpm-unique-46-_jbpm-unique-47\" sourceRef=\"jbpm-unique-46\" targetRef=\"_jbpm-unique-47\"/><intermediateCatchEvent id=\"_jbpm-unique-44\" name=\"Signal\"><signalEventDefinition signalRef=\"FeaturesReady\"/></intermediateCatchEvent><startEvent id=\"_jbpm-unique-42\" name=\"Start\" isInterrupting=\"false\"/><endEvent id=\"_jbpm-unique-47\" name=\"End\"><terminateEventDefinition/></endEvent><businessRuleTask id=\"jbpm-unique-46\" name=\"规则\" g:ruleFlowGroup=\"人脉关系\"><ioSpecification><inputSet/><outputSet/></ioSpecification></businessRuleTask><task id=\"_jbpm-unique-43\" name=\"获取特征\" tns:taskName=\"API\"><ioSpecification><dataInput id=\"_jbpm-unique-43_fieldsInput\" name=\"fields\"/><inputSet><dataInputRefs>_jbpm-unique-43_fieldsInput</dataInputRefs></inputSet><outputSet/></ioSpecification><dataInputAssociation><targetRef>_jbpm-unique-43_fieldsInput</targetRef><assignment><from xsi:type=\"tFormalExpression\">folk,companyAddrCityLevel</from><to xsi:type=\"tFormalExpression\">_jbpm-unique-43_fieldsInput</to></assignment></dataInputAssociation></task><task id=\"_jbpm-unique-45\" name=\"构建申请人画像\" tns:taskName=\"Assembly\"><ioSpecification><dataInput id=\"_jbpm-unique-45_modelInput\" name=\"model\"/><inputSet><dataInputRefs>_jbpm-unique-45_modelInput</dataInputRefs></inputSet><outputSet/></ioSpecification><dataInputAssociation><targetRef>_jbpm-unique-45_modelInput</targetRef><assignment><from xsi:type=\"tFormalExpression\">com.digcredit.brms.model.Applicant</from><to xsi:type=\"tFormalExpression\">_jbpm-unique-45_modelInput</to></assignment></dataInputAssociation></task></subProcess><intermediateCatchEvent id=\"_jbpm-unique-50\" name=\"Signal\"><signalEventDefinition signalRef=\"ModuleContinue\"/></intermediateCatchEvent><subProcess id=\"_jbpm-unique-51\" name=\"评分卡模块\"><sequenceFlow id=\"_jbpm-unique-52-_jbpm-unique-53\" sourceRef=\"_jbpm-unique-52\" targetRef=\"_jbpm-unique-53\"/><sequenceFlow id=\"_jbpm-unique-53-_jbpm-unique-54\" sourceRef=\"_jbpm-unique-53\" targetRef=\"_jbpm-unique-54\"/><sequenceFlow id=\"_jbpm-unique-54-_jbpm-unique-55\" sourceRef=\"_jbpm-unique-54\" targetRef=\"_jbpm-unique-55\"/><sequenceFlow id=\"_jbpm-unique-55-jbpm-unique-56\" sourceRef=\"_jbpm-unique-55\" targetRef=\"jbpm-unique-56\"/><sequenceFlow id=\"jbpm-unique-56-_jbpm-unique-57\" sourceRef=\"jbpm-unique-56\" targetRef=\"_jbpm-unique-57\"/><intermediateCatchEvent id=\"_jbpm-unique-54\" name=\"Signal\"><signalEventDefinition signalRef=\"FeaturesReady\"/></intermediateCatchEvent><startEvent id=\"_jbpm-unique-52\" name=\"Start\" isInterrupting=\"false\"/><endEvent id=\"_jbpm-unique-57\" name=\"End\"><terminateEventDefinition/></endEvent><businessRuleTask id=\"jbpm-unique-56\" name=\"规则\" g:ruleFlowGroup=\"行为偏好\"><ioSpecification><inputSet/><outputSet/></ioSpecification></businessRuleTask><task id=\"_jbpm-unique-53\" name=\"获取特征\" tns:taskName=\"API\"><ioSpecification><dataInput id=\"_jbpm-unique-53_fieldsInput\" name=\"fields\"/><inputSet><dataInputRefs>_jbpm-unique-53_fieldsInput</dataInputRefs></inputSet><outputSet/></ioSpecification><dataInputAssociation><targetRef>_jbpm-unique-53_fieldsInput</targetRef><assignment><from xsi:type=\"tFormalExpression\">completeDegree,contacts</from><to xsi:type=\"tFormalExpression\">_jbpm-unique-53_fieldsInput</to></assignment></dataInputAssociation></task><task id=\"_jbpm-unique-55\" name=\"构建申请人画像\" tns:taskName=\"Assembly\"><ioSpecification><dataInput id=\"_jbpm-unique-55_modelInput\" name=\"model\"/><inputSet><dataInputRefs>_jbpm-unique-55_modelInput</dataInputRefs></inputSet><outputSet/></ioSpecification><dataInputAssociation><targetRef>_jbpm-unique-55_modelInput</targetRef><assignment><from xsi:type=\"tFormalExpression\">com.digcredit.brms.model.Applicant</from><to xsi:type=\"tFormalExpression\">_jbpm-unique-55_modelInput</to></assignment></dataInputAssociation></task></subProcess><intermediateCatchEvent id=\"_jbpm-unique-60\" name=\"Signal\"><signalEventDefinition signalRef=\"ModuleContinue\"/></intermediateCatchEvent><subProcess id=\"_jbpm-unique-61\" name=\"评分卡模块\"><sequenceFlow id=\"_jbpm-unique-62-_jbpm-unique-63\" sourceRef=\"_jbpm-unique-62\" targetRef=\"_jbpm-unique-63\"/><sequenceFlow id=\"_jbpm-unique-63-_jbpm-unique-64\" sourceRef=\"_jbpm-unique-63\" targetRef=\"_jbpm-unique-64\"/><sequenceFlow id=\"_jbpm-unique-64-_jbpm-unique-65\" sourceRef=\"_jbpm-unique-64\" targetRef=\"_jbpm-unique-65\"/><sequenceFlow id=\"_jbpm-unique-65-jbpm-unique-66\" sourceRef=\"_jbpm-unique-65\" targetRef=\"jbpm-unique-66\"/><sequenceFlow id=\"jbpm-unique-66-_jbpm-unique-67\" sourceRef=\"jbpm-unique-66\" targetRef=\"_jbpm-unique-67\"/><intermediateCatchEvent id=\"_jbpm-unique-64\" name=\"Signal\"><signalEventDefinition signalRef=\"FeaturesReady\"/></intermediateCatchEvent><startEvent id=\"_jbpm-unique-62\" name=\"Start\" isInterrupting=\"false\"/><endEvent id=\"_jbpm-unique-67\" name=\"End\"><terminateEventDefinition/></endEvent><businessRuleTask id=\"jbpm-unique-66\" name=\"规则\" g:ruleFlowGroup=\"审核模块1\"><ioSpecification><inputSet/><outputSet/></ioSpecification></businessRuleTask><task id=\"_jbpm-unique-63\" name=\"获取特征\" tns:taskName=\"API\"><ioSpecification><dataInput id=\"_jbpm-unique-63_fieldsInput\" name=\"fields\"/><inputSet><dataInputRefs>_jbpm-unique-63_fieldsInput</dataInputRefs></inputSet><outputSet/></ioSpecification><dataInputAssociation><targetRef>_jbpm-unique-63_fieldsInput</targetRef><assignment><from xsi:type=\"tFormalExpression\">curCorpYears,educationDegreeCheck</from><to xsi:type=\"tFormalExpression\">_jbpm-unique-63_fieldsInput</to></assignment></dataInputAssociation></task><task id=\"_jbpm-unique-65\" name=\"构建申请人画像\" tns:taskName=\"Assembly\"><ioSpecification><dataInput id=\"_jbpm-unique-65_modelInput\" name=\"model\"/><inputSet><dataInputRefs>_jbpm-unique-65_modelInput</dataInputRefs></inputSet><outputSet/></ioSpecification><dataInputAssociation><targetRef>_jbpm-unique-65_modelInput</targetRef><assignment><from xsi:type=\"tFormalExpression\">com.digcredit.brms.model.Applicant</from><to xsi:type=\"tFormalExpression\">_jbpm-unique-65_modelInput</to></assignment></dataInputAssociation></task></subProcess><intermediateCatchEvent id=\"_jbpm-unique-70\" name=\"Signal\"><signalEventDefinition signalRef=\"ModuleContinue\"/></intermediateCatchEvent><subProcess id=\"_jbpm-unique-71\" name=\"评分卡模块\"><sequenceFlow id=\"_jbpm-unique-72-_jbpm-unique-73\" sourceRef=\"_jbpm-unique-72\" targetRef=\"_jbpm-unique-73\"/><sequenceFlow id=\"_jbpm-unique-73-_jbpm-unique-74\" sourceRef=\"_jbpm-unique-73\" targetRef=\"_jbpm-unique-74\"/><sequenceFlow id=\"_jbpm-unique-74-_jbpm-unique-75\" sourceRef=\"_jbpm-unique-74\" targetRef=\"_jbpm-unique-75\"/><sequenceFlow id=\"_jbpm-unique-75-jbpm-unique-76\" sourceRef=\"_jbpm-unique-75\" targetRef=\"jbpm-unique-76\"/><sequenceFlow id=\"jbpm-unique-76-_jbpm-unique-77\" sourceRef=\"jbpm-unique-76\" targetRef=\"_jbpm-unique-77\"/><intermediateCatchEvent id=\"_jbpm-unique-74\" name=\"Signal\"><signalEventDefinition signalRef=\"FeaturesReady\"/></intermediateCatchEvent><startEvent id=\"_jbpm-unique-72\" name=\"Start\" isInterrupting=\"false\"/><endEvent id=\"_jbpm-unique-77\" name=\"End\"><terminateEventDefinition/></endEvent><businessRuleTask id=\"jbpm-unique-76\" name=\"规则\" g:ruleFlowGroup=\"身份特征\"><ioSpecification><inputSet/><outputSet/></ioSpecification></businessRuleTask><task id=\"_jbpm-unique-73\" name=\"获取特征\" tns:taskName=\"API\"><ioSpecification><dataInput id=\"_jbpm-unique-73_fieldsInput\" name=\"fields\"/><inputSet><dataInputRefs>_jbpm-unique-73_fieldsInput</dataInputRefs></inputSet><outputSet/></ioSpecification><dataInputAssociation><targetRef>_jbpm-unique-73_fieldsInput</targetRef><assignment><from xsi:type=\"tFormalExpression\">age,airfareSum12,overspeedCount</from><to xsi:type=\"tFormalExpression\">_jbpm-unique-73_fieldsInput</to></assignment></dataInputAssociation></task><task id=\"_jbpm-unique-75\" name=\"构建申请人画像\" tns:taskName=\"Assembly\"><ioSpecification><dataInput id=\"_jbpm-unique-75_modelInput\" name=\"model\"/><inputSet><dataInputRefs>_jbpm-unique-75_modelInput</dataInputRefs></inputSet><outputSet/></ioSpecification><dataInputAssociation><targetRef>_jbpm-unique-75_modelInput</targetRef><assignment><from xsi:type=\"tFormalExpression\">com.digcredit.brms.model.Applicant</from><to xsi:type=\"tFormalExpression\">_jbpm-unique-75_modelInput</to></assignment></dataInputAssociation></task></subProcess><intermediateCatchEvent id=\"_jbpm-unique-80\" name=\"Signal\"><signalEventDefinition signalRef=\"ModuleContinue\"/></intermediateCatchEvent><subProcess id=\"_jbpm-unique-81\" name=\"评分卡模块\"><sequenceFlow id=\"_jbpm-unique-82-_jbpm-unique-83\" sourceRef=\"_jbpm-unique-82\" targetRef=\"_jbpm-unique-83\"/><sequenceFlow id=\"_jbpm-unique-83-_jbpm-unique-84\" sourceRef=\"_jbpm-unique-83\" targetRef=\"_jbpm-unique-84\"/><sequenceFlow id=\"_jbpm-unique-84-_jbpm-unique-85\" sourceRef=\"_jbpm-unique-84\" targetRef=\"_jbpm-unique-85\"/><sequenceFlow id=\"_jbpm-unique-85-jbpm-unique-86\" sourceRef=\"_jbpm-unique-85\" targetRef=\"jbpm-unique-86\"/><sequenceFlow id=\"jbpm-unique-86-_jbpm-unique-87\" sourceRef=\"jbpm-unique-86\" targetRef=\"_jbpm-unique-87\"/><intermediateCatchEvent id=\"_jbpm-unique-84\" name=\"Signal\"><signalEventDefinition signalRef=\"FeaturesReady\"/></intermediateCatchEvent><startEvent id=\"_jbpm-unique-82\" name=\"Start\" isInterrupting=\"false\"/><endEvent id=\"_jbpm-unique-87\" name=\"End\"><terminateEventDefinition/></endEvent><businessRuleTask id=\"jbpm-unique-86\" name=\"规则\" g:ruleFlowGroup=\"信用历史\"><ioSpecification><inputSet/><outputSet/></ioSpecification></businessRuleTask><task id=\"_jbpm-unique-83\" name=\"获取特征\" tns:taskName=\"API\"><ioSpecification><dataInput id=\"_jbpm-unique-83_fieldsInput\" name=\"fields\"/><inputSet><dataInputRefs>_jbpm-unique-83_fieldsInput</dataInputRefs></inputSet><outputSet/></ioSpecification><dataInputAssociation><targetRef>_jbpm-unique-83_fieldsInput</targetRef><assignment><from xsi:type=\"tFormalExpression\">applyRegisterDuration,carCount,creditcardCount</from><to xsi:type=\"tFormalExpression\">_jbpm-unique-83_fieldsInput</to></assignment></dataInputAssociation></task><task id=\"_jbpm-unique-85\" name=\"构建申请人画像\" tns:taskName=\"Assembly\"><ioSpecification><dataInput id=\"_jbpm-unique-85_modelInput\" name=\"model\"/><inputSet><dataInputRefs>_jbpm-unique-85_modelInput</dataInputRefs></inputSet><outputSet/></ioSpecification><dataInputAssociation><targetRef>_jbpm-unique-85_modelInput</targetRef><assignment><from xsi:type=\"tFormalExpression\">com.digcredit.brms.model.Applicant</from><to xsi:type=\"tFormalExpression\">_jbpm-unique-85_modelInput</to></assignment></dataInputAssociation></task></subProcess><intermediateCatchEvent id=\"_jbpm-unique-90\" name=\"Signal\"><signalEventDefinition signalRef=\"ModuleContinue\"/></intermediateCatchEvent><subProcess id=\"_jbpm-unique-91\" name=\"评分卡模块\"><sequenceFlow id=\"_jbpm-unique-92-_jbpm-unique-93\" sourceRef=\"_jbpm-unique-92\" targetRef=\"_jbpm-unique-93\"/><sequenceFlow id=\"_jbpm-unique-93-_jbpm-unique-94\" sourceRef=\"_jbpm-unique-93\" targetRef=\"_jbpm-unique-94\"/><sequenceFlow id=\"_jbpm-unique-94-_jbpm-unique-95\" sourceRef=\"_jbpm-unique-94\" targetRef=\"_jbpm-unique-95\"/><sequenceFlow id=\"_jbpm-unique-95-jbpm-unique-96\" sourceRef=\"_jbpm-unique-95\" targetRef=\"jbpm-unique-96\"/><sequenceFlow id=\"jbpm-unique-96-_jbpm-unique-97\" sourceRef=\"jbpm-unique-96\" targetRef=\"_jbpm-unique-97\"/><intermediateCatchEvent id=\"_jbpm-unique-94\" name=\"Signal\"><signalEventDefinition signalRef=\"FeaturesReady\"/></intermediateCatchEvent><startEvent id=\"_jbpm-unique-92\" name=\"Start\" isInterrupting=\"false\"/><endEvent id=\"_jbpm-unique-97\" name=\"End\"><terminateEventDefinition/></endEvent><businessRuleTask id=\"jbpm-unique-96\" name=\"规则\" g:ruleFlowGroup=\"履约能力\"><ioSpecification><inputSet/><outputSet/></ioSpecification></businessRuleTask><task id=\"_jbpm-unique-93\" name=\"获取特征\" tns:taskName=\"API\"><ioSpecification><dataInput id=\"_jbpm-unique-93_fieldsInput\" name=\"fields\"/><inputSet><dataInputRefs>_jbpm-unique-93_fieldsInput</dataInputRefs></inputSet><outputSet/></ioSpecification><dataInputAssociation><targetRef>_jbpm-unique-93_fieldsInput</targetRef><assignment><from xsi:type=\"tFormalExpression\">curWorkStatus,ccBillAge</from><to xsi:type=\"tFormalExpression\">_jbpm-unique-93_fieldsInput</to></assignment></dataInputAssociation></task><task id=\"_jbpm-unique-95\" name=\"构建申请人画像\" tns:taskName=\"Assembly\"><ioSpecification><dataInput id=\"_jbpm-unique-95_modelInput\" name=\"model\"/><inputSet><dataInputRefs>_jbpm-unique-95_modelInput</dataInputRefs></inputSet><outputSet/></ioSpecification><dataInputAssociation><targetRef>_jbpm-unique-95_modelInput</targetRef><assignment><from xsi:type=\"tFormalExpression\">com.digcredit.brms.model.Applicant</from><to xsi:type=\"tFormalExpression\">_jbpm-unique-95_modelInput</to></assignment></dataInputAssociation></task></subProcess><intermediateCatchEvent id=\"_jbpm-unique-100\" name=\"Signal\"><signalEventDefinition signalRef=\"ModuleContinue\"/></intermediateCatchEvent><subProcess id=\"_jbpm-unique-101\" name=\"评分卡模块\"><sequenceFlow id=\"_jbpm-unique-102-_jbpm-unique-103\" sourceRef=\"_jbpm-unique-102\" targetRef=\"_jbpm-unique-103\"/><sequenceFlow id=\"_jbpm-unique-103-_jbpm-unique-104\" sourceRef=\"_jbpm-unique-103\" targetRef=\"_jbpm-unique-104\"/><sequenceFlow id=\"_jbpm-unique-104-_jbpm-unique-105\" sourceRef=\"_jbpm-unique-104\" targetRef=\"_jbpm-unique-105\"/><sequenceFlow id=\"_jbpm-unique-105-jbpm-unique-106\" sourceRef=\"_jbpm-unique-105\" targetRef=\"jbpm-unique-106\"/><sequenceFlow id=\"jbpm-unique-106-_jbpm-unique-107\" sourceRef=\"jbpm-unique-106\" targetRef=\"_jbpm-unique-107\"/><intermediateCatchEvent id=\"_jbpm-unique-104\" name=\"Signal\"><signalEventDefinition signalRef=\"FeaturesReady\"/></intermediateCatchEvent><startEvent id=\"_jbpm-unique-102\" name=\"Start\" isInterrupting=\"false\"/><endEvent id=\"_jbpm-unique-107\" name=\"End\"><terminateEventDefinition/></endEvent><businessRuleTask id=\"jbpm-unique-106\" name=\"规则\" g:ruleFlowGroup=\"人脉关系\"><ioSpecification><inputSet/><outputSet/></ioSpecification></businessRuleTask><task id=\"_jbpm-unique-103\" name=\"获取特征\" tns:taskName=\"API\"><ioSpecification><dataInput id=\"_jbpm-unique-103_fieldsInput\" name=\"fields\"/><inputSet><dataInputRefs>_jbpm-unique-103_fieldsInput</dataInputRefs></inputSet><outputSet/></ioSpecification><dataInputAssociation><targetRef>_jbpm-unique-103_fieldsInput</targetRef><assignment><from xsi:type=\"tFormalExpression\">folk,companyAddrCityLevel</from><to xsi:type=\"tFormalExpression\">_jbpm-unique-103_fieldsInput</to></assignment></dataInputAssociation></task><task id=\"_jbpm-unique-105\" name=\"构建申请人画像\" tns:taskName=\"Assembly\"><ioSpecification><dataInput id=\"_jbpm-unique-105_modelInput\" name=\"model\"/><inputSet><dataInputRefs>_jbpm-unique-105_modelInput</dataInputRefs></inputSet><outputSet/></ioSpecification><dataInputAssociation><targetRef>_jbpm-unique-105_modelInput</targetRef><assignment><from xsi:type=\"tFormalExpression\">com.digcredit.brms.model.Applicant</from><to xsi:type=\"tFormalExpression\">_jbpm-unique-105_modelInput</to></assignment></dataInputAssociation></task></subProcess><intermediateCatchEvent id=\"_jbpm-unique-110\" name=\"Signal\"><signalEventDefinition signalRef=\"ModuleContinue\"/></intermediateCatchEvent><subProcess id=\"_jbpm-unique-111\" name=\"评分卡模块\"><sequenceFlow id=\"_jbpm-unique-112-_jbpm-unique-113\" sourceRef=\"_jbpm-unique-112\" targetRef=\"_jbpm-unique-113\"/><sequenceFlow id=\"_jbpm-unique-113-_jbpm-unique-114\" sourceRef=\"_jbpm-unique-113\" targetRef=\"_jbpm-unique-114\"/><sequenceFlow id=\"_jbpm-unique-114-_jbpm-unique-115\" sourceRef=\"_jbpm-unique-114\" targetRef=\"_jbpm-unique-115\"/><sequenceFlow id=\"_jbpm-unique-115-jbpm-unique-116\" sourceRef=\"_jbpm-unique-115\" targetRef=\"jbpm-unique-116\"/><sequenceFlow id=\"jbpm-unique-116-_jbpm-unique-117\" sourceRef=\"jbpm-unique-116\" targetRef=\"_jbpm-unique-117\"/><intermediateCatchEvent id=\"_jbpm-unique-114\" name=\"Signal\"><signalEventDefinition signalRef=\"FeaturesReady\"/></intermediateCatchEvent><startEvent id=\"_jbpm-unique-112\" name=\"Start\" isInterrupting=\"false\"/><endEvent id=\"_jbpm-unique-117\" name=\"End\"><terminateEventDefinition/></endEvent><businessRuleTask id=\"jbpm-unique-116\" name=\"规则\" g:ruleFlowGroup=\"行为偏好\"><ioSpecification><inputSet/><outputSet/></ioSpecification></businessRuleTask><task id=\"_jbpm-unique-113\" name=\"获取特征\" tns:taskName=\"API\"><ioSpecification><dataInput id=\"_jbpm-unique-113_fieldsInput\" name=\"fields\"/><inputSet><dataInputRefs>_jbpm-unique-113_fieldsInput</dataInputRefs></inputSet><outputSet/></ioSpecification><dataInputAssociation><targetRef>_jbpm-unique-113_fieldsInput</targetRef><assignment><from xsi:type=\"tFormalExpression\">completeDegree,contacts</from><to xsi:type=\"tFormalExpression\">_jbpm-unique-113_fieldsInput</to></assignment></dataInputAssociation></task><task id=\"_jbpm-unique-115\" name=\"构建申请人画像\" tns:taskName=\"Assembly\"><ioSpecification><dataInput id=\"_jbpm-unique-115_modelInput\" name=\"model\"/><inputSet><dataInputRefs>_jbpm-unique-115_modelInput</dataInputRefs></inputSet><outputSet/></ioSpecification><dataInputAssociation><targetRef>_jbpm-unique-115_modelInput</targetRef><assignment><from xsi:type=\"tFormalExpression\">com.digcredit.brms.model.Applicant</from><to xsi:type=\"tFormalExpression\">_jbpm-unique-115_modelInput</to></assignment></dataInputAssociation></task></subProcess><intermediateCatchEvent id=\"_jbpm-unique-120\" name=\"Signal\"><signalEventDefinition signalRef=\"ModuleContinue\"/></intermediateCatchEvent><subProcess id=\"_jbpm-unique-121\" name=\"评分卡模块\"><sequenceFlow id=\"_jbpm-unique-122-_jbpm-unique-123\" sourceRef=\"_jbpm-unique-122\" targetRef=\"_jbpm-unique-123\"/><sequenceFlow id=\"_jbpm-unique-123-_jbpm-unique-124\" sourceRef=\"_jbpm-unique-123\" targetRef=\"_jbpm-unique-124\"/><sequenceFlow id=\"_jbpm-unique-124-_jbpm-unique-125\" sourceRef=\"_jbpm-unique-124\" targetRef=\"_jbpm-unique-125\"/><sequenceFlow id=\"_jbpm-unique-125-jbpm-unique-126\" sourceRef=\"_jbpm-unique-125\" targetRef=\"jbpm-unique-126\"/><sequenceFlow id=\"jbpm-unique-126-_jbpm-unique-127\" sourceRef=\"jbpm-unique-126\" targetRef=\"_jbpm-unique-127\"/><intermediateCatchEvent id=\"_jbpm-unique-124\" name=\"Signal\"><signalEventDefinition signalRef=\"FeaturesReady\"/></intermediateCatchEvent><startEvent id=\"_jbpm-unique-122\" name=\"Start\" isInterrupting=\"false\"/><endEvent id=\"_jbpm-unique-127\" name=\"End\"><terminateEventDefinition/></endEvent><businessRuleTask id=\"jbpm-unique-126\" name=\"规则\" g:ruleFlowGroup=\"审核模块1\"><ioSpecification><inputSet/><outputSet/></ioSpecification></businessRuleTask><task id=\"_jbpm-unique-123\" name=\"获取特征\" tns:taskName=\"API\"><ioSpecification><dataInput id=\"_jbpm-unique-123_fieldsInput\" name=\"fields\"/><inputSet><dataInputRefs>_jbpm-unique-123_fieldsInput</dataInputRefs></inputSet><outputSet/></ioSpecification><dataInputAssociation><targetRef>_jbpm-unique-123_fieldsInput</targetRef><assignment><from xsi:type=\"tFormalExpression\">curCorpYears,educationDegreeCheck</from><to xsi:type=\"tFormalExpression\">_jbpm-unique-123_fieldsInput</to></assignment></dataInputAssociation></task><task id=\"_jbpm-unique-125\" name=\"构建申请人画像\" tns:taskName=\"Assembly\"><ioSpecification><dataInput id=\"_jbpm-unique-125_modelInput\" name=\"model\"/><inputSet><dataInputRefs>_jbpm-unique-125_modelInput</dataInputRefs></inputSet><outputSet/></ioSpecification><dataInputAssociation><targetRef>_jbpm-unique-125_modelInput</targetRef><assignment><from xsi:type=\"tFormalExpression\">com.digcredit.brms.model.Applicant</from><to xsi:type=\"tFormalExpression\">_jbpm-unique-125_modelInput</to></assignment></dataInputAssociation></task></subProcess><endEvent id=\"_jbpm-unique-130\" name=\"FinalEnd\"><terminateEventDefinition/></endEvent><sequenceFlow id=\"_jbpm-unique-0-_jbpm-unique-1\" sourceRef=\"_jbpm-unique-0\" targetRef=\"_jbpm-unique-1\"/><sequenceFlow id=\"_jbpm-unique-1-_jbpm-unique-10\" sourceRef=\"_jbpm-unique-1\" targetRef=\"_jbpm-unique-10\"/><sequenceFlow id=\"_jbpm-unique-10-_jbpm-unique-11\" sourceRef=\"_jbpm-unique-10\" targetRef=\"_jbpm-unique-11\"/><sequenceFlow id=\"_jbpm-unique-11-_jbpm-unique-20\" sourceRef=\"_jbpm-unique-11\" targetRef=\"_jbpm-unique-20\"/><sequenceFlow id=\"_jbpm-unique-20-_jbpm-unique-21\" sourceRef=\"_jbpm-unique-20\" targetRef=\"_jbpm-unique-21\"/><sequenceFlow id=\"_jbpm-unique-21-_jbpm-unique-30\" sourceRef=\"_jbpm-unique-21\" targetRef=\"_jbpm-unique-30\"/><sequenceFlow id=\"_jbpm-unique-30-_jbpm-unique-31\" sourceRef=\"_jbpm-unique-30\" targetRef=\"_jbpm-unique-31\"/><sequenceFlow id=\"_jbpm-unique-31-_jbpm-unique-40\" sourceRef=\"_jbpm-unique-31\" targetRef=\"_jbpm-unique-40\"/><sequenceFlow id=\"_jbpm-unique-40-_jbpm-unique-41\" sourceRef=\"_jbpm-unique-40\" targetRef=\"_jbpm-unique-41\"/><sequenceFlow id=\"_jbpm-unique-41-_jbpm-unique-50\" sourceRef=\"_jbpm-unique-41\" targetRef=\"_jbpm-unique-50\"/><sequenceFlow id=\"_jbpm-unique-50-_jbpm-unique-51\" sourceRef=\"_jbpm-unique-50\" targetRef=\"_jbpm-unique-51\"/><sequenceFlow id=\"_jbpm-unique-51-_jbpm-unique-60\" sourceRef=\"_jbpm-unique-51\" targetRef=\"_jbpm-unique-60\"/><sequenceFlow id=\"_jbpm-unique-60-_jbpm-unique-61\" sourceRef=\"_jbpm-unique-60\" targetRef=\"_jbpm-unique-61\"/><sequenceFlow id=\"_jbpm-unique-61-_jbpm-unique-70\" sourceRef=\"_jbpm-unique-61\" targetRef=\"_jbpm-unique-70\"/><sequenceFlow id=\"_jbpm-unique-70-_jbpm-unique-71\" sourceRef=\"_jbpm-unique-70\" targetRef=\"_jbpm-unique-71\"/><sequenceFlow id=\"_jbpm-unique-71-_jbpm-unique-80\" sourceRef=\"_jbpm-unique-71\" targetRef=\"_jbpm-unique-80\"/><sequenceFlow id=\"_jbpm-unique-80-_jbpm-unique-81\" sourceRef=\"_jbpm-unique-80\" targetRef=\"_jbpm-unique-81\"/><sequenceFlow id=\"_jbpm-unique-81-_jbpm-unique-90\" sourceRef=\"_jbpm-unique-81\" targetRef=\"_jbpm-unique-90\"/><sequenceFlow id=\"_jbpm-unique-90-_jbpm-unique-91\" sourceRef=\"_jbpm-unique-90\" targetRef=\"_jbpm-unique-91\"/><sequenceFlow id=\"_jbpm-unique-91-_jbpm-unique-100\" sourceRef=\"_jbpm-unique-91\" targetRef=\"_jbpm-unique-100\"/><sequenceFlow id=\"_jbpm-unique-100-_jbpm-unique-101\" sourceRef=\"_jbpm-unique-100\" targetRef=\"_jbpm-unique-101\"/><sequenceFlow id=\"_jbpm-unique-101-_jbpm-unique-110\" sourceRef=\"_jbpm-unique-101\" targetRef=\"_jbpm-unique-110\"/><sequenceFlow id=\"_jbpm-unique-110-_jbpm-unique-111\" sourceRef=\"_jbpm-unique-110\" targetRef=\"_jbpm-unique-111\"/><sequenceFlow id=\"_jbpm-unique-111-_jbpm-unique-120\" sourceRef=\"_jbpm-unique-111\" targetRef=\"_jbpm-unique-120\"/><sequenceFlow id=\"_jbpm-unique-120-_jbpm-unique-121\" sourceRef=\"_jbpm-unique-120\" targetRef=\"_jbpm-unique-121\"/><sequenceFlow id=\"_jbpm-unique-121-_jbpm-unique-130\" sourceRef=\"_jbpm-unique-121\" targetRef=\"_jbpm-unique-130\"/></process>\n<bpmndi:BPMNDiagram><bpmndi:BPMNPlane bpmnElement=\"Audit\"><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-0\"><dc:Bounds x=\"600\" y=\"0\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-1\"><dc:Bounds x=\"125\" y=\"150\" width=\"1000\" height=\"200\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-2\"><dc:Bounds x=\"25\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-3\"><dc:Bounds x=\"175\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-4\"><dc:Bounds x=\"375\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-5\"><dc:Bounds x=\"525\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"jbpm-unique-6\"><dc:Bounds x=\"725\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-7\"><dc:Bounds x=\"925\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-2-_jbpm-unique-3\"><di:waypoint x=\"75\" y=\"100\"/><di:waypoint x=\"175\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-3-_jbpm-unique-4\"><di:waypoint x=\"275\" y=\"100\"/><di:waypoint x=\"375\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-4-_jbpm-unique-5\"><di:waypoint x=\"425\" y=\"100\"/><di:waypoint x=\"525\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-5-jbpm-unique-6\"><di:waypoint x=\"625\" y=\"100\"/><di:waypoint x=\"725\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"jbpm-unique-6-_jbpm-unique-7\"><di:waypoint x=\"825\" y=\"100\"/><di:waypoint x=\"925\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-10\"><dc:Bounds x=\"600\" y=\"600\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-11\"><dc:Bounds x=\"125\" y=\"1050\" width=\"1000\" height=\"200\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-12\"><dc:Bounds x=\"25\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-13\"><dc:Bounds x=\"175\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-14\"><dc:Bounds x=\"375\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-15\"><dc:Bounds x=\"525\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"jbpm-unique-16\"><dc:Bounds x=\"725\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-17\"><dc:Bounds x=\"925\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-12-_jbpm-unique-13\"><di:waypoint x=\"75\" y=\"100\"/><di:waypoint x=\"175\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-13-_jbpm-unique-14\"><di:waypoint x=\"275\" y=\"100\"/><di:waypoint x=\"375\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-14-_jbpm-unique-15\"><di:waypoint x=\"425\" y=\"100\"/><di:waypoint x=\"525\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-15-jbpm-unique-16\"><di:waypoint x=\"625\" y=\"100\"/><di:waypoint x=\"725\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"jbpm-unique-16-_jbpm-unique-17\"><di:waypoint x=\"825\" y=\"100\"/><di:waypoint x=\"925\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-20\"><dc:Bounds x=\"600\" y=\"1500\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-21\"><dc:Bounds x=\"125\" y=\"1950\" width=\"1000\" height=\"200\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-22\"><dc:Bounds x=\"25\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-23\"><dc:Bounds x=\"175\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-24\"><dc:Bounds x=\"375\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-25\"><dc:Bounds x=\"525\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"jbpm-unique-26\"><dc:Bounds x=\"725\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-27\"><dc:Bounds x=\"925\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-22-_jbpm-unique-23\"><di:waypoint x=\"75\" y=\"100\"/><di:waypoint x=\"175\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-23-_jbpm-unique-24\"><di:waypoint x=\"275\" y=\"100\"/><di:waypoint x=\"375\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-24-_jbpm-unique-25\"><di:waypoint x=\"425\" y=\"100\"/><di:waypoint x=\"525\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-25-jbpm-unique-26\"><di:waypoint x=\"625\" y=\"100\"/><di:waypoint x=\"725\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"jbpm-unique-26-_jbpm-unique-27\"><di:waypoint x=\"825\" y=\"100\"/><di:waypoint x=\"925\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-30\"><dc:Bounds x=\"600\" y=\"2400\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-31\"><dc:Bounds x=\"125\" y=\"2850\" width=\"1000\" height=\"200\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-32\"><dc:Bounds x=\"25\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-33\"><dc:Bounds x=\"175\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-34\"><dc:Bounds x=\"375\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-35\"><dc:Bounds x=\"525\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"jbpm-unique-36\"><dc:Bounds x=\"725\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-37\"><dc:Bounds x=\"925\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-32-_jbpm-unique-33\"><di:waypoint x=\"75\" y=\"100\"/><di:waypoint x=\"175\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-33-_jbpm-unique-34\"><di:waypoint x=\"275\" y=\"100\"/><di:waypoint x=\"375\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-34-_jbpm-unique-35\"><di:waypoint x=\"425\" y=\"100\"/><di:waypoint x=\"525\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-35-jbpm-unique-36\"><di:waypoint x=\"625\" y=\"100\"/><di:waypoint x=\"725\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"jbpm-unique-36-_jbpm-unique-37\"><di:waypoint x=\"825\" y=\"100\"/><di:waypoint x=\"925\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-40\"><dc:Bounds x=\"600\" y=\"3300\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-41\"><dc:Bounds x=\"125\" y=\"3750\" width=\"1000\" height=\"200\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-42\"><dc:Bounds x=\"25\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-43\"><dc:Bounds x=\"175\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-44\"><dc:Bounds x=\"375\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-45\"><dc:Bounds x=\"525\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"jbpm-unique-46\"><dc:Bounds x=\"725\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-47\"><dc:Bounds x=\"925\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-42-_jbpm-unique-43\"><di:waypoint x=\"75\" y=\"100\"/><di:waypoint x=\"175\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-43-_jbpm-unique-44\"><di:waypoint x=\"275\" y=\"100\"/><di:waypoint x=\"375\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-44-_jbpm-unique-45\"><di:waypoint x=\"425\" y=\"100\"/><di:waypoint x=\"525\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-45-jbpm-unique-46\"><di:waypoint x=\"625\" y=\"100\"/><di:waypoint x=\"725\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"jbpm-unique-46-_jbpm-unique-47\"><di:waypoint x=\"825\" y=\"100\"/><di:waypoint x=\"925\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-50\"><dc:Bounds x=\"600\" y=\"4200\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-51\"><dc:Bounds x=\"125\" y=\"4650\" width=\"1000\" height=\"200\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-52\"><dc:Bounds x=\"25\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-53\"><dc:Bounds x=\"175\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-54\"><dc:Bounds x=\"375\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-55\"><dc:Bounds x=\"525\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"jbpm-unique-56\"><dc:Bounds x=\"725\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-57\"><dc:Bounds x=\"925\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-52-_jbpm-unique-53\"><di:waypoint x=\"75\" y=\"100\"/><di:waypoint x=\"175\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-53-_jbpm-unique-54\"><di:waypoint x=\"275\" y=\"100\"/><di:waypoint x=\"375\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-54-_jbpm-unique-55\"><di:waypoint x=\"425\" y=\"100\"/><di:waypoint x=\"525\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-55-jbpm-unique-56\"><di:waypoint x=\"625\" y=\"100\"/><di:waypoint x=\"725\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"jbpm-unique-56-_jbpm-unique-57\"><di:waypoint x=\"825\" y=\"100\"/><di:waypoint x=\"925\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-60\"><dc:Bounds x=\"600\" y=\"5100\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-61\"><dc:Bounds x=\"125\" y=\"5550\" width=\"1000\" height=\"200\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-62\"><dc:Bounds x=\"25\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-63\"><dc:Bounds x=\"175\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-64\"><dc:Bounds x=\"375\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-65\"><dc:Bounds x=\"525\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"jbpm-unique-66\"><dc:Bounds x=\"725\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-67\"><dc:Bounds x=\"925\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-62-_jbpm-unique-63\"><di:waypoint x=\"75\" y=\"100\"/><di:waypoint x=\"175\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-63-_jbpm-unique-64\"><di:waypoint x=\"275\" y=\"100\"/><di:waypoint x=\"375\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-64-_jbpm-unique-65\"><di:waypoint x=\"425\" y=\"100\"/><di:waypoint x=\"525\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-65-jbpm-unique-66\"><di:waypoint x=\"625\" y=\"100\"/><di:waypoint x=\"725\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"jbpm-unique-66-_jbpm-unique-67\"><di:waypoint x=\"825\" y=\"100\"/><di:waypoint x=\"925\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-70\"><dc:Bounds x=\"600\" y=\"6000\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-71\"><dc:Bounds x=\"125\" y=\"6450\" width=\"1000\" height=\"200\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-72\"><dc:Bounds x=\"25\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-73\"><dc:Bounds x=\"175\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-74\"><dc:Bounds x=\"375\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-75\"><dc:Bounds x=\"525\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"jbpm-unique-76\"><dc:Bounds x=\"725\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-77\"><dc:Bounds x=\"925\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-72-_jbpm-unique-73\"><di:waypoint x=\"75\" y=\"100\"/><di:waypoint x=\"175\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-73-_jbpm-unique-74\"><di:waypoint x=\"275\" y=\"100\"/><di:waypoint x=\"375\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-74-_jbpm-unique-75\"><di:waypoint x=\"425\" y=\"100\"/><di:waypoint x=\"525\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-75-jbpm-unique-76\"><di:waypoint x=\"625\" y=\"100\"/><di:waypoint x=\"725\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"jbpm-unique-76-_jbpm-unique-77\"><di:waypoint x=\"825\" y=\"100\"/><di:waypoint x=\"925\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-80\"><dc:Bounds x=\"600\" y=\"6900\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-81\"><dc:Bounds x=\"125\" y=\"7350\" width=\"1000\" height=\"200\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-82\"><dc:Bounds x=\"25\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-83\"><dc:Bounds x=\"175\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-84\"><dc:Bounds x=\"375\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-85\"><dc:Bounds x=\"525\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"jbpm-unique-86\"><dc:Bounds x=\"725\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-87\"><dc:Bounds x=\"925\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-82-_jbpm-unique-83\"><di:waypoint x=\"75\" y=\"100\"/><di:waypoint x=\"175\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-83-_jbpm-unique-84\"><di:waypoint x=\"275\" y=\"100\"/><di:waypoint x=\"375\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-84-_jbpm-unique-85\"><di:waypoint x=\"425\" y=\"100\"/><di:waypoint x=\"525\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-85-jbpm-unique-86\"><di:waypoint x=\"625\" y=\"100\"/><di:waypoint x=\"725\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"jbpm-unique-86-_jbpm-unique-87\"><di:waypoint x=\"825\" y=\"100\"/><di:waypoint x=\"925\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-90\"><dc:Bounds x=\"600\" y=\"7800\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-91\"><dc:Bounds x=\"125\" y=\"8250\" width=\"1000\" height=\"200\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-92\"><dc:Bounds x=\"25\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-93\"><dc:Bounds x=\"175\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-94\"><dc:Bounds x=\"375\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-95\"><dc:Bounds x=\"525\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"jbpm-unique-96\"><dc:Bounds x=\"725\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-97\"><dc:Bounds x=\"925\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-92-_jbpm-unique-93\"><di:waypoint x=\"75\" y=\"100\"/><di:waypoint x=\"175\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-93-_jbpm-unique-94\"><di:waypoint x=\"275\" y=\"100\"/><di:waypoint x=\"375\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-94-_jbpm-unique-95\"><di:waypoint x=\"425\" y=\"100\"/><di:waypoint x=\"525\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-95-jbpm-unique-96\"><di:waypoint x=\"625\" y=\"100\"/><di:waypoint x=\"725\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"jbpm-unique-96-_jbpm-unique-97\"><di:waypoint x=\"825\" y=\"100\"/><di:waypoint x=\"925\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-100\"><dc:Bounds x=\"600\" y=\"8700\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-101\"><dc:Bounds x=\"125\" y=\"9150\" width=\"1000\" height=\"200\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-102\"><dc:Bounds x=\"25\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-103\"><dc:Bounds x=\"175\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-104\"><dc:Bounds x=\"375\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-105\"><dc:Bounds x=\"525\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"jbpm-unique-106\"><dc:Bounds x=\"725\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-107\"><dc:Bounds x=\"925\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-102-_jbpm-unique-103\"><di:waypoint x=\"75\" y=\"100\"/><di:waypoint x=\"175\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-103-_jbpm-unique-104\"><di:waypoint x=\"275\" y=\"100\"/><di:waypoint x=\"375\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-104-_jbpm-unique-105\"><di:waypoint x=\"425\" y=\"100\"/><di:waypoint x=\"525\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-105-jbpm-unique-106\"><di:waypoint x=\"625\" y=\"100\"/><di:waypoint x=\"725\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"jbpm-unique-106-_jbpm-unique-107\"><di:waypoint x=\"825\" y=\"100\"/><di:waypoint x=\"925\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-110\"><dc:Bounds x=\"600\" y=\"9600\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-111\"><dc:Bounds x=\"125\" y=\"10050\" width=\"1000\" height=\"200\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-112\"><dc:Bounds x=\"25\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-113\"><dc:Bounds x=\"175\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-114\"><dc:Bounds x=\"375\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-115\"><dc:Bounds x=\"525\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"jbpm-unique-116\"><dc:Bounds x=\"725\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-117\"><dc:Bounds x=\"925\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-112-_jbpm-unique-113\"><di:waypoint x=\"75\" y=\"100\"/><di:waypoint x=\"175\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-113-_jbpm-unique-114\"><di:waypoint x=\"275\" y=\"100\"/><di:waypoint x=\"375\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-114-_jbpm-unique-115\"><di:waypoint x=\"425\" y=\"100\"/><di:waypoint x=\"525\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-115-jbpm-unique-116\"><di:waypoint x=\"625\" y=\"100\"/><di:waypoint x=\"725\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"jbpm-unique-116-_jbpm-unique-117\"><di:waypoint x=\"825\" y=\"100\"/><di:waypoint x=\"925\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-120\"><dc:Bounds x=\"600\" y=\"10500\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-121\"><dc:Bounds x=\"125\" y=\"10950\" width=\"1000\" height=\"200\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-122\"><dc:Bounds x=\"25\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-123\"><dc:Bounds x=\"175\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-124\"><dc:Bounds x=\"375\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-125\"><dc:Bounds x=\"525\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"jbpm-unique-126\"><dc:Bounds x=\"725\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-127\"><dc:Bounds x=\"925\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-122-_jbpm-unique-123\"><di:waypoint x=\"75\" y=\"100\"/><di:waypoint x=\"175\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-123-_jbpm-unique-124\"><di:waypoint x=\"275\" y=\"100\"/><di:waypoint x=\"375\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-124-_jbpm-unique-125\"><di:waypoint x=\"425\" y=\"100\"/><di:waypoint x=\"525\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-125-jbpm-unique-126\"><di:waypoint x=\"625\" y=\"100\"/><di:waypoint x=\"725\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"jbpm-unique-126-_jbpm-unique-127\"><di:waypoint x=\"825\" y=\"100\"/><di:waypoint x=\"925\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-130\"><dc:Bounds x=\"600\" y=\"0\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-0-_jbpm-unique-1\"><di:waypoint x=\"625\" y=\"50\"/><di:waypoint x=\"625\" y=\"150\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-1-_jbpm-unique-10\"><di:waypoint x=\"625\" y=\"350\"/><di:waypoint x=\"625\" y=\"450\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-10-_jbpm-unique-11\"><di:waypoint x=\"625\" y=\"950\"/><di:waypoint x=\"625\" y=\"1050\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-11-_jbpm-unique-20\"><di:waypoint x=\"625\" y=\"1250\"/><di:waypoint x=\"625\" y=\"1350\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-20-_jbpm-unique-21\"><di:waypoint x=\"625\" y=\"1850\"/><di:waypoint x=\"625\" y=\"1950\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-21-_jbpm-unique-30\"><di:waypoint x=\"625\" y=\"2150\"/><di:waypoint x=\"625\" y=\"2250\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-30-_jbpm-unique-31\"><di:waypoint x=\"625\" y=\"2750\"/><di:waypoint x=\"625\" y=\"2850\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-31-_jbpm-unique-40\"><di:waypoint x=\"625\" y=\"3050\"/><di:waypoint x=\"625\" y=\"3150\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-40-_jbpm-unique-41\"><di:waypoint x=\"625\" y=\"3650\"/><di:waypoint x=\"625\" y=\"3750\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-41-_jbpm-unique-50\"><di:waypoint x=\"625\" y=\"3950\"/><di:waypoint x=\"625\" y=\"4050\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-50-_jbpm-unique-51\"><di:waypoint x=\"625\" y=\"4550\"/><di:waypoint x=\"625\" y=\"4650\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-51-_jbpm-unique-60\"><di:waypoint x=\"625\" y=\"4850\"/><di:waypoint x=\"625\" y=\"4950\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-60-_jbpm-unique-61\"><di:waypoint x=\"625\" y=\"5450\"/><di:waypoint x=\"625\" y=\"5550\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-61-_jbpm-unique-70\"><di:waypoint x=\"625\" y=\"5750\"/><di:waypoint x=\"625\" y=\"5850\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-70-_jbpm-unique-71\"><di:waypoint x=\"625\" y=\"6350\"/><di:waypoint x=\"625\" y=\"6450\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-71-_jbpm-unique-80\"><di:waypoint x=\"625\" y=\"6650\"/><di:waypoint x=\"625\" y=\"6750\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-80-_jbpm-unique-81\"><di:waypoint x=\"625\" y=\"7250\"/><di:waypoint x=\"625\" y=\"7350\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-81-_jbpm-unique-90\"><di:waypoint x=\"625\" y=\"7550\"/><di:waypoint x=\"625\" y=\"7650\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-90-_jbpm-unique-91\"><di:waypoint x=\"625\" y=\"8150\"/><di:waypoint x=\"625\" y=\"8250\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-91-_jbpm-unique-100\"><di:waypoint x=\"625\" y=\"8450\"/><di:waypoint x=\"625\" y=\"8550\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-100-_jbpm-unique-101\"><di:waypoint x=\"625\" y=\"9050\"/><di:waypoint x=\"625\" y=\"9150\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-101-_jbpm-unique-110\"><di:waypoint x=\"625\" y=\"9350\"/><di:waypoint x=\"625\" y=\"9450\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-110-_jbpm-unique-111\"><di:waypoint x=\"625\" y=\"9950\"/><di:waypoint x=\"625\" y=\"10050\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-111-_jbpm-unique-120\"><di:waypoint x=\"625\" y=\"10250\"/><di:waypoint x=\"625\" y=\"10350\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-120-_jbpm-unique-121\"><di:waypoint x=\"625\" y=\"10850\"/><di:waypoint x=\"625\" y=\"10950\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-121-_jbpm-unique-130\"><di:waypoint x=\"625\" y=\"11150\"/><di:waypoint x=\"625\" y=\"11250\"/></bpmndi:BPMNEdge></bpmndi:BPMNPlane></bpmndi:BPMNDiagram></definitions>', '1');
+INSERT INTO `work_flow_info` VALUES ('2', '<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<definitions xmlns=\"http://www.omg.org/spec/BPMN/20100524/MODEL\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:g=\"http://www.jboss.org/drools/flow/gpd\" xmlns:bpmndi=\"http://www.omg.org/spec/BPMN/20100524/DI\" xmlns:dc=\"http://www.omg.org/spec/DD/20100524/DC\" xmlns:di=\"http://www.omg.org/spec/DD/20100524/DI\" xmlns:tns=\"http://www.jboss.org/drools\" id=\"Definition\" targetNamespace=\"http://www.jboss.org/drools\" typeLanguage=\"http://www.java.com/javaTypes\" expressionLanguage=\"http://www.mvel.org/2.0\" xsi:schemaLocation=\"http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd\">\n<process processType=\"Private\" isExecutable=\"true\" id=\"Audit\" name=\"决策引擎\" tns:packageName=\"com.digcredit.rules.credit\"><startEvent id=\"_jbpm-unique-0\" name=\"Start\" isInterrupting=\"false\"/><subProcess id=\"_jbpm-unique-1\" name=\"额度模块\"><sequenceFlow id=\"_jbpm-unique-2-_jbpm-unique-3\" sourceRef=\"_jbpm-unique-2\" targetRef=\"_jbpm-unique-3\"/><sequenceFlow id=\"_jbpm-unique-3-_jbpm-unique-4\" sourceRef=\"_jbpm-unique-3\" targetRef=\"_jbpm-unique-4\"/><sequenceFlow id=\"_jbpm-unique-4-_jbpm-unique-5\" sourceRef=\"_jbpm-unique-4\" targetRef=\"_jbpm-unique-5\"/><sequenceFlow id=\"_jbpm-unique-5-jbpm-unique-6\" sourceRef=\"_jbpm-unique-5\" targetRef=\"jbpm-unique-6\"/><sequenceFlow id=\"jbpm-unique-6-_jbpm-unique-7\" sourceRef=\"jbpm-unique-6\" targetRef=\"_jbpm-unique-7\"/><intermediateCatchEvent id=\"_jbpm-unique-4\" name=\"Signal\"><signalEventDefinition signalRef=\"FeaturesReady\"/></intermediateCatchEvent><startEvent id=\"_jbpm-unique-2\" name=\"Start\" isInterrupting=\"false\"/><endEvent id=\"_jbpm-unique-7\" name=\"End\"><terminateEventDefinition/></endEvent><businessRuleTask id=\"jbpm-unique-6\" name=\"规则\" g:ruleFlowGroup=\"规则集222\"><ioSpecification><inputSet/><outputSet/></ioSpecification></businessRuleTask><task id=\"_jbpm-unique-3\" name=\"获取特征\" tns:taskName=\"API\"><ioSpecification><dataInput id=\"_jbpm-unique-3_fieldsInput\" name=\"fields\"/><inputSet><dataInputRefs>_jbpm-unique-3_fieldsInput</dataInputRefs></inputSet><outputSet/></ioSpecification><dataInputAssociation><targetRef>_jbpm-unique-3_fieldsInput</targetRef><assignment><from xsi:type=\"tFormalExpression\">airfareSum12</from><to xsi:type=\"tFormalExpression\">_jbpm-unique-3_fieldsInput</to></assignment></dataInputAssociation></task><task id=\"_jbpm-unique-5\" name=\"构建申请人画像\" tns:taskName=\"Assembly\"><ioSpecification><dataInput id=\"_jbpm-unique-5_modelInput\" name=\"model\"/><inputSet><dataInputRefs>_jbpm-unique-5_modelInput</dataInputRefs></inputSet><outputSet/></ioSpecification><dataInputAssociation><targetRef>_jbpm-unique-5_modelInput</targetRef><assignment><from xsi:type=\"tFormalExpression\">com.digcredit.brms.model.Applicant</from><to xsi:type=\"tFormalExpression\">_jbpm-unique-5_modelInput</to></assignment></dataInputAssociation></task></subProcess><intermediateCatchEvent id=\"_jbpm-unique-10\" name=\"Signal\"><signalEventDefinition signalRef=\"ModuleContinue\"/></intermediateCatchEvent><subProcess id=\"_jbpm-unique-11\" name=\"评分卡模块\"><sequenceFlow id=\"_jbpm-unique-12-_jbpm-unique-13\" sourceRef=\"_jbpm-unique-12\" targetRef=\"_jbpm-unique-13\"/><sequenceFlow id=\"_jbpm-unique-13-_jbpm-unique-14\" sourceRef=\"_jbpm-unique-13\" targetRef=\"_jbpm-unique-14\"/><sequenceFlow id=\"_jbpm-unique-14-_jbpm-unique-15\" sourceRef=\"_jbpm-unique-14\" targetRef=\"_jbpm-unique-15\"/><sequenceFlow id=\"_jbpm-unique-15-jbpm-unique-16\" sourceRef=\"_jbpm-unique-15\" targetRef=\"jbpm-unique-16\"/><sequenceFlow id=\"jbpm-unique-16-_jbpm-unique-17\" sourceRef=\"jbpm-unique-16\" targetRef=\"_jbpm-unique-17\"/><intermediateCatchEvent id=\"_jbpm-unique-14\" name=\"Signal\"><signalEventDefinition signalRef=\"FeaturesReady\"/></intermediateCatchEvent><startEvent id=\"_jbpm-unique-12\" name=\"Start\" isInterrupting=\"false\"/><endEvent id=\"_jbpm-unique-17\" name=\"End\"><terminateEventDefinition/></endEvent><businessRuleTask id=\"jbpm-unique-16\" name=\"规则\" g:ruleFlowGroup=\"身份特征\"><ioSpecification><inputSet/><outputSet/></ioSpecification></businessRuleTask><task id=\"_jbpm-unique-13\" name=\"获取特征\" tns:taskName=\"API\"><ioSpecification><dataInput id=\"_jbpm-unique-13_fieldsInput\" name=\"fields\"/><inputSet><dataInputRefs>_jbpm-unique-13_fieldsInput</dataInputRefs></inputSet><outputSet/></ioSpecification><dataInputAssociation><targetRef>_jbpm-unique-13_fieldsInput</targetRef><assignment><from xsi:type=\"tFormalExpression\">age,airfareSum12,overspeedCount</from><to xsi:type=\"tFormalExpression\">_jbpm-unique-13_fieldsInput</to></assignment></dataInputAssociation></task><task id=\"_jbpm-unique-15\" name=\"构建申请人画像\" tns:taskName=\"Assembly\"><ioSpecification><dataInput id=\"_jbpm-unique-15_modelInput\" name=\"model\"/><inputSet><dataInputRefs>_jbpm-unique-15_modelInput</dataInputRefs></inputSet><outputSet/></ioSpecification><dataInputAssociation><targetRef>_jbpm-unique-15_modelInput</targetRef><assignment><from xsi:type=\"tFormalExpression\">com.digcredit.brms.model.Applicant</from><to xsi:type=\"tFormalExpression\">_jbpm-unique-15_modelInput</to></assignment></dataInputAssociation></task></subProcess><intermediateCatchEvent id=\"_jbpm-unique-20\" name=\"Signal\"><signalEventDefinition signalRef=\"ModuleContinue\"/></intermediateCatchEvent><subProcess id=\"_jbpm-unique-21\" name=\"评分卡模块\"><sequenceFlow id=\"_jbpm-unique-22-_jbpm-unique-23\" sourceRef=\"_jbpm-unique-22\" targetRef=\"_jbpm-unique-23\"/><sequenceFlow id=\"_jbpm-unique-23-_jbpm-unique-24\" sourceRef=\"_jbpm-unique-23\" targetRef=\"_jbpm-unique-24\"/><sequenceFlow id=\"_jbpm-unique-24-_jbpm-unique-25\" sourceRef=\"_jbpm-unique-24\" targetRef=\"_jbpm-unique-25\"/><sequenceFlow id=\"_jbpm-unique-25-jbpm-unique-26\" sourceRef=\"_jbpm-unique-25\" targetRef=\"jbpm-unique-26\"/><sequenceFlow id=\"jbpm-unique-26-_jbpm-unique-27\" sourceRef=\"jbpm-unique-26\" targetRef=\"_jbpm-unique-27\"/><intermediateCatchEvent id=\"_jbpm-unique-24\" name=\"Signal\"><signalEventDefinition signalRef=\"FeaturesReady\"/></intermediateCatchEvent><startEvent id=\"_jbpm-unique-22\" name=\"Start\" isInterrupting=\"false\"/><endEvent id=\"_jbpm-unique-27\" name=\"End\"><terminateEventDefinition/></endEvent><businessRuleTask id=\"jbpm-unique-26\" name=\"规则\" g:ruleFlowGroup=\"信用历史\"><ioSpecification><inputSet/><outputSet/></ioSpecification></businessRuleTask><task id=\"_jbpm-unique-23\" name=\"获取特征\" tns:taskName=\"API\"><ioSpecification><dataInput id=\"_jbpm-unique-23_fieldsInput\" name=\"fields\"/><inputSet><dataInputRefs>_jbpm-unique-23_fieldsInput</dataInputRefs></inputSet><outputSet/></ioSpecification><dataInputAssociation><targetRef>_jbpm-unique-23_fieldsInput</targetRef><assignment><from xsi:type=\"tFormalExpression\">applyRegisterDuration,carCount,creditcardCount</from><to xsi:type=\"tFormalExpression\">_jbpm-unique-23_fieldsInput</to></assignment></dataInputAssociation></task><task id=\"_jbpm-unique-25\" name=\"构建申请人画像\" tns:taskName=\"Assembly\"><ioSpecification><dataInput id=\"_jbpm-unique-25_modelInput\" name=\"model\"/><inputSet><dataInputRefs>_jbpm-unique-25_modelInput</dataInputRefs></inputSet><outputSet/></ioSpecification><dataInputAssociation><targetRef>_jbpm-unique-25_modelInput</targetRef><assignment><from xsi:type=\"tFormalExpression\">com.digcredit.brms.model.Applicant</from><to xsi:type=\"tFormalExpression\">_jbpm-unique-25_modelInput</to></assignment></dataInputAssociation></task></subProcess><intermediateCatchEvent id=\"_jbpm-unique-30\" name=\"Signal\"><signalEventDefinition signalRef=\"ModuleContinue\"/></intermediateCatchEvent><subProcess id=\"_jbpm-unique-31\" name=\"评分卡模块\"><sequenceFlow id=\"_jbpm-unique-32-_jbpm-unique-33\" sourceRef=\"_jbpm-unique-32\" targetRef=\"_jbpm-unique-33\"/><sequenceFlow id=\"_jbpm-unique-33-_jbpm-unique-34\" sourceRef=\"_jbpm-unique-33\" targetRef=\"_jbpm-unique-34\"/><sequenceFlow id=\"_jbpm-unique-34-_jbpm-unique-35\" sourceRef=\"_jbpm-unique-34\" targetRef=\"_jbpm-unique-35\"/><sequenceFlow id=\"_jbpm-unique-35-jbpm-unique-36\" sourceRef=\"_jbpm-unique-35\" targetRef=\"jbpm-unique-36\"/><sequenceFlow id=\"jbpm-unique-36-_jbpm-unique-37\" sourceRef=\"jbpm-unique-36\" targetRef=\"_jbpm-unique-37\"/><intermediateCatchEvent id=\"_jbpm-unique-34\" name=\"Signal\"><signalEventDefinition signalRef=\"FeaturesReady\"/></intermediateCatchEvent><startEvent id=\"_jbpm-unique-32\" name=\"Start\" isInterrupting=\"false\"/><endEvent id=\"_jbpm-unique-37\" name=\"End\"><terminateEventDefinition/></endEvent><businessRuleTask id=\"jbpm-unique-36\" name=\"规则\" g:ruleFlowGroup=\"履约能力\"><ioSpecification><inputSet/><outputSet/></ioSpecification></businessRuleTask><task id=\"_jbpm-unique-33\" name=\"获取特征\" tns:taskName=\"API\"><ioSpecification><dataInput id=\"_jbpm-unique-33_fieldsInput\" name=\"fields\"/><inputSet><dataInputRefs>_jbpm-unique-33_fieldsInput</dataInputRefs></inputSet><outputSet/></ioSpecification><dataInputAssociation><targetRef>_jbpm-unique-33_fieldsInput</targetRef><assignment><from xsi:type=\"tFormalExpression\">curWorkStatus,ccBillAge</from><to xsi:type=\"tFormalExpression\">_jbpm-unique-33_fieldsInput</to></assignment></dataInputAssociation></task><task id=\"_jbpm-unique-35\" name=\"构建申请人画像\" tns:taskName=\"Assembly\"><ioSpecification><dataInput id=\"_jbpm-unique-35_modelInput\" name=\"model\"/><inputSet><dataInputRefs>_jbpm-unique-35_modelInput</dataInputRefs></inputSet><outputSet/></ioSpecification><dataInputAssociation><targetRef>_jbpm-unique-35_modelInput</targetRef><assignment><from xsi:type=\"tFormalExpression\">com.digcredit.brms.model.Applicant</from><to xsi:type=\"tFormalExpression\">_jbpm-unique-35_modelInput</to></assignment></dataInputAssociation></task></subProcess><intermediateCatchEvent id=\"_jbpm-unique-40\" name=\"Signal\"><signalEventDefinition signalRef=\"ModuleContinue\"/></intermediateCatchEvent><subProcess id=\"_jbpm-unique-41\" name=\"评分卡模块\"><sequenceFlow id=\"_jbpm-unique-42-_jbpm-unique-43\" sourceRef=\"_jbpm-unique-42\" targetRef=\"_jbpm-unique-43\"/><sequenceFlow id=\"_jbpm-unique-43-_jbpm-unique-44\" sourceRef=\"_jbpm-unique-43\" targetRef=\"_jbpm-unique-44\"/><sequenceFlow id=\"_jbpm-unique-44-_jbpm-unique-45\" sourceRef=\"_jbpm-unique-44\" targetRef=\"_jbpm-unique-45\"/><sequenceFlow id=\"_jbpm-unique-45-jbpm-unique-46\" sourceRef=\"_jbpm-unique-45\" targetRef=\"jbpm-unique-46\"/><sequenceFlow id=\"jbpm-unique-46-_jbpm-unique-47\" sourceRef=\"jbpm-unique-46\" targetRef=\"_jbpm-unique-47\"/><intermediateCatchEvent id=\"_jbpm-unique-44\" name=\"Signal\"><signalEventDefinition signalRef=\"FeaturesReady\"/></intermediateCatchEvent><startEvent id=\"_jbpm-unique-42\" name=\"Start\" isInterrupting=\"false\"/><endEvent id=\"_jbpm-unique-47\" name=\"End\"><terminateEventDefinition/></endEvent><businessRuleTask id=\"jbpm-unique-46\" name=\"规则\" g:ruleFlowGroup=\"人脉关系\"><ioSpecification><inputSet/><outputSet/></ioSpecification></businessRuleTask><task id=\"_jbpm-unique-43\" name=\"获取特征\" tns:taskName=\"API\"><ioSpecification><dataInput id=\"_jbpm-unique-43_fieldsInput\" name=\"fields\"/><inputSet><dataInputRefs>_jbpm-unique-43_fieldsInput</dataInputRefs></inputSet><outputSet/></ioSpecification><dataInputAssociation><targetRef>_jbpm-unique-43_fieldsInput</targetRef><assignment><from xsi:type=\"tFormalExpression\">folk,companyAddrCityLevel</from><to xsi:type=\"tFormalExpression\">_jbpm-unique-43_fieldsInput</to></assignment></dataInputAssociation></task><task id=\"_jbpm-unique-45\" name=\"构建申请人画像\" tns:taskName=\"Assembly\"><ioSpecification><dataInput id=\"_jbpm-unique-45_modelInput\" name=\"model\"/><inputSet><dataInputRefs>_jbpm-unique-45_modelInput</dataInputRefs></inputSet><outputSet/></ioSpecification><dataInputAssociation><targetRef>_jbpm-unique-45_modelInput</targetRef><assignment><from xsi:type=\"tFormalExpression\">com.digcredit.brms.model.Applicant</from><to xsi:type=\"tFormalExpression\">_jbpm-unique-45_modelInput</to></assignment></dataInputAssociation></task></subProcess><intermediateCatchEvent id=\"_jbpm-unique-50\" name=\"Signal\"><signalEventDefinition signalRef=\"ModuleContinue\"/></intermediateCatchEvent><subProcess id=\"_jbpm-unique-51\" name=\"评分卡模块\"><sequenceFlow id=\"_jbpm-unique-52-_jbpm-unique-53\" sourceRef=\"_jbpm-unique-52\" targetRef=\"_jbpm-unique-53\"/><sequenceFlow id=\"_jbpm-unique-53-_jbpm-unique-54\" sourceRef=\"_jbpm-unique-53\" targetRef=\"_jbpm-unique-54\"/><sequenceFlow id=\"_jbpm-unique-54-_jbpm-unique-55\" sourceRef=\"_jbpm-unique-54\" targetRef=\"_jbpm-unique-55\"/><sequenceFlow id=\"_jbpm-unique-55-jbpm-unique-56\" sourceRef=\"_jbpm-unique-55\" targetRef=\"jbpm-unique-56\"/><sequenceFlow id=\"jbpm-unique-56-_jbpm-unique-57\" sourceRef=\"jbpm-unique-56\" targetRef=\"_jbpm-unique-57\"/><intermediateCatchEvent id=\"_jbpm-unique-54\" name=\"Signal\"><signalEventDefinition signalRef=\"FeaturesReady\"/></intermediateCatchEvent><startEvent id=\"_jbpm-unique-52\" name=\"Start\" isInterrupting=\"false\"/><endEvent id=\"_jbpm-unique-57\" name=\"End\"><terminateEventDefinition/></endEvent><businessRuleTask id=\"jbpm-unique-56\" name=\"规则\" g:ruleFlowGroup=\"行为偏好\"><ioSpecification><inputSet/><outputSet/></ioSpecification></businessRuleTask><task id=\"_jbpm-unique-53\" name=\"获取特征\" tns:taskName=\"API\"><ioSpecification><dataInput id=\"_jbpm-unique-53_fieldsInput\" name=\"fields\"/><inputSet><dataInputRefs>_jbpm-unique-53_fieldsInput</dataInputRefs></inputSet><outputSet/></ioSpecification><dataInputAssociation><targetRef>_jbpm-unique-53_fieldsInput</targetRef><assignment><from xsi:type=\"tFormalExpression\">completeDegree,contacts</from><to xsi:type=\"tFormalExpression\">_jbpm-unique-53_fieldsInput</to></assignment></dataInputAssociation></task><task id=\"_jbpm-unique-55\" name=\"构建申请人画像\" tns:taskName=\"Assembly\"><ioSpecification><dataInput id=\"_jbpm-unique-55_modelInput\" name=\"model\"/><inputSet><dataInputRefs>_jbpm-unique-55_modelInput</dataInputRefs></inputSet><outputSet/></ioSpecification><dataInputAssociation><targetRef>_jbpm-unique-55_modelInput</targetRef><assignment><from xsi:type=\"tFormalExpression\">com.digcredit.brms.model.Applicant</from><to xsi:type=\"tFormalExpression\">_jbpm-unique-55_modelInput</to></assignment></dataInputAssociation></task></subProcess><intermediateCatchEvent id=\"_jbpm-unique-60\" name=\"Signal\"><signalEventDefinition signalRef=\"ModuleContinue\"/></intermediateCatchEvent><subProcess id=\"_jbpm-unique-61\" name=\"评分卡模块\"><sequenceFlow id=\"_jbpm-unique-62-_jbpm-unique-63\" sourceRef=\"_jbpm-unique-62\" targetRef=\"_jbpm-unique-63\"/><sequenceFlow id=\"_jbpm-unique-63-_jbpm-unique-64\" sourceRef=\"_jbpm-unique-63\" targetRef=\"_jbpm-unique-64\"/><sequenceFlow id=\"_jbpm-unique-64-_jbpm-unique-65\" sourceRef=\"_jbpm-unique-64\" targetRef=\"_jbpm-unique-65\"/><sequenceFlow id=\"_jbpm-unique-65-jbpm-unique-66\" sourceRef=\"_jbpm-unique-65\" targetRef=\"jbpm-unique-66\"/><sequenceFlow id=\"jbpm-unique-66-_jbpm-unique-67\" sourceRef=\"jbpm-unique-66\" targetRef=\"_jbpm-unique-67\"/><intermediateCatchEvent id=\"_jbpm-unique-64\" name=\"Signal\"><signalEventDefinition signalRef=\"FeaturesReady\"/></intermediateCatchEvent><startEvent id=\"_jbpm-unique-62\" name=\"Start\" isInterrupting=\"false\"/><endEvent id=\"_jbpm-unique-67\" name=\"End\"><terminateEventDefinition/></endEvent><businessRuleTask id=\"jbpm-unique-66\" name=\"规则\" g:ruleFlowGroup=\"审核模块1\"><ioSpecification><inputSet/><outputSet/></ioSpecification></businessRuleTask><task id=\"_jbpm-unique-63\" name=\"获取特征\" tns:taskName=\"API\"><ioSpecification><dataInput id=\"_jbpm-unique-63_fieldsInput\" name=\"fields\"/><inputSet><dataInputRefs>_jbpm-unique-63_fieldsInput</dataInputRefs></inputSet><outputSet/></ioSpecification><dataInputAssociation><targetRef>_jbpm-unique-63_fieldsInput</targetRef><assignment><from xsi:type=\"tFormalExpression\">curCorpYears,educationDegreeCheck</from><to xsi:type=\"tFormalExpression\">_jbpm-unique-63_fieldsInput</to></assignment></dataInputAssociation></task><task id=\"_jbpm-unique-65\" name=\"构建申请人画像\" tns:taskName=\"Assembly\"><ioSpecification><dataInput id=\"_jbpm-unique-65_modelInput\" name=\"model\"/><inputSet><dataInputRefs>_jbpm-unique-65_modelInput</dataInputRefs></inputSet><outputSet/></ioSpecification><dataInputAssociation><targetRef>_jbpm-unique-65_modelInput</targetRef><assignment><from xsi:type=\"tFormalExpression\">com.digcredit.brms.model.Applicant</from><to xsi:type=\"tFormalExpression\">_jbpm-unique-65_modelInput</to></assignment></dataInputAssociation></task></subProcess><intermediateCatchEvent id=\"_jbpm-unique-70\" name=\"Signal\"><signalEventDefinition signalRef=\"ModuleContinue\"/></intermediateCatchEvent><subProcess id=\"_jbpm-unique-71\" name=\"评分卡模块\"><sequenceFlow id=\"_jbpm-unique-72-_jbpm-unique-73\" sourceRef=\"_jbpm-unique-72\" targetRef=\"_jbpm-unique-73\"/><sequenceFlow id=\"_jbpm-unique-73-_jbpm-unique-74\" sourceRef=\"_jbpm-unique-73\" targetRef=\"_jbpm-unique-74\"/><sequenceFlow id=\"_jbpm-unique-74-_jbpm-unique-75\" sourceRef=\"_jbpm-unique-74\" targetRef=\"_jbpm-unique-75\"/><sequenceFlow id=\"_jbpm-unique-75-jbpm-unique-76\" sourceRef=\"_jbpm-unique-75\" targetRef=\"jbpm-unique-76\"/><sequenceFlow id=\"jbpm-unique-76-_jbpm-unique-77\" sourceRef=\"jbpm-unique-76\" targetRef=\"_jbpm-unique-77\"/><intermediateCatchEvent id=\"_jbpm-unique-74\" name=\"Signal\"><signalEventDefinition signalRef=\"FeaturesReady\"/></intermediateCatchEvent><startEvent id=\"_jbpm-unique-72\" name=\"Start\" isInterrupting=\"false\"/><endEvent id=\"_jbpm-unique-77\" name=\"End\"><terminateEventDefinition/></endEvent><businessRuleTask id=\"jbpm-unique-76\" name=\"规则\" g:ruleFlowGroup=\"身份特征\"><ioSpecification><inputSet/><outputSet/></ioSpecification></businessRuleTask><task id=\"_jbpm-unique-73\" name=\"获取特征\" tns:taskName=\"API\"><ioSpecification><dataInput id=\"_jbpm-unique-73_fieldsInput\" name=\"fields\"/><inputSet><dataInputRefs>_jbpm-unique-73_fieldsInput</dataInputRefs></inputSet><outputSet/></ioSpecification><dataInputAssociation><targetRef>_jbpm-unique-73_fieldsInput</targetRef><assignment><from xsi:type=\"tFormalExpression\">age,airfareSum12,overspeedCount</from><to xsi:type=\"tFormalExpression\">_jbpm-unique-73_fieldsInput</to></assignment></dataInputAssociation></task><task id=\"_jbpm-unique-75\" name=\"构建申请人画像\" tns:taskName=\"Assembly\"><ioSpecification><dataInput id=\"_jbpm-unique-75_modelInput\" name=\"model\"/><inputSet><dataInputRefs>_jbpm-unique-75_modelInput</dataInputRefs></inputSet><outputSet/></ioSpecification><dataInputAssociation><targetRef>_jbpm-unique-75_modelInput</targetRef><assignment><from xsi:type=\"tFormalExpression\">com.digcredit.brms.model.Applicant</from><to xsi:type=\"tFormalExpression\">_jbpm-unique-75_modelInput</to></assignment></dataInputAssociation></task></subProcess><intermediateCatchEvent id=\"_jbpm-unique-80\" name=\"Signal\"><signalEventDefinition signalRef=\"ModuleContinue\"/></intermediateCatchEvent><subProcess id=\"_jbpm-unique-81\" name=\"评分卡模块\"><sequenceFlow id=\"_jbpm-unique-82-_jbpm-unique-83\" sourceRef=\"_jbpm-unique-82\" targetRef=\"_jbpm-unique-83\"/><sequenceFlow id=\"_jbpm-unique-83-_jbpm-unique-84\" sourceRef=\"_jbpm-unique-83\" targetRef=\"_jbpm-unique-84\"/><sequenceFlow id=\"_jbpm-unique-84-_jbpm-unique-85\" sourceRef=\"_jbpm-unique-84\" targetRef=\"_jbpm-unique-85\"/><sequenceFlow id=\"_jbpm-unique-85-jbpm-unique-86\" sourceRef=\"_jbpm-unique-85\" targetRef=\"jbpm-unique-86\"/><sequenceFlow id=\"jbpm-unique-86-_jbpm-unique-87\" sourceRef=\"jbpm-unique-86\" targetRef=\"_jbpm-unique-87\"/><intermediateCatchEvent id=\"_jbpm-unique-84\" name=\"Signal\"><signalEventDefinition signalRef=\"FeaturesReady\"/></intermediateCatchEvent><startEvent id=\"_jbpm-unique-82\" name=\"Start\" isInterrupting=\"false\"/><endEvent id=\"_jbpm-unique-87\" name=\"End\"><terminateEventDefinition/></endEvent><businessRuleTask id=\"jbpm-unique-86\" name=\"规则\" g:ruleFlowGroup=\"信用历史\"><ioSpecification><inputSet/><outputSet/></ioSpecification></businessRuleTask><task id=\"_jbpm-unique-83\" name=\"获取特征\" tns:taskName=\"API\"><ioSpecification><dataInput id=\"_jbpm-unique-83_fieldsInput\" name=\"fields\"/><inputSet><dataInputRefs>_jbpm-unique-83_fieldsInput</dataInputRefs></inputSet><outputSet/></ioSpecification><dataInputAssociation><targetRef>_jbpm-unique-83_fieldsInput</targetRef><assignment><from xsi:type=\"tFormalExpression\">applyRegisterDuration,carCount,creditcardCount</from><to xsi:type=\"tFormalExpression\">_jbpm-unique-83_fieldsInput</to></assignment></dataInputAssociation></task><task id=\"_jbpm-unique-85\" name=\"构建申请人画像\" tns:taskName=\"Assembly\"><ioSpecification><dataInput id=\"_jbpm-unique-85_modelInput\" name=\"model\"/><inputSet><dataInputRefs>_jbpm-unique-85_modelInput</dataInputRefs></inputSet><outputSet/></ioSpecification><dataInputAssociation><targetRef>_jbpm-unique-85_modelInput</targetRef><assignment><from xsi:type=\"tFormalExpression\">com.digcredit.brms.model.Applicant</from><to xsi:type=\"tFormalExpression\">_jbpm-unique-85_modelInput</to></assignment></dataInputAssociation></task></subProcess><intermediateCatchEvent id=\"_jbpm-unique-90\" name=\"Signal\"><signalEventDefinition signalRef=\"ModuleContinue\"/></intermediateCatchEvent><subProcess id=\"_jbpm-unique-91\" name=\"评分卡模块\"><sequenceFlow id=\"_jbpm-unique-92-_jbpm-unique-93\" sourceRef=\"_jbpm-unique-92\" targetRef=\"_jbpm-unique-93\"/><sequenceFlow id=\"_jbpm-unique-93-_jbpm-unique-94\" sourceRef=\"_jbpm-unique-93\" targetRef=\"_jbpm-unique-94\"/><sequenceFlow id=\"_jbpm-unique-94-_jbpm-unique-95\" sourceRef=\"_jbpm-unique-94\" targetRef=\"_jbpm-unique-95\"/><sequenceFlow id=\"_jbpm-unique-95-jbpm-unique-96\" sourceRef=\"_jbpm-unique-95\" targetRef=\"jbpm-unique-96\"/><sequenceFlow id=\"jbpm-unique-96-_jbpm-unique-97\" sourceRef=\"jbpm-unique-96\" targetRef=\"_jbpm-unique-97\"/><intermediateCatchEvent id=\"_jbpm-unique-94\" name=\"Signal\"><signalEventDefinition signalRef=\"FeaturesReady\"/></intermediateCatchEvent><startEvent id=\"_jbpm-unique-92\" name=\"Start\" isInterrupting=\"false\"/><endEvent id=\"_jbpm-unique-97\" name=\"End\"><terminateEventDefinition/></endEvent><businessRuleTask id=\"jbpm-unique-96\" name=\"规则\" g:ruleFlowGroup=\"履约能力\"><ioSpecification><inputSet/><outputSet/></ioSpecification></businessRuleTask><task id=\"_jbpm-unique-93\" name=\"获取特征\" tns:taskName=\"API\"><ioSpecification><dataInput id=\"_jbpm-unique-93_fieldsInput\" name=\"fields\"/><inputSet><dataInputRefs>_jbpm-unique-93_fieldsInput</dataInputRefs></inputSet><outputSet/></ioSpecification><dataInputAssociation><targetRef>_jbpm-unique-93_fieldsInput</targetRef><assignment><from xsi:type=\"tFormalExpression\">curWorkStatus,ccBillAge</from><to xsi:type=\"tFormalExpression\">_jbpm-unique-93_fieldsInput</to></assignment></dataInputAssociation></task><task id=\"_jbpm-unique-95\" name=\"构建申请人画像\" tns:taskName=\"Assembly\"><ioSpecification><dataInput id=\"_jbpm-unique-95_modelInput\" name=\"model\"/><inputSet><dataInputRefs>_jbpm-unique-95_modelInput</dataInputRefs></inputSet><outputSet/></ioSpecification><dataInputAssociation><targetRef>_jbpm-unique-95_modelInput</targetRef><assignment><from xsi:type=\"tFormalExpression\">com.digcredit.brms.model.Applicant</from><to xsi:type=\"tFormalExpression\">_jbpm-unique-95_modelInput</to></assignment></dataInputAssociation></task></subProcess><intermediateCatchEvent id=\"_jbpm-unique-100\" name=\"Signal\"><signalEventDefinition signalRef=\"ModuleContinue\"/></intermediateCatchEvent><subProcess id=\"_jbpm-unique-101\" name=\"评分卡模块\"><sequenceFlow id=\"_jbpm-unique-102-_jbpm-unique-103\" sourceRef=\"_jbpm-unique-102\" targetRef=\"_jbpm-unique-103\"/><sequenceFlow id=\"_jbpm-unique-103-_jbpm-unique-104\" sourceRef=\"_jbpm-unique-103\" targetRef=\"_jbpm-unique-104\"/><sequenceFlow id=\"_jbpm-unique-104-_jbpm-unique-105\" sourceRef=\"_jbpm-unique-104\" targetRef=\"_jbpm-unique-105\"/><sequenceFlow id=\"_jbpm-unique-105-jbpm-unique-106\" sourceRef=\"_jbpm-unique-105\" targetRef=\"jbpm-unique-106\"/><sequenceFlow id=\"jbpm-unique-106-_jbpm-unique-107\" sourceRef=\"jbpm-unique-106\" targetRef=\"_jbpm-unique-107\"/><intermediateCatchEvent id=\"_jbpm-unique-104\" name=\"Signal\"><signalEventDefinition signalRef=\"FeaturesReady\"/></intermediateCatchEvent><startEvent id=\"_jbpm-unique-102\" name=\"Start\" isInterrupting=\"false\"/><endEvent id=\"_jbpm-unique-107\" name=\"End\"><terminateEventDefinition/></endEvent><businessRuleTask id=\"jbpm-unique-106\" name=\"规则\" g:ruleFlowGroup=\"人脉关系\"><ioSpecification><inputSet/><outputSet/></ioSpecification></businessRuleTask><task id=\"_jbpm-unique-103\" name=\"获取特征\" tns:taskName=\"API\"><ioSpecification><dataInput id=\"_jbpm-unique-103_fieldsInput\" name=\"fields\"/><inputSet><dataInputRefs>_jbpm-unique-103_fieldsInput</dataInputRefs></inputSet><outputSet/></ioSpecification><dataInputAssociation><targetRef>_jbpm-unique-103_fieldsInput</targetRef><assignment><from xsi:type=\"tFormalExpression\">folk,companyAddrCityLevel</from><to xsi:type=\"tFormalExpression\">_jbpm-unique-103_fieldsInput</to></assignment></dataInputAssociation></task><task id=\"_jbpm-unique-105\" name=\"构建申请人画像\" tns:taskName=\"Assembly\"><ioSpecification><dataInput id=\"_jbpm-unique-105_modelInput\" name=\"model\"/><inputSet><dataInputRefs>_jbpm-unique-105_modelInput</dataInputRefs></inputSet><outputSet/></ioSpecification><dataInputAssociation><targetRef>_jbpm-unique-105_modelInput</targetRef><assignment><from xsi:type=\"tFormalExpression\">com.digcredit.brms.model.Applicant</from><to xsi:type=\"tFormalExpression\">_jbpm-unique-105_modelInput</to></assignment></dataInputAssociation></task></subProcess><intermediateCatchEvent id=\"_jbpm-unique-110\" name=\"Signal\"><signalEventDefinition signalRef=\"ModuleContinue\"/></intermediateCatchEvent><subProcess id=\"_jbpm-unique-111\" name=\"评分卡模块\"><sequenceFlow id=\"_jbpm-unique-112-_jbpm-unique-113\" sourceRef=\"_jbpm-unique-112\" targetRef=\"_jbpm-unique-113\"/><sequenceFlow id=\"_jbpm-unique-113-_jbpm-unique-114\" sourceRef=\"_jbpm-unique-113\" targetRef=\"_jbpm-unique-114\"/><sequenceFlow id=\"_jbpm-unique-114-_jbpm-unique-115\" sourceRef=\"_jbpm-unique-114\" targetRef=\"_jbpm-unique-115\"/><sequenceFlow id=\"_jbpm-unique-115-jbpm-unique-116\" sourceRef=\"_jbpm-unique-115\" targetRef=\"jbpm-unique-116\"/><sequenceFlow id=\"jbpm-unique-116-_jbpm-unique-117\" sourceRef=\"jbpm-unique-116\" targetRef=\"_jbpm-unique-117\"/><intermediateCatchEvent id=\"_jbpm-unique-114\" name=\"Signal\"><signalEventDefinition signalRef=\"FeaturesReady\"/></intermediateCatchEvent><startEvent id=\"_jbpm-unique-112\" name=\"Start\" isInterrupting=\"false\"/><endEvent id=\"_jbpm-unique-117\" name=\"End\"><terminateEventDefinition/></endEvent><businessRuleTask id=\"jbpm-unique-116\" name=\"规则\" g:ruleFlowGroup=\"行为偏好\"><ioSpecification><inputSet/><outputSet/></ioSpecification></businessRuleTask><task id=\"_jbpm-unique-113\" name=\"获取特征\" tns:taskName=\"API\"><ioSpecification><dataInput id=\"_jbpm-unique-113_fieldsInput\" name=\"fields\"/><inputSet><dataInputRefs>_jbpm-unique-113_fieldsInput</dataInputRefs></inputSet><outputSet/></ioSpecification><dataInputAssociation><targetRef>_jbpm-unique-113_fieldsInput</targetRef><assignment><from xsi:type=\"tFormalExpression\">completeDegree,contacts</from><to xsi:type=\"tFormalExpression\">_jbpm-unique-113_fieldsInput</to></assignment></dataInputAssociation></task><task id=\"_jbpm-unique-115\" name=\"构建申请人画像\" tns:taskName=\"Assembly\"><ioSpecification><dataInput id=\"_jbpm-unique-115_modelInput\" name=\"model\"/><inputSet><dataInputRefs>_jbpm-unique-115_modelInput</dataInputRefs></inputSet><outputSet/></ioSpecification><dataInputAssociation><targetRef>_jbpm-unique-115_modelInput</targetRef><assignment><from xsi:type=\"tFormalExpression\">com.digcredit.brms.model.Applicant</from><to xsi:type=\"tFormalExpression\">_jbpm-unique-115_modelInput</to></assignment></dataInputAssociation></task></subProcess><intermediateCatchEvent id=\"_jbpm-unique-120\" name=\"Signal\"><signalEventDefinition signalRef=\"ModuleContinue\"/></intermediateCatchEvent><subProcess id=\"_jbpm-unique-121\" name=\"评分卡模块\"><sequenceFlow id=\"_jbpm-unique-122-_jbpm-unique-123\" sourceRef=\"_jbpm-unique-122\" targetRef=\"_jbpm-unique-123\"/><sequenceFlow id=\"_jbpm-unique-123-_jbpm-unique-124\" sourceRef=\"_jbpm-unique-123\" targetRef=\"_jbpm-unique-124\"/><sequenceFlow id=\"_jbpm-unique-124-_jbpm-unique-125\" sourceRef=\"_jbpm-unique-124\" targetRef=\"_jbpm-unique-125\"/><sequenceFlow id=\"_jbpm-unique-125-jbpm-unique-126\" sourceRef=\"_jbpm-unique-125\" targetRef=\"jbpm-unique-126\"/><sequenceFlow id=\"jbpm-unique-126-_jbpm-unique-127\" sourceRef=\"jbpm-unique-126\" targetRef=\"_jbpm-unique-127\"/><intermediateCatchEvent id=\"_jbpm-unique-124\" name=\"Signal\"><signalEventDefinition signalRef=\"FeaturesReady\"/></intermediateCatchEvent><startEvent id=\"_jbpm-unique-122\" name=\"Start\" isInterrupting=\"false\"/><endEvent id=\"_jbpm-unique-127\" name=\"End\"><terminateEventDefinition/></endEvent><businessRuleTask id=\"jbpm-unique-126\" name=\"规则\" g:ruleFlowGroup=\"审核模块1\"><ioSpecification><inputSet/><outputSet/></ioSpecification></businessRuleTask><task id=\"_jbpm-unique-123\" name=\"获取特征\" tns:taskName=\"API\"><ioSpecification><dataInput id=\"_jbpm-unique-123_fieldsInput\" name=\"fields\"/><inputSet><dataInputRefs>_jbpm-unique-123_fieldsInput</dataInputRefs></inputSet><outputSet/></ioSpecification><dataInputAssociation><targetRef>_jbpm-unique-123_fieldsInput</targetRef><assignment><from xsi:type=\"tFormalExpression\">curCorpYears,educationDegreeCheck</from><to xsi:type=\"tFormalExpression\">_jbpm-unique-123_fieldsInput</to></assignment></dataInputAssociation></task><task id=\"_jbpm-unique-125\" name=\"构建申请人画像\" tns:taskName=\"Assembly\"><ioSpecification><dataInput id=\"_jbpm-unique-125_modelInput\" name=\"model\"/><inputSet><dataInputRefs>_jbpm-unique-125_modelInput</dataInputRefs></inputSet><outputSet/></ioSpecification><dataInputAssociation><targetRef>_jbpm-unique-125_modelInput</targetRef><assignment><from xsi:type=\"tFormalExpression\">com.digcredit.brms.model.Applicant</from><to xsi:type=\"tFormalExpression\">_jbpm-unique-125_modelInput</to></assignment></dataInputAssociation></task></subProcess><endEvent id=\"_jbpm-unique-130\" name=\"FinalEnd\"><terminateEventDefinition/></endEvent><sequenceFlow id=\"_jbpm-unique-0-_jbpm-unique-1\" sourceRef=\"_jbpm-unique-0\" targetRef=\"_jbpm-unique-1\"/><sequenceFlow id=\"_jbpm-unique-1-_jbpm-unique-10\" sourceRef=\"_jbpm-unique-1\" targetRef=\"_jbpm-unique-10\"/><sequenceFlow id=\"_jbpm-unique-10-_jbpm-unique-11\" sourceRef=\"_jbpm-unique-10\" targetRef=\"_jbpm-unique-11\"/><sequenceFlow id=\"_jbpm-unique-11-_jbpm-unique-20\" sourceRef=\"_jbpm-unique-11\" targetRef=\"_jbpm-unique-20\"/><sequenceFlow id=\"_jbpm-unique-20-_jbpm-unique-21\" sourceRef=\"_jbpm-unique-20\" targetRef=\"_jbpm-unique-21\"/><sequenceFlow id=\"_jbpm-unique-21-_jbpm-unique-30\" sourceRef=\"_jbpm-unique-21\" targetRef=\"_jbpm-unique-30\"/><sequenceFlow id=\"_jbpm-unique-30-_jbpm-unique-31\" sourceRef=\"_jbpm-unique-30\" targetRef=\"_jbpm-unique-31\"/><sequenceFlow id=\"_jbpm-unique-31-_jbpm-unique-40\" sourceRef=\"_jbpm-unique-31\" targetRef=\"_jbpm-unique-40\"/><sequenceFlow id=\"_jbpm-unique-40-_jbpm-unique-41\" sourceRef=\"_jbpm-unique-40\" targetRef=\"_jbpm-unique-41\"/><sequenceFlow id=\"_jbpm-unique-41-_jbpm-unique-50\" sourceRef=\"_jbpm-unique-41\" targetRef=\"_jbpm-unique-50\"/><sequenceFlow id=\"_jbpm-unique-50-_jbpm-unique-51\" sourceRef=\"_jbpm-unique-50\" targetRef=\"_jbpm-unique-51\"/><sequenceFlow id=\"_jbpm-unique-51-_jbpm-unique-60\" sourceRef=\"_jbpm-unique-51\" targetRef=\"_jbpm-unique-60\"/><sequenceFlow id=\"_jbpm-unique-60-_jbpm-unique-61\" sourceRef=\"_jbpm-unique-60\" targetRef=\"_jbpm-unique-61\"/><sequenceFlow id=\"_jbpm-unique-61-_jbpm-unique-70\" sourceRef=\"_jbpm-unique-61\" targetRef=\"_jbpm-unique-70\"/><sequenceFlow id=\"_jbpm-unique-70-_jbpm-unique-71\" sourceRef=\"_jbpm-unique-70\" targetRef=\"_jbpm-unique-71\"/><sequenceFlow id=\"_jbpm-unique-71-_jbpm-unique-80\" sourceRef=\"_jbpm-unique-71\" targetRef=\"_jbpm-unique-80\"/><sequenceFlow id=\"_jbpm-unique-80-_jbpm-unique-81\" sourceRef=\"_jbpm-unique-80\" targetRef=\"_jbpm-unique-81\"/><sequenceFlow id=\"_jbpm-unique-81-_jbpm-unique-90\" sourceRef=\"_jbpm-unique-81\" targetRef=\"_jbpm-unique-90\"/><sequenceFlow id=\"_jbpm-unique-90-_jbpm-unique-91\" sourceRef=\"_jbpm-unique-90\" targetRef=\"_jbpm-unique-91\"/><sequenceFlow id=\"_jbpm-unique-91-_jbpm-unique-100\" sourceRef=\"_jbpm-unique-91\" targetRef=\"_jbpm-unique-100\"/><sequenceFlow id=\"_jbpm-unique-100-_jbpm-unique-101\" sourceRef=\"_jbpm-unique-100\" targetRef=\"_jbpm-unique-101\"/><sequenceFlow id=\"_jbpm-unique-101-_jbpm-unique-110\" sourceRef=\"_jbpm-unique-101\" targetRef=\"_jbpm-unique-110\"/><sequenceFlow id=\"_jbpm-unique-110-_jbpm-unique-111\" sourceRef=\"_jbpm-unique-110\" targetRef=\"_jbpm-unique-111\"/><sequenceFlow id=\"_jbpm-unique-111-_jbpm-unique-120\" sourceRef=\"_jbpm-unique-111\" targetRef=\"_jbpm-unique-120\"/><sequenceFlow id=\"_jbpm-unique-120-_jbpm-unique-121\" sourceRef=\"_jbpm-unique-120\" targetRef=\"_jbpm-unique-121\"/><sequenceFlow id=\"_jbpm-unique-121-_jbpm-unique-130\" sourceRef=\"_jbpm-unique-121\" targetRef=\"_jbpm-unique-130\"/></process>\n<bpmndi:BPMNDiagram><bpmndi:BPMNPlane bpmnElement=\"Audit\"><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-0\"><dc:Bounds x=\"600\" y=\"0\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-1\"><dc:Bounds x=\"125\" y=\"150\" width=\"1000\" height=\"200\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-2\"><dc:Bounds x=\"25\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-3\"><dc:Bounds x=\"175\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-4\"><dc:Bounds x=\"375\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-5\"><dc:Bounds x=\"525\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"jbpm-unique-6\"><dc:Bounds x=\"725\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-7\"><dc:Bounds x=\"925\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-2-_jbpm-unique-3\"><di:waypoint x=\"75\" y=\"100\"/><di:waypoint x=\"175\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-3-_jbpm-unique-4\"><di:waypoint x=\"275\" y=\"100\"/><di:waypoint x=\"375\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-4-_jbpm-unique-5\"><di:waypoint x=\"425\" y=\"100\"/><di:waypoint x=\"525\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-5-jbpm-unique-6\"><di:waypoint x=\"625\" y=\"100\"/><di:waypoint x=\"725\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"jbpm-unique-6-_jbpm-unique-7\"><di:waypoint x=\"825\" y=\"100\"/><di:waypoint x=\"925\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-10\"><dc:Bounds x=\"600\" y=\"600\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-11\"><dc:Bounds x=\"125\" y=\"1050\" width=\"1000\" height=\"200\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-12\"><dc:Bounds x=\"25\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-13\"><dc:Bounds x=\"175\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-14\"><dc:Bounds x=\"375\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-15\"><dc:Bounds x=\"525\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"jbpm-unique-16\"><dc:Bounds x=\"725\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-17\"><dc:Bounds x=\"925\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-12-_jbpm-unique-13\"><di:waypoint x=\"75\" y=\"100\"/><di:waypoint x=\"175\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-13-_jbpm-unique-14\"><di:waypoint x=\"275\" y=\"100\"/><di:waypoint x=\"375\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-14-_jbpm-unique-15\"><di:waypoint x=\"425\" y=\"100\"/><di:waypoint x=\"525\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-15-jbpm-unique-16\"><di:waypoint x=\"625\" y=\"100\"/><di:waypoint x=\"725\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"jbpm-unique-16-_jbpm-unique-17\"><di:waypoint x=\"825\" y=\"100\"/><di:waypoint x=\"925\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-20\"><dc:Bounds x=\"600\" y=\"1500\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-21\"><dc:Bounds x=\"125\" y=\"1950\" width=\"1000\" height=\"200\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-22\"><dc:Bounds x=\"25\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-23\"><dc:Bounds x=\"175\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-24\"><dc:Bounds x=\"375\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-25\"><dc:Bounds x=\"525\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"jbpm-unique-26\"><dc:Bounds x=\"725\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-27\"><dc:Bounds x=\"925\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-22-_jbpm-unique-23\"><di:waypoint x=\"75\" y=\"100\"/><di:waypoint x=\"175\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-23-_jbpm-unique-24\"><di:waypoint x=\"275\" y=\"100\"/><di:waypoint x=\"375\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-24-_jbpm-unique-25\"><di:waypoint x=\"425\" y=\"100\"/><di:waypoint x=\"525\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-25-jbpm-unique-26\"><di:waypoint x=\"625\" y=\"100\"/><di:waypoint x=\"725\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"jbpm-unique-26-_jbpm-unique-27\"><di:waypoint x=\"825\" y=\"100\"/><di:waypoint x=\"925\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-30\"><dc:Bounds x=\"600\" y=\"2400\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-31\"><dc:Bounds x=\"125\" y=\"2850\" width=\"1000\" height=\"200\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-32\"><dc:Bounds x=\"25\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-33\"><dc:Bounds x=\"175\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-34\"><dc:Bounds x=\"375\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-35\"><dc:Bounds x=\"525\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"jbpm-unique-36\"><dc:Bounds x=\"725\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-37\"><dc:Bounds x=\"925\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-32-_jbpm-unique-33\"><di:waypoint x=\"75\" y=\"100\"/><di:waypoint x=\"175\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-33-_jbpm-unique-34\"><di:waypoint x=\"275\" y=\"100\"/><di:waypoint x=\"375\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-34-_jbpm-unique-35\"><di:waypoint x=\"425\" y=\"100\"/><di:waypoint x=\"525\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-35-jbpm-unique-36\"><di:waypoint x=\"625\" y=\"100\"/><di:waypoint x=\"725\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"jbpm-unique-36-_jbpm-unique-37\"><di:waypoint x=\"825\" y=\"100\"/><di:waypoint x=\"925\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-40\"><dc:Bounds x=\"600\" y=\"3300\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-41\"><dc:Bounds x=\"125\" y=\"3750\" width=\"1000\" height=\"200\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-42\"><dc:Bounds x=\"25\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-43\"><dc:Bounds x=\"175\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-44\"><dc:Bounds x=\"375\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-45\"><dc:Bounds x=\"525\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"jbpm-unique-46\"><dc:Bounds x=\"725\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-47\"><dc:Bounds x=\"925\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-42-_jbpm-unique-43\"><di:waypoint x=\"75\" y=\"100\"/><di:waypoint x=\"175\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-43-_jbpm-unique-44\"><di:waypoint x=\"275\" y=\"100\"/><di:waypoint x=\"375\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-44-_jbpm-unique-45\"><di:waypoint x=\"425\" y=\"100\"/><di:waypoint x=\"525\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-45-jbpm-unique-46\"><di:waypoint x=\"625\" y=\"100\"/><di:waypoint x=\"725\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"jbpm-unique-46-_jbpm-unique-47\"><di:waypoint x=\"825\" y=\"100\"/><di:waypoint x=\"925\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-50\"><dc:Bounds x=\"600\" y=\"4200\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-51\"><dc:Bounds x=\"125\" y=\"4650\" width=\"1000\" height=\"200\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-52\"><dc:Bounds x=\"25\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-53\"><dc:Bounds x=\"175\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-54\"><dc:Bounds x=\"375\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-55\"><dc:Bounds x=\"525\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"jbpm-unique-56\"><dc:Bounds x=\"725\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-57\"><dc:Bounds x=\"925\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-52-_jbpm-unique-53\"><di:waypoint x=\"75\" y=\"100\"/><di:waypoint x=\"175\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-53-_jbpm-unique-54\"><di:waypoint x=\"275\" y=\"100\"/><di:waypoint x=\"375\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-54-_jbpm-unique-55\"><di:waypoint x=\"425\" y=\"100\"/><di:waypoint x=\"525\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-55-jbpm-unique-56\"><di:waypoint x=\"625\" y=\"100\"/><di:waypoint x=\"725\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"jbpm-unique-56-_jbpm-unique-57\"><di:waypoint x=\"825\" y=\"100\"/><di:waypoint x=\"925\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-60\"><dc:Bounds x=\"600\" y=\"5100\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-61\"><dc:Bounds x=\"125\" y=\"5550\" width=\"1000\" height=\"200\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-62\"><dc:Bounds x=\"25\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-63\"><dc:Bounds x=\"175\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-64\"><dc:Bounds x=\"375\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-65\"><dc:Bounds x=\"525\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"jbpm-unique-66\"><dc:Bounds x=\"725\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-67\"><dc:Bounds x=\"925\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-62-_jbpm-unique-63\"><di:waypoint x=\"75\" y=\"100\"/><di:waypoint x=\"175\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-63-_jbpm-unique-64\"><di:waypoint x=\"275\" y=\"100\"/><di:waypoint x=\"375\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-64-_jbpm-unique-65\"><di:waypoint x=\"425\" y=\"100\"/><di:waypoint x=\"525\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-65-jbpm-unique-66\"><di:waypoint x=\"625\" y=\"100\"/><di:waypoint x=\"725\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"jbpm-unique-66-_jbpm-unique-67\"><di:waypoint x=\"825\" y=\"100\"/><di:waypoint x=\"925\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-70\"><dc:Bounds x=\"600\" y=\"6000\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-71\"><dc:Bounds x=\"125\" y=\"6450\" width=\"1000\" height=\"200\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-72\"><dc:Bounds x=\"25\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-73\"><dc:Bounds x=\"175\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-74\"><dc:Bounds x=\"375\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-75\"><dc:Bounds x=\"525\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"jbpm-unique-76\"><dc:Bounds x=\"725\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-77\"><dc:Bounds x=\"925\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-72-_jbpm-unique-73\"><di:waypoint x=\"75\" y=\"100\"/><di:waypoint x=\"175\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-73-_jbpm-unique-74\"><di:waypoint x=\"275\" y=\"100\"/><di:waypoint x=\"375\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-74-_jbpm-unique-75\"><di:waypoint x=\"425\" y=\"100\"/><di:waypoint x=\"525\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-75-jbpm-unique-76\"><di:waypoint x=\"625\" y=\"100\"/><di:waypoint x=\"725\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"jbpm-unique-76-_jbpm-unique-77\"><di:waypoint x=\"825\" y=\"100\"/><di:waypoint x=\"925\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-80\"><dc:Bounds x=\"600\" y=\"6900\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-81\"><dc:Bounds x=\"125\" y=\"7350\" width=\"1000\" height=\"200\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-82\"><dc:Bounds x=\"25\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-83\"><dc:Bounds x=\"175\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-84\"><dc:Bounds x=\"375\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-85\"><dc:Bounds x=\"525\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"jbpm-unique-86\"><dc:Bounds x=\"725\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-87\"><dc:Bounds x=\"925\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-82-_jbpm-unique-83\"><di:waypoint x=\"75\" y=\"100\"/><di:waypoint x=\"175\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-83-_jbpm-unique-84\"><di:waypoint x=\"275\" y=\"100\"/><di:waypoint x=\"375\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-84-_jbpm-unique-85\"><di:waypoint x=\"425\" y=\"100\"/><di:waypoint x=\"525\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-85-jbpm-unique-86\"><di:waypoint x=\"625\" y=\"100\"/><di:waypoint x=\"725\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"jbpm-unique-86-_jbpm-unique-87\"><di:waypoint x=\"825\" y=\"100\"/><di:waypoint x=\"925\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-90\"><dc:Bounds x=\"600\" y=\"7800\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-91\"><dc:Bounds x=\"125\" y=\"8250\" width=\"1000\" height=\"200\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-92\"><dc:Bounds x=\"25\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-93\"><dc:Bounds x=\"175\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-94\"><dc:Bounds x=\"375\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-95\"><dc:Bounds x=\"525\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"jbpm-unique-96\"><dc:Bounds x=\"725\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-97\"><dc:Bounds x=\"925\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-92-_jbpm-unique-93\"><di:waypoint x=\"75\" y=\"100\"/><di:waypoint x=\"175\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-93-_jbpm-unique-94\"><di:waypoint x=\"275\" y=\"100\"/><di:waypoint x=\"375\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-94-_jbpm-unique-95\"><di:waypoint x=\"425\" y=\"100\"/><di:waypoint x=\"525\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-95-jbpm-unique-96\"><di:waypoint x=\"625\" y=\"100\"/><di:waypoint x=\"725\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"jbpm-unique-96-_jbpm-unique-97\"><di:waypoint x=\"825\" y=\"100\"/><di:waypoint x=\"925\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-100\"><dc:Bounds x=\"600\" y=\"8700\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-101\"><dc:Bounds x=\"125\" y=\"9150\" width=\"1000\" height=\"200\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-102\"><dc:Bounds x=\"25\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-103\"><dc:Bounds x=\"175\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-104\"><dc:Bounds x=\"375\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-105\"><dc:Bounds x=\"525\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"jbpm-unique-106\"><dc:Bounds x=\"725\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-107\"><dc:Bounds x=\"925\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-102-_jbpm-unique-103\"><di:waypoint x=\"75\" y=\"100\"/><di:waypoint x=\"175\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-103-_jbpm-unique-104\"><di:waypoint x=\"275\" y=\"100\"/><di:waypoint x=\"375\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-104-_jbpm-unique-105\"><di:waypoint x=\"425\" y=\"100\"/><di:waypoint x=\"525\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-105-jbpm-unique-106\"><di:waypoint x=\"625\" y=\"100\"/><di:waypoint x=\"725\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"jbpm-unique-106-_jbpm-unique-107\"><di:waypoint x=\"825\" y=\"100\"/><di:waypoint x=\"925\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-110\"><dc:Bounds x=\"600\" y=\"9600\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-111\"><dc:Bounds x=\"125\" y=\"10050\" width=\"1000\" height=\"200\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-112\"><dc:Bounds x=\"25\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-113\"><dc:Bounds x=\"175\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-114\"><dc:Bounds x=\"375\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-115\"><dc:Bounds x=\"525\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"jbpm-unique-116\"><dc:Bounds x=\"725\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-117\"><dc:Bounds x=\"925\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-112-_jbpm-unique-113\"><di:waypoint x=\"75\" y=\"100\"/><di:waypoint x=\"175\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-113-_jbpm-unique-114\"><di:waypoint x=\"275\" y=\"100\"/><di:waypoint x=\"375\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-114-_jbpm-unique-115\"><di:waypoint x=\"425\" y=\"100\"/><di:waypoint x=\"525\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-115-jbpm-unique-116\"><di:waypoint x=\"625\" y=\"100\"/><di:waypoint x=\"725\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"jbpm-unique-116-_jbpm-unique-117\"><di:waypoint x=\"825\" y=\"100\"/><di:waypoint x=\"925\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-120\"><dc:Bounds x=\"600\" y=\"10500\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-121\"><dc:Bounds x=\"125\" y=\"10950\" width=\"1000\" height=\"200\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-122\"><dc:Bounds x=\"25\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-123\"><dc:Bounds x=\"175\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-124\"><dc:Bounds x=\"375\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-125\"><dc:Bounds x=\"525\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"jbpm-unique-126\"><dc:Bounds x=\"725\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-127\"><dc:Bounds x=\"925\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-122-_jbpm-unique-123\"><di:waypoint x=\"75\" y=\"100\"/><di:waypoint x=\"175\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-123-_jbpm-unique-124\"><di:waypoint x=\"275\" y=\"100\"/><di:waypoint x=\"375\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-124-_jbpm-unique-125\"><di:waypoint x=\"425\" y=\"100\"/><di:waypoint x=\"525\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-125-jbpm-unique-126\"><di:waypoint x=\"625\" y=\"100\"/><di:waypoint x=\"725\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"jbpm-unique-126-_jbpm-unique-127\"><di:waypoint x=\"825\" y=\"100\"/><di:waypoint x=\"925\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-130\"><dc:Bounds x=\"600\" y=\"0\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-0-_jbpm-unique-1\"><di:waypoint x=\"625\" y=\"50\"/><di:waypoint x=\"625\" y=\"150\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-1-_jbpm-unique-10\"><di:waypoint x=\"625\" y=\"350\"/><di:waypoint x=\"625\" y=\"450\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-10-_jbpm-unique-11\"><di:waypoint x=\"625\" y=\"950\"/><di:waypoint x=\"625\" y=\"1050\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-11-_jbpm-unique-20\"><di:waypoint x=\"625\" y=\"1250\"/><di:waypoint x=\"625\" y=\"1350\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-20-_jbpm-unique-21\"><di:waypoint x=\"625\" y=\"1850\"/><di:waypoint x=\"625\" y=\"1950\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-21-_jbpm-unique-30\"><di:waypoint x=\"625\" y=\"2150\"/><di:waypoint x=\"625\" y=\"2250\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-30-_jbpm-unique-31\"><di:waypoint x=\"625\" y=\"2750\"/><di:waypoint x=\"625\" y=\"2850\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-31-_jbpm-unique-40\"><di:waypoint x=\"625\" y=\"3050\"/><di:waypoint x=\"625\" y=\"3150\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-40-_jbpm-unique-41\"><di:waypoint x=\"625\" y=\"3650\"/><di:waypoint x=\"625\" y=\"3750\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-41-_jbpm-unique-50\"><di:waypoint x=\"625\" y=\"3950\"/><di:waypoint x=\"625\" y=\"4050\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-50-_jbpm-unique-51\"><di:waypoint x=\"625\" y=\"4550\"/><di:waypoint x=\"625\" y=\"4650\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-51-_jbpm-unique-60\"><di:waypoint x=\"625\" y=\"4850\"/><di:waypoint x=\"625\" y=\"4950\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-60-_jbpm-unique-61\"><di:waypoint x=\"625\" y=\"5450\"/><di:waypoint x=\"625\" y=\"5550\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-61-_jbpm-unique-70\"><di:waypoint x=\"625\" y=\"5750\"/><di:waypoint x=\"625\" y=\"5850\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-70-_jbpm-unique-71\"><di:waypoint x=\"625\" y=\"6350\"/><di:waypoint x=\"625\" y=\"6450\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-71-_jbpm-unique-80\"><di:waypoint x=\"625\" y=\"6650\"/><di:waypoint x=\"625\" y=\"6750\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-80-_jbpm-unique-81\"><di:waypoint x=\"625\" y=\"7250\"/><di:waypoint x=\"625\" y=\"7350\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-81-_jbpm-unique-90\"><di:waypoint x=\"625\" y=\"7550\"/><di:waypoint x=\"625\" y=\"7650\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-90-_jbpm-unique-91\"><di:waypoint x=\"625\" y=\"8150\"/><di:waypoint x=\"625\" y=\"8250\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-91-_jbpm-unique-100\"><di:waypoint x=\"625\" y=\"8450\"/><di:waypoint x=\"625\" y=\"8550\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-100-_jbpm-unique-101\"><di:waypoint x=\"625\" y=\"9050\"/><di:waypoint x=\"625\" y=\"9150\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-101-_jbpm-unique-110\"><di:waypoint x=\"625\" y=\"9350\"/><di:waypoint x=\"625\" y=\"9450\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-110-_jbpm-unique-111\"><di:waypoint x=\"625\" y=\"9950\"/><di:waypoint x=\"625\" y=\"10050\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-111-_jbpm-unique-120\"><di:waypoint x=\"625\" y=\"10250\"/><di:waypoint x=\"625\" y=\"10350\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-120-_jbpm-unique-121\"><di:waypoint x=\"625\" y=\"10850\"/><di:waypoint x=\"625\" y=\"10950\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-121-_jbpm-unique-130\"><di:waypoint x=\"625\" y=\"11150\"/><di:waypoint x=\"625\" y=\"11250\"/></bpmndi:BPMNEdge></bpmndi:BPMNPlane></bpmndi:BPMNDiagram></definitions>', '2');
+
+-- ----------------------------
+-- Table structure for work_flow_info1
+-- ----------------------------
+DROP TABLE IF EXISTS `work_flow_info1`;
+CREATE TABLE `work_flow_info1` (
+  `work_flow_info_id` int(11) NOT NULL AUTO_INCREMENT,
+  `work_flow_info_xml` longtext,
+  PRIMARY KEY (`work_flow_info_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=138 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of work_flow_info1
+-- ----------------------------
+INSERT INTO `work_flow_info1` VALUES ('1', '<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<definitions xmlns=\"http://www.omg.org/spec/BPMN/20100524/MODEL\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:g=\"http://www.jboss.org/drools/flow/gpd\" xmlns:bpmndi=\"http://www.omg.org/spec/BPMN/20100524/DI\" xmlns:dc=\"http://www.omg.org/spec/DD/20100524/DC\" xmlns:di=\"http://www.omg.org/spec/DD/20100524/DI\" xmlns:tns=\"http://www.jboss.org/drools\" id=\"Definition\" targetNamespace=\"http://www.jboss.org/drools\" typeLanguage=\"http://www.java.com/javaTypes\" expressionLanguage=\"http://www.mvel.org/2.0\" xsi:schemaLocation=\"http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd\">\r\n<process processType=\"Private\" isExecutable=\"true\" id=\"Audit\" name=\"决策引擎\" tns:packageName=\"com.digcredit.rules.credit\"><startEvent id=\"_jbpm-unique-0\" name=\"Start\" isInterrupting=\"false\"/><subProcess id=\"_jbpm-unique-1\" name=\"异常模块\"><sequenceFlow id=\"_jbpm-unique-2-_jbpm-unique-3\" sourceRef=\"_jbpm-unique-2\" targetRef=\"_jbpm-unique-3\"/><sequenceFlow id=\"_jbpm-unique-3-_jbpm-unique-4\" sourceRef=\"_jbpm-unique-3\" targetRef=\"_jbpm-unique-4\"/><sequenceFlow id=\"_jbpm-unique-4-_jbpm-unique-5\" sourceRef=\"_jbpm-unique-4\" targetRef=\"_jbpm-unique-5\"/><sequenceFlow id=\"_jbpm-unique-5-jbpm-unique-6\" sourceRef=\"_jbpm-unique-5\" targetRef=\"jbpm-unique-6\"/><sequenceFlow id=\"jbpm-unique-6-_jbpm-unique-7\" sourceRef=\"jbpm-unique-6\" targetRef=\"_jbpm-unique-7\"/><intermediateCatchEvent id=\"_jbpm-unique-4\" name=\"Signal\"><signalEventDefinition signalRef=\"FeaturesReady\"/></intermediateCatchEvent><startEvent id=\"_jbpm-unique-2\" name=\"Start\" isInterrupting=\"false\"/><endEvent id=\"_jbpm-unique-7\" name=\"End\"><terminateEventDefinition/></endEvent><businessRuleTask id=\"jbpm-unique-6\" name=\"规则\" g:ruleFlowGroup=\"1\"><ioSpecification><inputSet/><outputSet/></ioSpecification></businessRuleTask><task id=\"_jbpm-unique-3\" name=\"获取特征\" tns:taskName=\"API\"><ioSpecification><dataInput id=\"_jbpm-unique-3_fieldsInput\" name=\"fields\"/><inputSet><dataInputRefs>_jbpm-unique-3_fieldsInput</dataInputRefs></inputSet><outputSet/></ioSpecification><dataInputAssociation><targetRef>_jbpm-unique-3_fieldsInput</targetRef><assignment><from xsi:type=\"tFormalExpression\">age,isUnclearLoan,applyRegisterDuration,completeDegree,isPinganFinancialShixin,pinganOverdueCount,pinganMaxOverdueDays,isMobileBlack,isLoanAgency,isOrganizationGBlack,isNetskyBlack,isNetskyMultiLoan,isSkyeyeBlack,isNetBlack,isNetskyGrey,isCourtShixin,isCourtZhixing,mobileIdentity,onlineTime,hasNegativeInfo,pinganMultiLoanCount,pinganOtherLoanCount,pinganOverdueCorpCount,isJiuyaoMultiLoan,jiuyaoMultiLoanDeniedCount,jiuyaoMultiLoanM2Count,name,mobile,cardId</from><to xsi:type=\"tFormalExpression\">_jbpm-unique-3_fieldsInput</to></assignment></dataInputAssociation></task><task id=\"_jbpm-unique-5\" name=\"构建申请人画像\" tns:taskName=\"Assembly\"><ioSpecification><dataInput id=\"_jbpm-unique-5_modelInput\" name=\"model\"/><inputSet><dataInputRefs>_jbpm-unique-5_modelInput</dataInputRefs></inputSet><outputSet/></ioSpecification><dataInputAssociation><targetRef>_jbpm-unique-5_modelInput</targetRef><assignment><from xsi:type=\"tFormalExpression\">com.digcredit.brms.model.Applicant</from><to xsi:type=\"tFormalExpression\">_jbpm-unique-5_modelInput</to></assignment></dataInputAssociation></task></subProcess><intermediateCatchEvent id=\"_jbpm-unique-10\" name=\"Signal\"><signalEventDefinition signalRef=\"ModuleContinue\"/></intermediateCatchEvent><subProcess id=\"_jbpm-unique-11\" name=\"AAA模块\"><startEvent id=\"_jbpm-unique-12\" name=\"Start\" isInterrupting=\"false\"/><task id=\"_jbpm-unique-13\" name=\"画像构建\" tns:taskName=\"Features\"><ioSpecification><dataInput id=\"_jbpm-unique-13_featuresInput\" name=\"features\"/><inputSet><dataInputRefs>_jbpm-unique-13_featuresInput</dataInputRefs></inputSet><outputSet/></ioSpecification><dataInputAssociation><targetRef>_jbpm-unique-13_featuresInput</targetRef><assignment><from xsi:type=\"tFormalExpression\">age,isUnclearLoan,applyRegisterDuration,completeDegree,isPinganFinancialShixin,pinganOverdueCount,pinganMaxOverdueDays,isMobileBlack,isLoanAgency,isOrganizationGBlack,isNetskyBlack,isNetskyMultiLoan,isSkyeyeBlack,isNetBlack,isNetskyGrey,isCourtShixin,isCourtZhixing,mobileIdentity,onlineTime,hasNegativeInfo,pinganMultiLoanCount,pinganOtherLoanCount,pinganOverdueCorpCount,isJiuyaoMultiLoan,jiuyaoMultiLoanDeniedCount,jiuyaoMultiLoanM2Count,name,mobile,cardId</from><to xsi:type=\"tFormalExpression\">_jbpm-unique-13_featuresInput</to></assignment></dataInputAssociation></task><businessRuleTask id=\"_jbpm-unique-14\" name=\"规则\" g:ruleFlowGroup=\"1\"><ioSpecification><inputSet/><outputSet/></ioSpecification></businessRuleTask><endEvent id=\"_jbpm-unique-15\" name=\"End\"><terminateEventDefinition/></endEvent><sequenceFlow id=\"_jbpm-unique-12-_jbpm-unique-13\" sourceRef=\"_jbpm-unique-12\" targetRef=\"_jbpm-unique-13\"/><sequenceFlow id=\"_jbpm-unique-13-_jbpm-unique-14\" sourceRef=\"_jbpm-unique-13\" targetRef=\"_jbpm-unique-14\"/><sequenceFlow id=\"_jbpm-unique-14-_jbpm-unique-15\" sourceRef=\"_jbpm-unique-14\" targetRef=\"_jbpm-unique-15\"/></subProcess><intermediateCatchEvent id=\"_jbpm-unique-18\" name=\"Signal\"><signalEventDefinition signalRef=\"ModuleContinue\"/></intermediateCatchEvent><subProcess id=\"_jbpm-unique-19\" name=\"VVV模块\"><sequenceFlow id=\"_jbpm-unique-20-_jbpm-unique-21\" sourceRef=\"_jbpm-unique-20\" targetRef=\"_jbpm-unique-21\"/><sequenceFlow id=\"_jbpm-unique-21-_jbpm-unique-22\" sourceRef=\"_jbpm-unique-21\" targetRef=\"_jbpm-unique-22\"/><sequenceFlow id=\"_jbpm-unique-22-_jbpm-unique-23\" sourceRef=\"_jbpm-unique-22\" targetRef=\"_jbpm-unique-23\"/><sequenceFlow id=\"_jbpm-unique-23-jbpm-unique-24\" sourceRef=\"_jbpm-unique-23\" targetRef=\"jbpm-unique-24\"/><sequenceFlow id=\"jbpm-unique-24-_jbpm-unique-25\" sourceRef=\"jbpm-unique-24\" targetRef=\"_jbpm-unique-25\"/><intermediateCatchEvent id=\"_jbpm-unique-22\" name=\"Signal\"><signalEventDefinition signalRef=\"FeaturesReady\"/></intermediateCatchEvent><startEvent id=\"_jbpm-unique-20\" name=\"Start\" isInterrupting=\"false\"/><endEvent id=\"_jbpm-unique-25\" name=\"End\"><terminateEventDefinition/></endEvent><businessRuleTask id=\"jbpm-unique-24\" name=\"规则\" g:ruleFlowGroup=\"1\"><ioSpecification><inputSet/><outputSet/></ioSpecification></businessRuleTask><task id=\"_jbpm-unique-21\" name=\"获取特征\" tns:taskName=\"API\"><ioSpecification><dataInput id=\"_jbpm-unique-21_fieldsInput\" name=\"fields\"/><inputSet><dataInputRefs>_jbpm-unique-21_fieldsInput</dataInputRefs></inputSet><outputSet/></ioSpecification><dataInputAssociation><targetRef>_jbpm-unique-21_fieldsInput</targetRef><assignment><from xsi:type=\"tFormalExpression\">age,isUnclearLoan,applyRegisterDuration,completeDegree,isPinganFinancialShixin,pinganOverdueCount,pinganMaxOverdueDays,isMobileBlack,isLoanAgency,isOrganizationGBlack,isNetskyBlack,isNetskyMultiLoan,isSkyeyeBlack,isNetBlack,isNetskyGrey,isCourtShixin,isCourtZhixing,mobileIdentity,onlineTime,hasNegativeInfo,pinganMultiLoanCount,pinganOtherLoanCount,pinganOverdueCorpCount,isJiuyaoMultiLoan,jiuyaoMultiLoanDeniedCount,jiuyaoMultiLoanM2Count,name,mobile,cardId</from><to xsi:type=\"tFormalExpression\">_jbpm-unique-21_fieldsInput</to></assignment></dataInputAssociation></task><task id=\"_jbpm-unique-23\" name=\"构建申请人画像\" tns:taskName=\"Assembly\"><ioSpecification><dataInput id=\"_jbpm-unique-23_modelInput\" name=\"model\"/><inputSet><dataInputRefs>_jbpm-unique-23_modelInput</dataInputRefs></inputSet><outputSet/></ioSpecification><dataInputAssociation><targetRef>_jbpm-unique-23_modelInput</targetRef><assignment><from xsi:type=\"tFormalExpression\">com.digcredit.brms.model.Applicant</from><to xsi:type=\"tFormalExpression\">_jbpm-unique-23_modelInput</to></assignment></dataInputAssociation></task></subProcess><intermediateCatchEvent id=\"_jbpm-unique-28\" name=\"Signal\"><signalEventDefinition signalRef=\"ModuleContinue\"/></intermediateCatchEvent><subProcess id=\"_jbpm-unique-29\" name=\"haha模块\"><startEvent id=\"_jbpm-unique-30\" name=\"Start\" isInterrupting=\"false\"/><task id=\"_jbpm-unique-31\" name=\"画像构建\" tns:taskName=\"Features\"><ioSpecification><dataInput id=\"_jbpm-unique-31_featuresInput\" name=\"features\"/><inputSet><dataInputRefs>_jbpm-unique-31_featuresInput</dataInputRefs></inputSet><outputSet/></ioSpecification><dataInputAssociation><targetRef>_jbpm-unique-31_featuresInput</targetRef><assignment><from xsi:type=\"tFormalExpression\">age,isUnclearLoan,applyRegisterDuration,completeDegree,isPinganFinancialShixin,pinganOverdueCount,pinganMaxOverdueDays,isMobileBlack,isLoanAgency,isOrganizationGBlack,isNetskyBlack,isNetskyMultiLoan,isSkyeyeBlack,isNetBlack,isNetskyGrey,isCourtShixin,isCourtZhixing,mobileIdentity,onlineTime,hasNegativeInfo,pinganMultiLoanCount,pinganOtherLoanCount,pinganOverdueCorpCount,isJiuyaoMultiLoan,jiuyaoMultiLoanDeniedCount,jiuyaoMultiLoanM2Count,name,mobile,cardId</from><to xsi:type=\"tFormalExpression\">_jbpm-unique-31_featuresInput</to></assignment></dataInputAssociation></task><businessRuleTask id=\"_jbpm-unique-32\" name=\"规则\" g:ruleFlowGroup=\"1\"><ioSpecification><inputSet/><outputSet/></ioSpecification></businessRuleTask><endEvent id=\"_jbpm-unique-33\" name=\"End\"><terminateEventDefinition/></endEvent><sequenceFlow id=\"_jbpm-unique-30-_jbpm-unique-31\" sourceRef=\"_jbpm-unique-30\" targetRef=\"_jbpm-unique-31\"/><sequenceFlow id=\"_jbpm-unique-31-_jbpm-unique-32\" sourceRef=\"_jbpm-unique-31\" targetRef=\"_jbpm-unique-32\"/><sequenceFlow id=\"_jbpm-unique-32-_jbpm-unique-33\" sourceRef=\"_jbpm-unique-32\" targetRef=\"_jbpm-unique-33\"/></subProcess><endEvent id=\"_jbpm-unique-36\" name=\"FinalEnd\"><terminateEventDefinition/></endEvent><sequenceFlow id=\"_jbpm-unique-0-_jbpm-unique-1\" sourceRef=\"_jbpm-unique-0\" targetRef=\"_jbpm-unique-1\"/><sequenceFlow id=\"_jbpm-unique-1-_jbpm-unique-10\" sourceRef=\"_jbpm-unique-1\" targetRef=\"_jbpm-unique-10\"/><sequenceFlow id=\"_jbpm-unique-10-_jbpm-unique-11\" sourceRef=\"_jbpm-unique-10\" targetRef=\"_jbpm-unique-11\"/><sequenceFlow id=\"_jbpm-unique-11-_jbpm-unique-18\" sourceRef=\"_jbpm-unique-11\" targetRef=\"_jbpm-unique-18\"/><sequenceFlow id=\"_jbpm-unique-18-_jbpm-unique-19\" sourceRef=\"_jbpm-unique-18\" targetRef=\"_jbpm-unique-19\"/><sequenceFlow id=\"_jbpm-unique-19-_jbpm-unique-28\" sourceRef=\"_jbpm-unique-19\" targetRef=\"_jbpm-unique-28\"/><sequenceFlow id=\"_jbpm-unique-28-_jbpm-unique-29\" sourceRef=\"_jbpm-unique-28\" targetRef=\"_jbpm-unique-29\"/><sequenceFlow id=\"_jbpm-unique-29-_jbpm-unique-36\" sourceRef=\"_jbpm-unique-29\" targetRef=\"_jbpm-unique-36\"/></process>\r\n<bpmndi:BPMNDiagram><bpmndi:BPMNPlane bpmnElement=\"Audit\"><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-0\"><dc:Bounds x=\"600\" y=\"0\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-1\"><dc:Bounds x=\"125\" y=\"150\" width=\"1000\" height=\"200\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-2\"><dc:Bounds x=\"25\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-3\"><dc:Bounds x=\"175\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-4\"><dc:Bounds x=\"375\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-5\"><dc:Bounds x=\"525\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"jbpm-unique-6\"><dc:Bounds x=\"725\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-7\"><dc:Bounds x=\"925\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-2-_jbpm-unique-3\"><di:waypoint x=\"75\" y=\"100\"/><di:waypoint x=\"175\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-3-_jbpm-unique-4\"><di:waypoint x=\"275\" y=\"100\"/><di:waypoint x=\"375\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-4-_jbpm-unique-5\"><di:waypoint x=\"425\" y=\"100\"/><di:waypoint x=\"525\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-5-jbpm-unique-6\"><di:waypoint x=\"625\" y=\"100\"/><di:waypoint x=\"725\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"jbpm-unique-6-_jbpm-unique-7\"><di:waypoint x=\"825\" y=\"100\"/><di:waypoint x=\"925\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-10\"><dc:Bounds x=\"600\" y=\"600\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-11\"><dc:Bounds x=\"225\" y=\"1050\" width=\"800\" height=\"200\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-12\"><dc:Bounds x=\"100\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-13\"><dc:Bounds x=\"250\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-14\"><dc:Bounds x=\"450\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-15\"><dc:Bounds x=\"650\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-12-_jbpm-unique-13\"><di:waypoint x=\"150\" y=\"100\"/><di:waypoint x=\"250\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-13-_jbpm-unique-14\"><di:waypoint x=\"350\" y=\"100\"/><di:waypoint x=\"450\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-14-_jbpm-unique-15\"><di:waypoint x=\"550\" y=\"100\"/><di:waypoint x=\"650\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-18\"><dc:Bounds x=\"600\" y=\"1500\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-19\"><dc:Bounds x=\"125\" y=\"1950\" width=\"1000\" height=\"200\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-20\"><dc:Bounds x=\"25\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-21\"><dc:Bounds x=\"175\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-22\"><dc:Bounds x=\"375\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-23\"><dc:Bounds x=\"525\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"jbpm-unique-24\"><dc:Bounds x=\"725\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-25\"><dc:Bounds x=\"925\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-20-_jbpm-unique-21\"><di:waypoint x=\"75\" y=\"100\"/><di:waypoint x=\"175\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-21-_jbpm-unique-22\"><di:waypoint x=\"275\" y=\"100\"/><di:waypoint x=\"375\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-22-_jbpm-unique-23\"><di:waypoint x=\"425\" y=\"100\"/><di:waypoint x=\"525\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-23-jbpm-unique-24\"><di:waypoint x=\"625\" y=\"100\"/><di:waypoint x=\"725\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"jbpm-unique-24-_jbpm-unique-25\"><di:waypoint x=\"825\" y=\"100\"/><di:waypoint x=\"925\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-28\"><dc:Bounds x=\"600\" y=\"2400\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-29\"><dc:Bounds x=\"225\" y=\"2850\" width=\"800\" height=\"200\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-30\"><dc:Bounds x=\"100\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-31\"><dc:Bounds x=\"250\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-32\"><dc:Bounds x=\"450\" y=\"75\" width=\"100\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-33\"><dc:Bounds x=\"650\" y=\"75\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-30-_jbpm-unique-31\"><di:waypoint x=\"150\" y=\"100\"/><di:waypoint x=\"250\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-31-_jbpm-unique-32\"><di:waypoint x=\"350\" y=\"100\"/><di:waypoint x=\"450\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-32-_jbpm-unique-33\"><di:waypoint x=\"550\" y=\"100\"/><di:waypoint x=\"650\" y=\"100\"/></bpmndi:BPMNEdge><bpmndi:BPMNShape bpmnElement=\"_jbpm-unique-36\"><dc:Bounds x=\"600\" y=\"0\" width=\"50\" height=\"50\"/></bpmndi:BPMNShape><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-0-_jbpm-unique-1\"><di:waypoint x=\"625\" y=\"50\"/><di:waypoint x=\"625\" y=\"150\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-1-_jbpm-unique-10\"><di:waypoint x=\"625\" y=\"350\"/><di:waypoint x=\"625\" y=\"450\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-10-_jbpm-unique-11\"><di:waypoint x=\"625\" y=\"950\"/><di:waypoint x=\"625\" y=\"1050\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-11-_jbpm-unique-18\"><di:waypoint x=\"625\" y=\"1250\"/><di:waypoint x=\"625\" y=\"1350\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-18-_jbpm-unique-19\"><di:waypoint x=\"625\" y=\"1850\"/><di:waypoint x=\"625\" y=\"1950\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-19-_jbpm-unique-28\"><di:waypoint x=\"625\" y=\"2150\"/><di:waypoint x=\"625\" y=\"2250\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-28-_jbpm-unique-29\"><di:waypoint x=\"625\" y=\"2750\"/><di:waypoint x=\"625\" y=\"2850\"/></bpmndi:BPMNEdge><bpmndi:BPMNEdge bpmnElement=\"_jbpm-unique-29-_jbpm-unique-36\"><di:waypoint x=\"625\" y=\"3050\"/><di:waypoint x=\"625\" y=\"3150\"/></bpmndi:BPMNEdge></bpmndi:BPMNPlane></bpmndi:BPMNDiagram></definitions>\r\n');

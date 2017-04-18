@@ -40,7 +40,6 @@ def get_token(url, client_secret):
                  client_secret=client_secret,
                  )
     content = do_request(url, datas, des_key)
-    # print content
     token = json.loads(content['res_data'])
     return token
 
@@ -990,12 +989,11 @@ def post(data_identity):
             token = get_token(dataocean_url_grant, client_secret)
             req_data.update({"access_token": token["access_token"]})
             content = do_request(dataocean_url_data, req_data, des_key)
-            # print content
-        print content
+        # print content
         data.update({"res_data": content})
 
     except Exception, e:
-        print e.message
+        # print e.message
         data.update({
             'status': 0,
             'message': e.message

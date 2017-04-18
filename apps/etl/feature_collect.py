@@ -58,13 +58,14 @@ class CollectFeature(object):
                     '%s:start_time' % calling_interface]
                 logger.info("feature call use_time:\n%s" % self.use_time)
                 if self.use_time['%s:use_time' % calling_interface] > cons.ASYNC_CALL_OVERTIME:
+                    self.delete_async_cache()
                     raise AsyncCallInterfaceTimeout
                 continue
             except Exception as e:
                 import traceback
                 traceback.print_exc()
                 self.delete_async_cache()
-                raise Exception(e.message)
+                raise e
 
         if self.feature_list:
             time.sleep(10)

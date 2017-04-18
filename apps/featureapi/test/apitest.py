@@ -56,7 +56,7 @@ def feature_post():
                 # 'graduate_college_check',
                 # 'has_negative_info',
                 # 'income_expense_comparison',#nodata
-                'income_level',
+                # 'income_level',
                 # 'industry_change_count',
                 # 'is_court_shixin',
                 # 'is_court_zhixing',

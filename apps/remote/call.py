@@ -23,6 +23,7 @@ from apps.etl.context import CacheContext, ArgsContext, ApplyContext, PortraitCo
 from apps.datasource.models import DsInterfaceInfo
 from vendor.errors.remote_error import *
 from vendor.errors.contact_error import *
+from vendor.utils.constant import cons
 
 logger = logging.getLogger('apps.remote')
 
@@ -56,7 +57,7 @@ class DataPrepare(object):
             self.is_cache = True
             ret_data = data[self.data_identity]['origin_data']
             logger.info('Find cache_base data_identity:%s data:\n%s' % (self.data_identity, ret_data))
-            if not ret_data and self.collect_type != 'ShuntCourier':
+            if not ret_data and self.collect_type != cons.SHUNT_TYPE:
                 self.cache_base.delete_cache(self.data_identity)
         return ret_data
 
@@ -126,12 +127,9 @@ class DataPrepare(object):
 
     def get_origin_data_asyns(self, data_prams):
         """异步获取数据"""
-        print 'async request-----start', data_prams
-
-        print 'data_prams--------',data_prams
         if isinstance(data_prams, list):
-            logger.info("data_identity:%s argument is a list , multiple async requests will be performed" % self.data_identity)
-            self.cache_base.smembers_async_args(self.data_identity)
+            logger.info(
+                "data_identity:%s argument is a list , multiple async requests will be performed" % self.data_identity)
             for flag, prams in data_prams:
                 redis_cache = {u'%s' % self.is_list_args_to_real: u'%s' % prams[self.is_list_args_to_real]}
                 self.cache_base.sadd_async_args(self.data_identity, redis_cache)
@@ -252,7 +250,7 @@ class AsyncCallback(CsrfExemptMixin, View):
             logger.info("Async callback receive:\n%s" % body)
             apply_id = body.get('apply_id')
             data_identity = body.get('data_identity')
-            parm_dict = body.get('request_parms')
+            parm_dict = body.get('req_data')
             if not (apply_id and data_identity and parm_dict):
                 logger.error("async callback function request pattern error, body:%s" % body)
                 raise Exception("async callback function request pattern error, body:%s" % body)

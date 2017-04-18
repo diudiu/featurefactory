@@ -49,7 +49,7 @@ def post(url, data_identity, req_data, apply_id):
     data = {
         "data_identity": data_identity,
         "apply_id": apply_id,
-        'request_parms': req_data.copy()
+        'req_data': req_data.copy()
     }
     try:
         if data_identity == 'cc_car_credit':
@@ -1013,16 +1013,16 @@ if __name__ == '__main__':
         # {'data_identity':'personal_info',
         #  'request_parms':[{u'id_card_name': u'\u4e01\u4e8c', u'id_card_code': u'132600199306251568'}]
         #  },
-        # {'data_identity': 'high_way_over_load',
-        #  'request_parms': [{u'start_time': u'', u'high_way_period': u'4', u'license_plate': u'\u8c6bSFD777', u'end_time': u''},
-        #  {u'start_time': u'', u'high_way_period': u'4', u'license_plate': u'\u8c6bSFD888', u'end_time': u''}]
-        # #  },
+        {'data_identity': 'high_way_over_load',
+         'request_parms': [{u'start_time': u'', u'high_way_period': u'4', u'license_plate': u'\u8c6bSFD777', u'end_time': u''},
+         {u'start_time': u'', u'high_way_period': u'4', u'license_plate': u'\u8c6bSFD888', u'end_time': u''}]
+         },
         # {'data_identity': 'unicom_finance_portrait_s',
         #  'request_parms': [{'mobile': '18511116277'}]
         #  },
-        {'data_identity': 'cc_credit',
-         'request_parms': [{'mobile': '18511116277'}]
-         },
+        # {'data_identity': 'cc_credit',
+        #  'request_parms': [{'mobile': '18511116277'}]
+        #  },
     ]
     # test_data = test_data[0:1]
     for data in test_data:
