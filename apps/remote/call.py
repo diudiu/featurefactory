@@ -168,7 +168,6 @@ class DataPrepare(object):
         else:
             data_prams = eval(ds_conf.must_data % self.parm_dict)
         logger.info('prams:%s' % data_prams)
-        print data_prams,self.is_list_args,self.is_list_args_to_real
         return data_prams
 
     def do_request(self, data):
