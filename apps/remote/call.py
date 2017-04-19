@@ -75,25 +75,8 @@ class DataPrepare(object):
             ds_conf = ds_conf[0]
         self.is_async = ds_conf.is_async
         logger.info('data_identity request is_async: %s' % self.is_async)
-        self.prepare_parms()
+        data_prams = self.prepare_parms(ds_conf)
         self.url = ds_conf.data_source.backend_url + ds_conf.route + self.data_identity + '/'
-        if self.is_list_args:
-            data_prams = []
-            for i in self.parm_dict[self.is_list_args]:
-                parm_dict = self.parm_dict.copy()
-                parm_dict.update({self.is_list_args: i})
-                is_list_args_to_real = re.search(r"'(\w+)':\s*'%%\(%s\)s'" % self.is_list_args, ds_conf.must_data)
-                if not is_list_args_to_real:
-                    logger.error("The key is not found in config:%s, the value code string is %s"
-                                 % (ds_conf.must_data, self.is_list_args))
-                    raise InterfaceInfoTableConfigError
-                self.is_list_args_to_real = is_list_args_to_real.group(1)
-                prams = eval(ds_conf.must_data % parm_dict)
-                data_prams.append([i, prams])
-        else:
-            data_prams = eval(ds_conf.must_data % self.parm_dict)
-
-        logger.info('prams:%s' % data_prams)
         if self.is_async:
             if self.data_identity in self.cache_base.smembers_async():
                 DoingAsyncCallInterface.data_identify = self.data_identity
@@ -156,7 +139,7 @@ class DataPrepare(object):
         clear_data = cleaner.worked()
         return clear_data
 
-    def prepare_parms(self):
+    def prepare_parms(self, ds_conf):
         arguments = self.argument_base.load()
         for key in self.parm_keys:
             value = arguments.get(key, None)
@@ -169,6 +152,24 @@ class DataPrepare(object):
             self.parm_dict.update({
                 key: value
             })
+        if self.is_list_args:
+            data_prams = []
+            for i in self.parm_dict[self.is_list_args]:
+                parm_dict = self.parm_dict.copy()
+                parm_dict.update({self.is_list_args: i})
+                is_list_args_to_real = re.search(r"'(\w+)':\s*'%%\(%s\)s'" % self.is_list_args, ds_conf.must_data)
+                if not is_list_args_to_real:
+                    logger.error("The key is not found in config:%s, the value code string is %s"
+                                 % (ds_conf.must_data, self.is_list_args))
+                    raise InterfaceInfoTableConfigError
+                self.is_list_args_to_real = is_list_args_to_real.group(1)
+                prams = eval(ds_conf.must_data % parm_dict)
+                data_prams.append([i, prams])
+        else:
+            data_prams = eval(ds_conf.must_data % self.parm_dict)
+        logger.info('prams:%s' % data_prams)
+        print data_prams,self.is_list_args,self.is_list_args_to_real
+        return data_prams
 
     def do_request(self, data):
         if 'int(time.time())' in data.values():
