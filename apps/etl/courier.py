@@ -91,7 +91,7 @@ class Courier(object):
         for data_identity in self.data_identity_list:
             data = self.get_useful_data(data_identity)
             if not data:
-                logger.error('Get origin data error, data_identity is : %s' %data_identity)
+                logger.error('Get origin data error, data_identity is : %s' % data_identity)
 
                 raise OriginDataGetError
             self.useful_data.update({data_identity: data})
