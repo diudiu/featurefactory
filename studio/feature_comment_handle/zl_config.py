@@ -7,7 +7,7 @@ config = dict(
         "json_path_list": [("age", "$..content.age", "f_assert_not_null->f_assert_must_digit_or_float")],
         "f_map_and_filter_chain": "m_get_seq_index_value(0)",
         "reduce_chain": "",
-        "l_map_and_filter_chain": ''
+        "l_map_and_filter_chain": ""
     },
 
     apply_register_duration_config={
@@ -20,7 +20,7 @@ config = dict(
         ],
         "f_map_and_filter_chain": "m_to_slice(0,10)->f_assert_seq0_gte_seq1->m_get_mon_sub(2)",
         "reduce_chain": "",
-        "l_map_and_filter_chain": ''
+        "l_map_and_filter_chain": ""
     },
 
     application_on_config={

@@ -206,6 +206,48 @@ def m_to_bool(seq, args=None):
     return seq
 
 
+def m_to_recruitment(seq, args=None):
+    """
+        返回bool值0/1
+        :param seq: 任意值
+        :param args: 可不传 传时seq==args为1
+        :return:    0/1
+        example：
+                :seq  '11'
+                :args   '00'
+                :return  0
+    """
+    if seq:
+        seq = "统招"
+    else:
+        seq = "非统招"
+    return seq
+
+
+def m_to_bool2_0(seq, args=None):
+    """
+        返回bool值0/1
+        :param seq: 任意值
+        :param args: 可不传 传时seq==args为1
+        :return:    0/1
+        example：
+                :seq  '11'
+                :args   '00'
+                :return  0
+    """
+    if args is not None:
+        if seq == args:
+            seq = "是"
+        else:
+            seq = "否"
+    else:
+        if seq:
+            seq = "是"
+        else:
+            seq = "否"
+    return seq
+
+
 def m_check_x_in_y(seq, args):
     """
         判断x是否在y中 返回0/1
@@ -221,6 +263,24 @@ def m_check_x_in_y(seq, args):
         seq = 1
     else:
         seq = 0
+    return seq
+
+
+def m_folk_x_in_y(seq, args):
+    """
+        判断x是否在y中 返回0/1
+        :param seq: 字符串、元组、字典、列表
+        :param args: 判断元素
+        :return:    0/1
+        example：
+                :seq  '汉族'
+                :args   '汉'
+                :return  1
+    """
+    if args in seq:
+        seq = "汉族"
+    else:
+        seq = "少数民族"
     return seq
 
 
@@ -541,6 +601,38 @@ def m_city_name_to_level(city_name):
     return seq
 
 
+def m_city_name_to_level2_0(city_name):
+    """
+       获取城市名所对应的level
+        :param city_name: 城市
+        :return:    code
+        example：
+                :address  '北京'
+                :return  1
+    """
+    ccf = CityCodeField.objects.filter(
+        city_name_cn=city_name,
+        is_delete=False
+    )
+    if not ccf:
+        raise FeatureProcessError('not find %s level config in database table' % city_name)
+    company_addr_city_level = ccf[0].city_level
+    if not str(company_addr_city_level).isdigit():
+        raise FeatureProcessError('%s city_level config error in database table' % city_name)
+    seq = int(company_addr_city_level)
+    if seq == 1:
+        seq = "一线"
+    elif seq == 2:
+        seq = "二线"
+    elif seq == 3:
+        seq = "三线"
+    elif seq == 4:
+        seq = "四线"
+    elif seq == 5:
+        seq = "其他"
+    return seq
+
+
 def m_city_name_to_code(city_name):
     """
        获取城市名所对应的Code
@@ -677,6 +769,16 @@ def m_now_industry_code(seq):
             tmp = i[1]
             break
     return tmp
+
+
+def m_industry_code_to_str(seq, feature_name):
+    feature_code = FeatureCodeMapping.objects.filter(
+        feature_name=feature_name,
+    )
+    num_map = {int(conf.mapped_value): conf.feature_desc for conf in feature_code}
+    for key, value in num_map.iteritems():
+        if seq == key:
+            return value
 
 
 def m_r_to_now_work_time(seq):
@@ -901,7 +1003,7 @@ def m_to_code(seq, args=None):
         is_delete=False
     )
     res = ''
-    num_map = {int(conf.mapped_value): [conf.unitary_value, conf.dual_value, conf.arithmetic_type] for conf in fcm}
+    num_map = {int(conf.mapped_value): [conf.unitary_value, conf.dual_value, conf.arithmetic_type, conf.feature_desc] for conf in fcm}
     for key, value in num_map.iteritems():
         arithmetic_type = value[2]
         if arithmetic_type == '[)':
@@ -930,7 +1032,7 @@ def m_to_code(seq, args=None):
                 break
         elif arithmetic_type == '==':
             if str(seq) == value[0]:
-                res = key
+                res = value[3]
                 break
     if res in ('', None):
         raise FeatureProcessError("don't find %s=%s code value" % (feature_name, seq))
@@ -1051,6 +1153,78 @@ def m_telecom_online_time(seq):
     return seq
 
 
+def m_yd_online_time2_0(seq):
+    """
+       获取移动手机在网时长所对应的code
+
+        :param seq: 移动在网时长区间
+        :return:    code
+
+        example：
+                :seq: (0,3)
+                :return  1
+    """
+    if not seq:
+        return []
+    if seq[0] in ["(0,3)", "[3,6)"]:
+        seq = ["(0_6)"]
+    elif seq[0] in ["[6,12)"]:
+        seq = ["[6_12)"]
+    elif seq[0] in ["[12,18)", "[18,24]"]:
+        seq = ["[12_24)"]
+    elif seq[0] in ["(24,+)"]:
+        seq = ["[24_+)"]
+    return seq
+
+
+def m_unicom_online_time2_0(seq):
+    """
+       获取联通手机在网时长所对应的code
+
+        :param seq: 联通在网时长区间
+        :return:    code
+
+        example：
+                :seq: [0-1]
+                :return  1
+    """
+    if not seq:
+        return []
+    if seq[0] in ["[0-1]", "(1-2]", "[3-6]"]:
+        seq = ["(0_6)"]
+    elif seq[0] in ["[7-12]"]:
+        seq = ["[6_12)"]
+    elif seq[0] in ["[13-24]"]:
+        seq = ["[12_24)"]
+    elif seq[0] in ["[25-36]", "[37,+)"]:
+        seq = ["[24_+)"]
+    return seq
+
+
+def m_telecom_online_time2_0(seq):
+    """
+       获取电信手机在网时长所对应的code
+
+        :param seq: 电信在网时长区间
+        :return:    code
+
+        example：
+                :seq: [0-6)
+                :return  1
+    """
+    if not seq:
+        return []
+    if seq[0] in ["[0-6)"]:
+        seq = ["(0_6)"]
+    elif seq[0] in ["[6-12)"]:
+        seq = ["[6_12)"]
+    elif seq[0] in ["[12-24)"]:
+        seq = ["[12_24)"]
+    elif seq[0] in ["[24-36)", "[36,+]"]:
+        seq = ["[24_+)"]
+    return seq
+
+
 def m_lp_income(seq, discount):
     """
        获取猎聘返回的用户年收入,即最近一份工作的月薪个数与月薪的乘积,乘以折扣比率,保留两位小数
@@ -1112,6 +1286,18 @@ def m_to_str(seq):
             res.append(str(i))
         return res
     return str(seq)
+
+
+def m_code_to_collage_type(seq):
+    if seq == '1':
+        seq = "专科"
+    elif seq == '2':
+        seq = "普本"
+    elif seq == '3':
+        seq = "211院校"
+    elif seq == '4':
+        seq = "985院校"
+    return seq
 
 
 def m_get_income_expense_comparison(seq, args=None):
