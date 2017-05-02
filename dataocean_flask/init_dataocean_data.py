@@ -75,19 +75,21 @@ def insert_mongo(data_identity, req_data, res_data):
                     request=req_id,
                     created_time=created_time)
     res_id = res_col.insert(response)
-    print "hstr:%s do_%s_request--id:%s do_%s_response--id:%s" % (hstr, req_data['data_identity'], req_id, req_data['data_identity'], res_id)
+    print "hstr:%s do_%s_request--id:%s do_%s_response--id:%s" % (
+    hstr, req_data['data_identity'], req_id, req_data['data_identity'], res_id)
 
 
 if __name__ == '__main__':
     path = os.path.dirname(__file__)
+    # path='/home/shulifang/www/dataocean_debug/tests'
     files = os.listdir(path)
     for i in files:
         if i.startswith('dataocean_test_data'):
             f = import_module(i.split('.')[0])
             data = f.data
             for data_identify, lists in data.items():
-                if data_identify == 'education_review_s':
-                # if True:
+                # if data_identify == 'education_review_s':
+                if True:
                     for req_res in lists:
                         req_data = req_res['req_data']
                         res_data = req_res['res_data']
@@ -95,14 +97,3 @@ if __name__ == '__main__':
                         for k in req_data:
                             tmp_req_data[u'%s' % k] = u'%s' % req_data[k]
                         insert_mongo(data_identify, tmp_req_data, res_data)
-
-            # for fecture, v in data.items():
-            #     data_identify = v['data_identify']
-            #     lists = v['req_res']
-            #     for req_res in lists:
-            #         req_data = req_res['req_data']
-            #         res_data = req_res['res_data']
-            #         tmp_req_data = {}
-            #         for k in req_data:
-            #             tmp_req_data[u'%s' % k] = u'%s' % req_data[k]
-            #         insert_mongo(data_identify, tmp_req_data, res_data)
