@@ -15,8 +15,8 @@ def load_feature_config():
     file_list = os.listdir(path)
     config = {}
     for file in file_list:
-        if file.endswith('_config.py'):
-        # if file.endswith('_features.py'):
+        # if file.endswith('_config.py'):
+        if file.endswith('_features.py'):
             title = 'studio.feature_comment_handle.%s.config' % file[:-3]
             configs = import_string(title)
             config.update(configs)
