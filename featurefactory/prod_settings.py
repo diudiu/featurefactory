@@ -18,47 +18,43 @@ PROJECT_PATH = os.path.dirname(CURRENT_PATH)
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'featurefactory',
-        'PASSWORD': '123456',
-        'USER': 'dev',
-        'HOST': 'mysql_master',
-        'PORT': '3306',
+        'NAME': os.getenv('MYSQL_DB_NAME'),
+        'PASSWORD': os.getenv('MYSQL_PWD'),
+        'USER': os.getenv('MYSQL_USER'),
+        'HOST': os.getenv('MYSQL_HOST'),
+        'PORT': os.getenv('MYSQL_PORT'),
     },
 }
 if 'test' in sys.argv:
     DATABASES['default'] = {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'featurefactory',
-        'PASSWORD': '123456',
-        'USER': 'root',
-        'HOST': 'mysql_master',
-        'PORT': '3306',
+        'NAME': os.getenv('MYSQL_DB_NAME'),
+        'PASSWORD': os.getenv('MYSQL_PWD'),
+        'USER': os.getenv('MYSQL_USER'),
+        'HOST': os.getenv('MYSQL_HOST'),
+        'PORT': os.getenv('MYSQL_PORT'),
         'TEST': {
             'CHARSET': 'utf8',
             'COLLATION': 'utf8_general_ci',
         },
     }
-
     TEST_RUNNER = 'django.test.runner.DiscoverRunner'
-
 # redis
 REDIS_CONFIG = {
     'default': {
-        'host': 'redis_master',
-        'port': 6379,
-        'password': 'syph@dev',
-        'db': 7,
+        'host': os.getenv('REDIS_HOST'),
+        'port': os.getenv('REDIS_PORT'),
+        'password': os.getenv('REDIS_PWD'),
+        'db': os.getenv('REDIS_DB'),
         'connect_timeout': 1,
     }
 }
-
-
 # mongodb
-MONGODB_HOST = 'mongodb_primary'
-MONGODB_PORT = 27017
-MONGODB_NAME = 'feature_storage'
-MONGODB_USERNAME = 'feature_storage'
-MONGODB_PASSWORD = 'feature_storage'
+MONGODB_HOST = os.getenv('MONGODB_HOST')
+MONGODB_PORT = os.getenv('MONGODB_PORT')
+MONGODB_NAME = os.getenv('MONGODB_NAME')
+MONGODB_USERNAME = os.getenv('MONGODB_USER')
+MONGODB_PASSWORD = os.getenv('MONGODB_PWD')
 
 # logging
 log_path = os.path.join(BASE_DIR, 'logs')
