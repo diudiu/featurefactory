@@ -18,21 +18,21 @@ PROJECT_PATH = os.path.dirname(CURRENT_PATH)
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.getenv('MYSQL_DB_NAME'),
-        'PASSWORD': os.getenv('MYSQL_PWD'),
-        'USER': os.getenv('MYSQL_USER'),
-        'HOST': os.getenv('MYSQL_HOST'),
-        'PORT': os.getenv('MYSQL_PORT'),
+        'NAME': os.getenv('MYSQL_DB_NAME', 'featurefactory'),
+        'PASSWORD': os.getenv('MYSQL_PWD', '123456'),
+        'USER': os.getenv('MYSQL_USER', 'dev'),
+        'HOST': os.getenv('MYSQL_HOST', 'mysql_master'),
+        'PORT': os.getenv('MYSQL_PORT', '3306'),
     },
 }
 if 'test' in sys.argv:
     DATABASES['default'] = {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.getenv('MYSQL_DB_NAME'),
-        'PASSWORD': os.getenv('MYSQL_PWD'),
-        'USER': os.getenv('MYSQL_USER'),
-        'HOST': os.getenv('MYSQL_HOST'),
-        'PORT': os.getenv('MYSQL_PORT'),
+        'NAME': os.getenv('MYSQL_DB_NAME', 'featurefactory'),
+        'PASSWORD': os.getenv('MYSQL_PWD', '123456'),
+        'USER': os.getenv('MYSQL_USER', 'dev'),
+        'HOST': os.getenv('MYSQL_HOST', 'mysql_master'),
+        'PORT': os.getenv('MYSQL_PORT', '3306'),
         'TEST': {
             'CHARSET': 'utf8',
             'COLLATION': 'utf8_general_ci',
@@ -42,19 +42,19 @@ if 'test' in sys.argv:
 # redis
 REDIS_CONFIG = {
     'default': {
-        'host': os.getenv('REDIS_HOST'),
-        'port': os.getenv('REDIS_PORT'),
-        'password': os.getenv('REDIS_PWD'),
-        'db': os.getenv('REDIS_DB'),
+        'host': os.getenv('REDIS_HOST', 'redis_master'),
+        'port': os.getenv('REDIS_PORT', '6379'),
+        'password': os.getenv('REDIS_PWD', 'syph@dev'),
+        'db': os.getenv('REDIS_DB', '1'),
         'connect_timeout': 1,
     }
 }
 # mongodb
-MONGODB_HOST = os.getenv('MONGODB_HOST')
-MONGODB_PORT = os.getenv('MONGODB_PORT')
-MONGODB_NAME = os.getenv('MONGODB_NAME')
-MONGODB_USERNAME = os.getenv('MONGODB_USER')
-MONGODB_PASSWORD = os.getenv('MONGODB_PWD')
+MONGODB_HOST = os.getenv('MONGODB_HOST', 'mongodb_primary')
+MONGODB_PORT = os.getenv('MONGODB_PORT', '27017')
+MONGODB_NAME = os.getenv('MONGODB_NAME', 'feature_storage')
+MONGODB_USERNAME = os.getenv('MONGODB_USER', 'feature_storage')
+MONGODB_PASSWORD = os.getenv('MONGODB_PWD', 'feature_storage')
 
 # logging
 log_path = os.path.join(BASE_DIR, 'logs')
