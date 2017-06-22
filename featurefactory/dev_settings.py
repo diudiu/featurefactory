@@ -20,28 +20,28 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         # 'NAME': 'featuretemp',
         'NAME': 'featurefactory',
-        'PASSWORD': '',
-        'USER': 'root',
-        'HOST': '192.168.1.196',
-        'PORT': '8077',
+        'PASSWORD': '123456',
+        'USER': 'dev',
+        'HOST': '192.168.1.198',
+        'PORT': '3306',
     },
 }
-if 'test' in sys.argv:
-    DATABASES['default'] = {
-        'ENGINE': 'django.db.backends.mysql',
-        # 'NAME': 'featuretemp',
-        'NAME': 'featurefactory',
-        'PASSWORD': '',
-        'USER': 'root',
-        'HOST': '192.168.1.196',
-        'PORT': '8077',
-        'TEST': {
-            'CHARSET': 'utf8',
-            'COLLATION': 'utf8_general_ci',
-        },
-    }
+# if 'test' in sys.argv:
+#     DATABASES['default'] = {
+#         'ENGINE': 'django.db.backends.mysql',
+#         # 'NAME': 'featuretemp',
+#         'NAME': 'featurefactory',
+#         'PASSWORD': '',
+#         'USER': 'root',
+#         'HOST': '192.168.1.196',
+#         'PORT': '8077',
+#         'TEST': {
+#             'CHARSET': 'utf8',
+#             'COLLATION': 'utf8_general_ci',
+#         },
+#     }
 
-    TEST_RUNNER = 'django.test.runner.DiscoverRunner'
+    # TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
 # redis
 REDIS_CONFIG = {

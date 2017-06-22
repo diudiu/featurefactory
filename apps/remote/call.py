@@ -11,7 +11,6 @@ import logging
 import requests
 import json
 import re
-import time
 
 from braces.views import CsrfExemptMixin
 from apps.featureapi.response import JSONResponse
@@ -24,6 +23,8 @@ from apps.datasource.models import DsInterfaceInfo
 from vendor.errors.remote_error import *
 from vendor.errors.contact_error import *
 from vendor.utils.constant import cons
+from vendor.utils.encrypt import Cryption
+import config
 
 logger = logging.getLogger('apps.remote')
 
@@ -38,11 +39,16 @@ class DataPrepare(object):
         self.parm_keys = args_list
         self.parm_dict = {}
         self.url = ''
+        self.token_url = ''
+        self.access_token = ''
         self.is_list_args = ''
         self.is_list_args_to_real = ''
         self.is_async = 0
         self.is_cache = False
         self.collect_type = collect_type
+        self.des_key = config.DES_KEY
+        self.client_id = config.CLIENT_ID
+        self.client_secret = config.CLIENT_SECRET
 
     def get_original_data(self):
         ret_data = self.get_data_from_db()
@@ -76,7 +82,8 @@ class DataPrepare(object):
         self.is_async = ds_conf.is_async
         logger.info('data_identity request is_async: %s' % self.is_async)
         data_prams = self.prepare_parms(ds_conf)
-        self.url = ds_conf.data_source.backend_url + ds_conf.route + self.data_identity + '/'
+        self.url = ds_conf.data_source.backend_url + ds_conf.route + '/'
+        self.token_url = ds_conf.data_source.backend_url + "/oauth2/token/"
         if self.is_async:
             if self.data_identity in self.cache_base.smembers_async():
                 DoingAsyncCallInterface.data_identify = self.data_identity
@@ -133,7 +140,12 @@ class DataPrepare(object):
         if ds_conf.method == 'LOCALE':
             origin_data = self.do_local_request(ds_conf, data_prams)
         elif ds_conf.method == 'REMOTE':
-            origin_data = self.do_request(data_prams)
+            self.set_token()
+            data_prams.update({
+                "data_identity": self.data_identity,
+                "access_token": self.access_token,
+            })
+            origin_data = self.do_request(self.url, data_prams)
 
         cleaner = DataClean(origin_data, ds_conf.data_origin_type)
         clear_data = cleaner.worked()
@@ -144,7 +156,7 @@ class DataPrepare(object):
         for key in self.parm_keys:
             value = arguments.get(key, None)
             if not value:
-                logger.error('Stream in call class ,Get prepare_parms error, miss parms %s, data_identity is : %s'
+                logger.error('Stream in call class ,Get prepare_prams error, miss prams %s, data_identity is : %s'
                              % (key, self.data_identity))
                 raise OriginDataGetParmsMiss
             if isinstance(value, list):
@@ -170,21 +182,57 @@ class DataPrepare(object):
         logger.info('prams:%s' % data_prams)
         return data_prams
 
-    def do_request(self, data):
-        if 'int(time.time())' in data.values():
-            for k, v in data.items():
-                if v == 'int(time.time())':
-                    data.update({k: eval(v)})
-        data = {
-            "client_token": "test_lp_syph_code",
-            "req_data": data
+    def do_token_request(self, url, data):
+        json_data = json.dumps(data, encoding="UTF-8", ensure_ascii=False)
+        req_data = Cryption.aes_base64_encrypt(json_data, self.des_key)
+        data_bag = {
+            "req_data": req_data,
+            "client": self.client_id
         }
-        logger.info('From REMOTE get data, data_identity:%s param:%s' % (self.data_identity, data))
-        response = requests.post(self.url, json.dumps(data))
+        post_data = json.dumps(
+            data_bag,
+            encoding="UTF-8",
+            ensure_ascii=False
+        )
+        response = requests.post(url, post_data)
         content = response.content
         content = json.loads(content)
-        logger.info('data_identity:%s, REMOTE interface return:\n%s' % (self.data_identity, content))
+        if content.get('res_data', None):
+            content['res_data'] = Cryption.aes_base64_decrypt(content['res_data'], self.des_key)
+        result = json.loads(content['res_data'])
+        return result
+
+    def do_request(self, url, data):
+        json_data = json.dumps(data, encoding="UTF-8", ensure_ascii=False)
+        req_data = Cryption.aes_base64_encrypt(json_data, self.des_key)
+        data_bag = {
+            "req_data": req_data,
+            "client": self.client_id
+        }
+        post_data = json.dumps(
+            data_bag,
+            encoding="UTF-8",
+            ensure_ascii=False
+        )
+        response = requests.post(url, post_data)
+        content = response.content
+        content = json.loads(content)
+        if content.get('res_data', None):
+            content['res_data'] = Cryption.aes_base64_decrypt(content['res_data'], self.des_key)
+        result = json.loads(content['res_data'])
+        content['res_data'] = result
         return content
+
+    def set_token(self):
+        grant_type = "client_credentials"
+        url = self.token_url
+        data = dict(
+            grant_type=grant_type,
+            client_secret=self.client_secret,
+        )
+        res = self.do_token_request(url, data)
+        access_token = res['access_token']
+        self.access_token = access_token.encode('utf-8')
 
     @staticmethod
     def do_local_request(ds_conf, data_prams):
@@ -213,9 +261,9 @@ class AsyncCallback(CsrfExemptMixin, View):
             clear_data = cleaner.worked()
             is_list_args_value = ''
             for i in cache_base.smembers_async_args(data_identity):
-                logger.info('redis_chache_args:%s, request_args:%s' % (eval(i).items(), parm_dict.items()))
+                logger.info('redis_cache_args:%s, request_args:%s' % (eval(i).items(), parm_dict.items()))
                 if set(eval(i).items()).issubset(set(parm_dict.items())):
-                    logger.info("remove data_identify:%s redis_chache_args:%s" % (data_identity, i))
+                    logger.info("remove data_identify:%s redis_cache_args:%s" % (data_identity, i))
                     is_list_args_value = eval(i).values()[0]
                     cache_base.srem_async_args(data_identity, i)
                     logger.info("remove redis_cache_args: %s" % i)

@@ -36,14 +36,13 @@ def audit_task(base_data):
         cons.RESPONSE_REQUEST_MESSAGE: ResponseCode.message(ResponseCode.FEATURE_SUCCESS)
     }
     try:
-        logger.info('\n============Streams in ASYNC mission control center,Collecting feature now===========')
+        logger.info('\n===========Streams in ASYNC mission control center,Collecting feature now==========')
         ret_data = mission_control(base_data)
         data.update({
             'client_code': base_data.get('client_code', None),
             'apply_id': base_data.get('apply_id', None),
             'ret_msg': ret_data
         })
-
     except ServerError as e:
         data = {
             cons.RESPONSE_REQUEST_STATUS: e.status,
@@ -69,7 +68,7 @@ def mission_control(base_data):
     if collecter.error_list:
         pass
     ret_data = collecter.feature_ret
-    logger.info('\n============feature compared completed=========================================\n')
+    logger.info('\n==========feature compared completed==========\n')
     logger.info('All feature is %s', ret_data)
     return ret_data
 

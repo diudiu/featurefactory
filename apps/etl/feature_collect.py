@@ -9,7 +9,7 @@
 """
 import time
 import logging
-
+import traceback
 from apps.etl.context import CacheContext
 from apps.etl.courier import Courier
 from vendor.errors.contact_error import *
@@ -35,8 +35,7 @@ class CollectFeature(object):
         self.cache_base.delete_async()
 
     def get_feature_value(self):
-        logger.info('Stream in feature_collect function name : get_feature_value\nFeature list :%s' %
-                    self.feature_list)
+        logger.info('Stream in feature_collect function name : get_feature_value\nFeature list :%s' % self.feature_list)
         feature_list = tuple(self.feature_list)
         for feature_name in feature_list:
             try:
@@ -62,7 +61,6 @@ class CollectFeature(object):
                     raise AsyncCallInterfaceTimeout
                 continue
             except Exception as e:
-                import traceback
                 traceback.print_exc()
                 self.delete_async_cache()
                 raise e
