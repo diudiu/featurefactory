@@ -1338,6 +1338,19 @@ def m_get_income_expense_comparison(seq, args=None):
     return [ratio]
 
 
+def m_to_nature_card(seq):
+    code = seq
+    cmap = {
+        "00": "UNKNOWN",
+        "01": "借记卡",
+        "02": "贷记卡",
+        "03": "准贷记卡",
+        "04": "借贷合一卡",
+        "05": "预付费卡",
+    }
+    return cmap[code]
+
+
 if __name__ == '__main__':
     data = [
         {

@@ -20,10 +20,10 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         # 'NAME': 'featuretemp',
         'NAME': 'featurefactory',
-        'PASSWORD': '123456',
-        'USER': 'dev',
-        'HOST': '192.168.1.198',
-        'PORT': '3306',
+        'PASSWORD': '',
+        'USER': 'root',
+        'HOST': '192.168.1.196',
+        'PORT': '8077',
     },
 }
 # if 'test' in sys.argv:

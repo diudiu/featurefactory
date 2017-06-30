@@ -94,8 +94,10 @@ class DataPrepare(object):
 
     def get_origin_data_sync(self, data_prams, ds_conf):
         """同步获取数据"""
+        origin_data = {}
+        local_data = {}
         if isinstance(data_prams, list):
-            origin_data = {}
+
             for flag, prams in data_prams:
                 clear_data = self._get_data_from_interface(ds_conf, prams)
                 if clear_data:
@@ -104,7 +106,7 @@ class DataPrepare(object):
                     logger.warn('Stream in call class ,Get origin data error, data_identity is : %s args:%s' %
                                 (self.data_identity, prams))
         else:
-            origin_data = self._get_data_from_interface(ds_conf, data_prams)
+            local_data = self._get_data_from_interface(ds_conf, data_prams)
         if origin_data:
             self.cache_base.kwargs.update({
                 self.data_identity: {
@@ -113,7 +115,9 @@ class DataPrepare(object):
                 }
             })
             self.cache_base.save()
-        return origin_data
+            return origin_data
+        else:
+            return local_data
 
     def get_origin_data_asyns(self, data_prams):
         """异步获取数据"""
@@ -239,10 +243,10 @@ class DataPrepare(object):
         base_index = ds_conf.data_identity
         data_bases = None
         if base_index == 'apply_data':
-            logger.info('From LOCAL get interface data, data from apply_data')
+            logger.info('From LOCALE get interface data, data from apply_data')
             data_bases = ApplyContext((data_prams.values())[0])
         if base_index == 'portrait_data':
-            logger.info('From LOCAL get interface data, data from portrait_data')
+            logger.info('From LOCALE get interface data, data from portrait_data')
             data_bases = PortraitContext((data_prams.values())[0])
         return data_bases.load() if data_bases else None
 
