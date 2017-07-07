@@ -9,9 +9,13 @@
 """
 import logging
 from bson import ObjectId
+from jsonpath_rw_ext import parse
 
 from apps.common.mongo_handle import MongoBase
 from vendor.utils.cache import RedisX
+from vendor.utils.constant import cons
+from vendor.errors.api_errors import *
+from apps.etl.models import PreFieldInfo
 
 logger = logging.getLogger('apps.etl')
 
@@ -144,6 +148,7 @@ class CacheContext(BaseContext):
         key = self.apply_id + ':' + self.data_identity
         if not self.red.set(key, o_id):
             raise Exception("redis cache_base %s key error!" % key)
+        self.data_identity = ""
 
     def get(self, key):
         """get value for key"""
@@ -251,6 +256,7 @@ class ArgsContext(BaseContext):
     def __init__(self, apply_id, **kwargs):
         super(ArgsContext, self).__init__(apply_id, **kwargs)
         self.args_base = MongoBase(collection_name=BASE_ARGS_NAME)
+        self.arguments = {}
         # self.cache_base = MongoBase(collection_name=CACHE_BASE_NAME)
 
     def load(self):
@@ -274,3 +280,43 @@ class ArgsContext(BaseContext):
             return value
         else:
             return (self.load()).get(key, None)
+
+    def reload(self):
+        self.arguments = {}
+        apply_data = ApplyContext(self.apply_id).load()
+        portrait_data = {}
+        if cons.IS_PORTRAIT_BASE:
+            proposer_id = apply_data.get('proposer_id', None)
+            if not proposer_id:
+                logger.error("Don't find proposer_id in apply_data,apply_id:%s" % self.apply_id)
+                raise ProposerIdMissing
+            portrait_data = PortraitContext(proposer_id).load()
+            if not portrait_data:
+                logger.error("Portrait_data is null in apply_data,proposer_id:%s apply_id:%s"
+                             % (proposer_id, self.apply_id))
+                raise NoPortraitData
+        pre_conf = PreFieldInfo.objects.filter(
+            is_delete=False
+        )
+        full_data = {
+            'apply_data': apply_data,
+            'portrait_data': portrait_data
+        }
+        for pre in pre_conf:
+            self.arguments.update({
+                pre.field_name: self.get_value(full_data[pre.source], pre.path)
+            })
+        self.kwargs.update(self.arguments)
+        self.save()
+
+    @staticmethod
+    def get_value(data, path):
+        path_expr = parse(path)
+        temp = path_expr.find(data)
+        result = []
+        for val in temp:
+            result.append(val.value)
+        if result:
+            return result[0]
+        else:
+            return None

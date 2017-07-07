@@ -2,6 +2,7 @@
 import os
 import sys
 import re
+import time
 import math
 from datetime import datetime
 
@@ -1349,6 +1350,54 @@ def m_to_nature_card(seq):
         "05": "预付费卡",
     }
     return cmap[code]
+
+
+def m_list_average(seq):
+    sum_num = sum(seq)
+    return sum_num / len(seq)
+
+
+def m_get_max(seq):
+    return max(seq)
+
+
+def m_time_to_string_bfm(seq):
+    time_code = seq[0]
+    today = datetime.today()
+    base_time = datetime(today.year, today.month, today.day, 0, 0, 0)
+    base_time_num = int(time.mktime(time.strptime(base_time.strftime("%Y-%m-%d %H:%M:%S"), "%Y-%m-%d %H:%M:%S")))
+    difference = int(time_code) - base_time_num
+    if (difference > 0) and (difference <= 25200):
+        seq = '00:01 - 7:00'
+    elif (difference > 25200) and (difference <= 32400):
+        seq = '7:01 - 9:00'
+    elif (difference > 32400) and (difference <= 41400):
+        seq = '9:01 - 11:30'
+    elif (difference > 41400) and (difference <= 50400):
+        seq = '11:31 - 14:00'
+    elif (difference > 50400) and (difference <= 61200):
+        seq = '14:01 - 17:00'
+    elif (difference > 61200) and (difference <= 79200):
+        seq = '17:01 - 22:00'
+    elif (difference > 79200) and (difference <= 86400):
+        seq = '22:01 - 00:00'
+    else:
+        seq = 'UNKNOWN'
+    return seq
+
+
+def m_first_equal_next(seq):
+    if seq[0] == seq[1]:
+        return "是"
+    else:
+        return "否"
+
+
+def m_first_in_next(seq):
+    if seq[0] in seq[1]:
+        return "是"
+    else:
+        return "否"
 
 
 if __name__ == '__main__':

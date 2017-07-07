@@ -19,6 +19,15 @@ def f_digit_or_float(seq):
     return seq
 
 
+def f_small_than0(seq):
+    res = []
+    for i in seq:
+        if i < 0:
+            continue
+        res.append(i)
+    return res
+
+
 def f_not_null(seq):
     """过滤非空值"""
     seq = filter(lambda x: x not in (None, '', {}, [], ()), seq)

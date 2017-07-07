@@ -95,7 +95,6 @@ class DataPrepare(object):
     def get_origin_data_sync(self, data_prams, ds_conf):
         """同步获取数据"""
         origin_data = {}
-        local_data = {}
         if isinstance(data_prams, list):
 
             for flag, prams in data_prams:
@@ -106,18 +105,18 @@ class DataPrepare(object):
                     logger.warn('Stream in call class ,Get origin data error, data_identity is : %s args:%s' %
                                 (self.data_identity, prams))
         else:
-            local_data = self._get_data_from_interface(ds_conf, data_prams)
-        if origin_data:
+            origin_data_list = self._get_data_from_interface(ds_conf, data_prams)
+        if origin_data_list[0] == "remote":
             self.cache_base.kwargs.update({
                 self.data_identity: {
-                    'origin_data': origin_data,
+                    'origin_data': origin_data_list[1],
                     'prams': self.parm_dict,
                 }
             })
             self.cache_base.save()
-            return origin_data
+            return origin_data_list[1]
         else:
-            return local_data
+            return origin_data_list[1]
 
     def get_origin_data_asyns(self, data_prams):
         """异步获取数据"""
@@ -140,9 +139,11 @@ class DataPrepare(object):
         raise DoingAsyncCallInterface
 
     def _get_data_from_interface(self, ds_conf, data_prams):
-        origin_data = None
         if ds_conf.method == 'LOCALE':
             origin_data = self.do_local_request(ds_conf, data_prams)
+            cleaner = DataClean(origin_data, ds_conf.data_origin_type)
+            clear_data = cleaner.worked()
+            return ["locale", clear_data]
         elif ds_conf.method == 'REMOTE':
             self.set_token()
             data_prams.update({
@@ -151,18 +152,22 @@ class DataPrepare(object):
             })
             origin_data = self.do_request(self.url, data_prams)
 
-        cleaner = DataClean(origin_data, ds_conf.data_origin_type)
-        clear_data = cleaner.worked()
-        return clear_data
+            cleaner = DataClean(origin_data, ds_conf.data_origin_type)
+            clear_data = cleaner.worked()
+            return ["remote", clear_data]
 
     def prepare_parms(self, ds_conf):
         arguments = self.argument_base.load()
         for key in self.parm_keys:
             value = arguments.get(key, None)
             if not value:
-                logger.error('Stream in call class ,Get prepare_prams error, miss prams %s, data_identity is : %s'
-                             % (key, self.data_identity))
-                raise OriginDataGetParmsMiss
+                self.argument_base.reload()
+                arguments = self.argument_base.load()
+                value = arguments.get(key, None)
+                if not value:
+                    logger.error('Stream in call class ,Get prepare_prams error, miss prams %s, data_identity is : %s'
+                                 % (key, self.data_identity))
+                    raise OriginDataGetParmsMiss
             if isinstance(value, list):
                 self.is_list_args = key
             self.parm_dict.update({
