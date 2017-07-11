@@ -102,7 +102,7 @@ def feature_post():
     test_data = {
         u'content': {
             u'callback': '',
-            u'apply_id': u'APPLY20170705170537232801123',
+            u'apply_id': u'APPLY20170710120019257289418',
             u'res_keys':
                 [
                     # "c_d_c_a003",
@@ -159,11 +159,11 @@ def feature_post():
                     # "arrears_limit",
                     # "apply_limit",
                     # "acc_overdue_cnt",
-                    # "disposable_personal_income",
+                    "disposable_personal_income",
                     # "credit_card_cnt",
                     # "san_code_time",
                     # "is_equal61",
-                    "is_gps_location_scan_same",
+                    # "is_gps_location_scan_same",
                 ]
         },
         u'client_code': u'bfm_test'
