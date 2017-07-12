@@ -82,6 +82,8 @@ class DataPrepare(object):
         self.is_async = ds_conf.is_async
         logger.info('data_identity request is_async: %s' % self.is_async)
         data_prams = self.prepare_parms(ds_conf)
+        if not data_prams:
+            return {}
         self.url = ds_conf.data_source.backend_url + ds_conf.route + '/'
         self.token_url = ds_conf.data_source.backend_url + "/oauth2/token/"
         if self.is_async:
@@ -167,7 +169,8 @@ class DataPrepare(object):
                 if not value:
                     logger.error('Stream in call class ,Get prepare_prams error, miss prams %s, data_identity is : %s'
                                  % (key, self.data_identity))
-                    raise OriginDataGetParmsMiss
+                    return None
+                    # raise OriginDataGetParmsMiss
             if isinstance(value, list):
                 self.is_list_args = key
             self.parm_dict.update({

@@ -93,7 +93,7 @@ class Courier(object):
             if not data:
                 logger.error('Get origin data error, data_identity is : %s' % data_identity)
 
-                raise OriginDataGetError
+                # raise OriginDataGetError
             self.useful_data.update({data_identity: data})
         logger.info('Stream get_general_data complete\nUseful_data : %s' % self.useful_data)
 
