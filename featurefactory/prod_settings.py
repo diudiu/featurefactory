@@ -18,47 +18,43 @@ PROJECT_PATH = os.path.dirname(CURRENT_PATH)
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'featurefactory',
-        'PASSWORD': '123456',
-        'USER': 'dev',
-        'HOST': 'mysql_master',
-        'PORT': '3306',
+        'NAME': os.getenv('MYSQL_DATABASE', 'featurefactory'),
+        'PASSWORD': os.getenv('MYSQL_PASSWORD', '123456'),
+        'USER': os.getenv('MYSQL_USER', 'dev'),
+        'HOST': os.getenv('MYSQL_HOST', 'mysql_master'),
+        'PORT': os.getenv('MYSQL_PORT', '3306'),
     },
 }
 if 'test' in sys.argv:
     DATABASES['default'] = {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'featurefactory',
-        'PASSWORD': '123456',
-        'USER': 'root',
-        'HOST': 'mysql_master',
-        'PORT': '3306',
+        'NAME': os.getenv('MYSQL_DATABASE', 'featurefactory'),
+        'PASSWORD': os.getenv('MYSQL_USER', '123456'),
+        'USER': os.getenv('MYSQL_USER', 'dev'),
+        'HOST': os.getenv('MYSQL_HOST', 'mysql_master'),
+        'PORT': os.getenv('MYSQL_PORT', '3306'),
         'TEST': {
             'CHARSET': 'utf8',
             'COLLATION': 'utf8_general_ci',
         },
     }
-
     TEST_RUNNER = 'django.test.runner.DiscoverRunner'
-
 # redis
 REDIS_CONFIG = {
     'default': {
-        'host': 'redis_master',
-        'port': 6379,
-        'password': 'syph@dev',
-        'db': 7,
+        'host': os.getenv('REDIS_HOST', 'redis_master'),
+        'port': os.getenv('REDIS_PORT', '6379'),
+        'password': os.getenv('REDIS_PASSWORD', 'syph@dev'),
+        'db': os.getenv('REDIS_DB_4_FF', '1'),
         'connect_timeout': 1,
     }
 }
-
-
 # mongodb
-MONGODB_HOST = 'mongodb_primary'
-MONGODB_PORT = 27017
-MONGODB_NAME = 'feature_storage'
-MONGODB_USERNAME = 'feature_storage'
-MONGODB_PASSWORD = 'feature_storage'
+MONGODB_HOST = os.getenv('MONGODB_HOST', 'mongodb_primary')
+MONGODB_PORT = os.getenv('MONGODB_PORT', '27017')
+MONGODB_NAME = os.getenv('MONGODB_DATABASE', 'feature_storage')
+MONGODB_USERNAME = os.getenv('MONGODB_USERNAME', 'feature_storage')
+MONGODB_PASSWORD = os.getenv('MONGODB_PASSWORD', 'feature_storage')
 
 # logging
 log_path = os.path.join(BASE_DIR, 'logs')

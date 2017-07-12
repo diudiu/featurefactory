@@ -24,7 +24,6 @@ import json
 import logging
 
 from braces.views import CsrfExemptMixin
-from django.http.response import HttpResponse
 from django.views.generic import View
 
 from apps.async.tasks import audit_task, mission_control
@@ -45,7 +44,12 @@ class FeatureExtract(CsrfExemptMixin, View):
 
     @staticmethod
     def get(request):
-        return HttpResponse('Feature Factory !!!')
+        data = {
+            'name': 'feature factory',
+            'status': 'Success',
+            'message': 'feature factory is working',
+        }
+        return JSONResponse(data)
 
     # @装饰器验证一下request包完整性
     @post_data_check
