@@ -43,7 +43,7 @@ if 'test' in sys.argv:
 REDIS_CONFIG = {
     'default': {
         'host': os.getenv('REDIS_HOST', 'redis_master'),
-        'port': os.getenv('REDIS_PORT', '6379'),
+        'port': int(os.getenv('REDIS_PORT', '6379')),
         'password': os.getenv('REDIS_PASSWORD', 'syph@dev'),
         'db': os.getenv('REDIS_DB_4_FF', '1'),
         'connect_timeout': 1,
@@ -51,7 +51,7 @@ REDIS_CONFIG = {
 }
 # mongodb
 MONGODB_HOST = os.getenv('MONGODB_HOST', 'mongodb_primary')
-MONGODB_PORT = os.getenv('MONGODB_PORT', '27017')
+MONGODB_PORT = int(os.getenv('MONGODB_PORT', '27017'))
 MONGODB_NAME = os.getenv('MONGODB_DATABASE', 'feature_storage')
 MONGODB_USERNAME = os.getenv('MONGODB_USERNAME', 'feature_storage')
 MONGODB_PASSWORD = os.getenv('MONGODB_PASSWORD', 'feature_storage')
