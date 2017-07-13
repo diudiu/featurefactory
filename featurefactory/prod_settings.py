@@ -45,7 +45,7 @@ REDIS_CONFIG = {
         'host': os.getenv('REDIS_HOST', 'redis_master'),
         'port': int(os.getenv('REDIS_PORT', '6379')),
         'password': os.getenv('REDIS_PASSWORD', 'syph@dev'),
-        'db': os.getenv('REDIS_DB_4_FF', '1'),
+        'db': int(os.getenv('REDIS_DB_4_FF', '1')),
         'connect_timeout': 1,
     }
 }
