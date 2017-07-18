@@ -702,7 +702,6 @@ def m_max_flight_class(seq):
     return result
 
 
-# Todo
 def m_get_work_status_map(seq, feature_name):
     """
     对seq数据针对工作状态匹配相应code码

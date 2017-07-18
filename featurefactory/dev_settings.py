@@ -23,7 +23,7 @@ DATABASES = {
         'PASSWORD': '',
         'USER': 'root',
         'HOST': '192.168.1.196',
-        'PORT': '8077',
+        'PORT': 8077,
     },
 }
 # if 'test' in sys.argv:
@@ -40,8 +40,7 @@ DATABASES = {
 #             'COLLATION': 'utf8_general_ci',
 #         },
 #     }
-
-    # TEST_RUNNER = 'django.test.runner.DiscoverRunner'
+#     TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
 # redis
 REDIS_CONFIG = {
