@@ -166,6 +166,14 @@ LOGGING = {
             'maxBytes': 1024 * 1024 * 20,
             'backupCount': 200,
         },
+        'dispatcher': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'formatter': 'verbose',
+            'filename': os.path.join(log_path, 'apps.dispatcher.out'),
+            'maxBytes': 1024 * 1024 * 20,
+            'backupCount': 200,
+        }
     },
     'loggers': {
         'django': {
@@ -220,6 +228,11 @@ LOGGING = {
         },
         'apps.integration': {
             'handlers': ['integration', 'console'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'apps.dispatcher': {
+            'handlers': ['dispatcher', 'console'],
             'level': 'INFO',
             'propagate': False,
         },
