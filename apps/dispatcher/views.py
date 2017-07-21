@@ -60,6 +60,7 @@ class ObtainCreditResultView(APIView):
             redis_status = json.loads(redis_status)
         if redis_status.get("status") == "OK":
             ret_data = rc1.do_request_1_result(request.query_params)
+            logger.info("1.0 result go back, data is: %s" % ret_data)
             return JSONResponse(ret_data)
         else:
             return JSONResponse(not_ok_data)
