@@ -42,8 +42,12 @@ class RiskControl1(object):
         return [apply_id, response.content]
 
     def do_request_1_result(self, data):
+        get_params = {
+            "product_code": data.get("product_code"),
+            "apply_id": data.get("apply_id")
+        }
         session = requests.session()
-        resp = session.request('GET', URL_1_0_RESULT, params=json.dumps(data),
+        resp = session.request('GET', URL_1_0_RESULT, params=get_params,
                                headers={'content-type': 'application/json;charset=utf-8'})
         return json.loads(resp.content)
 
@@ -67,22 +71,7 @@ class RiskControl2(object):
             apply_id = res_date.get("res_data").get("apply_id")
 
             logger.info("Do 2.0 formal request success, apply_id is: %s" % apply_id)
-
-            base_data_json = {
-                "apply_id_1_0": "",
-                "apply_id_2_0": apply_id,
-                "flow_chart": "formal",
-                "data_1_0_apply": data1,
-                "data_1_0_callback": [],
-                "data_2_0_formal": data2,
-                "data_2_0_bankcard": "",
-                "data_2_0_email": "",
-                "data_2_0_operator": "",
-                "data_2_0_final": "",
-            }
-            logger.info("set 2.0 data in redis, keys: %s, value: %s" % (apply_id, base_data_json))
-            self.red.set(name=apply_id, value=json.dumps(base_data_json))
-            pass
+            return apply_id
         else:
             logger.info("Do 2.0 formal request failed, status code is not 200, card_id is: %s" % card_id)
 

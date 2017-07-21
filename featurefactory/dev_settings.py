@@ -22,8 +22,8 @@ DATABASES = {
         'NAME': 'featurefactory',
         'PASSWORD': '123456',
         'USER': 'dev',
-        'HOST': '192.168.1.198',
-        'PORT': 3306,
+        'HOST': 'de.digcredit.com',
+        'PORT': 8077,
     },
 }
 # if 'test' in sys.argv:
@@ -45,18 +45,18 @@ DATABASES = {
 # redis
 REDIS_CONFIG = {
     'default': {
-        'host': '192.168.1.198',
-        'port': 6379,
+        'host': 'de.digcredit.com',
+        'port': 8079,
         'password': 'syph@dev',
-        'db': 7,
+        'db': 8,
         'connect_timeout': 1,
     }
 }
 
 
 # mongodb
-MONGODB_HOST = '192.168.1.198'
-MONGODB_PORT = 27017
+MONGODB_HOST = 'de.digcredit.com'
+MONGODB_PORT = 8078
 MONGODB_NAME = 'feature_storage'
 MONGODB_USERNAME = 'feature_storage'
 MONGODB_PASSWORD = 'feature_storage'

@@ -15,9 +15,9 @@ import time
 
 
 class Cases(object):
-    # domain = 'http://139.129.220.118:9999'
-    # domain = 'http://192.168.1.196:8099'
-    domain = 'http://127.0.0.1:9999'
+    domain = 'http://139.129.220.118:10012'
+    # domain = 'http://118.190.81.178:8888'
+    # domain = 'http://127.0.0.1:9999'
     credit_audit_url = '/api/credit/apply/'
     obtain_result_url = '/api/credit/result/'
     receive_result_url = '/api/async/result/'
@@ -49,7 +49,7 @@ class Cases(object):
         url = '%s%s' % (self.domain, uri)
         json_ = {
             'product_code': 'cf5b6d062260f643d123ae61a37fe416',
-            'apply_id': 'APPLY20170317130732720659'
+            'apply_id': "APPLY20170721161004031679"
         }
         session = requests.session()
         resp = session.request('GET', url, params=json_,
@@ -110,12 +110,12 @@ def async_post():
 
 
 def all_step_test():
-    audit_api = 'http://127.0.0.1:9999/api/credit/apply/'
-    result_api = 'http://127.0.0.1:9999/api/credit/result/'
-    callback_api = 'http://127.0.0.1:9999/api/async/callback/'
-    # audit_api = 'http://139.129.220.118:9999/api/credit/apply/'
-    # result_api = 'http://139.129.220.118:9999/api/credit/result/'
-    # callback_api = 'http://139.129.220.118:9999/api/async/callback/'
+    # audit_api = 'http://127.0.0.1:9999/api/credit/apply/'
+    # result_api = 'http://127.0.0.1:9999/api/credit/result/'
+    # callback_api = 'http://127.0.0.1:9999/api/async/callback/'
+    audit_api = 'http://139.129.220.118:10012/api/credit/apply/'
+    result_api = 'http://139.129.220.118:10012/api/credit/result/'
+    callback_api = 'http://139.129.220.118:10012/api/async/callback/'
     # 第一次授信
     json_ = {
         'product_code': 'cf5b6d062260f643d123ae61a37fe416',
@@ -249,10 +249,10 @@ def all_step_test():
 if __name__ == '__main__':
     # all_step_test()
     test_case = Cases()
-    test_case.test_credit_audit()
+    # test_case.test_credit_audit()
     # for i in range(45):
     #     test_case.test_credit_audit()
     #     time.sleep(1)
-    # test_case.test_obtain_result()
+    test_case.test_obtain_result()
     # test_case.test_list_result()
     # async_post()

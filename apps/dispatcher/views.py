@@ -2,19 +2,23 @@
 import requests
 import json
 from braces.views import CsrfExemptMixin
+import logging
 
 # Create your views here.
+
 from django.views.generic import View
 from rest_framework.views import APIView
 from apps.featureapi.response import JSONResponse
 from apps.dispatcher.interviews import RiskControl1
 from apps.dispatcher.interviews import RiskControl2
 from vendor.utils.cache import RedisX
+logger = logging.getLogger('apps.dispatcher')
 
 
 class ApplyCreditView(APIView):
     def post(self, request, *args, **kwargs):
         post_data = request.data
+
         rc1 = RiskControl1()
         rc2 = RiskControl2()
         data_1_0 = post_data
@@ -36,8 +40,12 @@ class ApplyCreditView(APIView):
         ret_data = ret_data_list[1]
         apply_id_2 = rc2.do_formal_request(data_2_0, data_1_0)
         red = RedisX()
-        red.set(apply_id_1, apply_id_2)
-        red.set(apply_id_2, "DOING")
+        redis_status = {
+            "status": "RUNNING",
+            "apply_id_2_0": apply_id_2
+        }
+        red.set(apply_id_1, json.dumps(redis_status))
+        red.set(apply_id_2, apply_id_1)
         return JSONResponse(json.loads(ret_data))
 
 
@@ -45,11 +53,13 @@ class ObtainCreditResultView(APIView):
     def get(self, request, *args, **kwargs):
         red = RedisX()
         rc1 = RiskControl1()
-        apply_id = request.data.get("apply_id")
+        apply_id = request.query_params.get("apply_id")
         not_ok_data = {"status": 1, "res_data": {"result": 100, "result_message": "审核中"}, "message": "操作成功"}
         redis_status = red.get(apply_id)
-        if redis_status == "ok":
-            ret_data = rc1.do_request_1_result(request.data)
+        if redis_status:
+            redis_status = json.loads(redis_status)
+        if redis_status.get("status") == "OK":
+            ret_data = rc1.do_request_1_result(request.query_params)
             return JSONResponse(ret_data)
         else:
             return JSONResponse(not_ok_data)
@@ -74,8 +84,14 @@ class ReceiveResult(CsrfExemptMixin, View):
     def post(self, request, *args, **kwargs):
         red = RedisX()
         req_data = json.loads(request.body)
+        logger.info("2.0 callback data is: %s" % req_data)
         apply_id_2 = req_data.get("apply_id")
-        red.set(apply_id_2, "OK")
+        apply_id_1 = red.get(apply_id_2)
+        redis_status_json = red.get(apply_id_1)
+        logger.info("receive result redis data is: %s" % redis_status_json)
+        redis_status = json.loads(redis_status_json)
+        redis_status.update({"status": "OK"})
+        red.set(apply_id_1, json.dumps(redis_status))
         res_data = {
             "status": 1,
             "message": "结果接收成功",
