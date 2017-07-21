@@ -11,12 +11,13 @@
 from __future__ import unicode_literals
 import requests
 import json
+import time
 
 
 class Cases(object):
     # domain = 'http://139.129.220.118:9999'
     # domain = 'http://192.168.1.196:8099'
-    domain = 'http://127.0.0.1:8866'
+    domain = 'http://127.0.0.1:9999'
     credit_audit_url = '/api/credit/apply/'
     obtain_result_url = '/api/credit/result/'
     receive_result_url = '/api/async/result/'
@@ -25,26 +26,17 @@ class Cases(object):
         url = '%s%s' % (self.domain, self.credit_audit_url)
         json_ = {
             'product_code': 'cf5b6d062260f643d123ae61a37fe416',
+            "name": "张娜",
+            "mobile": "15652375668",
             'data_identity': '',
             'apply_id': '',
-            'name': 'aaaaaaa',
-            'card_id': '511955561604296649',
+            'card_id': '120222198208052620',
             'scan_code_city': '西安',
-            # 'san_code_time': time.time(),
+            'san_code_time': time.time(),
             'gps_longitude': '108.85492143460725',
             'gps_latitude': '34.198012456599415',
-            # 'select_address': '陕西省咸阳市',
-            'receive_address': u'陕西省 铜川市 宜君区',
-            # 'age': 30,
-            # 'san_code_time': '',
-            # 'san_code_loc': '',
-            # 'credit_card_number': '',
-            # 'credit_limit': '',
-            # 'available_balance': 600,
-            # 'phone_remain': 50.1,
-            # 'phone_list': ['50000', '923742', '8374287', '734863463', '554324364'],
-            # 'call_pay_list': [95.4, 15.2, 56.8, 58.6, 84.6],
-            # 'receive_address': u'西安市雁塔区',
+            "product_version": "P045-v01.1125",
+            "validation_status": True,
         }
         headers = {
             "Content-type": "application/json; charset=utf-8",

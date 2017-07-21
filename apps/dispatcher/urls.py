@@ -15,5 +15,4 @@ urlpatterns = patterns(
     url(r'^credit/result/$', ObtainCreditResultView.as_view(), name='api_obtain_credit_result'),
     url(r'^async/callback/$', AsyncCallbackView.as_view(), name='api_async_callback'),
     url(r'^async/result/$', ReceiveResult.as_view(), name='receive_result'),
-
 )
