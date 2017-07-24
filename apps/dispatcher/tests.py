@@ -15,7 +15,7 @@ import time
 
 
 class Cases(object):
-    domain = 'http://139.129.220.118:10012'
+    domain = 'http://118.190.81.178'
     # domain = 'http://118.190.81.178:8888'
     # domain = 'http://127.0.0.1:9999'
     credit_audit_url = '/api/credit/apply/'
@@ -24,19 +24,32 @@ class Cases(object):
 
     def test_credit_audit(self):
         url = '%s%s' % (self.domain, self.credit_audit_url)
+        # json_ = {
+        #     'product_code': 'cf5b6d062260f643d123ae61a37fe416',
+        #     "name": "张娜",
+        #     "mobile": "15652375668",
+        #     'data_identity': '',
+        #     'apply_id': '',
+        #     'card_id': '120222198208052620',
+        #     'scan_code_city': '西安',
+        #     'san_code_time': time.time(),
+        #     'gps_longitude': '108.85492143460725',
+        #     'gps_latitude': '34.198012456599415',
+        #     "product_version": "P045-v01.1125",
+        #     "validation_status": True,
+        # }
         json_ = {
-            'product_code': 'cf5b6d062260f643d123ae61a37fe416',
-            "name": "张娜",
-            "mobile": "15652375668",
-            'data_identity': '',
-            'apply_id': '',
-            'card_id': '120222198208052620',
-            'scan_code_city': '西安',
-            'san_code_time': time.time(),
-            'gps_longitude': '108.85492143460725',
-            'gps_latitude': '34.198012456599415',
-            "product_version": "P045-v01.1125",
-            "validation_status": True,
+            u'scan_code_city': u'',
+            u'san_code_time': u'1500865177',
+            u'product_code': u'cf5b6d062260f643d123ae61a37fe416',
+            u'name': u'张兴杰',
+            u'mobile': u'13529141770',
+            'product_version': u'P045-v01.1125',
+            u'validation_status': True,
+            u'card_id': u'530128198409254535',
+            u'apply_id': u'',
+            u'gps_latitude': u'',
+            u'gps_longitude': u''
         }
         headers = {
             "Content-type": "application/json; charset=utf-8",
@@ -118,18 +131,31 @@ def all_step_test():
     callback_api = 'http://139.129.220.118:10012/api/async/callback/'
     # 第一次授信
     json_ = {
-        'product_code': 'cf5b6d062260f643d123ae61a37fe416',
-        'data_identity': '',
-        'apply_id': '',
-        'name': '尚刚',
-        'card_id': '371422199311137713',
-        'mobile': '18811436445',
-        'gps_longitude': '116.401361',
-        'gps_latitude': '40.000479',
-        'select_address': '陕西省咸阳市',
-        'san_code_time': '',
-        'san_code_loc': '',
+        u'scan_code_city': u'',
+        u'san_code_time': u'1500865177',
+        u'product_code': u'cf5b6d062260f643d123ae61a37fe416',
+        u'name': u'张兴杰',
+        u'mobile': u'13529141770',
+        'product_version': u'P045-v01.1125',
+        u'validation_status': True,
+        u'card_id': u'530128198409254535',
+        u'apply_id': u'',
+        u'gps_latitude': u'',
+        u'gps_longitude': u''
     }
+    # json_ = {
+    #     'product_code': 'cf5b6d062260f643d123ae61a37fe416',
+    #     'data_identity': '',
+    #     'apply_id': '',
+    #     'name': '尚刚',
+    #     'card_id': '371422199311137713',
+    #     'mobile': '18811436445',
+    #     'gps_longitude': '116.401361',
+    #     'gps_latitude': '40.000479',
+    #     'select_address': '陕西省咸阳市',
+    #     'san_code_time': '',
+    #     'san_code_loc': '',
+    # }
     response = requests.post(audit_api, data=json_)
     print response.content
     res_data = eval(response.content)
@@ -249,10 +275,10 @@ def all_step_test():
 if __name__ == '__main__':
     # all_step_test()
     test_case = Cases()
-    # test_case.test_credit_audit()
+    test_case.test_credit_audit()
     # for i in range(45):
     #     test_case.test_credit_audit()
     #     time.sleep(1)
-    test_case.test_obtain_result()
+    # test_case.test_obtain_result()
     # test_case.test_list_result()
     # async_post()

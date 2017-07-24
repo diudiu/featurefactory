@@ -16,19 +16,6 @@ class RiskControl1(object):
     def __init__(self):
         self.red = RedisX()
 
-    # def do_request_1_0(self, apply_id_2_0):
-    #     json_data = self.red.get(apply_id_2_0)
-    #     redis_data = json.loads(json_data)
-    #     flow_chart = redis_data.get("flow_chart")
-    #     if flow_chart == "formal":
-    #         self.do_request_1_apply(redis_data)
-    #     elif flow_chart in ["bankcard", "email", "operator"]:
-    #         self.do_request_1_callback(redis_data)
-    #     elif flow_chart == "final":
-    #         self.do_request_1_result(redis_data)
-    #     else:
-    #         pass
-
     def do_request_1_apply(self, post_data):
         response = requests.post(URL_1_0_APPLY, headers=HEADERS, data=json.dumps(post_data))
         res_data = json.loads(response.content)
@@ -57,7 +44,7 @@ class RiskControl2(object):
     def __init__(self):
         self.red = RedisX()
 
-    def do_formal_request(self, data2, data1):
+    def do_formal_request(self, data2):
         card_id = data2.get("card_id")
         data2.update(
             {
@@ -69,7 +56,6 @@ class RiskControl2(object):
         if response.status_code == 200:
             res_date = json.loads(response.content)
             apply_id = res_date.get("res_data").get("apply_id")
-
             logger.info("Do 2.0 formal request success, apply_id is: %s" % apply_id)
             return apply_id
         else:
@@ -77,15 +63,27 @@ class RiskControl2(object):
 
     def do_request_2(self, data, apply_id_2):
         data_identity = data.get('data_identity')
+        data.update({"apply_id": apply_id_2})
         if data_identity == "bank_card_upload":
-            data2 = {}
-            response = requests.post(URL_2_0_BANKCARD, headers=HEADERS, data=json.dumps(data2))
+            logger.info("Do request to 2.0, flowchart is: %s, data is: %s" % (data_identity, data))
+            response = requests.post(URL_2_0_BANKCARD, headers=HEADERS, data=json.dumps(data))
+            logger.info("response is: %s, flowchart is: %s" % (response.content, data))
+            pass
         elif data_identity == "email_dig_upload":
-            data2 = {}
-            response = requests.post(URL_2_0_EMAIL, headers=HEADERS, data=json.dumps(data2))
+            logger.info("Do request to 2.0, flowchart is: %s, data is: %s", data_identity, data)
+            response = requests.post(URL_2_0_EMAIL, headers=HEADERS, data=json.dumps(data))
+            logger.info("response is: %s, flowchart is: %s" % (response.content, data))
+            pass
         elif data_identity == "operator_dig_upload":
-            data2 = {}
-            response = requests.post(URL_2_0_OPERATOR, headers=HEADERS, data=json.dumps(data2))
+            phone_remain = data.get("phone_remain", None)
+            if phone_remain:
+                data["phone_remain"] = float(phone_remain)
+            logger.info("Do request to 2.0, flowchart is: %s, data is: %s", data_identity, data)
+            response = requests.post(URL_2_0_OPERATOR, headers=HEADERS, data=json.dumps(data))
+            logger.info("response is: %s, flowchart is: %s" % (response.content, data))
+            pass
         elif data_identity == "final_upload":
-            data2 = {}
-            response = requests.post(URL_2_0_FINAL, headers=HEADERS, data=json.dumps(data2))
+            logger.info("Do request to 2.0, flowchart is: %s, data is: %s", data_identity, data)
+            response = requests.post(URL_2_0_FINAL, headers=HEADERS, data=json.dumps(data))
+            logger.info("response is: %s, flowchart is: %s" % (response.content, data))
+            pass
