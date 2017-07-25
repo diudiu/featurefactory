@@ -97,9 +97,8 @@ class AsyncCallbackView(CsrfExemptMixin, View):
         rc1 = RiskControl1()
         rc2 = RiskControl2()
         # 访问风控1.0, 得到相应的apply_id和返回数据
-        ret_data_list = rc1.do_request_1_callback(request.body)
-        apply_id_1 = ret_data_list[0]
-        ret_data = ret_data_list[1]
+        ret_data = rc1.do_request_1_callback(json.dumps(post_data))
+        apply_id_1 = post_data.get("apply_id")
 
         red = RedisX()
         redis_status = red.get(apply_id_1)
@@ -117,7 +116,7 @@ class AsyncCallbackView(CsrfExemptMixin, View):
         # 储存第一个redis数据, 以apply_id1做键 redis数据转json串做值
         red.set(apply_id_1, json.dumps(redis_status))
 
-        return JSONResponse(JSONResponse(json.loads(ret_data)))
+        return JSONResponse(ret_data)
 
 
 class ReceiveResult(CsrfExemptMixin, View):

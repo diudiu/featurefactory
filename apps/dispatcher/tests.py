@@ -15,9 +15,10 @@ import time
 
 
 class Cases(object):
-    domain = 'http://118.190.81.178'
+    # domain = 'http://118.190.81.178'
     # domain = 'http://118.190.81.178:8888'
     # domain = 'http://127.0.0.1:9999'
+    domain = 'http://139.129.220.118:10012'
     credit_audit_url = '/api/credit/apply/'
     obtain_result_url = '/api/credit/result/'
     receive_result_url = '/api/async/result/'
@@ -56,6 +57,7 @@ class Cases(object):
         }
         response = requests.post(url, headers=headers, data=json.dumps(json_))
         a = json.loads(response.content)
+        print a
 
     def test_obtain_result(self):
         uri = '/api/credit/result/'

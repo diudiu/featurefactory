@@ -3,7 +3,6 @@
 import requests
 import json
 import logging
-import random
 
 from apps.dispatcher.settings import *
 from vendor.utils.cache import RedisX
@@ -23,10 +22,8 @@ class RiskControl1(object):
         return [apply_id, response.content]
 
     def do_request_1_callback(self, post_data):
-        response = requests.post(URL_1_0_CALLBACK, headers=HEADERS, data=json.dumps(post_data))
-        res_data = json.loads(response.content)
-        apply_id = res_data['res_data']['apply_id']
-        return [apply_id, response.content]
+        response = requests.post(URL_1_0_CALLBACK, headers=HEADERS, data=post_data)
+        return json.loads(response.content)
 
     def do_request_1_result(self, data):
         get_params = {
@@ -63,7 +60,7 @@ class RiskControl2(object):
 
     def do_request_2(self, data, apply_id_2):
         data_identity = data.get('data_identity')
-        data.update({"apply_id": apply_id_2})
+        data.update({"apply_id": apply_id_2, "call_back": URL_RECEIVE})
         if data_identity == "bank_card_upload":
             logger.info("Do request to 2.0, flowchart is: %s, data is: %s" % (data_identity, data))
             response = requests.post(URL_2_0_BANKCARD, headers=HEADERS, data=json.dumps(data))
