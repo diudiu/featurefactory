@@ -17,10 +17,10 @@ no_disease_list = [
 
 def feature_post():
     # url = 'http://192.168.1.196:8071/syph-ff/feature/extract/'
-    # url = 'http://127.0.0.1:9999/syph-ff/feature/extract/'
+    url = 'http://127.0.0.1:10012/syph-ff/feature/extract/'
     # url = 'http://192.168.1.100:8071/syph-ff/feature/extract/'
     # url = 'http://de.digcredit.com:8071/syph-ff/feature/extract/'
-    url = 'http://139.129.220.118:10012/syph-ff/feature/extract/'
+    # url = 'http://139.129.220.118:10012/syph-ff/feature/extract/'
     test_data = {
         u'content': {
             u'callback': '',

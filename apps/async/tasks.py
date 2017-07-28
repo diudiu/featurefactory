@@ -71,6 +71,3 @@ def mission_control(base_data):
     logger.info('\n==========feature compared completed==========\n')
     logger.info('All feature is %s', ret_data)
     return ret_data
-
-
-
