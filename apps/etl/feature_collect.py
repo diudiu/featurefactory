@@ -9,7 +9,7 @@
 """
 import time
 import logging
-
+import traceback
 from apps.etl.context import CacheContext
 from apps.etl.courier import Courier
 from vendor.errors.contact_error import *
@@ -22,7 +22,7 @@ class CollectFeature(object):
     def __init__(self, base_data):
         logger.info('Init CollectFeature')
         self.feature_config = base_data['feature_conf']
-        self.feature_list = self.feature_config.keys()
+        self.feature_dict = {}
         self.feature_ret = {}
         self.error_list = []
         self.use_time = {}
@@ -35,22 +35,20 @@ class CollectFeature(object):
         self.cache_base.delete_async()
 
     def get_feature_value(self):
-        logger.info('Stream in feature_collect function name : get_feature_value\nFeature list :%s' %
-                    self.feature_list)
-        feature_list = tuple(self.feature_list)
-        for feature_name in feature_list:
+        logger.info('Stream in feature_collect function name : get_feature_value\nFeature list :%s' % self.feature_dict)
+        feature_dict = self._fit_data()
+        for k, v in feature_dict.iteritems():
             try:
-                logger.info('*******Get feature:%s value*******' % feature_name)
-                courier = Courier(feature_name, self.feature_config[feature_name], self.apply_id)
+                logger.info('*******Get feature:%s value*******' % feature_dict)
+                courier = Courier(k, v, self.apply_id)
                 ret = courier.get_feature()
                 if ret:
                     self.feature_ret.update(ret)
-                    self.feature_list.remove(feature_name)
                 else:
                     logger.error('Get single feature value field, result is None')
                     self.error_list.append(courier.error_no)
             except DoingAsyncCallInterface:
-                logger.info("Feature:%s doing asynchronous call" % feature_name)
+                logger.info("Feature:%s doing asynchronous call" % k)
                 calling_interface = DoingAsyncCallInterface.data_identify
                 self.use_time['%s:start_time' % calling_interface] = self.use_time.get(
                     '%s:start_time' % calling_interface, int(time.time()))
@@ -62,11 +60,41 @@ class CollectFeature(object):
                     raise AsyncCallInterfaceTimeout
                 continue
             except Exception as e:
-                import traceback
                 traceback.print_exc()
                 self.delete_async_cache()
                 raise e
 
-        if self.feature_list:
-            time.sleep(10)
-            self.get_feature_value()
+        # if self.feature_list:
+        #     time.sleep(10)
+        #     self.get_feature_value()
+
+    def _fit_data(self):
+        key_list = self.feature_config.keys()
+        feature_dict = {}
+        data_identity_list = []
+        data_identity = ""
+        for feature_name in key_list:
+            val = self.feature_config.get(feature_name)
+            val_keys = val.keys()
+            if val_keys[0] == "collect_type":
+                data_identity = val_keys[1]
+            else:
+                data_identity = val_keys[0]
+            if data_identity not in data_identity_list:
+                data_identity_list.append(data_identity)
+                feature_dict.update(
+                    {
+                        data_identity: {
+                            "value": val,
+                            "feature_list": feature_name
+                        }
+                    }
+                )
+            else:
+                feature_list_str = feature_dict[data_identity]["feature_list"] + "," + feature_name
+                feature_dict[data_identity]["feature_list"] = feature_list_str
+
+        self.feature_dict = feature_dict
+
+        return self.feature_dict
+

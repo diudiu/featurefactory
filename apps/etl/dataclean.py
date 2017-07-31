@@ -40,7 +40,7 @@ class DataClean(object):
 
     def _data_ocean_clean(self):
         logger.info('Start clean data, use clean type: _data_ocean_clean  data:\n %s' % self.origin_data)
-        temp_data = Judger.get_value(self.origin_data, '$.res_data.res_data')
+        temp_data = Judger.get_value(self.origin_data, '$.res_data')
         logger.info('completed clean, clean result:\n%s' % temp_data)
         if not temp_data or temp_data == '{}':
             logger.info(
@@ -48,7 +48,6 @@ class DataClean(object):
                 (cons.SOURCE_TYPE_MESSAGE[self.clean_style], self.origin_data)
             )
             return {}
-        temp_data = json.loads(temp_data)
         return temp_data
 
     def _91_credit_clean(self):

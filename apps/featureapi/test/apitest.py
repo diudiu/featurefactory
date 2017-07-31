@@ -17,106 +17,107 @@ no_disease_list = [
 
 def feature_post():
     # url = 'http://192.168.1.196:8071/syph-ff/feature/extract/'
-    url = 'http://127.0.0.1:9999/syph-ff/feature/extract/'
-    # url = 'http://192.168.1.199:9900/syph-ff/feature/extract/'
-    data = {
+    url = 'http://127.0.0.1:10012/syph-ff/feature/extract/'
+    # url = 'http://192.168.1.100:8071/syph-ff/feature/extract/'
+    # url = 'http://de.digcredit.com:8071/syph-ff/feature/extract/'
+    # url = 'http://139.129.220.118:10012/syph-ff/feature/extract/'
+    test_data = {
         u'content': {
             u'callback': '',
-            # u'callback': u'http://127.0.0.1:9999/feature_config/common_conf/add/feature_info/',
-            # u'apply_id': u'APPLY201703081545051dxdinger',
-            # u'apply_id': u'APPLY20170308154505179ydlisi',
-            u'apply_id': u'APPLY2017030815450ltzhangsan',
-            u'res_keys': [
-                'age',
-                # 'airfare_sum12',
-                # 'application_on',
-                # 'application_on_plus',
-                # 'apply_register_duration',
-                # 'card_id',
-                # 'car_count',
-                # 'car_number',
-                # 'cc_bill_age',
-                # 'college_type',#
-                # 'company_addr_city_level',
-                # 'complete_degree',
-                # 'contacts',
-                # 'creditcard_count',
-                # 'cur_company',
-                # 'cur_corp_years', #
-                # 'cur_employee_number',#
-                # 'cur_work_status',#
-                # 'dc_bill_age',
-                # 'education_degree_check',#
-                # 'education_degree_code',#
-                # 'education_tz',
-                # 'folk',
-                # 'gender',#
-                # 'gps_city_code',
-                # 'graduate_college',
-                # 'graduate_college_check',
-                # 'has_negative_info',
-                # 'income_expense_comparison',#nodata
-                # 'income_level',
-                # 'industry_change_count',
-                # 'is_court_shixin',
-                # 'is_court_zhixing',
-                # 'is_cur_corp_shixin',
-                # 'is_jiuyao_multi_loan',
-                # 'is_loan_agency',
-                # 'is_mobile_black',
-                # 'is_net_black',
-                # 'is_netsky_black',
-                # 'is_netsky_grey',
-                # 'is_netsky_multi_loan',
-                # 'is_organization_g_black',
-                # 'is_pingan_financial_shixin',
-                # 'is_pingan_multi_loan',
-                # 'is_pingan_other_loan',
-                # 'is_pingan_overdue_loan',
-                # 'is_recruitment',
-                # 'is_skyeye_black',#
-                # 'is_unclear_loan',#nodata
-                # 'jiuyao_multi_loan_denied_count',
-                # 'jiuyao_multi_loan_m2_count',
-                # 'last_industry_code',
-                # 'loan_infos',
-                # 'marital_status',
-                # 'max_flight_area',
-                # 'max_flight_class',
-                # 'mobile',
-                # 'mobile_activeness',
-                # 'mobile_area_city_level',
-                # 'mobile_area_code',
-                # 'mobile_identity',
-                # 'mobile_mark',#nodata
-                # 'mobile_stability',
-                # 'name',
-                # 'now_industry_code',
-                # 'now_workplace_code',
-                # 'now_work_time',
-                # 'online_time',
-                # 'overload_count',
-                # 'overspeed_count',
-                # 'pingan_max_overdue_days',
-                # 'pingan_multi_loan_count',
-                # 'pingan_multi_loan_infos',
-                # 'pingan_other_loan_count',
-                # 'pingan_other_loan_infos',
-                # 'pingan_overdue_corp_count',
-                # 'pingan_overdue_count',
-                # 'pingan_overdue_loan_infos',
-                # 'register_city_level',
-                # 'work_time',
-            ]
+            u'apply_id': u'APPLY20170725104516684093829',
+            u'res_keys':
+                [
+                    "c_d_c_a003",
+                    "c_d_m_c113",
+                    "c_d_m_c133",
+                    "c_d_m_c136",
+                    "c_d_m_c260",
+                    "c_d_t_b004",
+                    "c_d_t_b019",
+                    "c_d_t_b045",
+                    "c_d_t_b046",
+                    "c_d_t_b061",
+                    "c_d_t_b064",
+                    "c_d_t_b065",
+                    "c_d_t_b066",
+                    "c_d_t_b122",
+                    "c_d_t_b230",
+                    "c_d_t_b260",
+                    "c_d_t_b268",
+                    "c_d_t_b292",
+                    "c_d_t_b296",
+                    "c_d_t_c035",
+                    "c_d_t_c048",
+                    "c_d_t_c050",
+                    "c_d_t_t027",
+                    "c_d_t_t040",
+                    "c_d_t_t079",
+                    "c_d_t_t092",
+                    "c_d_t_t094",
+                    "c_d_t_t097",
+                    "c_d_t_t106",
+                    "c_s_r_l001",
+                    "c_s_r_l003",
+                    "c_s_w_c002",
+                    # "is_owner_mobile",
+                    "age",
+                    # "card_id_two_elem",
+                    # "mobile_online_time",
+                    # "is_loan_agency",
+                    # "is_court_shixin",
+                    # "is_organization_g_black",
+                    # "is_netsky_black",
+                    # "is_netsky_longloan",
+                    # "is_skyeye_black",
+                    "gender",
+                    "credit_card_iden",
+                    # "is_credit_card",
+                    "call_pay_average",
+                    "phone_remain",
+                    "credit_limit",
+                    "available_balance",
+                    #
+                    "loan_cnt",
+                    "arrears_limit",
+                    "apply_limit",
+                    "acc_overdue_cnt",
+                    "disposable_personal_income",
+                    "credit_card_cnt",
+                    "san_code_time",
+                    # "is_equal61",
+                    # "is_gps_location_scan_same",
+                ]
         },
-        u'client_code': u'lp_test'
+        u'client_code': u'bfm_test'
     }
     a = time.time()
-    response = requests.post(url, headers=headers, data=json.dumps(data))
+    response = requests.post(url, headers=headers, data=json.dumps(test_data))
     content = json.loads(response.content)
     print content
     print time.time() - a
 
 
+def rule_engine_post():
+    url = 'http://192.168.1.25:8080/syph-re/api/credit/apply/async/'
+    data = {
+        "product_code": "cf5b6d062260f643d123ae61a37fe416",
+        "call_back": "aaaaa",
+        "data_identity": "aaaaa",
+        "apply_id": "aaaaaa",
+        "mobile": "13333333333",
+        "name": "文儿哥",
+        "card_id": "130202199108101423",
+        "scan_code_city": u"北京",
+        "scan_code_time": time.time(),
+        "gps_longitude": "108.85492143460727",
+        "gps_latitude": "34.198012456599415",
+        "select_address": u"北京",
+    }
+    response = requests.post(url, headers=headers, data=json.dumps(data))
+    content = json.loads(response.content)
+    print content
+
+
 if __name__ == '__main__':
+    # rule_engine_post()
     feature_post()

@@ -42,7 +42,7 @@ def post_data_check(view_func):
                 cons.RESPONSE_REQUEST_STATUS: ResponseCode.FAILED,
                 cons.RESPONSE_REQUEST_MESSAGE: e.message,
             }
-            logger.error('Response from the decorators of `post_data_check`, data=%s, unknow error, rel_err_msg=%s'
+            logger.error('Response from the decorators of `post_data_check`, data=%s, unknown error, rel_err_msg=%s'
                          % (str(data), e.message), exc_info=True)
         return JSONResponse(data=data)
     return _wrapped_view_func

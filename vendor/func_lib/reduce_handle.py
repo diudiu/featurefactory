@@ -41,3 +41,13 @@ def r_min(seq):
     if isinstance(seq, list) and seq:
         seq = min(seq)
         return seq
+
+
+def r_get_key_from_list(seq, args):
+    res = []
+    key = args[0]
+    defaults = args[1]
+    for i in seq:
+        if key in i.keys():
+            res.append(i.get(key, defaults))
+    return res

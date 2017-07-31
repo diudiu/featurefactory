@@ -20,44 +20,43 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         # 'NAME': 'featuretemp',
         'NAME': 'featurefactory',
-        'PASSWORD': '',
-        'USER': 'root',
-        'HOST': '192.168.1.196',
-        'PORT': '8077',
+        'PASSWORD': '123456',
+        'USER': 'dev',
+        'HOST': 'de.digcredit.com',
+        'PORT': 8077,
     },
 }
-if 'test' in sys.argv:
-    DATABASES['default'] = {
-        'ENGINE': 'django.db.backends.mysql',
-        # 'NAME': 'featuretemp',
-        'NAME': 'featurefactory',
-        'PASSWORD': '',
-        'USER': 'root',
-        'HOST': '192.168.1.196',
-        'PORT': '8077',
-        'TEST': {
-            'CHARSET': 'utf8',
-            'COLLATION': 'utf8_general_ci',
-        },
-    }
-
-    TEST_RUNNER = 'django.test.runner.DiscoverRunner'
+# if 'test' in sys.argv:
+#     DATABASES['default'] = {
+#         'ENGINE': 'django.db.backends.mysql',
+#         # 'NAME': 'featuretemp',
+#         'NAME': 'featurefactory',
+#         'PASSWORD': '',
+#         'USER': 'root',
+#         'HOST': '192.168.1.196',
+#         'PORT': '8077',
+#         'TEST': {
+#             'CHARSET': 'utf8',
+#             'COLLATION': 'utf8_general_ci',
+#         },
+#     }
+#     TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
 # redis
 REDIS_CONFIG = {
     'default': {
-        'host': '192.168.1.198',
-        'port': 6379,
+        'host': 'de.digcredit.com',
+        'port': 8079,
         'password': 'syph@dev',
-        'db': 7,
+        'db': 8,
         'connect_timeout': 1,
     }
 }
 
 
 # mongodb
-MONGODB_HOST = '192.168.1.198'
-MONGODB_PORT = 27017
+MONGODB_HOST = 'de.digcredit.com'
+MONGODB_PORT = 8078
 MONGODB_NAME = 'feature_storage'
 MONGODB_USERNAME = 'feature_storage'
 MONGODB_PASSWORD = 'feature_storage'
@@ -167,6 +166,14 @@ LOGGING = {
             'maxBytes': 1024 * 1024 * 20,
             'backupCount': 200,
         },
+        'dispatcher': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'formatter': 'verbose',
+            'filename': os.path.join(log_path, 'apps.dispatcher.out'),
+            'maxBytes': 1024 * 1024 * 20,
+            'backupCount': 200,
+        }
     },
     'loggers': {
         'django': {
@@ -221,6 +228,11 @@ LOGGING = {
         },
         'apps.integration': {
             'handlers': ['integration', 'console'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'apps.dispatcher': {
+            'handlers': ['dispatcher', 'console'],
             'level': 'INFO',
             'propagate': False,
         },

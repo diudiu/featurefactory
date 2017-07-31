@@ -2,6 +2,7 @@
 import os
 import sys
 import re
+import time
 import math
 from datetime import datetime
 
@@ -701,7 +702,6 @@ def m_max_flight_class(seq):
     return result
 
 
-# Todo
 def m_get_work_status_map(seq, feature_name):
     """
     对seq数据针对工作状态匹配相应code码
@@ -1336,6 +1336,67 @@ def m_get_income_expense_comparison(seq, args=None):
         else:
             ratio = float(income_level) / float(expense_level)
     return [ratio]
+
+
+def m_to_nature_card(seq):
+    code = seq
+    cmap = {
+        "00": "UNKNOWN",
+        "01": "借记卡",
+        "02": "贷记卡",
+        "03": "准贷记卡",
+        "04": "借贷合一卡",
+        "05": "预付费卡",
+    }
+    return cmap[code]
+
+
+def m_list_average(seq):
+    sum_num = sum(seq)
+    return sum_num / len(seq)
+
+
+def m_get_max(seq):
+    return max(seq)
+
+
+def m_time_to_string_bfm(seq):
+    time_code = seq[0]
+    today = datetime.today()
+    base_time = datetime(today.year, today.month, today.day, 0, 0, 0)
+    base_time_num = int(time.mktime(time.strptime(base_time.strftime("%Y-%m-%d %H:%M:%S"), "%Y-%m-%d %H:%M:%S")))
+    difference = int(time_code) - base_time_num
+    if (difference > 0) and (difference <= 25200):
+        seq = '00:01 - 7:00'
+    elif (difference > 25200) and (difference <= 32400):
+        seq = '7:01 - 9:00'
+    elif (difference > 32400) and (difference <= 41400):
+        seq = '9:01 - 11:30'
+    elif (difference > 41400) and (difference <= 50400):
+        seq = '11:31 - 14:00'
+    elif (difference > 50400) and (difference <= 61200):
+        seq = '14:01 - 17:00'
+    elif (difference > 61200) and (difference <= 79200):
+        seq = '17:01 - 22:00'
+    elif (difference > 79200) and (difference <= 86400):
+        seq = '22:01 - 00:00'
+    else:
+        seq = 'UNKNOWN'
+    return seq
+
+
+def m_first_equal_next(seq):
+    if seq[0] == seq[1]:
+        return "是"
+    else:
+        return "否"
+
+
+def m_first_in_next(seq):
+    if seq[0] in seq[1]:
+        return "是"
+    else:
+        return "否"
 
 
 if __name__ == '__main__':

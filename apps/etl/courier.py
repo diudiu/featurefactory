@@ -25,10 +25,11 @@ logger = logging.getLogger('apps.etl')
 
 
 class Courier(object):
-    def __init__(self, feature_name, feature_conf, apply_id):
+    def __init__(self, data_identity, feature_conf, apply_id):
         logger.info('Init Courier')
-        self.feature_conf = feature_conf
-        self.feature_name = feature_name
+        self.base_conf = feature_conf
+        self.feature_conf = feature_conf["value"]
+        self.data_identity = data_identity
         self.error_no = 0
         self.collect_type = ''
         self.apply_id = apply_id
@@ -42,7 +43,7 @@ class Courier(object):
 
     def get_feature(self):
         logger.info('Stream in courier function name : get_feature Feature name :%s' %
-                    self.feature_name)
+                    self.base_conf)
         self.data_identity_list = self._get_di_from_conf(self.feature_conf)
         if self.collect_type == cons.COMMON_TYPE:
             logger.info('Stream in courier function name : get_feature collect_type is Courier')
@@ -57,24 +58,27 @@ class Courier(object):
             self.get_relevance_data()
 
         if not self.useful_data:
-            logger.error('Get feature value error : useful data is empty  feature_name is %s' % self.feature_name)
+            logger.error('Get feature value error : useful data is empty  feature_config is %s' % self.base_conf)
             raise FeatureProcessError
-        return self.data_analysis(self.feature_name, self.useful_data)
+        return self.data_analysis(self.base_conf["feature_list"], self.useful_data)
 
     @staticmethod
-    def data_analysis(feature_name, useful_data):
-
-        feature_obj = FeatureProcess(feature_name, useful_data)
-        ret = feature_obj.run()
-        if not ret:
-            logger.error('Feature:%s return is None' % feature_name)
-            raise HandleWorkError
-        if feature_name not in ret.keys():
-            logger.error(
-                'Wrong config of the feature, not the expect feature_name, feature_name: %s' % feature_name)
-            raise FeatureConfigError
-        logger.info('Feature Handle completed, result is: \n%s' % ret)
-        return ret
+    def data_analysis(feature_list_str, useful_data):
+        result = {}
+        feature_list = feature_list_str.split(",")
+        for feature_name in feature_list:
+            feature_obj = FeatureProcess(feature_name, useful_data)
+            ret = feature_obj.run()
+            if not ret:
+                logger.error('Feature:%s return is None' % feature_name)
+                raise HandleWorkError
+            if feature_name not in ret.keys():
+                logger.error(
+                    'Wrong config of the feature, not the expect feature_name, feature_name: %s' % feature_name)
+                raise FeatureConfigError
+            result.update(ret)
+        logger.info('Feature Handle completed, result is: \n%s' % result)
+        return result
 
     def get_useful_data(self, data_identity):
         args_config = self.feature_conf.get(data_identity)
@@ -93,7 +97,7 @@ class Courier(object):
             if not data:
                 logger.error('Get origin data error, data_identity is : %s' % data_identity)
 
-                raise OriginDataGetError
+                # raise OriginDataGetError
             self.useful_data.update({data_identity: data})
         logger.info('Stream get_general_data complete\nUseful_data : %s' % self.useful_data)
 

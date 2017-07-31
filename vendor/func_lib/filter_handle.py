@@ -19,6 +19,15 @@ def f_digit_or_float(seq):
     return seq
 
 
+def f_small_than0(seq):
+    res = []
+    for i in seq:
+        if i < 0:
+            continue
+        res.append(i)
+    return res
+
+
 def f_not_null(seq):
     """过滤非空值"""
     seq = filter(lambda x: x not in (None, '', {}, [], ()), seq)
@@ -109,6 +118,53 @@ def f_plate_number(seq):
         if re.match(m, plate):
             tmp.append(plate)
     return tmp
+
+
+def f_get_online_time(seq):
+    crop = seq[1]
+    time_index = seq[0]
+    ydmap = {
+        0: "(0_6)",
+        1: "[6_12)",
+        2: "[12_24)",
+        3: "[24_+)"
+    }
+    temap = {
+        0: "UNKNOWN",
+        1: "(0_6)",
+        2: "(0_6)",
+        3: "(0_6)",
+        4: "(0_6)",
+        5: "(0_6)",
+        6: "(0_6)",
+        7: "[6_12)",
+        8: "[12_24)",
+        9: "[24_+)",
+        10: "[24_+)",
+        11: "[24_+)",
+        12: "[24_+)",
+    }
+    unmap = {
+        0: "UNKNOWN",
+        1: "(0_6)",
+        2: "(0_6)",
+        3: "(0_6)",
+        4: "[6_12)",
+        5: "[12_24)",
+        6: "[24_+)",
+        7: "[24_+)",
+    }
+    res = ["UNKNOWN"]
+    if crop == 1:
+        res = [unmap[time_index]]
+    elif crop == 2:
+        res = [temap[time_index]]
+    elif crop == 3:
+        res = [ydmap[time_index]]
+    else:
+        pass
+    seq = res
+    return seq
 
 
 if __name__ == '__main__':
