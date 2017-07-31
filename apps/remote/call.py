@@ -52,6 +52,8 @@ class DataPrepare(object):
 
     def get_original_data(self):
         ret_data = self.get_data_from_db()
+        # TODO
+        # self.is_cache = False
         if not self.is_cache:
             ret_data = self.get_origin_data_from_interface()
         return ret_data
@@ -84,7 +86,7 @@ class DataPrepare(object):
         data_prams = self.prepare_parms(ds_conf)
         if not data_prams:
             return {}
-        self.url = ds_conf.data_source.backend_url + ds_conf.route + '/'
+        self.url = ds_conf.data_source.backend_url + ds_conf.route
         self.token_url = ds_conf.data_source.backend_url + "/oauth2/token/"
         if self.is_async:
             if self.data_identity in self.cache_base.smembers_async():
@@ -107,18 +109,16 @@ class DataPrepare(object):
                     logger.warn('Stream in call class ,Get origin data error, data_identity is : %s args:%s' %
                                 (self.data_identity, prams))
         else:
-            origin_data_list = self._get_data_from_interface(ds_conf, data_prams)
-        if origin_data_list[0] == "remote":
+            origin_data = self._get_data_from_interface(ds_conf, data_prams)
+        if ds_conf.method == 'REMOTE' and origin_data:
             self.cache_base.kwargs.update({
                 self.data_identity: {
-                    'origin_data': origin_data_list[1],
+                    'origin_data': origin_data,
                     'prams': self.parm_dict,
                 }
             })
             self.cache_base.save()
-            return origin_data_list[1]
-        else:
-            return origin_data_list[1]
+        return origin_data
 
     def get_origin_data_asyns(self, data_prams):
         """异步获取数据"""
@@ -141,11 +141,10 @@ class DataPrepare(object):
         raise DoingAsyncCallInterface
 
     def _get_data_from_interface(self, ds_conf, data_prams):
+        origin_data = None
         if ds_conf.method == 'LOCALE':
             origin_data = self.do_local_request(ds_conf, data_prams)
-            cleaner = DataClean(origin_data, ds_conf.data_origin_type)
-            clear_data = cleaner.worked()
-            return ["locale", clear_data]
+
         elif ds_conf.method == 'REMOTE':
             self.set_token()
             data_prams.update({
@@ -154,9 +153,9 @@ class DataPrepare(object):
             })
             origin_data = self.do_request(self.url, data_prams)
 
-            cleaner = DataClean(origin_data, ds_conf.data_origin_type)
-            clear_data = cleaner.worked()
-            return ["remote", clear_data]
+        cleaner = DataClean(origin_data, ds_conf.data_origin_type)
+        clear_data = cleaner.worked()
+        return clear_data
 
     def prepare_parms(self, ds_conf):
         arguments = self.argument_base.load()

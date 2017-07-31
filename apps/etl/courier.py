@@ -25,11 +25,14 @@ logger = logging.getLogger('apps.etl')
 
 
 class Courier(object):
-    def __init__(self, data_identity, feature_conf, apply_id):
+    def __init__(self, feature_name, feature_conf, data_identity, data_identity_config, apply_id,
+                 classify_collect_type):
         logger.info('Init Courier')
-        self.base_conf = feature_conf
-        self.feature_conf = feature_conf["value"]
+        self.feature_conf = feature_conf
+        self.feature_name = feature_name
         self.data_identity = data_identity
+        self.data_identity_config = data_identity_config
+        self.classify_collect_type = classify_collect_type
         self.error_no = 0
         self.collect_type = ''
         self.apply_id = apply_id
@@ -42,30 +45,47 @@ class Courier(object):
         self.relevance_data_identity_list = []
 
     def get_feature(self):
-        logger.info('Stream in courier function name : get_feature Feature name :%s' %
-                    self.base_conf)
-        self.data_identity_list = self._get_di_from_conf(self.feature_conf)
-        if self.collect_type == cons.COMMON_TYPE:
+
+        if self.classify_collect_type == cons.COMMON_TYPE:
             logger.info('Stream in courier function name : get_feature collect_type is Courier')
-            self.get_general_data()
+            self.get_comment_general_data()
+            return self.data_analysis_comment_type(self.data_identity_config["feature_list"], self.useful_data)
 
-        elif len(self.data_identity_list) > 1 and self.collect_type == cons.SHUNT_TYPE:
-            logger.info('Stream in courier function name : get_feature collect_type is ShuntCourier')
-            self.get_shunt_data()
-
-        elif self.collect_type == cons.RELEVANCE:
-            logger.info('Stream in courier function name : get_feature collect_type is RelevanceCourier')
-            self.get_relevance_data()
-
-        if not self.useful_data:
-            logger.error('Get feature value error : useful data is empty  feature_config is %s' % self.base_conf)
-            raise FeatureProcessError
-        return self.data_analysis(self.base_conf["feature_list"], self.useful_data)
+        else:
+            logger.info('Stream in courier function name : get_feature Feature name :%s' %
+                        self.feature_name)
+            self.data_identity_list = self._get_di_from_conf(self.feature_conf)
+            if self.collect_type == cons.COMMON_TYPE:
+                logger.info('Stream in courier function name : get_feature collect_type is Courier')
+                self.get_general_data()
+            elif len(self.data_identity_list) > 1 and self.collect_type == cons.SHUNT_TYPE:
+                logger.info('Stream in courier function name : get_feature collect_type is ShuntCourier')
+                self.get_shunt_data()
+            elif self.collect_type == cons.RELEVANCE:
+                logger.info('Stream in courier function name : get_feature collect_type is RelevanceCourier')
+                self.get_relevance_data()
+            if not self.useful_data:
+                logger.error('Get feature value error : useful data is empty  feature_name is %s' % self.feature_name)
+                raise FeatureProcessError
+            return self.data_analysis(self.feature_name, self.useful_data)
 
     @staticmethod
-    def data_analysis(feature_list_str, useful_data):
+    def data_analysis(feature_name, useful_data):
+        feature_obj = FeatureProcess(feature_name, useful_data)
+        ret = feature_obj.run()
+        if not ret:
+            logger.error('Feature:%s return is None' % feature_name)
+            raise HandleWorkError
+        if feature_name not in ret.keys():
+            logger.error(
+                'Wrong config of the feature, not the expect feature_name, feature_name: %s' % feature_name)
+            raise FeatureConfigError
+        logger.info('Feature Handle completed, result is: \n%s' % ret)
+        return ret
+
+    @staticmethod
+    def data_analysis_comment_type(feature_list, useful_data):
         result = {}
-        feature_list = feature_list_str.split(",")
         for feature_name in feature_list:
             feature_obj = FeatureProcess(feature_name, useful_data)
             ret = feature_obj.run()
@@ -79,6 +99,24 @@ class Courier(object):
             result.update(ret)
         logger.info('Feature Handle completed, result is: \n%s' % result)
         return result
+
+    def get_comment_useful_data(self, data_identity):
+        args_config = self.data_identity_config.get("args")[data_identity]
+        if not args_config:
+            logger.error("data_identity:%s config error in common feature table " % data_identity)
+            raise CommonFeatureConfigError
+        dp = DataPrepare(data_identity, self.apply_id, args_config, self.collect_type)
+        data = dp.get_original_data()
+        return data
+
+    def get_comment_general_data(self):
+        logger.info('Stream in courier function name : get_comment_general_data')
+        data = self.get_comment_useful_data(self.data_identity)
+        if not data:
+            logger.error('Get origin data error, data_identity is : %s' % self.data_identity)
+            raise OriginDataGetError
+        self.useful_data.update({self.data_identity: data})
+        logger.info('Stream get_comment_general_data complete\nUseful_data : %s' % self.useful_data)
 
     def get_useful_data(self, data_identity):
         args_config = self.feature_conf.get(data_identity)
@@ -96,8 +134,8 @@ class Courier(object):
             data = self.get_useful_data(data_identity)
             if not data:
                 logger.error('Get origin data error, data_identity is : %s' % data_identity)
-
-                # raise OriginDataGetError
+                raise OriginDataGetError
+            logger.info({data_identity: data})
             self.useful_data.update({data_identity: data})
         logger.info('Stream get_general_data complete\nUseful_data : %s' % self.useful_data)
 
@@ -143,7 +181,6 @@ class Courier(object):
                     logger.info('Find shunt_data,stream get_shunt_data complete\nUseful_data : %s' % data)
                     self.useful_data.update(data)
                     break
-
         if not has_value:
             logger.error('Get origin data error, feature_name is : %s' %
                          self.feature_name)
@@ -173,14 +210,12 @@ class Courier(object):
                 self._get_relevance_feature_list(feature)
 
     def _get_relevance_feature_userful_data(self, relevance_feature_list, relevance_data_identity):
-
         feature_data_identity_list = zip(relevance_feature_list, relevance_data_identity)
         feature_data_identity_list.reverse()
         logger.info("Relevance feature:%s config order:\n%s" % (self.feature_name, feature_data_identity_list))
         for feature_name, data_identity in feature_data_identity_list:
             if isinstance(data_identity, list):
                 self._get_relevance_feature_userful_data(feature_name, data_identity)
-
             data = self.get_useful_data(data_identity)
             if not data:
                 logger.error('Get origin data error,feature_name is:%s data_identity:%s'
@@ -194,11 +229,13 @@ class Courier(object):
         logger.info('Stream get_relevance_data complete\nUseful_data : %s' % self.useful_data)
 
     def _get_di_from_conf(self, base_conf):
-        logger.info('Stream in courier function name : _get_di_from_conf\nBase_conf :%s' %
-                    base_conf)
-        data_identity_list = base_conf.keys()
-        if 'collect_type' in data_identity_list:
-            self.collect_type = base_conf['collect_type']
-            data_identity_list.remove('collect_type')
-        logger.info('Data_identity_list : %s' % data_identity_list)
+        data_identity_list = []
+        if base_conf:
+            logger.info('Stream in courier function name : _get_di_from_conf\nBase_conf :%s' %
+                        base_conf)
+            data_identity_list = base_conf.keys()
+            if 'collect_type' in data_identity_list:
+                self.collect_type = base_conf['collect_type']
+                data_identity_list.remove('collect_type')
+            logger.info('Data_identity_list : %s' % data_identity_list)
         return data_identity_list
