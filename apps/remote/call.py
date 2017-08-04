@@ -205,6 +205,7 @@ class DataPrepare(object):
             encoding="UTF-8",
             ensure_ascii=False
         )
+        logger.info(url)
         response = requests.post(url, post_data)
         content = response.content
         content = json.loads(content)
@@ -225,6 +226,7 @@ class DataPrepare(object):
             encoding="UTF-8",
             ensure_ascii=False
         )
+        logger.info(url)
         response = requests.post(url, post_data)
         content = response.content
         content = json.loads(content)

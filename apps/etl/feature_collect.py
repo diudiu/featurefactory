@@ -40,11 +40,12 @@ class CollectFeature(object):
         self.classify_feature()
         logger.info('Stream in feature_collect function name : get_feature_value\nFeature list :%s' %
                     self.feature_list)
+        logger.info(self.feature_comment_type)
         # feature_list = tuple(self.feature_list)
         # 通用特征计算
         for data_identity, apiconfig_feature in self.feature_comment_type.iteritems():
             logger.info("*******get_comment_type*******")
-            logger.info(self.feature_comment_type)
+            logger.info(data_identity, apiconfig_feature)
             try:
                 logger.info('Get feature from data_identity:%s' % data_identity)
                 courier = Courier(feature_name='',
