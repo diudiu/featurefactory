@@ -58,8 +58,9 @@ def audit_task(base_data):
     finally:
         callback_url = base_data['callback_url']
         headers = {"Content-type": "application/json; charset=utf-8"}
-        logger.info(callback_url, data)
-        response = requests.post(callback_url, headers=headers, data=json.dumps(data))
+        logger.info("%s, %s" % (callback_url, data))
+        post_data = json.dumps(data)
+        response = requests.post(callback_url, headers=headers, data=post_data)
         logger.info('Results have already arrived, reply %s', response.content)
 
 
