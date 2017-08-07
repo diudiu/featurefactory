@@ -23,7 +23,7 @@ Usage:
 """
 
 # 特征取值如果是字符串类型的，将此类型作为缺省值
-StringTypeDefault = "**UNKNOWN**"
+StringTypeDefault = "UNKNOWN"
 
 # 特征取值如果是布尔类型的，将此类型作为缺省值
 BooleanTypeDefault = -1

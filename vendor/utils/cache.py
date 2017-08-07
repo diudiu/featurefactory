@@ -31,9 +31,9 @@ def singleton(cls):
 class RedisX(object):
     def __init__(self):
         self.host = REDIS_CONFIG['default']['host']
-        self.port = REDIS_CONFIG['default']['port']
+        self.port = int(REDIS_CONFIG['default']['port'])
         self.password = REDIS_CONFIG['default']['password']
-        self.db = REDIS_CONFIG['default']['db']
+        self.db = int(REDIS_CONFIG['default']['db'])
         self.conn = redis.Redis(
             host=self.host,
             port=self.port,

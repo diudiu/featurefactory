@@ -62,6 +62,16 @@ config = dict(
         "l_map_and_filter_chain": ""
     },
 
+    home_address_config={
+        "feature_name": "home_address",
+        "feature_data_type": "string",
+        "default_value": "StringTypeDefault",
+        "json_path_list": [("nation", "$..content.home_address", "f_assert_not_null->f_assert_must_basestring")],
+        "f_map_and_filter_chain": "",
+        "reduce_chain": "",
+        "l_map_and_filter_chain": ""
+    },
+
     marital_status_config={
         "feature_name": "marital_status",
         "feature_data_type": "int",

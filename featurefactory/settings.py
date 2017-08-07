@@ -47,6 +47,7 @@ INSTALLED_APPS = (
     'apps.pregranting',
     'apps.interface',
     'apps.integration',
+    'apps.dispatcher'
 )
 
 MIDDLEWARE_CLASSES = (

@@ -26,7 +26,7 @@ class MongoBase(object):
     def __init__(self, collection_name):
         self.collection = collection_name
         host = MONGODB_HOST
-        port = MONGODB_PORT
+        port = int(MONGODB_PORT)
         username = MONGODB_USERNAME
         password = MONGODB_PASSWORD
         db = MONGODB_NAME
@@ -35,6 +35,9 @@ class MongoBase(object):
         if username and password:
             self.db.authenticate(username, password)
         self.coll = self.db[self.collection]
+
+    def __del__(self):
+        self.conn.close()
 
     def save(self, data):
         data.update({

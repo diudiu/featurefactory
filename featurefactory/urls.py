@@ -6,6 +6,7 @@ from django.contrib import admin
 from apps.featureapi import urls as feature_url
 from apps.interface import urls as app_url
 from apps.integration import urls as integ_url
+from apps.dispatcher import urls as dispatcher_url
 
 urlpatterns = patterns(
     '',
@@ -15,7 +16,7 @@ urlpatterns = patterns(
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^syph-ff/feature/', include(feature_url)),
-    url(r'^api/', include(feature_url)),
+    url(r'^api/', include(dispatcher_url)),
     url(r'^feature_config/', include(app_url)),
     url(r'^rule/', include(integ_url)),
 )

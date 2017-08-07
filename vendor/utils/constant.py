@@ -24,7 +24,7 @@ class Constant(object):
 
 cons = Constant()
 
-CACHE_TIMEOUT = 86400
+CACHE_TIMEOUT = 86400 * 30
 
 cons.STR_EMPTY = ''
 cons.ZERO = 0
