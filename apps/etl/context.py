@@ -19,12 +19,12 @@ from apps.etl.models import PreFieldInfo
 
 logger = logging.getLogger('apps.etl')
 
-ORIGINAL_BASE_NAME = 'original_base_rg'
-PROCESS_BASE_NAME = 'process_base_rg'
-CACHE_BASE_NAME = 'cache_base_rg'
-APPLY_BASE_NAME = 'apply_base_rg'
-PORTRAIT_BASE_NAME = 'portrait_base_rg'
-BASE_ARGS_NAME = 'base_args_rg'
+ORIGINAL_BASE_NAME = 'original_base'
+PROCESS_BASE_NAME = 'process_base'
+CACHE_BASE_NAME = 'cache_base'
+APPLY_BASE_NAME = 'apply_base'
+PORTRAIT_BASE_NAME = 'portrait_base'
+BASE_ARGS_NAME = 'base_args'
 
 
 class BaseContext(object):
