@@ -1,8 +1,8 @@
 # -*- coding:utf-8 -*-
 
-import jsonpath
 import logging
 
+from jsonpath_rw_ext import parse
 from exec_chain_handle import func_exec_chain
 from vendor.errors.feature import FeatureProcessError
 
@@ -29,15 +29,19 @@ class JSONPathParser(object):
         """
         json_path_value = []
         for key, path, assert_chain in json_path_list:
-            value = jsonpath.jsonpath(data, path)
-            if not value:
+            path_expr = parse(path)
+            value = path_expr.find(data)
+            result = []
+            for val in value:
+                result.append(val.value)
+            if not result:
                 logger.error('(%s, %s) jsonpath value is null ' % (key, path))
-                value = []
+                result = []
             else:
-                logger.info('(%s, %s) jsonpath value is %s ' % (key, path, value))
-            value = func_exec_chain(value, assert_chain)
+                logger.info('(%s, %s) jsonpath value is %s ' % (key, path, result))
+            result = func_exec_chain(result, assert_chain)
 
-            json_path_value.append((key, path, assert_chain, value))
+            json_path_value.append((key, path, assert_chain, result))
 
         return json_path_value
 
@@ -56,5 +60,5 @@ if __name__ == '__main__':
         "f_assert_not_null->f_assert_must_digit"
     )]
 
-    parse = JSONPathParser()
-    parse.parsex(data, json_path_list)
+    jparse = JSONPathParser()
+    jparse.parsex(data, json_path_list)
