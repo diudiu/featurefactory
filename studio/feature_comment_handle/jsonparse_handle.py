@@ -1,8 +1,6 @@
 # -*- coding:utf-8 -*-
-
 import jsonpath
 import logging
-
 from exec_chain_handle import func_exec_chain
 from vendor.errors.feature import FeatureProcessError
 
@@ -34,9 +32,7 @@ class JSONPathParser(object):
             else:
                 logger.info('(%s, %s) jsonpath value is %s ' % (key, path, value))
             value = func_exec_chain(value, assert_chain)
-
             json_path_value.append((key, path, assert_chain, value))
-
         return json_path_value
 
 
@@ -53,6 +49,5 @@ if __name__ == '__main__':
         "age", "$..content.age",
         "f_assert_not_null->f_assert_must_digit"
     )]
-
-    jparse = JSONPathParser()
-    jparse.parsex(data, json_path_list)
+    parse = JSONPathParser()
+    parse.parsex(data, json_path_list)
