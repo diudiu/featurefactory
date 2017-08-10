@@ -124,21 +124,21 @@ class ReceiveResult(CsrfExemptMixin, View):
     def post(self, request, *args, **kwargs):
 
         # 接收2.0系统审核完成结果接口, 触发此接口代表2.0审核任务完成
-        # red = RedisX()
+        red = RedisX()
         req_data = json.loads(request.body)
-        # logger.info("2.0 callback data is: %s" % req_data)
-        # # 获取2.0的apply_id
-        # apply_id_2 = req_data.get("apply_id")
-        # # 在redis中查得对应的1.0的apply_id
-        # apply_id_1 = red.get(apply_id_2)
-        # # 拿到redis中存储的审核状态
-        # redis_status_json = red.get(apply_id_1)
-        # logger.info("receive result redis data is: %s" % redis_status_json)
-        # redis_status = json.loads(redis_status_json)
-        # redis_status.update({"status": "OK"})
-        #
-        # # 修改状态为OK
-        # red.set(apply_id_1, json.dumps(redis_status))
+        logger.info("2.0 callback data is: %s" % req_data)
+        # 获取2.0的apply_id
+        apply_id_2 = req_data.get("apply_id")
+        # 在redis中查得对应的1.0的apply_id
+        apply_id_1 = red.get(apply_id_2)
+        # 拿到redis中存储的审核状态
+        redis_status_json = red.get(apply_id_1)
+        logger.info("receive result redis data is: %s" % redis_status_json)
+        redis_status = json.loads(redis_status_json)
+        redis_status.update({"status": "OK"})
+
+        # 修改状态为OK
+        red.set(apply_id_1, json.dumps(redis_status))
         res_data = {
             "status": 1,
             "message": "结果接收成功",
