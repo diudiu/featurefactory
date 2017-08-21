@@ -232,7 +232,10 @@ class DataPrepare(object):
         content = json.loads(content)
         if content.get('res_data', None):
             content['res_data'] = Cryption.aes_base64_decrypt(content['res_data'], self.des_key)
-        result = json.loads(content['res_data'])
+            result = json.loads(content['res_data'])
+        else:
+            logger.info(content)
+            result = {}
         content['res_data'] = result
         return content
 
