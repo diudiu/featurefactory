@@ -57,10 +57,12 @@ class RedisX(object):
         return a
 
     def set(self, name, value):
+        self.ping()
         a = self.conn.set(name=name, value=value, ex=CACHE_TIMEOUT)
         return a
 
     def get(self, name):
+        self.ping()
         value = self.conn.get(name=name)
         return value
 
