@@ -64,12 +64,12 @@ class RiskControl2(object):
         if data_identity == "bank_card_upload":
             logger.info("Do request to 2.0, flowchart is: %s, data is: %s" % (data_identity, data))
             response = requests.post(URL_2_0_BANKCARD, headers=HEADERS, data=json.dumps(data))
-            logger.info("response is: %s, flowchart is: %s" % (response.content, data))
+            logger.info("bank_card_upload response is: %s, flowchart is: %s" % (response.content, data))
             pass
         elif data_identity == "email_dig_upload":
             logger.info("Do request to 2.0, flowchart is: %s, data is: %s", data_identity, data)
             response = requests.post(URL_2_0_EMAIL, headers=HEADERS, data=json.dumps(data))
-            logger.info("response is: %s, flowchart is: %s" % (response.content, data))
+            logger.info("email_dig_upload response is: %s, flowchart is: %s" % (response.content, data))
             pass
         elif data_identity == "operator_dig_upload":
             phone_remain = data.get("phone_remain", None)
@@ -77,10 +77,10 @@ class RiskControl2(object):
                 data["phone_remain"] = float(phone_remain)
             logger.info("Do request to 2.0, flowchart is: %s, data is: %s", data_identity, data)
             response = requests.post(URL_2_0_OPERATOR, headers=HEADERS, data=json.dumps(data))
-            logger.info("response is: %s, flowchart is: %s" % (response.content, data))
+            logger.info("operator_dig_upload response is: %s, flowchart is: %s" % (response.content, data))
             pass
         elif data_identity == "final_upload":
             logger.info("Do request to 2.0, flowchart is: %s, data is: %s", data_identity, data)
             response = requests.post(URL_2_0_FINAL, headers=HEADERS, data=json.dumps(data))
-            logger.info("response is: %s, flowchart is: %s" % (response.content, data))
+            logger.info("final_upload response is: %s, flowchart is: %s" % (response.content, data))
             pass

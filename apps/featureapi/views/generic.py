@@ -71,6 +71,7 @@ class FeatureExtract(CsrfExemptMixin, View):
         #     return JSONResponse(data)
         try:
             base_data = client_dispatch(client_code, content)
+            logger.info("base_data: %s" % base_data)
             if base_data['is_async']:
                 # ASYNC
                 logger.info('\n============Streams come in ASYNC ===========')
@@ -86,12 +87,14 @@ class FeatureExtract(CsrfExemptMixin, View):
                 })
         except ServerError as e:
             data = {
+                'apply_id': content.get('apply_id', None),
                 cons.RESPONSE_REQUEST_STATUS: e.status,
                 cons.RESPONSE_REQUEST_MESSAGE: e.message,
             }
             logger.error(data)
         except Exception as e:
             data = {
+                'apply_id': content.get('apply_id', None),
                 cons.RESPONSE_REQUEST_STATUS: ResponseCode.FAILED,
                 cons.RESPONSE_REQUEST_MESSAGE: e.message,
             }

@@ -45,6 +45,7 @@ def audit_task(base_data):
         })
     except ServerError as e:
         data = {
+            'apply_id': base_data.get('apply_id', None),
             cons.RESPONSE_REQUEST_STATUS: e.status,
             cons.RESPONSE_REQUEST_MESSAGE: e.message
         }
@@ -52,6 +53,7 @@ def audit_task(base_data):
         import traceback
         traceback.print_exc()
         data = {
+            'apply_id': base_data.get('apply_id', None),
             cons.RESPONSE_REQUEST_STATUS: ResponseCode.FAILED,
             cons.RESPONSE_REQUEST_MESSAGE: e.message,
         }
