@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 import requests
 import json
+import time
 from braces.views import CsrfExemptMixin
 import logging
 
@@ -40,12 +41,17 @@ class ApplyCreditView(APIView):
         # 访问风控1.0, 得到相应的apply_id和返回数据
         ret_data_list = rc1.do_request_1_apply(post_data)
         apply_id_1 = ret_data_list[0]
-        logger.info("apply_id_1: %s" % apply_id_1)
+        logger.info("ApplyCreditView apply_id_1: %s" % apply_id_1)
         ret_data = ret_data_list[1]
 
         # 访问2.0 得到相应的apply_id
         apply_id_2 = rc2.do_formal_request(data_2_0)
-        logger.info("apply_id_2: %s" % apply_id_2)
+        if apply_id_2:
+            logger.info("ApplyCreditView apply_id_2: %s" % apply_id_2)
+        else:
+            apply_id_2 = "Error%s" % int(time.time()*1000)
+            logger.error("ApplyCreditView apply_id_2: %s" % apply_id_2)
+
         red = RedisX()
 
         # 准备redis数据 包含审核状态和 apply_id映射
@@ -81,8 +87,9 @@ class ObtainCreditResultView(APIView):
         if redis_status:
             redis_status = json.loads(redis_status)
         else:
-            redis_status = {}
-            logger.error("redis_status: %s " % redis_status)
+            apply_id_2 = "Error%s" % int(time.time() * 1000)
+            redis_status = {"status": "OK", "apply_id_2_0": apply_id_2}
+            logger.error("ObtainCreditResultView apply_id_1:%s redis_status: %s " % (apply_id, redis_status))
         # 如果redis状态表示审核完成, 调用1.0获取结果接口, 透传返回信息
         if redis_status.get("status") == "OK":
             ret_data = rc1.do_request_1_result(request.query_params)
@@ -107,22 +114,25 @@ class AsyncCallbackView(CsrfExemptMixin, View):
         logger.info("apply_id_1:%s" % apply_id_1)
 
         red = RedisX()
-
         redis_status = red.get(apply_id_1)
         if redis_status:
             redis_status = json.loads(redis_status)
         else:
-            redis_status = {}
-            logger.error("redis_status: %s" % redis_status)
+            apply_id_2 = "Error%s" % int(time.time() * 1000)
+            redis_status = {"status": "RUNNING", "apply_id_2_0": apply_id_2}
 
         # 获取对应2.0的apply_id
         apply_id_2 = redis_status.get("apply_id_2_0")
         logger.info("apply_id_2:%s" % apply_id_2)
 
-        rc2.do_request_2(post_data, apply_id_2)
+        if apply_id_2.startswith("Error"):
+            redis_status["status"] = "OK"
+            logger.error("AsyncCallbackView apply_id_2:%s skip! apply_id_1:%s post_data:%s" % (apply_id_2, apply_id_1, post_data))
+        else:
+            rc2.do_request_2(post_data, apply_id_2)
 
-        # 准备redis数据 包含审核状态和 apply_id映射 状态改为RUNNING
-        redis_status["status"] = "RUNNING"
+            # 准备redis数据 包含审核状态和 apply_id映射 状态改为RUNNING
+            redis_status["status"] = "RUNNING"
 
         # 储存第一个redis数据, 以apply_id1做键 redis数据转json串做值
         red.set(apply_id_1, json.dumps(redis_status))
@@ -144,13 +154,13 @@ class ReceiveResult(CsrfExemptMixin, View):
         # 在redis中查得对应的1.0的apply_id
         apply_id_1 = red.get(apply_id_2)
         if not apply_id_1:
-            logger.error("apply_id_1 is None!")
+            apply_id_1 = "Error%s" % int(time.time() * 1000)
         logger.info("apply_id_1: %s" % apply_id_1)
         # 拿到redis中存储的审核状态
         redis_status_json = red.get(apply_id_1)
         logger.info("receive result redis data is: %s" % redis_status_json)
         if not redis_status_json:
-            redis_status_json = {}
+            redis_status_json = json.dumps({"status": "RUNNING", "apply_id_2_0": apply_id_2})
         redis_status = json.loads(redis_status_json)
         redis_status.update({"status": "OK"})
 
