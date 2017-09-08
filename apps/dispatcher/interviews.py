@@ -61,6 +61,7 @@ class RiskControl2(object):
                 logger.error("Do 2.0 formal request failed, status code is not 200, card_id is: %s" % card_id)
 
         except Exception as e:
+            logger.error(e.message)
             pass
 
         return apply_id
