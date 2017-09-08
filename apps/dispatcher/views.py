@@ -89,7 +89,7 @@ class ObtainCreditResultView(APIView):
             apply_id_first_req = red.get("%s_first_req" % apply_id)
             if apply_id_first_req:
                 time_interval = int(time.time())-int(apply_id_first_req)
-                if time_interval > 30:
+                if time_interval > 180:
                     redis_status["status"] = "OK"
             else:
                 red_ret = red.set("%s_first_req" % apply_id, int(time.time()))
