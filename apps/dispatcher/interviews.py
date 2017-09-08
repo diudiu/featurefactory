@@ -49,14 +49,20 @@ class RiskControl2(object):
                 "call_back": URL_RECEIVE
             }
         )
-        response = requests.post(URL_2_0_FORMAL, headers=HEADERS, data=json.dumps(data2))
-        self.red.ping()
-        if response.status_code == 200:
-            res_date = json.loads(response.content)
-            apply_id = res_date.get("res_data").get("apply_id")
-            logger.info("Do 2.0 formal request success, apply_id is: %s" % apply_id)
-        else:
-            logger.error("Do 2.0 formal request failed, status code is not 200, card_id is: %s" % card_id)
+
+        try:
+            response = requests.post(URL_2_0_FORMAL, headers=HEADERS, data=json.dumps(data2))
+            self.red.ping()
+            if response.status_code == 200:
+                res_date = json.loads(response.content)
+                apply_id = res_date.get("res_data").get("apply_id")
+                logger.info("Do 2.0 formal request success, apply_id is: %s" % apply_id)
+            else:
+                logger.error("Do 2.0 formal request failed, status code is not 200, card_id is: %s" % card_id)
+
+        except Exception as e:
+            pass
+
         return apply_id
 
     def do_request_2(self, data, apply_id_2):
