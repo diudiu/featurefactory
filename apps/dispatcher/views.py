@@ -86,6 +86,14 @@ class ObtainCreditResultView(APIView):
         redis_status = red.get(apply_id)
         if redis_status:
             redis_status = json.loads(redis_status)
+            apply_id_first_req = red.get("%s_first_req" % apply_id)
+            if apply_id_first_req:
+                time_interval = int(time.time())-int(apply_id_first_req)
+                if time_interval > 40:
+                    redis_status["status"] = "OK"
+            else:
+                red_ret = red.set("%s_first_req" % apply_id, int(time.time()))
+
         else:
             apply_id_2 = "Error%s" % int(time.time() * 1000)
             redis_status = {"status": "OK", "apply_id_2_0": apply_id_2}
