@@ -12,7 +12,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 CURRENT_PATH = os.path.dirname(os.path.realpath(__file__))
 PROJECT_PATH = os.path.dirname(CURRENT_PATH)
 
-
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 DATABASES = {
@@ -168,6 +167,14 @@ LOGGING = {
             'filename': os.path.join(log_path, 'apps.dispatcher.out'),
             'maxBytes': 1024 * 1024 * 20,
             'backupCount': 200,
+        },
+        'timelog': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'formatter': 'verbose',
+            'filename': os.path.join(log_path, 'apps.timelog.out'),
+            'maxBytes': 1024 * 1024 * 20,
+            'backupCount': 200,
         }
     },
     'loggers': {
@@ -228,6 +235,11 @@ LOGGING = {
         },
         'apps.dispatcher': {
             'handlers': ['dispatcher'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'apps.timelog': {
+            'handlers': ['timelog'],
             'level': 'INFO',
             'propagate': False,
         },
