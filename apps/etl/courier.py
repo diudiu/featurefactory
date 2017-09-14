@@ -152,6 +152,7 @@ class Courier(object):
         apply_data = (apply_base.load())['data']
         has_value = False
         data_identity = ''
+        data = ''
         for feature_conf in feature_conf_list:
             shunt_key = feature_conf.shunt_key
             data_identity = feature_conf.data_identity
@@ -179,7 +180,6 @@ class Courier(object):
                             break
                     has_value = True
                     data = {data_identity: data}
-                    logger.info('Find shunt_data,stream get_shunt_data complete\nUseful_data : %s' % data)
                     self.useful_data.update(data)
                     break
         if not has_value:
@@ -188,6 +188,7 @@ class Courier(object):
             # raise OriginDataGetError
             data = {data_identity: {}}
             self.useful_data.update(data)
+        logger.info('Find shunt_data,stream get_shunt_data complete\nUseful_data : %s' % data)
 
     def get_relevance_data(self):
         self._get_relevance_feature_list(self.feature_name)
