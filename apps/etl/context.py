@@ -62,7 +62,9 @@ class ApplyContext(BaseContext):
 
     def load(self):
         query = {'apply_id': self.apply_id, 'is_delete': False}
+        logger.info("mongo query: %s" % self.apply_id)
         data = self.apply_base.search(query)
+        logger.info("mongo return :%s" % data)
         return data
 
 
