@@ -114,7 +114,7 @@ class Courier(object):
         data = self.get_comment_useful_data(self.data_identity)
         if not data:
             logger.error('Get origin data error, data_identity is : %s' % self.data_identity)
-            raise OriginDataGetError
+            # raise OriginDataGetError
         self.useful_data.update({self.data_identity: data})
         logger.info('Stream get_comment_general_data complete\nUseful_data : %s' % self.useful_data)
 
@@ -134,7 +134,7 @@ class Courier(object):
             data = self.get_useful_data(data_identity)
             if not data:
                 logger.error('Get origin data error, data_identity is : %s' % data_identity)
-                raise OriginDataGetError
+                # raise OriginDataGetError
             logger.info({data_identity: data})
             self.useful_data.update({data_identity: data})
         logger.info('Stream get_general_data complete\nUseful_data : %s' % self.useful_data)
@@ -151,6 +151,7 @@ class Courier(object):
         apply_base = ApplyContext(self.apply_id)
         apply_data = (apply_base.load())['data']
         has_value = False
+        data_identity = ''
         for feature_conf in feature_conf_list:
             shunt_key = feature_conf.shunt_key
             data_identity = feature_conf.data_identity
@@ -184,7 +185,9 @@ class Courier(object):
         if not has_value:
             logger.error('Get origin data error, feature_name is : %s' %
                          self.feature_name)
-            raise OriginDataGetError
+            # raise OriginDataGetError
+            data = {data_identity: {}}
+            self.useful_data.update(data)
 
     def get_relevance_data(self):
         self._get_relevance_feature_list(self.feature_name)
@@ -220,7 +223,7 @@ class Courier(object):
             if not data:
                 logger.error('Get origin data error,feature_name is:%s data_identity:%s'
                              % (self.feature_name, data_identity))
-                raise OriginDataGetError
+                # raise OriginDataGetError
             self.useful_data.update({data_identity: data})
             if feature_name != feature_data_identity_list[-1][0]:
                 feature_value = self.data_analysis(feature_name, data)
