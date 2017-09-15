@@ -1399,6 +1399,14 @@ def m_first_in_next(seq):
         return "否"
 
 
+def m_bfm_risk(seq, risk_list):
+
+    for i in seq:
+        if i in risk_list:
+            return "是"
+    return "否"
+
+
 if __name__ == '__main__':
     data = [
         {
