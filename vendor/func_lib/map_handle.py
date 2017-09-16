@@ -1392,6 +1392,13 @@ def m_first_equal_next(seq):
         return "否"
 
 
+def m_yes_no(seq):
+    if seq[0] == "yes":
+        return "是"
+    else:
+        return "否"
+
+
 def m_first_in_next(seq):
     if seq[0] in seq[1]:
         return "是"
