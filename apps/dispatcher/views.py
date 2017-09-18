@@ -137,6 +137,7 @@ class AsyncCallbackView(CsrfExemptMixin, View):
             redis_status["status"] = "OK"
             logger.error("AsyncCallbackView apply_id_2:%s skip! apply_id_1:%s post_data:%s" % (apply_id_2, apply_id_1, post_data))
         else:
+            time.sleep(3)
             rc2.do_request_2(post_data, apply_id_2)
 
             # 准备redis数据 包含审核状态和 apply_id映射 状态改为RUNNING
