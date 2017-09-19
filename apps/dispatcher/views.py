@@ -73,6 +73,15 @@ class ApplyCreditView(APIView):
 class ObtainCreditResultView(APIView):
 
     def get(self, request, *args, **kwargs):
+        try:
+            real_ip = request.META['HTTP_X_FORWARDED_FOR']
+            regip = real_ip.split(",")[0]
+        except:
+            try:
+                regip = request.META['REMOTE_ADDR']
+            except:
+                regip = ""
+        logger.info("ObtainCreditResultView: %s" % regip)
 
         # 获取结果接口
         red = RedisX()
