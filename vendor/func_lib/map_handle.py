@@ -1003,7 +1003,8 @@ def m_to_code(seq, args=None):
         is_delete=False
     )
     res = ''
-    num_map = {int(conf.mapped_value): [conf.unitary_value, conf.dual_value, conf.arithmetic_type, conf.feature_desc] for conf in fcm}
+    num_map = {int(conf.mapped_value): [conf.unitary_value, conf.dual_value, conf.arithmetic_type, conf.feature_desc]
+               for conf in fcm}
     for key, value in num_map.iteritems():
         arithmetic_type = value[2]
         if arithmetic_type == '[)':
@@ -1314,7 +1315,8 @@ def m_get_income_expense_comparison(seq, args=None):
                    '9': 9500, 'a': 15000, 'b': 25000, 'c': 35000, 'd': 45000, 'e': 55000, 'f': 65000, '10': 75000,
                    '11': 85000, '12': 95000, '13': 150000, '14': 250000, '15': 350000, '16': 450000, '17': 550000,
                    '18': 650000, '19': 750000, '1a': 850000, '1b': 950000, '1c': 1500000, '1d': 2500000, '1e': 3500000,
-                   '1f': 4500000, '20': 5500000, '21': 6500000, '22': 7500000, '23': 8500000, '24': 9500000, '25':15000000
+                   '1f': 4500000, '20': 5500000, '21': 6500000, '22': 7500000, '23': 8500000, '24': 9500000,
+                   '25': 15000000
                    }
 
     ratio = ''
@@ -1407,10 +1409,22 @@ def m_first_in_next(seq):
 
 
 def m_bfm_risk(seq, risk_list):
-
     for i in seq:
         if i in risk_list:
             return "是"
+    return "否"
+
+
+def m_c_d_t_b268(seq):
+    c_d_t_b268 = seq[0][:-3]
+    home_address = seq[1]
+    if not isinstance(c_d_t_b268, unicode):
+        c_d_t_b268 = unicode(c_d_t_b268)
+    if not isinstance(home_address, unicode):
+        home_address = unicode(home_address)
+    if c_d_t_b268 in home_address:
+        return "是"
+
     return "否"
 
 
