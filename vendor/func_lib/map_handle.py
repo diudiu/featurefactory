@@ -1416,12 +1416,15 @@ def m_bfm_risk(seq, risk_list):
 
 
 def m_c_d_t_b268(seq):
-    c_d_t_b268 = seq[0][:-3]
+    c_d_t_b268 = seq[0]
     home_address = seq[1]
     if not isinstance(c_d_t_b268, unicode):
         c_d_t_b268 = unicode(c_d_t_b268)
     if not isinstance(home_address, unicode):
         home_address = unicode(home_address)
+    if c_d_t_b268[-1] == u"市":
+        c_d_t_b268 = c_d_t_b268[:-1]
+
     if c_d_t_b268 in home_address:
         return "是"
 
