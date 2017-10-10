@@ -1,0 +1,98 @@
+{ 
+    "scan_code_city": "内江", 
+	"call_back": "http://192.168.1.14:10012/api/async/result/",
+    "san_code_time": "1499659147", 
+    "product_code": "cf5b6d062260f643d123ae61a37fe416", 
+    "name": "张娜", 
+    "mobile": "15652375668",
+    "product_version": "P045-v01.1125", 
+    "validation_status": true, 
+    "card_id": "120222198208052620", 
+    "apply_id": "", 
+    "gps_latitude": "26.86885", 
+    "gps_longitude": "100.222024" 
+}
+
+{
+    "product_code": "cf5b6d062260f643d123ae61a37fe416",
+    "data_identity": "bank_card_upload",
+	"call_back": "http://192.168.1.14:10012/api/async/result/",
+    "apply_id": "APPLY20170710122434668460537",
+    "message": {
+        "bank_card_number": "6226090103985392",
+        "union_pay_data": {
+            "CDCA003": "02",
+            "CSWC002": "2",
+            "CSRL003": "578",
+            "CDTT106": "41542.1",
+            "CDTB292": "28172",
+            "CDTB296": "3",
+            "CDTT094": "696.22",
+            "CDTT097": "2",
+            "CDTB260": "4",
+            "CDTT027": "32971.61",
+            "CDTT040": "8",
+            "CDMC133": "0",
+            "CDMC136": "0",
+            "CDTT079": "48537.15",
+            "CDTT092": "8",
+            "CDTB065": "7077.04",
+            "CDTB066": "2.25",
+            "CDTB061": "7077.04",
+            "CDTB064": "2.25",
+            "CDMC260": "77130",
+            "CDTC035": "84924.48",
+            "CDTC050": "27",
+            "CDMC113": "2191.99",
+            "CDTB004": "84924.48",
+            "CDTB019": "27",
+            "CDTB230": "40000",
+            "CDTB122": "3",
+            "CSRL001": "730",
+            "CDTB268": "内江市",
+            "CDTB045": "3",
+            "CDTB046": "3"
+        }
+    }
+}
+
+{
+    "product_code": "cf5b6d062260f643d123ae61a37fe416", 
+    "data_identity": "email_dig_upload",
+	"call_back": "http://192.168.1.14:10012/api/async/result/",
+    "apply_id": "",
+    "message": {
+        "credit_card_number": "",
+        "credit_limit": "",
+        "available_balance": ""
+    }
+}
+
+{
+    "product_code": "cf5b6d062260f643d123ae61a37fe416", 
+    "data_identity": "operator_dig_upload",
+	"call_back": "http://192.168.1.14:10012/api/async/result/",
+    "apply_id": "APPLY20170710122434668460537",
+    "message": {
+        "phone_remain": 56.5,
+        "phone_list": [
+            "12423556756", "234253645645", "2342342342",
+            "34225565764", "423435546342", "6589898955"
+        ], 
+        "call_pay_list": [
+            15.5, 62.4, 76.5, 35.6, 26.8, 14.9
+        ]
+    }
+}
+
+{
+    "product_code": "cf5b6d062260f643d123ae61a37fe416", 
+    "data_identity": "final_upload",
+	"call_back": "http://192.168.1.14:10012/api/async/result/",
+    "apply_id": "APPLY20170710122434668460537",
+    "message": {
+        "receive_address": "北京市朝阳区大屯路洛克时代"
+    }
+}
+
+
