@@ -227,9 +227,11 @@ class DataPrepare(object):
             ensure_ascii=False
         )
         logger.info(url)
+        logger.info(post_data)
         response = requests.post(url, post_data)
         content = response.content
         content = json.loads(content)
+        logger.info(content)
         if content.get('res_data', None):
             content['res_data'] = Cryption.aes_base64_decrypt(content['res_data'], self.des_key)
             result = json.loads(content['res_data'])
