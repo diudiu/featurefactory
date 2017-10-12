@@ -226,17 +226,16 @@ class DataPrepare(object):
             encoding="UTF-8",
             ensure_ascii=False
         )
-        logger.info(url)
-        logger.info(post_data)
+        logger.info("%s %s" % (url, json_data))
         response = requests.post(url, post_data)
         content = response.content
         content = json.loads(content)
-        logger.info(content)
         if content.get('res_data', None):
             content['res_data'] = Cryption.aes_base64_decrypt(content['res_data'], self.des_key)
             result = json.loads(content['res_data'])
+            logger.info("%s %s" % (data.get("data_identity"), content))
         else:
-            logger.info(content)
+            logger.error(content)
             result = {}
         content['res_data'] = result
         return content

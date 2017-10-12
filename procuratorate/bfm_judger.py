@@ -64,6 +64,7 @@ class Judger(object):
             )
             raise GetArgumentsError  # E06
         self._load_args()
+        logger.info("%s arguments: %s" % (self.apply_id,self.arguments))
 
     def _load_conf(self):
         full_conf = FeatureConf.objects.filter(
