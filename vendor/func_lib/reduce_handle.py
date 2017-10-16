@@ -51,3 +51,10 @@ def r_get_key_from_list(seq, args):
         if key in i.keys():
             res.append(i.get(key, defaults))
     return res
+
+
+def r_division(seq, args):
+    """除法"""
+    if args:
+        return float(seq)/float(args)
+    return int(seq[0]) / int(seq[1])

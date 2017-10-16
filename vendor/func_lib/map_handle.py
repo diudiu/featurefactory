@@ -4,7 +4,7 @@ import sys
 import re
 import time
 import math
-from datetime import datetime
+from datetime import datetime, timedelta
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -19,6 +19,7 @@ from vendor.errors.feature import FeatureProcessError
 from apps.common.models import FeatureCodeMapping
 from apps.common.models import CityCodeField
 from apps.common.models import *
+from apps.etl.models import P2PTelephoneModel, LoanAgencyModel
 
 
 def m_to_int(seq):
@@ -109,6 +110,14 @@ def m_to_sum(seq):
     return seq
 
 
+def m_to_sort(seq, args=False):
+    """
+        排序
+    """
+    seq.sort(key=lambda x: x, reverse=args)
+    return seq
+
+
 def m_get_seq_index_value(seq, args):
     """
         获取序列中指定索引的值
@@ -164,6 +173,25 @@ def m_get_date_to_now_years(seq, args=None):
     if args is not None:
         seq = round(seq, args)
     return seq
+
+
+def m_get_date_to_now_days(seq):
+    """
+        :param seq: 日期字符串
+        :return:    距离现在的天数
+
+    """
+    try:
+        seq = datetime.strptime(seq, "%Y-%m-%d")
+    except:
+        seq = datetime.strptime(seq, "%Y-%m-%d %H:%M:%S")
+    seq = (datetime.now() - seq).days
+    return seq
+
+
+def m_datetime_obj_to_str(seq):
+    d = seq.strftime("%Y-%m-%d %H:%M:%S")
+    return d
 
 
 def m_seq_to_agv(seq, args=None):
@@ -1431,6 +1459,49 @@ def m_c_d_t_b268(seq):
     return "否"
 
 
+def m_p2p_count(seq):
+    count = P2PTelephoneModel.objects.filter(telephone__in=seq).values_list("telephone").distinct().count()
+    return count
+
+
+def m_loan_agency_count(seq):
+    count = LoanAgencyModel.objects.filter(telephone__in=seq).values_list("telephone").distinct().count()
+    return count
+
+
+def m_car_room_code(seq):
+    m = {
+        1: "有",
+        2: "可能有",
+        3: "无"
+    }
+    if seq in m:
+        return m[seq]
+    else:
+        return "UNKNOWN"
+
+
+def m_call_time_type(seq):
+    days = [x.hour for x in seq]
+    trans = [1 if x in range(6, 22) else 2 for x in days]
+    type1 = trans.count(1)
+    type2 = trans.count(2)
+    if type1 >= type2:
+        return "生活型"
+    elif type1 < type2:
+        return "夜话型"
+
+
+def m_a_per_in_b(seq, args):
+    args_count = seq.count(args)
+    return args_count / len(seq)
+
+
+def m_date_less_x_days(seq, args):
+    t = datetime.now() - timedelta(args)
+    l = [i for i in seq if i >= t]
+    return l
+
 if __name__ == '__main__':
     data = [
         {
@@ -1496,5 +1567,5 @@ if __name__ == '__main__':
         },
     ]
     # data = m_r_to_now_work_time()
-    data = m_to_code(0, args='income_expense_comparison')
+    data = m_to_slice("5%", [0, -1])
     print data

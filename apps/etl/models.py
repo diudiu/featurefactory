@@ -125,6 +125,44 @@ class FeatureProcess(models.Model):
         verbose_name_plural = u'特征计算方式配置表'
 
 
+class LoanAgencyModel(BaseModel):
+    """ 贷款经理信息 """
+    source_name = models.CharField(u'来源网站名称', max_length=128, null=True, blank=True)
+    source_url = models.CharField(u'信息来源url', max_length=1024, null=True, blank=True)
+    source_url_mapping = models.CharField(u'映射url', max_length=255, null=True, blank=True)
+    name = models.CharField(u'联系人名称', max_length=32, null=True, blank=True)
+    telephone = models.CharField(u'手机号', max_length=64, null=True, blank=True)
+    business_released_date = models.DateField(u'信息发布日期', null=True, blank=True)
+    father_type = models.CharField(u'分类', max_length=20, null=True, blank=True)
+    reservation_counts = models.IntegerField(u'预约次数', default=0)
+    qq = models.CharField(u'qq号', max_length=15, db_index=True, null=True)
+    view_counts = models.IntegerField(u'浏览次数', default=0)
+    child_type = models.CharField(u'子分类', max_length=128, null=True, blank=True)
+    company_name = models.CharField(u'公司名称', max_length=128, null=True, blank=True)
+    company_addr = models.CharField(u'公司地址', max_length=255, null=True, blank=True)
+    company_register_date = models.DateField(u'注册时间', null=True)
+    company_url = models.CharField(u'公司官网', max_length=128, null=True, blank=True)
+    publish_city = models.CharField(u'信息发布城市', max_length=50, null=True, blank=True)
+
+    from_which_id = models.CharField(u'原始记录的id', max_length=64, null=True, blank=True)
+    from_which_model = models.CharField(u'来自哪个模型', max_length=64, null=True, blank=True,
+                                        help_text=u'使用app_label:model_name的形式存储')
+
+    class Meta:
+        db_table = 'do_loan_manager_info'
+        verbose_name_plural = u'贷款经理信息'
+        verbose_name = u'贷款经理信息'
+
+
+class P2PTelephoneModel(models.Model):
+    company_name = models.CharField(u'公司名称', max_length=64, null=True, blank=True)
+    telephone = models.CharField(u'客服电话', max_length=64, null=True, blank=True)
+    province = models.CharField(u'省份或直辖市名称', max_length=32, null=True, blank=True)
+
+    class Meta:
+        db_table = 'do_p2p_telephone'
+
+
 class FuncLibSource(models.Model):
     FUNC_TYPE_CHOICES = [
         ('M', u'map'),

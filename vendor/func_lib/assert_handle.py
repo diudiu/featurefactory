@@ -119,6 +119,18 @@ def f_assert_must_digit_or_float(value_list, args=False):
     return value_list
 
 
+def f_assert_must_percent(value_list):
+    """
+        检测是否是百分数
+    """
+
+    for value in value_list:
+        if not (str(value)[-1] == '%' and (str(value[:-1]).count('.') <= 1 and str(value[:-1]).replace('.', '').isdigit())):
+                raise FeatureProcessError(
+                    '%s f_assert_must_percent Error' % value_list)
+    return value_list
+
+
 def f_assert_must_between(value_list, args):
     """
     检测列表中的元素是否为数字或浮点数且在args的范围内
@@ -151,4 +163,4 @@ def f_assert_seq0_gte_seq1(value_list):
 
 
 if __name__ == '__main__':
-    print f_assert_jsonpath_true([])
+    print f_assert_must_percent(['7.0%'])
