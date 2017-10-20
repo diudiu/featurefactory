@@ -3,9 +3,9 @@
     urls route
 """
 from django.conf.urls import url, patterns
-from apps.dispatcher.views import ApplyCreditView
+from apps.dispatcher.viewnew import ApplyCreditView
 from apps.dispatcher.views import ObtainCreditResultView
-from apps.dispatcher.views import AsyncCallbackView
+from apps.dispatcher.viewnew import AsyncCallbackView
 from apps.dispatcher.views import ReceiveResult
 
 
