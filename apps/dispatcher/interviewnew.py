@@ -57,6 +57,7 @@ class RiskControl2(object):
         res_date = {"status": 0, "message": "操作失败"}
         try:
             starttime = time.time()
+            logger.info("do_request_2_apply data:%s" % data2)
             response = requests.post(URL_2_0_FORMAL, headers=HEADERS, data=json.dumps(data2))
             endtime = time.time()
             loggertime.info("do_request_2_apply time: %s" % (endtime - starttime))
