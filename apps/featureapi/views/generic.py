@@ -60,6 +60,7 @@ class FeatureExtract(CsrfExemptMixin, View):
         }
         post_data = json.loads(request.body)
         # get client code
+        logger.info("post_data:%s" % post_data)
         client_code = post_data.get(cons.CLIENT_CODE, None)
         content = post_data.get(cons.RESPONSE_HANDLE_CONTENT, None)
         # if client_code == "bfm_test":

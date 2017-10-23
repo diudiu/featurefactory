@@ -37,6 +37,7 @@ def audit_task(base_data):
     }
     try:
         logger.info('\n===========Streams in ASYNC mission control center,Collecting feature now==========')
+        logger.info("base_data: %s" % base_data)
         ret_data = mission_control(base_data)
         data.update({
             'client_code': base_data.get('client_code', None),
