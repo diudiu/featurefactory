@@ -79,7 +79,8 @@ class FeatureExtract(CsrfExemptMixin, View):
             if base_data['is_async']:
                 # ASYNC
                 logger.info('\n============Streams come in ASYNC ===========')
-                audit_task.apply_async(args=({'apply_id': content.get('apply_id', None)}, base_data), retry=True, queue='re_task_audit', routing_key='re_task_audit')
+                task_id = audit_task.apply_async(args=({'apply_id': content.get('apply_id', None)}, base_data), retry=True, queue='re_task_audit', routing_key='re_task_audit')
+                logger.info("task_id:%s" % task_id)
             else:
                 # SYNC
                 logger.info('\n============Streams in SYNC mission control center, Collecting feature now===========')
