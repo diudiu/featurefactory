@@ -54,10 +54,7 @@ class FeatureExtract(CsrfExemptMixin, View):
     # @装饰器验证一下request包完整性
     @post_data_check
     def post(self, request):
-        data = {
-            cons.RESPONSE_REQUEST_STATUS: ResponseCode.SUCCESS,
-            cons.RESPONSE_REQUEST_MESSAGE: ResponseCode.message(ResponseCode.SUCCESS)
-        }
+
         post_data = json.loads(request.body)
         # get client code
         logger.info("post_data:%s" % post_data)
@@ -70,13 +67,19 @@ class FeatureExtract(CsrfExemptMixin, View):
         #     })
         #     logger.info('Mission completed request data :\n %s' % data)
         #     return JSONResponse(data)
+        data = {
+            'apply_id': content.get('apply_id', None),
+            cons.RESPONSE_REQUEST_STATUS: ResponseCode.SUCCESS,
+            cons.RESPONSE_REQUEST_MESSAGE: ResponseCode.message(ResponseCode.SUCCESS)
+        }
         try:
             base_data = client_dispatch(client_code, content)
+            base_data.update({'apply_id': content.get('apply_id', None)})
             logger.info("base_data: %s" % base_data)
             if base_data['is_async']:
                 # ASYNC
                 logger.info('\n============Streams come in ASYNC ===========')
-                audit_task.apply_async((base_data, ), retry=True, queue='re_task_audit', routing_key='re_task_audit')
+                audit_task.apply_async(args=({'apply_id': content.get('apply_id', None)}, base_data), retry=True, queue='re_task_audit', routing_key='re_task_audit')
             else:
                 # SYNC
                 logger.info('\n============Streams in SYNC mission control center, Collecting feature now===========')
@@ -100,5 +103,5 @@ class FeatureExtract(CsrfExemptMixin, View):
                 cons.RESPONSE_REQUEST_MESSAGE: e.message,
             }
             logger.error(data)
-        logger.info('Mission completed request data :\n %s' % data)
+        logger.info('Mission completed response data :\n %s' % data)
         return JSONResponse(data)
