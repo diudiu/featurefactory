@@ -80,7 +80,10 @@ class FeatureExtract(CsrfExemptMixin, View):
                 # ASYNC
                 logger.info('\n============Streams come in ASYNC ===========')
                 task_id = audit_task.apply_async(args=({'apply_id': content.get('apply_id', None)}, base_data), retry=True, queue='re_task_audit', routing_key='re_task_audit')
-                logger.info("task_id:%s" % task_id)
+                if task_id:
+                    logger.info("task_id:%s" % task_id)
+                else:
+                    raise Exception("audit_task.apply_async don't return task_id")
             else:
                 # SYNC
                 logger.info('\n============Streams in SYNC mission control center, Collecting feature now===========')
@@ -95,14 +98,17 @@ class FeatureExtract(CsrfExemptMixin, View):
                 'apply_id': content.get('apply_id', None),
                 cons.RESPONSE_REQUEST_STATUS: e.status,
                 cons.RESPONSE_REQUEST_MESSAGE: e.message,
+                "post_data": content
             }
-            logger.error(data)
+            logger.error('Mission completed response data :\n %s' %data)
         except Exception as e:
             data = {
                 'apply_id': content.get('apply_id', None),
                 cons.RESPONSE_REQUEST_STATUS: ResponseCode.FAILED,
                 cons.RESPONSE_REQUEST_MESSAGE: e.message,
+                "post_data": content
             }
-            logger.error(data)
-        logger.info('Mission completed response data :\n %s' % data)
+            logger.error('Mission completed response data :\n %s' %data)
+        else:
+            logger.info('Mission completed response data :\n %s' % data)
         return JSONResponse(data)
