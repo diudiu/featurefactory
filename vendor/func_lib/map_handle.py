@@ -1414,26 +1414,6 @@ def m_time_to_string_bfm(seq):
     #     seq = '22:01 - 00:00'
     # else:
     #     seq = 'UNKNOWN'
-    # if time_hour in range(0, 7):
-    #     seq = '00:01 - 7:00'
-    # elif time_hour in range(7, 9):
-    #     seq = '7:01 - 9:00'
-    # elif time_hour in range(9, 11):
-    #     seq = '9:01 - 11:30'
-    # elif time_hour == 11 and time_min <= 30:
-    #     seq = '9:01 - 11:30'
-    # elif time_hour == 11 and time_min > 30:
-    #     seq = '11:31 - 14:00'
-    # elif time_hour in range(12, 14):
-    #     seq = '11:31 - 14:00'
-    # elif time_hour in range(14, 17):
-    #     seq = '14:01 - 17:00'
-    # elif time_hour in range(17, 22):
-    #     seq = '17:01 - 22:00'
-    # elif time_hour in range(22, 24):
-    #     seq = '22:01 - 00:00'
-    # else:
-    #     seq = 'UNKNOWN'
     if (time_hour_min > '00:01') and (time_hour_min <= '07:00'):
         seq = '00:01 - 7:00'
     elif (time_hour_min > '07:01') and (time_hour_min <= '09:00'):
@@ -1442,14 +1422,16 @@ def m_time_to_string_bfm(seq):
         seq = '9:01 - 11:30'
     elif (time_hour_min > '11:31') and (time_hour_min <= '14:00'):
         seq = '11:31 - 14:00'
-    elif (time_hour_min > '14:01') and (time_hour_min <= '17:00'):
-        seq = '14:01 - 17:00'
-    elif (time_hour_min > '17:01') and (time_hour_min <= '22:00'):
-        seq = '17:01 - 22:00'
-    elif (time_hour_min > '22:01') and (time_hour_min <= '23:59'):
-        seq = '22:01 - 00:00'
+    elif (time_hour_min > '14:01') and (time_hour_min <= '16:00'):
+        seq = '14:01 - 16:00'
+    elif (time_hour_min > '16:01') and (time_hour_min <= '18:30'):
+        seq = '16:01 - 18:30'
+    elif (time_hour_min > '18:31') and (time_hour_min <= '21:30'):
+        seq = '18:31 - 21:30'
+    elif (time_hour_min > '21:31') and (time_hour_min <= '23:59'):
+        seq = '21:31 - 00:00'
     elif time_hour_min == '00:00':
-        seq = '22:01 - 00:00'
+        seq = '21:31 - 00:00'
     else:
         seq = 'UNKNOWN'
     return seq

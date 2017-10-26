@@ -83,7 +83,7 @@ class FeatureExtract(CsrfExemptMixin, View):
                 if task_id:
                     logger.info("task_id:%s" % task_id)
                 else:
-                    raise Exception("audit_task.apply_async don't return task_id")
+                    logger.error("audit_task.apply_async don't return task_id")
             else:
                 # SYNC
                 logger.info('\n============Streams in SYNC mission control center, Collecting feature now===========')
