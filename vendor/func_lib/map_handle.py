@@ -1493,9 +1493,21 @@ def m_loan_agency_count(seq):
 
 def m_car_room_code(seq):
     m = {
-        1: "有",
-        2: "可能有",
-        3: "无"
+        1: "有车",
+        2: "可能有车",
+        3: "无法判断"
+    }
+    if seq in m:
+        return m[seq]
+    else:
+        return "UNKNOWN"
+
+
+def m_room_code(seq):
+    m = {
+        1: "有购房交易",
+        2: "可能购房交易",
+        3: "无法判断"
     }
     if seq in m:
         return m[seq]
