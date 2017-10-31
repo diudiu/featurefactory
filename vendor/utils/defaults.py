@@ -29,7 +29,7 @@ StringTypeDefault = "UNKNOWN"
 BooleanTypeDefault = -1
 
 # 特征取值如果是正数类型的，将此类型作为缺省值
-PositiveSignedTypeDefault = -1
+PositiveSignedTypeDefault = -99999
 
 # 特征取值如果是负数类型的，将此类型作为缺省值
 NegativeSignedTypeDefault = 1
