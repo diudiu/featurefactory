@@ -1,7 +1,7 @@
 2.1.171030
 
 commit_id:
-- ui: 7f4482b10400e1547d36ff7a9fcd92c0180c4a0e
+- ui: a52b397def3d37e1e84753c3f11aadbacdf9cc0a
 - ff: c0e6b59279b6498fa59602bc5cacd8c41f5461ed
 - re: ea8865c92d21e5c5d4c1409c7e20c64e5ebfe762
 
