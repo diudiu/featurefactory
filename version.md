@@ -1,9 +1,9 @@
 3.0.171108
 
 commit_id:
-- ui: c62740b11e39a837f096c64316b3937bc5018ab7
-- ff: c204415cedf6a4d96827acdf217ac60b4c827962
-- re: f531e5541f7accecb05b1300c32abd0658f8bc20
+- ui: b180accd12afd0b9c32d76fa60d74f812f104ab6
+- ff: e7050e6227549ff06e70a58685e1bc4dc0c27780
+- re: 8aeb7eaaabd24e015667f072e6aabedf07480b3e
 
 版本内容：
 1. 版本综述：此版本为维伦真知云服务的第一版本，访问域名为 zz.shu-3.com此版本基于2.2.171102版本升级，目前作为演示系统使用。
