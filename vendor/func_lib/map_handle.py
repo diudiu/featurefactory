@@ -20,7 +20,7 @@ from apps.common.models import FeatureCodeMapping
 from apps.common.models import CityCodeField
 from apps.common.models import *
 from apps.etl.models import P2PTelephoneModel, LoanAgencyModel
-
+from vendor.utils.defaults import *
 
 def m_to_int(seq):
     """
@@ -1385,7 +1385,7 @@ def m_d_c_s_r_l003(seq):
     if seq[0] in ['02']:
         return int(seq[1])
     else:
-        return "UNKNOWN"
+        return eval(PositiveSignedTypeDefault)
 
 
 def m_list_average(seq):
