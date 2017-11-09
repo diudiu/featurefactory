@@ -1381,6 +1381,13 @@ def m_to_nature_card(seq):
     return cmap[code]
 
 
+def m_d_c_s_r_l003(seq):
+    if seq[0] in ['02']:
+        return int(seq[1])
+    else:
+        return "UNKNOWN"
+
+
 def m_list_average(seq):
     sum_num = sum(seq)
     return sum_num / len(seq)
@@ -1535,6 +1542,7 @@ def m_date_less_x_days(seq, args):
     t = datetime.now() - timedelta(args)
     l = [i for i in seq if i >= t]
     return l
+
 
 if __name__ == '__main__':
     data = [
