@@ -1385,7 +1385,7 @@ def m_d_c_s_r_l003(seq):
     if seq[0] in ['02']:
         return int(seq[1])
     else:
-        return eval(PositiveSignedTypeDefault)
+        return PositiveSignedTypeDefault
 
 
 def m_list_average(seq):
