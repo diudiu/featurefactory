@@ -22,6 +22,7 @@
 
 import json
 import logging
+import traceback
 
 from braces.views import CsrfExemptMixin
 from django.views.generic import View
@@ -96,6 +97,7 @@ class FeatureExtract(CsrfExemptMixin, View):
                     'ret_msg': ret_data
                 })
         except ServerError as e:
+            traceback.print_exc()
             data = {
                 'apply_id': content.get('apply_id', None),
                 cons.RESPONSE_REQUEST_STATUS: e.status,
@@ -104,6 +106,8 @@ class FeatureExtract(CsrfExemptMixin, View):
             }
             logger.error('Mission completed response data :\n %s' % data)
         except Exception as e:
+            traceback.print_exc()
+
             data = {
                 'apply_id': content.get('apply_id', None),
                 cons.RESPONSE_REQUEST_STATUS: ResponseCode.FAILED,
