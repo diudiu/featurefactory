@@ -27,19 +27,26 @@ def singleton(cls):
     return _singleton
 
 
-@singleton
+# @singleton
 class RedisX(object):
     def __init__(self):
         self.host = REDIS_CONFIG['default']['host']
         self.port = int(REDIS_CONFIG['default']['port'])
         self.password = REDIS_CONFIG['default']['password']
         self.db = int(REDIS_CONFIG['default']['db'])
-        self.conn = redis.Redis(
+        # self.conn = redis.Redis(
+        #     host=self.host,
+        #     port=self.port,
+        #     password=self.password,
+        #     db=self.db
+        # )
+        self.pool = redis.ConnectionPool(
             host=self.host,
             port=self.port,
             password=self.password,
             db=self.db
         )
+        self.conn = redis.Redis(connection_pool=self.pool)
 
     def ping(self):
         try:
@@ -57,12 +64,12 @@ class RedisX(object):
         return a
 
     def set(self, name, value):
-        self.ping()
+        # self.ping()
         a = self.conn.set(name=name, value=value, ex=CACHE_TIMEOUT)
         return a
 
     def get(self, name):
-        self.ping()
+        # self.ping()
         value = self.conn.get(name=name)
         return value
 
