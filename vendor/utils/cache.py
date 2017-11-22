@@ -27,7 +27,7 @@ def singleton(cls):
     return _singleton
 
 
-# @singleton
+@singleton
 class RedisX(object):
     def __init__(self):
         self.host = REDIS_CONFIG['default']['host']
