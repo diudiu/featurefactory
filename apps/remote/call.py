@@ -11,6 +11,7 @@ import logging
 import requests
 import json
 import re
+import time
 
 from braces.views import CsrfExemptMixin
 from apps.featureapi.response import JSONResponse
@@ -59,6 +60,7 @@ class DataPrepare(object):
         return ret_data
 
     def get_data_from_db(self):
+        t1 = time.time()
         ret_data = {}
         data = self.cache_base.get(self.data_identity)
         if data:
@@ -67,6 +69,8 @@ class DataPrepare(object):
             logger.info('Find cache_base data_identity:%s data:\n%s' % (self.data_identity, ret_data))
             if not ret_data and self.collect_type != cons.SHUNT_TYPE:
                 self.cache_base.delete_cache(self.data_identity)
+        logger.info("TIME %s %s find mongo cache use :%s" % (self.apply_id, self.data_identity, time.time()-t1))
+
         return ret_data
 
     def get_origin_data_from_interface(self):

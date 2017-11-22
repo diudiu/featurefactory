@@ -78,10 +78,10 @@ class FeatureExtract(CsrfExemptMixin, View):
             logger.info("base_data: %s" % base_data)
             if base_data['is_async']:
                 # ASYNC
-                logger.info('\n============Streams come in ASYNC ===========')
+                logger.info('\n============Streams come in ASYNC apply_id: %s===========' % content.get('apply_id', None))
                 task_id = audit_task.apply_async(args=({'apply_id': content.get('apply_id', None)}, base_data), retry=True, queue='re_task_audit', routing_key='re_task_audit')
                 if task_id:
-                    logger.info("task_id:%s" % task_id)
+                    logger.info("apply_id: %s task_id:%s" % (content.get('apply_id', None), task_id))
                 else:
                     logger.error("audit_task.apply_async don't return task_id")
             else:
