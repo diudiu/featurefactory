@@ -12,6 +12,9 @@ import redis
 
 from featurefactory.settings import REDIS_CONFIG
 from vendor.utils import constant as cons
+import logging
+
+logger = logging.getLogger('apps.remote')
 
 CACHE_TIMEOUT = cons.CACHE_TIMEOUT
 
@@ -22,6 +25,7 @@ def singleton(cls):
     def _singleton(*args, **kw):
         if cls not in instances:
             instances[cls] = cls(*args, **kw)
+        logger.info('reis_id:%s redis_created_connections:%s ' % (id(instances[cls]), instances[cls].pool._created_connections))
         return instances[cls]
 
     return _singleton
@@ -70,6 +74,7 @@ class RedisX(object):
 
     def get(self, name):
         # self.ping()
+        print self.conn.connection_pool._created_connections
         value = self.conn.get(name=name)
         return value
 

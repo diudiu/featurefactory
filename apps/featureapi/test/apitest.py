@@ -25,7 +25,7 @@ def feature_post():
         u'content': {
             u'process_apply_id': u'final_upload',
             u'callback': '',
-            u'apply_id': u'APPLY20171010084214154181784',
+            u'apply_id': u'APPLY20170914201929742716711',
             u'res_keys':
                 [
                     # "c_d_c_a003",
@@ -62,10 +62,10 @@ def feature_post():
                     # "c_s_w_c002",
                     # "is_owner_mobile",
                     "age",
-                    "card_id_two_elem",
-                    "mobile_online_time",
-                    "is_loan_agency",
-                    "is_court_shixin",
+                    # "card_id_two_elem",
+                    # "mobile_online_time",
+                    # "is_loan_agency",
+                    # "is_court_shixin",
                     # "is_organization_g_black",
                     # "is_netsky_longloan",
                     # "is_skyeye_black",
@@ -91,6 +91,13 @@ def feature_post():
         u'client_code': u'bfm_test',
 
     }
+    test_data= {
+                u'content':
+                    {u'callback': u'',
+                     u'process_apply_id': None,
+                     u'apply_id': u'APPLY20171122165817915179546',
+
+                 u'res_keys': [u'is_scan_receive_same']}, u'client_code': u'lp_test'}
     a = time.time()
     response = requests.post(url, headers=headers, data=json.dumps(test_data))
     content = json.loads(response.content)
@@ -121,4 +128,19 @@ def rule_engine_post():
 
 if __name__ == '__main__':
     # rule_engine_post()
-    feature_post()
+    # feature_post()
+    from multiprocessing import Pool
+    import time
+    # p = Pool()
+    # for i in range(1000):
+    #     p.apply_async(feature_post, args=())
+    #     print time.time()
+    # print 'Waiting for all subprocesses done...'
+    # p.close()
+    # p.join()
+
+    import threading
+    for k in range(1000):
+        new_thread = threading.Thread(target=feature_post, args=())
+        new_thread.start()
+        print time.time()
