@@ -91,13 +91,6 @@ def feature_post():
         u'client_code': u'bfm_test',
 
     }
-    test_data= {
-                u'content':
-                    {u'callback': u'',
-                     u'process_apply_id': None,
-                     u'apply_id': u'APPLY20171122165817915179546',
-
-                 u'res_keys': [u'is_scan_receive_same']}, u'client_code': u'lp_test'}
     a = time.time()
     response = requests.post(url, headers=headers, data=json.dumps(test_data))
     content = json.loads(response.content)
@@ -140,7 +133,7 @@ if __name__ == '__main__':
     # p.join()
 
     import threading
-    for k in range(1000):
+    for k in range(1):
         new_thread = threading.Thread(target=feature_post, args=())
         new_thread.start()
         print time.time()
