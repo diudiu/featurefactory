@@ -23,42 +23,43 @@ def feature_post():
     # url = 'http://139.129.220.118:10012/syph-ff/feature/extract/'
     test_data = {
         u'content': {
+            u'process_apply_id': u'final_upload',
             u'callback': '',
-            u'apply_id': u'APPLY20170725104516684093829',
+            u'apply_id': u'APPLY20170914201929742716711',
             u'res_keys':
                 [
-                    "c_d_c_a003",
-                    "c_d_m_c113",
-                    "c_d_m_c133",
-                    "c_d_m_c136",
-                    "c_d_m_c260",
-                    "c_d_t_b004",
-                    "c_d_t_b019",
-                    "c_d_t_b045",
-                    "c_d_t_b046",
-                    "c_d_t_b061",
-                    "c_d_t_b064",
-                    "c_d_t_b065",
-                    "c_d_t_b066",
-                    "c_d_t_b122",
-                    "c_d_t_b230",
-                    "c_d_t_b260",
-                    "c_d_t_b268",
-                    "c_d_t_b292",
-                    "c_d_t_b296",
-                    "c_d_t_c035",
-                    "c_d_t_c048",
-                    "c_d_t_c050",
-                    "c_d_t_t027",
-                    "c_d_t_t040",
-                    "c_d_t_t079",
-                    "c_d_t_t092",
-                    "c_d_t_t094",
-                    "c_d_t_t097",
-                    "c_d_t_t106",
-                    "c_s_r_l001",
-                    "c_s_r_l003",
-                    "c_s_w_c002",
+                    # "c_d_c_a003",
+                    # "c_d_m_c113",
+                    # "c_d_m_c133",
+                    # "c_d_m_c136",
+                    # "c_d_m_c260",
+                    # "c_d_t_b004",
+                    # "c_d_t_b019",
+                    # "c_d_t_b045",
+                    # "c_d_t_b046",
+                    # "c_d_t_b061",
+                    # "c_d_t_b064",
+                    # "c_d_t_b065",
+                    # "c_d_t_b066",
+                    # "c_d_t_b122",
+                    # "c_d_t_b230",
+                    # "c_d_t_b260",
+                    # "c_d_t_b268",
+                    # "c_d_t_b292",
+                    # "c_d_t_b296",
+                    # "c_d_t_c035",
+                    # "c_d_t_c048",
+                    # "c_d_t_c050",
+                    # "c_d_t_t027",
+                    # "c_d_t_t040",
+                    # "c_d_t_t079",
+                    # "c_d_t_t092",
+                    # "c_d_t_t094",
+                    # "c_d_t_t097",
+                    # "c_d_t_t106",
+                    # "c_s_r_l001",
+                    # "c_s_r_l003",
+                    # "c_s_w_c002",
                     # "is_owner_mobile",
                     "age",
                     # "card_id_two_elem",
@@ -66,29 +67,29 @@ def feature_post():
                     # "is_loan_agency",
                     # "is_court_shixin",
                     # "is_organization_g_black",
-                    # "is_netsky_black",
                     # "is_netsky_longloan",
                     # "is_skyeye_black",
-                    "gender",
-                    "credit_card_iden",
+                    # "gender",
+                    # "credit_card_iden",
                     # "is_credit_card",
-                    "call_pay_average",
-                    "phone_remain",
-                    "credit_limit",
-                    "available_balance",
+                    # "call_pay_average",
+                    # "phone_remain",
+                    # "credit_limit",
+                    # "available_balance",
                     #
-                    "loan_cnt",
-                    "arrears_limit",
-                    "apply_limit",
-                    "acc_overdue_cnt",
-                    "disposable_personal_income",
-                    "credit_card_cnt",
-                    "san_code_time",
+                    # "loan_cnt",
+                    # "arrears_limit",
+                    # "apply_limit",
+                    # "acc_overdue_cnt",
+                    # "disposable_personal_income",
+                    # "credit_card_cnt",
+                    # "san_code_time",
                     # "is_equal61",
                     # "is_gps_location_scan_same",
                 ]
         },
-        u'client_code': u'bfm_test'
+        u'client_code': u'bfm_test',
+
     }
     a = time.time()
     response = requests.post(url, headers=headers, data=json.dumps(test_data))
@@ -120,4 +121,19 @@ def rule_engine_post():
 
 if __name__ == '__main__':
     # rule_engine_post()
-    feature_post()
+    # feature_post()
+    from multiprocessing import Pool
+    import time
+    # p = Pool()
+    # for i in range(1000):
+    #     p.apply_async(feature_post, args=())
+    #     print time.time()
+    # print 'Waiting for all subprocesses done...'
+    # p.close()
+    # p.join()
+
+    import threading
+    for k in range(1):
+        new_thread = threading.Thread(target=feature_post, args=())
+        new_thread.start()
+        print time.time()

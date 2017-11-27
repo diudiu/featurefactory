@@ -9,7 +9,7 @@
 """
 import logging
 from django.utils.module_loading import import_string
-
+import time
 from apps.etl.context import CacheContext, ApplyContext, ArgsContext
 from apps.etl.models import FeatureShuntConf, FeatureRelevanceConf
 from apps.remote.call import DataPrepare
@@ -105,7 +105,9 @@ class Courier(object):
         if not args_config:
             logger.error("data_identity:%s config error in common feature table " % data_identity)
             raise CommonFeatureConfigError
+        t1 = time.time()
         dp = DataPrepare(data_identity, self.apply_id, args_config, self.collect_type)
+        logger.info("TIME %s %s Init DataPrepare use :%s" % (self.apply_id, data_identity, time.time()-t1))
         data = dp.get_original_data()
         return data
 
@@ -124,7 +126,9 @@ class Courier(object):
             logger.error("feature_name:%s config error in common feature table miss data_identity:%s"
                          % (self.feature_name, data_identity))
             raise CommonFeatureConfigError
+        t1 = time.time()
         dp = DataPrepare(data_identity, self.apply_id, self.feature_conf[data_identity], self.collect_type)
+        logger.info("TIME %s %s Init DataPrepare use :%s" % (self.apply_id, data_identity, time.time()-t1))
         data = dp.get_original_data()
         return data
 

@@ -107,12 +107,12 @@ if __name__ == '__main__':
         "gps_latitude": u'39.957206',
         "product_version": "P045-v01.1125",
         "validation_status": "True",
-        # "call_back": call_back
+        "call_back": call_back
 
     }
 
-    domain = 'http://127.0.0.1:10012'
-    # domain = 'http://de.digcredit.com:8071'
+    # domain = 'http://127.0.0.1:10012'
+    domain = 'http://de.digcredit.com:8071'
     # domain = 'http://192.168.1.100:8071'
 
     test_case = Cases()
@@ -121,7 +121,7 @@ if __name__ == '__main__':
     apply_id = content["res_data"]["apply_id"]
 
     json_bank_card_upload = {"apply_id": apply_id,
-                             # "call_back": call_back,
+                             "call_back": call_back,
                              "message": {u'bank_card_number': u'6226890085988409',
                                          u'hit': u'no',
                                          u'risk_list': [],
@@ -146,7 +146,7 @@ if __name__ == '__main__':
     json_final_upload = {
         'product_code': 'cf5b6d062260f643d123ae61a37fe416',
         'apply_id': apply_id,
-        # "call_back": call_back,
+        "call_back": call_back,
         'data_identity': 'final_upload',
         "message": {
             "receive_address": "北京市朝阳区大屯路洛克时代"
@@ -157,10 +157,10 @@ if __name__ == '__main__':
     appjson = json_bank_card_upload
     async_post()
     time.sleep(s)
-    test_case.test_obtain_result()
-    time.sleep(s)
+    # test_case.test_obtain_result()
+    # time.sleep(s)
     appjson = json_final_upload
     async_post()
-    time.sleep(s)
-    test_case.test_obtain_result()
+    # time.sleep(s)
+    # test_case.test_obtain_result()
 

@@ -30,7 +30,7 @@ logger = logging.getLogger('apps.featureapi')
 
 
 @shared_task
-def audit_task(apply_id, base_data):
+def audit_task(apply_id, base_data, process_apply_id):
     data = {
         cons.RESPONSE_REQUEST_STATUS: ResponseCode.FEATURE_SUCCESS,
         cons.RESPONSE_REQUEST_MESSAGE: ResponseCode.message(ResponseCode.FEATURE_SUCCESS)
@@ -42,13 +42,15 @@ def audit_task(apply_id, base_data):
         data.update({
             'client_code': base_data.get('client_code', None),
             'apply_id': apply_id.get('apply_id', None),
-            'ret_msg': ret_data
+            'ret_msg': ret_data,
+            'process_apply_id': process_apply_id
         })
     except ServerError as e:
         data = {
             'apply_id': apply_id.get('apply_id', None),
             cons.RESPONSE_REQUEST_STATUS: e.status,
-            cons.RESPONSE_REQUEST_MESSAGE: e.message
+            cons.RESPONSE_REQUEST_MESSAGE: e.message,
+            'process_apply_id': process_apply_id
         }
     except Exception as e:
         import traceback
@@ -57,6 +59,7 @@ def audit_task(apply_id, base_data):
             'apply_id': apply_id.get('apply_id', None),
             cons.RESPONSE_REQUEST_STATUS: ResponseCode.FAILED,
             cons.RESPONSE_REQUEST_MESSAGE: e.message,
+            'process_apply_id': process_apply_id
         }
     finally:
         callback_url = base_data['callback_url']
