@@ -53,7 +53,7 @@ class FeatureExtract(CsrfExemptMixin, View):
     # @装饰器验证一下request包完整性
     @post_data_check
     def post(self, request):
-
+        logger.info(request.body)
         post_data = json.loads(request.body)
         # get client code
         logger.info("post_data:%s" % post_data)
