@@ -44,8 +44,8 @@ DATABASES = {
 # redis
 REDIS_CONFIG = {
     'default': {
-        'host': '192.168.1.100',
-        'port': 8079,
+        'host': '192.168.1.198',
+        'port': 6379,
         'password': 'syph@dev',
         'db': 8,
         'connect_timeout': 1,
@@ -53,8 +53,8 @@ REDIS_CONFIG = {
 }
 
 # mongodb
-MONGODB_HOST = '192.168.1.100'
-MONGODB_PORT = 8078
+MONGODB_HOST = '192.168.1.198'
+MONGODB_PORT = 27017
 MONGODB_NAME = 'feature_storage'
 MONGODB_USERNAME = 'feature_storage'
 MONGODB_PASSWORD = 'feature_storage'
