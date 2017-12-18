@@ -23,9 +23,12 @@ def feature_post():
     # url = 'http://139.129.220.118:10012/syph-ff/feature/extract/'
     test_data = {
         u'content': {
-            u'process_apply_id': u'final_upload',
+            u'process_apply_id': u'zm_score',
             u'callback': '',
-            u'apply_id': u'APPLY20170914201929742716711',
+            # u'apply_id': u'APPLY20170914201929742716711',
+            u'apply_id': u'APPLY20171204112941031045255',     # zm_score
+            # u'apply_id': u'APPLY20171215175322129556919',   # 张勃
+            # u'apply_id': u'APPLY20171213162309835599976',   # 程小安
             u'res_keys':
                 [
                     # "c_d_c_a003",
@@ -61,7 +64,7 @@ def feature_post():
                     # "c_s_r_l003",
                     # "c_s_w_c002",
                     # "is_owner_mobile",
-                    "age",
+                    # "age",
                     # "card_id_two_elem",
                     # "mobile_online_time",
                     # "is_loan_agency",
@@ -86,6 +89,14 @@ def feature_post():
                     # "san_code_time",
                     # "is_equal61",
                     # "is_gps_location_scan_same",
+                    # "zm_score",
+                    "ali_zm_score"
+                    # "is_matched_hy",
+                    # "m3_call_count",
+                    # "last_call_time",
+                    # "call_time_type",
+                    # "loan_agency_value",
+                    # "p2p_value",
                 ]
         },
         u'client_code': u'bfm_test',

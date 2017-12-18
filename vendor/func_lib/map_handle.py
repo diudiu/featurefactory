@@ -1544,6 +1544,13 @@ def m_date_less_x_days(seq, args):
     return l
 
 
+def m_true_false_to_sf(seq):
+    if seq[0]:
+        return '是'
+    else:
+        return '否'
+
+
 if __name__ == '__main__':
     data = [
         {
