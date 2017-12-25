@@ -17,17 +17,18 @@ no_disease_list = [
 
 def feature_post():
     # url = 'http://192.168.1.196:8071/syph-ff/feature/extract/'
-    url = 'http://127.0.0.1:10012/syph-ff/feature/extract/'
+    # url = 'http://127.0.0.1:10012/syph-ff/feature/extract/'
     # url = 'http://192.168.1.100:8071/syph-ff/feature/extract/'
-    # url = 'http://de.digcredit.com:8071/syph-ff/feature/extract/'
+    url = 'http://de.digcredit.com:1902/syph-ff/feature/extract/'
     # url = 'http://139.129.220.118:10012/syph-ff/feature/extract/'
     test_data = {
         u'content': {
-            u'process_apply_id': u'zm_score',
+            u'process_apply_id': u'accumulation_fund_upload',
             u'callback': '',
             # u'apply_id': u'APPLY20170914201929742716711',
-            u'apply_id': u'APPLY20171204112941031045255',     # zm_score
-            # u'apply_id': u'APPLY20171215175322129556919',   # 张勃
+            # u'apply_id': u'APPLY20171221153955748443645',
+            # u'apply_id': u'APPLY20171204112941031045255',     # zm_score
+            u'apply_id': u'APPLY20171215175322129556919',   # 张勃
             # u'apply_id': u'APPLY20171213162309835599976',   # 程小安
             u'res_keys':
                 [
@@ -90,13 +91,19 @@ def feature_post():
                     # "is_equal61",
                     # "is_gps_location_scan_same",
                     # "zm_score",
-                    "ali_zm_score"
+                    # "ali_zm_score",
                     # "is_matched_hy",
                     # "m3_call_count",
                     # "last_call_time",
                     # "call_time_type",
                     # "loan_agency_value",
                     # "p2p_value",
+                    # "call_pay_average",
+                    # "phone_remain",
+                    "company_rate",
+                    # "deposit_base",
+                    # "fund_amount",
+                    # "repay_amount",
                 ]
         },
         u'client_code': u'bfm_test',

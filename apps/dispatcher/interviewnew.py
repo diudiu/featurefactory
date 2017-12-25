@@ -101,6 +101,13 @@ class RiskControl2(object):
                 endtime = time.time()
                 loggertime.info("do_request_2_zm_dig_upload time: %s" % (endtime - starttime))
                 logger.info("zm_dig_upload response is: %s, flowchart is: %s" % (response.content, data))
+            elif data_identity == "accumulation_fund_upload":
+                logger.info("Do request to 2.0, flowchart is: %s, data is: %s", data_identity, data)
+                starttime = time.time()
+                response = requests.post(URL_2_0_GJJ, headers=HEADERS, data=json.dumps(data))
+                endtime = time.time()
+                loggertime.info("do_request_2_accumulation_fund_upload time: %s" % (endtime - starttime))
+                logger.info("accumulation_fund_upload response is: %s, flowchart is: %s" % (response.content, data))
             elif data_identity == "operator_dig_upload":
                 phone_remain = data.get("phone_remain", None)
                 if phone_remain:

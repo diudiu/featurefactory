@@ -9,6 +9,7 @@ URL_2_0_FORMAL = "http://" + os.getenv('RISKCTL_2_DE', '') + "/syph-re/api/credi
 URL_2_0_BANKCARD = "http://" + os.getenv('RISKCTL_2_DE', '') + "/syph-re/api/credit/apply/async/bankcard/"
 URL_2_0_EMAIL = "http://" + os.getenv('RISKCTL_2_DE', '') + "/syph-re/api/credit/apply/async/email/"
 URL_2_0_ZM = "http://" + os.getenv('RISKCTL_2_DE') + "/syph-re/api/credit/apply/async/aliZmCredit/"
+URL_2_0_GJJ = "http://" + os.getenv('RISKCTL_2_DE') + "/syph-re/api/credit/apply/async/accumulation/"
 URL_2_0_OPERATOR = "http://" + os.getenv('RISKCTL_2_DE', '') + "/syph-re/api/credit/apply/async/operator/"
 URL_2_0_FINAL = "http://" + os.getenv('RISKCTL_2_DE', '') + "/syph-re/api/credit/apply/async/final/"
 

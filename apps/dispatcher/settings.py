@@ -9,6 +9,7 @@ URL_2_0_FORMAL = "http://de.digcredit.com:8072/syph-re/api/credit/apply/async/fo
 URL_2_0_BANKCARD = "http://de.digcredit.com:8072/syph-re/api/credit/apply/async/bankcard/"
 URL_2_0_EMAIL = "http://de.digcredit.com:8072/syph-re/api/credit/apply/async/email/"
 URL_2_0_ZM = "http://de.digcredit.com:8072/syph-re/api/credit/apply/async/aliZmCredit/"
+URL_2_0_GJJ = "http://de.digcredit.com:8072/syph-re/api/credit/apply/async/accumulation/"
 URL_2_0_OPERATOR = "http://de.digcredit.com:8072/syph-re/api/credit/apply/async/operator/"
 URL_2_0_FINAL = "http://de.digcredit.com:8072/syph-re/api/credit/apply/async/final/"
 
