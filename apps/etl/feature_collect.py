@@ -26,8 +26,8 @@ class CollectFeature(object):
         self.feature_ret = {}
         self.error_list = []
         self.use_time = {}
-        self.feature_comment_type = {}
-        self.feature_excomment_type = self.feature_config.copy()
+        self.feature_comment_type = {}  # 通用型特征
+        self.feature_excomment_type = self.feature_config.copy()  # 非通用型特征
         self.apply_id = base_data.get('apply_id', None)
         self.cache_base = CacheContext(self.apply_id)
 
@@ -37,7 +37,7 @@ class CollectFeature(object):
         self.cache_base.delete_async()
 
     def get_feature_value(self):
-        self.classify_feature()
+        self.classify_feature()  # 特征分类：分成通用型和非通用型两类特征
         logger.info('Stream in feature_collect function name : get_feature_value\nFeature list :%s' %
                     self.feature_list)
         logger.info(self.feature_comment_type)
@@ -127,7 +127,7 @@ class CollectFeature(object):
             val_keys = f_config.keys()
             if collect_type == cons.COMMON_TYPE and len(val_keys)-1 == 1:
 
-                if val_keys[0] == "collect_type":
+                if val_keys[0] == "collect_type":  # 取得data_identity
                     data_identity = val_keys[1]
                 else:
                     data_identity = val_keys[0]

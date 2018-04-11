@@ -37,7 +37,7 @@ def client_dispatch(client_code, content):
         raise MissingManageType
     try:
         obj = import_string(obj_string)
-        judger = obj(content, client_code)
+        judger = obj(content, client_code)  # 一个client_code对应一个客户端的judger（配置在数据库中）
     except Exception as e:
         logger.error('judger init error , massage is :\n %s' % e)
         raise JudgeInitializeFailed

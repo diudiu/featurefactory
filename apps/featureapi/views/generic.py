@@ -72,7 +72,7 @@ class FeatureExtract(CsrfExemptMixin, View):
             cons.RESPONSE_REQUEST_MESSAGE: ResponseCode.message(ResponseCode.SUCCESS)
         }
         try:
-            base_data = client_dispatch(client_code, content)
+            base_data = client_dispatch(client_code, content)  # 取得特征配置及特征参数
             base_data.update({'apply_id': content.get('apply_id', None)})
             logger.info("base_data: %s" % base_data)
             if base_data['is_async']:
@@ -90,7 +90,7 @@ class FeatureExtract(CsrfExemptMixin, View):
             else:
                 # SYNC
                 logger.info('\n============Streams in SYNC mission control center, Collecting feature now===========')
-                ret_data = mission_control(base_data)
+                ret_data = mission_control(base_data)  # 任务控制
                 data.update({
                     'client_code': base_data.get('client_code', None),
                     'apply_id': base_data.get('apply_id', None),

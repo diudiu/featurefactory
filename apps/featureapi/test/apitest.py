@@ -18,8 +18,9 @@ no_disease_list = [
 def feature_post():
     # url = 'http://192.168.1.196:8071/syph-ff/feature/extract/'
     # url = 'http://127.0.0.1:10012/syph-ff/feature/extract/'
+    url = 'http://192.168.1.3:10012/syph-ff/feature/extract/'
     # url = 'http://192.168.1.100:8071/syph-ff/feature/extract/'
-    url = 'http://de.digcredit.com:1902/syph-ff/feature/extract/'
+    # url = 'http://de.digcredit.com:1902/syph-ff/feature/extract/'
     # url = 'http://139.129.220.118:10012/syph-ff/feature/extract/'
     test_data = {
         u'content': {
@@ -64,8 +65,8 @@ def feature_post():
                     # "c_s_r_l001",
                     # "c_s_r_l003",
                     # "c_s_w_c002",
-                    # "is_owner_mobile",
-                    # "age",
+                    "is_owner_mobile",
+                    "age",
                     # "card_id_two_elem",
                     # "mobile_online_time",
                     # "is_loan_agency",
@@ -100,7 +101,7 @@ def feature_post():
                     # "p2p_value",
                     # "call_pay_average",
                     # "phone_remain",
-                    "company_rate",
+                    # "company_rate",
                     # "deposit_base",
                     # "fund_amount",
                     # "repay_amount",

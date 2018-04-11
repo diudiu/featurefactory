@@ -71,7 +71,7 @@ def audit_task(apply_id, base_data, process_apply_id):
 
 
 def mission_control(base_data):
-    collecter = CollectFeature(base_data)
+    collecter = CollectFeature(base_data)  # 收集特征
     collecter.get_feature_value()
     if collecter.error_list:
         pass

@@ -37,7 +37,7 @@ class Judger(object):
         self.arguments = {}
 
     def work_stream(self):
-        self._fill_attributes()
+        self._fill_attributes()  # 填充judger的各个self属性， 其中ret_msg是数据库特征配置， arguments是mongo的客户传入数据
         base_data = {
             'client_code': self.client_code,
             'callback_url': self.callback_url,
